@@ -1,4 +1,5 @@
 ﻿using Atmega.Asm.Opcodes.Arithmetics;
+using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Logic;
 
 namespace Atmega.Asm.Opcodes {
@@ -35,13 +36,15 @@ namespace Atmega.Asm.Opcodes {
                 case "clr": return new ClrOpcode();
                 case "ser": return new SerOpcode();
                 case "tst": return new TstOpcode();
+                
+                case "clc": return new ClcOpcode();
+                case "sec": return new SecOpcode();
 
                 default: return null;
             }
         }
 
         /*
-             1001010010001000   clc
              1001010011011000   clh
              1001010011111000   cli
              1001010010101000   cln
@@ -49,7 +52,6 @@ namespace Atmega.Asm.Opcodes {
              1001010011101000   clt
              1001010010111000   clv
              1001010010011000   clz
-             1001010000001000   sec
              1001010001011000   seh
              1001010001111000   sei
              1001010000101000   sen

@@ -21,7 +21,12 @@ namespace Atmega.Asm.Tests {
             var content = LoadEmbeded("logic.asm");
             var compiled = new Assembler().Assemble(content);
         }
-
+        
+        [Test]
+        public void BitTest() {
+            var content = LoadEmbeded("bit.asm");
+            var compiled = new Assembler().Assemble(content);
+        }
         private string LoadEmbeded(string name) {
             var type = GetType();
             var ns = type.Namespace;
