@@ -6,7 +6,7 @@
         public TokenType Type { get; set; }
 
         public string StringValue { get; set; }
-
+        public long IntegerValue { get; set; }
     }
 
     public enum TokenType {

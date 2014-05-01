@@ -125,6 +125,28 @@ namespace Atmega.Asm.Tokens {
                                 StringValue = ch.ToString(),
                                 Position = new TokenPosition { File = fileName, Line = lineNumber }
                             });
+                        } else if (char.IsDigit(ch)) {
+                            pos--;
+                            var literal = ReadLiteral(ref content, ref pos).ToLower();
+                            if (literal.StartsWith("0x")) {
+                                res.Add(new Token {
+                                    Type = TokenType.Integer,
+                                    IntegerValue = ParsePrefixedHexInteger(literal),
+                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                });
+                            } else if (literal.EndsWith("h")) {
+                                res.Add(new Token {
+                                    Type = TokenType.Integer,
+                                    IntegerValue = ParsePostfixedHexInteger(literal),
+                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                });
+                            } else {
+                                res.Add(new Token {
+                                    Type = TokenType.Integer,
+                                    IntegerValue = ReadInteger(literal),
+                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                });
+                            }
                         } else {
                             pos--;
                             res.Add(new Token {
@@ -139,9 +161,59 @@ namespace Atmega.Asm.Tokens {
             return res;
         }
 
-        public bool IsPunctuation(char ch) {
+        private long ReadInteger(string literal) {
+            long val = 0;
+            var pos = 0;
+            while (pos < literal.Length) {
+                var ch = literal[pos++];
+                if (char.IsDigit(ch)) {
+                    val = val * 10 + (ch - '0');
+                } else {
+                    throw new Exception("Unexpected symbol");
+                }
+            }
+            return val;
+        }
+
+        private long ParsePrefixedHexInteger(string literal) {
+            long val = 0;
+            var pos = 2;
+            if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
+            while (pos < literal.Length) {
+                var ch = literal[pos++];
+                var hex = GetHexValue(ch);
+                if (hex < 0) throw new Exception("Unexpected symbol");
+                val = val * 16 + hex;
+            }
+            return val;
+        }
+
+        private long ParsePostfixedHexInteger(string literal) {
+            long val = 0;
+            var pos = 0;
+            if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
+            while (pos < literal.Length - 1) {
+                var ch = literal[pos++];
+                var hex = GetHexValue(ch);
+                if (hex < 0) throw new Exception("Unexpected symbol");
+                val = val * 16 + hex;
+            }
+            return val;
+        }
+
+        private int GetHexValue(char ch) {
+            if (ch >= '0' && ch <= '9') return ch - '0';
+            if (ch >= 'A' && ch <= 'F') return ch - 'A' + 10;
+            if (ch >= 'a' && ch <= 'f') return ch - 'a' + 10;
+            return -1;
+        }
+
+        private bool IsPunctuation(char ch) {
             switch (ch) {
                 case ' ':
+                case '\t':
+                case '\r':
+                case '\n':
                 case '+':
                 case '-':
                 case '/':
@@ -157,13 +229,16 @@ namespace Atmega.Asm.Tokens {
                 case '}':
                 case ':':
                 case ',':
+                case '|':
+                case '&':
+                case '~':
                     return true;
                 default:
                     return false;
             }
         }
 
-        private static char[] SymbolCharacters = { '\t', (char)0x0A, (char)0x0D, (char)0x1A, '|', '&', '~', '#', '`', ';', '\\' };
+        private static char[] SymbolCharacters = { '#', '`', ';', '\\' };
 
     }
 }
