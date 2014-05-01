@@ -31,6 +31,10 @@ namespace Atmega.Asm.Opcodes {
                 case "eor": return new EorOpcode();
                 case "cbr": return new CbrOpcode();
                 case "sbr": return new SbrOpcode();
+                
+                case "clr": return new ClrOpcode();
+                case "ser": return new SerOpcode();
+                case "tst": return new TstOpcode();
 
                 default: return null;
             }
@@ -72,12 +76,9 @@ namespace Atmega.Asm.Opcodes {
              000100rdddddrrrr   cpse    r,r
              001011rdddddrrrr   mov     r,r
              100111rdddddrrrr   mul     r,r
-             001001rdddddrrrr   clr     r
              000011rdddddrrrr   lsl     r
              000111rdddddrrrr   rol     r
-             001000rdddddrrrr   tst     r
              1110KKKKddddKKKK   ldi     d,M
-             11101111dddd1111   ser     d
              1111110rrrrr0sss   sbrc    r,s
              1111111rrrrr0sss   sbrs    r,s
              1111100ddddd0sss   bld     r,s

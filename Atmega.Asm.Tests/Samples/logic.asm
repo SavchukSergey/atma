@@ -7,6 +7,6 @@ ori r16,0	;Логическое "ИЛИ" с константой	Rn <- Rn | K	Z,
 eor r0,r1	;"Исключающее ИЛИ"	Rn <- Rn ^ Rk	Z, N, V, S	1
 CBR r22,112	;Очистка битов	Rn <- Rn & (0FFh-K)	Z, N, V, S	1
 SBR R22,115	;Установка битов	Rn <- Rn | K	Z, N, V, S	1
-CLR Rn	;Очистка регистра	Rn <- Rn ^ Rn	Z, N, V, S	1
-SER Rn	;Установка регистра	Rn <- 0FFh	-	1
-TST Rn	;Проверка на 0 и минус	Rn <- Rn & Rn	Z, N, V, S	1
+CLR R12	;Очистка регистра	Rn <- Rn ^ Rn	Z, N, V, S	1
+SER R12	;Установка регистра	Rn <- 0FFh	-	1
+TST R12	;Проверка на 0 и минус	Rn <- Rn & Rn	Z, N, V, S	1

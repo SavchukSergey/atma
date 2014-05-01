@@ -59,8 +59,12 @@
     <Compile Include="Opcodes\AvrOpcodes.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
+    <Compile Include="Opcodes\BaseReg32SelfOpcode.cs" />
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
+    <Compile Include="Opcodes\Logic\TstOpcode.cs" />
+    <Compile Include="Opcodes\Logic\SerOpcode.cs" />
+    <Compile Include="Opcodes\Logic\ClrOpcode.cs" />
     <Compile Include="Opcodes\Logic\SbrOpcode.cs" />
     <Compile Include="Opcodes\Logic\CbrOpcode.cs" />
     <Compile Include="Opcodes\Logic\OriOpcode.cs" />
