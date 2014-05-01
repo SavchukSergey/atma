@@ -27,6 +27,13 @@ namespace Atmega.Asm.Tests {
             var content = LoadEmbeded("bit.asm");
             var compiled = new Assembler().Assemble(content);
         }
+
+        [Test]
+        public void MoveTest() {
+            var content = LoadEmbeded("move.asm");
+            var compiled = new Assembler().Assemble(content);
+        }
+
         private string LoadEmbeded(string name) {
             var type = GetType();
             var ns = type.Namespace;
