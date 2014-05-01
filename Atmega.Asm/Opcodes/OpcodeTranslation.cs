@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 
 namespace Atmega.Asm.Opcodes {
     public struct OpcodeTranslation {
@@ -53,9 +54,6 @@ namespace Atmega.Asm.Opcodes {
             get { return (byte)((Opcode << 1) & 0x1e); }
         }
 
-        public byte BitNumber {
-            get { return (byte)(Opcode & 0x7); }
-        }
 
         public byte Port64 {
             get { return (byte)(((Opcode & 0x0600) >> 5) | (Opcode & 0x0f)); }
@@ -118,6 +116,25 @@ namespace Atmega.Asm.Opcodes {
                 Opcode &= 0xf0f0;
                 Opcode |= (ushort)(value & 0x0f);
                 Opcode |= (ushort)((value << 4) & 0x0f00);
+            }
+        }
+
+        public byte Port32 {
+            get {
+                return (byte)((Opcode >> 3) & 0x1f);
+            }
+            set {
+                Opcode &= 0xff07;
+                Opcode |= (ushort)((value & 0x1f) << 3);
+            }
+        }
+
+
+        public byte BitNumber {
+            get { return (byte)(Opcode & 0x7); }
+            set {
+                Opcode &= 0xfff8;
+                Opcode |= (ushort)(value & 0x07);
             }
         }
     }

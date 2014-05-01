@@ -67,6 +67,22 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
+        public byte ReadPort32() {
+            var val = CalculateExpression();
+            if (val < 0 || val > 32) {
+                throw new Exception("Expected port address 0-31");
+            }
+            return (byte)val;
+        }
+
+        public byte ReadBit() {
+            var val = CalculateExpression();
+            if (val < 0 || val > 7) {
+                throw new Exception("Expected bit number 0-7");
+            }
+            return (byte)val;
+        }
+
         private long CalculateExpression() {
             //TODO: eof and eol check
             var token = Queue.Read(TokenType.Integer);

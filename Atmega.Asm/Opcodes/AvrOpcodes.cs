@@ -53,6 +53,11 @@ namespace Atmega.Asm.Opcodes {
                 case "set": return new SetOpcode();
                 case "clh": return new ClhOpcode();
                 case "seh": return new SehOpcode();
+                
+                case "cbi": return new CbiOpcode();
+                case "sbi": return new SbiOpcode();
+                case "bst": return new BstOpcode();
+                case "bld": return new BldOpcode();
 
                 default: return null;
             }
@@ -83,14 +88,10 @@ namespace Atmega.Asm.Opcodes {
              1110KKKKddddKKKK   ldi     d,M
              1111110rrrrr0sss   sbrc    r,s
              1111111rrrrr0sss   sbrs    r,s
-             1111100ddddd0sss   bld     r,s
-             1111101ddddd0sss   bst     r,s
              10110PPdddddPPPP   in      r,P
              10111PPrrrrrPPPP   out     P,r
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
-             10011000pppppsss   cbi     p,s
-             10011010pppppsss   sbi     p,s
              10011001pppppsss   sbic    p,s
              10011011pppppsss   sbis    p,s
              111101lllllll000   brcc    l
