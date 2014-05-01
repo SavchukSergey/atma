@@ -61,6 +61,13 @@
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
+    <Compile Include="Opcodes\Logic\SbrOpcode.cs" />
+    <Compile Include="Opcodes\Logic\CbrOpcode.cs" />
+    <Compile Include="Opcodes\Logic\OriOpcode.cs" />
+    <Compile Include="Opcodes\Logic\EorOpcode.cs" />
+    <Compile Include="Opcodes\Logic\OrOpcode.cs" />
+    <Compile Include="Opcodes\Logic\AndOpcode.cs" />
+    <Compile Include="Opcodes\Logic\AndiOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
