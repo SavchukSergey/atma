@@ -10,10 +10,18 @@ namespace Atmega.Asm.Tokens {
             _queue = new Queue<Token>(tokens);
         }
 
+        public Token Read() {
+            return _queue.Dequeue();
+        }
+
         public Token Read(TokenType type) {
             var token = _queue.Dequeue();
-            if (token.Type != type) throw new Exception("Unexpected token ");
+            if (token.Type != type) throw new TokenException("Unexpected token", token);
             return token;
+        }
+
+        public Token Peek() {
+            return _queue.Peek();
         }
 
         public int Count {

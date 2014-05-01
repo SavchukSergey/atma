@@ -97,6 +97,10 @@ namespace Atmega.Asm.Tokens {
                     case ';':
                         SkipLine(ref content, ref pos);
                         lineNumber++;
+                        res.Add(new Token {
+                            Type = TokenType.NewLine,
+                            Position = new TokenPosition { File = fileName, Line = lineNumber }
+                        });
                         break;
                     case '"':
                     case '\'':
@@ -121,7 +125,7 @@ namespace Atmega.Asm.Tokens {
                     default:
                         if (IsPunctuation(ch)) {
                             res.Add(new Token {
-                                Type = TokenType.Punctuation,
+                                Type = GetPunctuationTokenType(ch),
                                 StringValue = ch.ToString(),
                                 Position = new TokenPosition { File = fileName, Line = lineNumber }
                             });
@@ -232,13 +236,50 @@ namespace Atmega.Asm.Tokens {
                 case '|':
                 case '&':
                 case '~':
+                case '#':
+                case '`':
+                case ';':
+                case '\\':
                     return true;
                 default:
                     return false;
             }
         }
 
-        private static char[] SymbolCharacters = { '#', '`', ';', '\\' };
+        private TokenType GetPunctuationTokenType(char ch) {
+            switch (ch) {
+                case ',':
+                    return TokenType.Comma;
+                case ' ':
+                case '\t':
+                case '\r':
+                case '\n':
+                case '+':
+                case '-':
+                case '/':
+                case '*':
+                case '=':
+                case '<':
+                case '>':
+                case '(':
+                case ')':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                case ':':
+                case '|':
+                case '&':
+                case '~':
+                case '#':
+                case '`':
+                case ';':
+                case '\\':
+                    return TokenType.Punctuation;
+                default:
+                    return TokenType.None;
+            }
+        }
 
     }
 }

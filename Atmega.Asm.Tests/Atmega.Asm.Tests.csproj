@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Samples\arithmetics.asm" />
     <Compile Include="Tokens\TokenizerTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -41,8 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsmContext.cs" />
+    <Compile Include="AsmResult.cs" />
+    <Compile Include="Assembler.cs" />
+    <Compile Include="Opcodes\Arithmetics\SbciOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\SubiOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\AdcOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\AddOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\SbcOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
+    <Compile Include="Opcodes\AvrOpcodes.cs" />
+    <Compile Include="Opcodes\BaseOpcode.cs" />
+    <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
+    <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
+    <Compile Include="Opcodes\OpcodeTranslation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenException.cs" />
     <Compile Include="Tokens\Token.cs" />
     <Compile Include="Tokens\Tokenizer.cs" />
     <Compile Include="Tokens\TokenPosition.cs" />

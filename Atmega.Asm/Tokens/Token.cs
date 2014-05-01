@@ -10,10 +10,12 @@
     }
 
     public enum TokenType {
+        None,
         String,
         Integer,
         Literal,
         Punctuation,
-        NewLine
+        NewLine,
+        Comma
     }
 }
