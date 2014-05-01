@@ -47,18 +47,18 @@ namespace Atmega.Asm.Opcodes {
                 case "sei": return new SeiOpcode();
                 case "cls": return new ClsOpcode();
                 case "ses": return new SesOpcode();
+                case "clv": return new ClvOpcode();
+                case "sev": return new SevOpcode();
+                case "clt": return new CltOpcode();
+                case "set": return new SetOpcode();
+                case "clh": return new ClhOpcode();
+                case "seh": return new SehOpcode();
 
                 default: return null;
             }
         }
 
         /*
-             1001010011011000   clh
-             1001010011101000   clt
-             1001010010111000   clv
-             1001010001011000   seh
-             1001010001101000   set
-             1001010000111000   sev
              100101001SSS1000   bclr    S
              100101000SSS1000   bset    S
              1001010100001001   icall
