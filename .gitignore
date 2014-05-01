@@ -1,0 +1,9 @@
+/Atmega.Asm/bin/
+/Atmega.Asm/obj/
+
+/Atmega.Asm.Tests/bin/
+/Atmega.Asm.Tests/obj/
+
+/packages/*/
+/Atmega.v12.suo
+/Atmega.sln.DotSettings.user
