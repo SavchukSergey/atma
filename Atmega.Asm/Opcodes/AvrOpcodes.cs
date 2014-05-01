@@ -39,6 +39,14 @@ namespace Atmega.Asm.Opcodes {
                 
                 case "clc": return new ClcOpcode();
                 case "sec": return new SecOpcode();
+                case "cln": return new ClnOpcode();
+                case "sen": return new SenOpcode();
+                case "clz": return new ClzOpcode();
+                case "sez": return new SezOpcode();
+                case "cli": return new CliOpcode();
+                case "sei": return new SeiOpcode();
+                case "cls": return new ClsOpcode();
+                case "ses": return new SesOpcode();
 
                 default: return null;
             }
@@ -46,19 +54,11 @@ namespace Atmega.Asm.Opcodes {
 
         /*
              1001010011011000   clh
-             1001010011111000   cli
-             1001010010101000   cln
-             1001010011001000   cls
              1001010011101000   clt
              1001010010111000   clv
-             1001010010011000   clz
              1001010001011000   seh
-             1001010001111000   sei
-             1001010000101000   sen
-             1001010001001000   ses
              1001010001101000   set
              1001010000111000   sev
-             1001010000011000   sez
              100101001SSS1000   bclr    S
              100101000SSS1000   bset    S
              1001010100001001   icall
