@@ -9,10 +9,20 @@ namespace Atmega.Asm.Opcodes {
                 case "add": return new AddOpcode();
                 case "sub": return new SubOpcode();
                 case "sbc": return new SbcOpcode();
-                
+
+                case "inc": return new IncOpcode();
+                case "dec": return new DecOpcode();
+
+                case "com": return new ComOpcode();
+                case "neg": return new NegOpcode();
+
                 case "subi": return new SubiOpcode();
                 case "sbci": return new SbciOpcode();
-                
+
+                case "cp": return new CpOpcode();
+                case "cpi": return new CpiOpcode();
+                case "cpc": return new CpcOpcode();
+
                 default: return null;
             }
         }
@@ -51,8 +61,6 @@ namespace Atmega.Asm.Opcodes {
              1001010111101000   spm
 
              001000rdddddrrrr   and     r,r
-             000101rdddddrrrr   cp      r,r
-             000001rdddddrrrr   cpc     r,r
              000100rdddddrrrr   cpse    r,r
              001001rdddddrrrr   eor     r,r
              001011rdddddrrrr   mov     r,r
@@ -68,7 +76,6 @@ namespace Atmega.Asm.Opcodes {
              11101111dddd1111   ser     d
              0110KKKKddddKKKK   ori     d,M
              0110KKKKddddKKKK   sbr     d,M
-             0011KKKKddddKKKK   cpi     d,M
              1111110rrrrr0sss   sbrc    r,s
              1111111rrrrr0sss   sbrs    r,s
              1111100ddddd0sss   bld     r,s
@@ -106,11 +113,7 @@ namespace Atmega.Asm.Opcodes {
              1001010hhhhh111h   call    h
              1001010hhhhh110h   jmp     h
              1001010rrrrr0101   asr     r
-             1001010rrrrr0000   com     r
-             1001010rrrrr1010   dec     r
-             1001010rrrrr0011   inc     r
              1001010rrrrr0110   lsr     r
-             1001010rrrrr0001   neg     r
              1001000rrrrr1111   pop     r
              1001001rrrrr1111   push    r
              1001010rrrrr0111   ror     r

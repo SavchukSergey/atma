@@ -5,19 +5,41 @@ using Atmega.Asm.Tokens;
 namespace Atmega.Asm {
     public class AsmContext {
 
-        private readonly IList<ushort> _code = new List<ushort>();
+        private readonly IList<byte> _code = new List<byte>();
 
         public TokensQueue Queue { get; set; }
 
         public int CodeOffset { get; set; }
 
-        public IList<ushort> Code {
+        public IList<byte> Code {
             get { return _code; }
         }
 
         public void EmitCode(ushort opcode) {
-            _code.Add(opcode);
+            AlignCode(2);
+            _code.Add((byte)(opcode & 0xff));
+            _code.Add((byte)((opcode >> 8) & 0xff));
             CodeOffset += 2;
+        }
+
+        public void ReserveByte() {
+            //TODO: alignment should take any space if put at the end of section. put uninitialized pointer
+            Code.Add(0);
+            CodeOffset++;
+        }
+
+        public void AlignCode(byte alignment) {
+            switch (alignment) {
+                case 2:
+                    var mask = ~(alignment - 1);
+                    var targetOffset = (CodeOffset + 1) & mask;
+                    while (CodeOffset < targetOffset) {
+                        ReserveByte();
+                    }
+                    break;
+                default:
+                    throw new Exception("Invalid alignment");
+            }
         }
 
         public byte ReadReg32() {

@@ -42,8 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsmContext.cs" />
-    <Compile Include="AsmResult.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="Opcodes\Arithmetics\CpcOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\CpOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\DecOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\IncOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\NegOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\ComOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\CpiOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SbciOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubiOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\AdcOpcode.cs" />
@@ -53,6 +59,7 @@
     <Compile Include="Opcodes\AvrOpcodes.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
+    <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
     <Compile Include="Program.cs" />
