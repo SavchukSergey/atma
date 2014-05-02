@@ -12,6 +12,8 @@ namespace Atmega.Asm {
 
         public TokensQueue Queue { get; set; }
 
+        public AsmSymbols Symbols { get; set; }
+
         public int CodeOffset { get; set; }
 
         public int Offset {
@@ -184,15 +186,23 @@ namespace Atmega.Asm {
             }
         }
 
-        private readonly IDictionary<string, ushort> _labels = new Dictionary<string, ushort>();
+        private readonly IDictionary<string, ushort> _passLabels = new Dictionary<string, ushort>();
+
+        public bool LabelDefined(string name) {
+            return _passLabels.ContainsKey(name);
+        }
 
         public void DefineLabel(string name) {
-            _labels[name] = (ushort)Offset;
+            _passLabels[name] = (ushort)Offset;
+            Symbols.Labels[name] = (ushort)Offset;
         }
 
         public ushort? GetLabel(string name) {
             ushort val;
-            if (_labels.TryGetValue(name, out val)) {
+            if (_passLabels.TryGetValue(name, out val)) {
+                return val;
+            }
+            if (Symbols.Labels.TryGetValue(name, out val)) {
                 return val;
             }
             if (Pass <= 1) return 0;

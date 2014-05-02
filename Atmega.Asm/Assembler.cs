@@ -14,15 +14,18 @@ namespace Atmega.Asm {
         }
 
         public AsmContext Assemble(string content, string fileName = null) {
+            var symbols = new AsmSymbols();
             IList<Token> tokens = new List<Token>();
             LoadRecursive(content, tokens, fileName);
 
-            tokens = ProcessSymbolConstants(tokens);
+            tokens = ProcessSymbolConstants(tokens, symbols);
 
             AsmContext last = null;
-            for (var i = 0; i < 10; i++) {
+            for (var i = 1; i < 10; i++) {
                 var context = new AsmContext {
-                    Queue = new TokensQueue(tokens)
+                    Queue = new TokensQueue(tokens),
+                    Symbols = symbols,
+                    Pass = i
                 };
                 AssemblePass(context);
                 if (TheSame(last, context)) break;
@@ -31,10 +34,8 @@ namespace Atmega.Asm {
             return last;
         }
 
-        protected IList<Token> ProcessSymbolConstants(IList<Token> tokens) {
+        protected IList<Token> ProcessSymbolConstants(IList<Token> tokens, AsmSymbols symbols) {
             var result = new List<Token>();
-
-            IDictionary<string, IList<Token>> map = new Dictionary<string, IList<Token>>();
 
             for (var i = 0; i < tokens.Count; ) {
                 var nameToken = tokens[i++];
@@ -43,15 +44,15 @@ namespace Atmega.Asm {
                     if (equToken.Type == TokenType.Literal && equToken.StringValue.ToLower() == "equ") {
                         i++;
                         var meaning = new List<Token>();
-                        CopyLine(tokens, meaning, map, ref i);
-                        map[nameToken.StringValue] = meaning;
+                        CopyLine(tokens, meaning, symbols, ref i);
+                        symbols.SymbolicConstants[nameToken.StringValue] = meaning;
                     } else {
                         i--;
-                        CopyLine(tokens, result, map, ref i);
+                        CopyLine(tokens, result, symbols, ref i);
                     }
                 } else {
                     i--;
-                    CopyLine(tokens, result, map, ref i);
+                    CopyLine(tokens, result, symbols, ref i);
                 }
             }
             return result;
@@ -98,7 +99,7 @@ namespace Atmega.Asm {
             }
         }
 
-        private void CopyLine(IList<Token> source, IList<Token> target, IDictionary<string, IList<Token>> symbolConstants, ref int pointer) {
+        private void CopyLine(IList<Token> source, IList<Token> target, AsmSymbols symbols, ref int pointer) {
             while (pointer < source.Count) {
                 var tkn = source[pointer++];
                 if (tkn.Type == TokenType.NewLine) {
@@ -106,7 +107,7 @@ namespace Atmega.Asm {
                     break;
                 }
                 IList<Token> replaced;
-                if (symbolConstants.TryGetValue(tkn.StringValue, out replaced)) {
+                if (symbols.SymbolicConstants.TryGetValue(tkn.StringValue, out replaced)) {
                     foreach (var repl in replaced) {
                         if (repl.Type != TokenType.NewLine) {
                             var item = repl;
