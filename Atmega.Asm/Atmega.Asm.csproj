@@ -101,6 +101,7 @@
     <Compile Include="Opcodes\Branch\EijmpOpcode.cs" />
     <Compile Include="Opcodes\Branch\IcallOpcode.cs" />
     <Compile Include="Opcodes\Branch\IjmpOpcode.cs" />
+    <Compile Include="Opcodes\Branch\CallOpcode.cs" />
     <Compile Include="Opcodes\Branch\JmpOpcode.cs" />
     <Compile Include="Opcodes\Branch\RetiOpcode.cs" />
     <Compile Include="Opcodes\Branch\RetOpcode.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Opcodes\Move\PopOpcode.cs" />
     <Compile Include="Opcodes\Move\PushOpcode.cs" />
     <Compile Include="Opcodes\Move\MovOpcode.cs" />
+    <Compile Include="Opcodes\WdrOpcode.cs" />
     <Compile Include="Opcodes\NopOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
     <Compile Include="Opcodes\BaseSimpleOpcode.cs" />

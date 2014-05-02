@@ -87,6 +87,7 @@ namespace Atmega.Asm.Opcodes {
                 case "ret": return new RetOpcode();
                 case "reti": return new RetiOpcode();
                 case "jmp": return new JmpOpcode();
+                case "call": return new CallOpcode();
                 
                 case "breq": return new BreqOpcode();
                 case "brne": return new BrneOpcode();
@@ -108,6 +109,7 @@ namespace Atmega.Asm.Opcodes {
                 case "brid": return new BridOpcode();
                 
                 case "nop": return new NopOpcode();
+                case "wdr": return new WdrOpcode();
 
                 default: return null;
             }
@@ -122,7 +124,6 @@ namespace Atmega.Asm.Opcodes {
              1001000ddddd011+   elpm    r,z
              1001010110001000   sleep
              1001010110011000   break
-             1001010110101000   wdr
 
              000100rdddddrrrr   cpse    r,r
              10010110KKddKKKK   adiw    w,K
@@ -133,7 +134,6 @@ namespace Atmega.Asm.Opcodes {
              111100lllllllsss   brbs    s,l
              1101LLLLLLLLLLLL   rcall   L
              1100LLLLLLLLLLLL   rjmp    L
-             1001010hhhhh111h   call    h
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a
