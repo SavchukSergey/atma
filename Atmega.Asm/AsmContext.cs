@@ -50,15 +50,34 @@ namespace Atmega.Asm {
             }
         }
 
+        public Token ReadRequiredToken() {
+            if (Queue.Count == 0) {
+                throw new Exception("Unexpected end of file");
+            }
+            var token = Queue.Read();
+            if (token.Type == TokenType.NewLine) {
+                throw new Exception("Unexpected end of line");
+            }
+            return token;
+        }
+
         public byte ReadReg32() {
-            var reg = ParseReg();
+            var token = ReadRequiredToken();
+            if (token.Type != TokenType.Literal) {
+                throw new TokenException("register expected", token);
+            }
+            var reg = ParseReg(token.StringValue);
             return reg;
         }
 
         public byte ReadReg16() {
-            var reg = ParseReg();
+            var token = ReadRequiredToken();
+            if (token.Type != TokenType.Literal) {
+                throw new TokenException("register expected", token);
+            }
+            var reg = ParseReg(token.StringValue);
             if (reg < 16) {
-                throw new Exception("Expected r16-r31");
+                throw new TokenException("Expected r16-r31", token);
             }
             return reg;
         }
@@ -105,10 +124,8 @@ namespace Atmega.Asm {
             return _calculator.Calculate(this);
         }
 
-        private byte ParseReg() {
-            //TODO: eof and eol check
-            var token = Queue.Read(TokenType.Literal);
-            switch (token.StringValue.ToLower()) {
+        private byte ParseReg(string val) {
+            switch (val.ToLower()) {
                 case "r0": return 0;
                 case "r1": return 1;
                 case "r2": return 2;
@@ -142,7 +159,7 @@ namespace Atmega.Asm {
                 case "r30": return 30;
                 case "r31": return 31;
                 default:
-                    throw new TokenException("Register expected", token);
+                    return 0xff;
             }
         }
 
