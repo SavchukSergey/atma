@@ -79,3 +79,5 @@ C equ 0
 EERE equ 0
 EEWE equ 1
 EEMWE equ 2
+
+;WDTCRWDCE equ 4WDE equ 3

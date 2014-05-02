@@ -57,6 +57,8 @@ namespace Atmega.Asm.Expressions {
                     case TokenType.Plus:
                     case TokenType.Multiply:
                     case TokenType.Mod:
+                    case TokenType.LeftShift:
+                    case TokenType.BitOr:
                         ProcessBinaryExpression(token, stack, tokens);
                         break;
                     case TokenType.Literal:
@@ -75,7 +77,7 @@ namespace Atmega.Asm.Expressions {
                         }
                         break;
                     default:
-                        throw new TokenException("unexpected token", token);
+                        throw new TokenException("unexpected token " + token.StringValue, token);
                 }
 
             } while (tokens.Count > 0);
@@ -106,6 +108,12 @@ namespace Atmega.Asm.Expressions {
                 case TokenType.Mod:
                     stack.Push(new ModExpression(left, other));
                     break;
+                case TokenType.LeftShift:
+                    stack.Push(new ShiftLeftExpression(left, other));
+                    break;
+                case TokenType.BitOr:
+                    stack.Push(new BitOrExpression(left, other));
+                    break;
                 default:
                     throw new TokenException("unexpected operator", opToken);
             }
@@ -122,6 +130,14 @@ namespace Atmega.Asm.Expressions {
                     return 1;
                 case TokenType.Mod:
                     return 2;
+
+                case TokenType.BitOr:
+                    return 3;
+
+                case TokenType.LeftShift:
+                case TokenType.RightShift:
+                    return 4;
+
                 default:
                     return -1;
             }

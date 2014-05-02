@@ -84,6 +84,28 @@ namespace Atmega.Asm.Tokens {
                 if (pos >= content.Length) break;
 
                 var ch = content[pos++];
+                var preview = (char)(0xffff);
+                if (pos < content.Length) {
+                    preview = content[pos];
+                }
+                if (ch == '>' && preview == '>') {
+                    res.Add(new Token {
+                        Type = TokenType.RightShift,
+                        StringValue = ">",
+                        Position = new TokenPosition { File = fileName, Line = lineNumber }
+                    });
+                    pos++;
+                    continue;
+                }
+                if (ch == '<' && preview == '<') {
+                    res.Add(new Token {
+                        Type = TokenType.LeftShift,
+                        StringValue = "<",
+                        Position = new TokenPosition { File = fileName, Line = lineNumber }
+                    });
+                    pos++;
+                    continue;
+                }
                 switch (ch) {
                     case '\r':
                     case '\n':
@@ -252,20 +274,16 @@ namespace Atmega.Asm.Tokens {
 
         private TokenType GetPunctuationTokenType(char ch) {
             switch (ch) {
-                case ',':
-                    return TokenType.Comma;
-                case ':':
-                    return TokenType.Colon;
-                case '(':
-                    return TokenType.OpenParenthesis;
-                case ')':
-                    return TokenType.CloseParenthesis;
-                case '+':
-                    return TokenType.Plus;
-                case '*':
-                    return TokenType.Multiply;
-                case '%':
-                    return TokenType.Mod;
+                case ',': return TokenType.Comma;
+                case ':': return TokenType.Colon;
+                case '(': return TokenType.OpenParenthesis;
+                case ')': return TokenType.CloseParenthesis;
+                case '+': return TokenType.Plus;
+                case '*': return TokenType.Multiply;
+                case '%': return TokenType.Mod;
+                case '<': return TokenType.Less;
+                case '>': return TokenType.Greater;
+                case '|': return TokenType.BitOr;
                 case ' ':
                 case '\t':
                 case '\r':
@@ -273,13 +291,10 @@ namespace Atmega.Asm.Tokens {
                 case '-':
                 case '/':
                 case '=':
-                case '<':
-                case '>':
                 case '[':
                 case ']':
                 case '{':
                 case '}':
-                case '|':
                 case '&':
                 case '~':
                 case '#':

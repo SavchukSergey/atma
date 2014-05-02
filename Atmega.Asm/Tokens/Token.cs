@@ -78,6 +78,11 @@
         Minus,
         Multiply,
         Divide,
-        Mod
+        Mod,
+        LeftShift,
+        RightShift,
+        BitOr,
+        Less,
+        Greater
     }
 }
