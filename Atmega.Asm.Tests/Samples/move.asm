@@ -20,8 +20,8 @@ SPM	;Загрузить в память программ	(Z) <- R1:R0	-	3
 ;ST Ri+, Rn	;(Ri) <- Rn, Ri <- Ri + 1	-	2
 ;ST -Ri, Rn	;Ri <- Ri - 1, (Ri) <- Rn	-	2
 ;STD Ri + q, Rn;	(Ri + q) <- Rn	-	2
-;IN Rn,I	;Прочитать I/O-регистр I в Rn	Rn <- I	-	1
-;OUT I,Rn	;Записать Rn в I/O-регистр I	I <- Rk	-	1
+IN r12,60	;Прочитать I/O-регистр I в Rn	Rn <- I	-	1
+OUT 0x3e,r11	;Записать Rn в I/O-регистр I	I <- Rk	-	1
 push	r12	;Сохранить Rn в стеке	STACK <- Rn	-	2
 pop	r13	;Восстановить Rn из стека	Rn <- STACK	-	2
 SWAP R22	;Обмен тетрад в регистре	Rn(0...3) <- Rn(4...7), Rn(4...7) <- Rn(0...3)	-	1

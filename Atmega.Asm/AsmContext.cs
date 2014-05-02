@@ -75,6 +75,14 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
+        public byte ReadPort64() {
+            var val = CalculateExpression();
+            if (val < 0 || val > 64) {
+                throw new Exception("Expected port address 0-63");
+            }
+            return (byte)val;
+        }
+
         public byte ReadBit() {
             var val = CalculateExpression();
             if (val < 0 || val > 7) {

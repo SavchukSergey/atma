@@ -60,6 +60,8 @@
     <Compile Include="Opcodes\AvrOpcodes.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
+    <Compile Include="Opcodes\BasePort64Reg32Opcode.cs" />
+    <Compile Include="Opcodes\BaseReg32Port64Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32SelfOpcode.cs" />
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
@@ -108,6 +110,8 @@
     <Compile Include="Opcodes\Logic\OrOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndiOpcode.cs" />
+    <Compile Include="Opcodes\Move\OutOpcode.cs" />
+    <Compile Include="Opcodes\Move\InOpcode.cs" />
     <Compile Include="Opcodes\Move\SpmOpcode.cs" />
     <Compile Include="Opcodes\Move\LdiOpcode.cs" />
     <Compile Include="Opcodes\Move\SwapOpcode.cs" />

@@ -74,6 +74,8 @@ namespace Atmega.Asm.Opcodes {
                 case "push": return new PushOpcode();
                 case "pop": return new PopOpcode();
                 case "spm": return new SpmOpcode();
+                case "in": return new InOpcode();
+                case "out": return new OutOpcode();
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
@@ -101,8 +103,6 @@ namespace Atmega.Asm.Opcodes {
              1001010110101000   wdr
 
              000100rdddddrrrr   cpse    r,r
-             10110PPdddddPPPP   in      r,P
-             10111PPrrrrrPPPP   out     P,r
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
              10011001pppppsss   sbic    p,s

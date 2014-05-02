@@ -55,15 +55,7 @@ namespace Atmega.Asm.Opcodes {
         }
 
 
-        public byte Port64 {
-            get { return (byte)(((Opcode & 0x0600) >> 5) | (Opcode & 0x0f)); }
-        }
-
-        public byte Port32 {
-            get { return (byte)((Opcode >> 3) & 0x1f); }
-        }
-
-        public sbyte Offset7 {
+              public sbyte Offset7 {
             get {
                 var offset = (Opcode >> 3) & 0x7f;
                 if (offset >= 0x40) offset = -(((offset ^ 0x7f) + 1) & 0x7f);
@@ -129,6 +121,14 @@ namespace Atmega.Asm.Opcodes {
             }
         }
 
+        public byte Port64 {
+            get { return (byte)(((Opcode & 0x0600) >> 5) | (Opcode & 0x0f)); }
+            set {
+                Opcode &= 0xf9f0;
+                Opcode |= (ushort)(value & 0x0f);
+                Opcode |= (ushort)((value << 5) & 0x0600);
+            }
+        }
 
         public byte BitNumber {
             get { return (byte)(Opcode & 0x7); }
