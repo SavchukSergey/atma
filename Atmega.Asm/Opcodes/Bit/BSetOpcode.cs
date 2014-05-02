@@ -1,6 +1,6 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit {
-    public class BSetOpcode : BaseStatusBitOpcode {
-        public BSetOpcode()
+    public class BsetOpcode : BaseStatusBitOpcode {
+        public BsetOpcode()
             : base("100101000SSS1000") {
         }
     }

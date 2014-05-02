@@ -58,7 +58,7 @@ namespace Atmega.Asm.Opcodes {
                 case "clh": return new ClhOpcode();
                 case "seh": return new SehOpcode();
                 case "bclr": return new BclrOpcode();
-                case "bset": return new BSetOpcode();
+                case "bset": return new BsetOpcode();
                 
                 case "cbi": return new CbiOpcode();
                 case "sbi": return new SbiOpcode();
@@ -73,6 +73,8 @@ namespace Atmega.Asm.Opcodes {
                 
                 case "mov": return new MovOpcode();
                 case "ldi": return new LdiOpcode();
+                case "lds": return new LdsOpcode();
+                case "sts": return new StsOpcode();
                 case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
                 case "pop": return new PopOpcode();
@@ -141,8 +143,6 @@ namespace Atmega.Asm.Opcodes {
              000000110ddd1rrr   fmul    a,a
              000000111ddd0rrr   fmuls   a,a
              000000111ddd1rrr   fmulsu  a,a
-             1001001ddddd0000   sts     i,r
-             1001000ddddd0000   lds     r,i
              10o0oo0dddddbooo   ldd     r,b
              100!000dddddee-+   ld      r,e
              10o0oo1rrrrrbooo   std     b,r

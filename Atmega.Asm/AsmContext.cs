@@ -61,6 +61,17 @@ namespace Atmega.Asm {
             return token;
         }
 
+        public Token PeekRequiredToken() {
+            if (Queue.Count == 0) {
+                throw new Exception("Unexpected end of file");
+            }
+            var token = Queue.Peek();
+            if (token.Type == TokenType.NewLine) {
+                throw new Exception("Unexpected end of line");
+            }
+            return token;
+        }
+
         public byte ReadReg32() {
             var token = ReadRequiredToken();
             if (token.Type != TokenType.Literal) {
@@ -95,19 +106,29 @@ namespace Atmega.Asm {
         }
 
         public byte ReadPort32() {
+            var token = PeekRequiredToken();
             var val = CalculateExpression();
             if (val < 0 || val > 32) {
-                throw new Exception("Expected port address 0-31");
+                throw new TokenException("expected port address 0-31", token);
             }
             return (byte)val;
         }
 
         public byte ReadPort64() {
+            var token = PeekRequiredToken();
             var val = CalculateExpression();
             if (val < 0 || val > 64) {
-                throw new Exception("Expected port address 0-63");
+                throw new TokenException("expected port address 0-63", token);
             }
             return (byte)val;
+        }
+
+        public ushort ReadUshort() {
+            var val = CalculateExpression();
+            if (val < 0 || val > 0x10000) {
+                throw new Exception("addres is beyound 64k boundary");
+            }
+            return (ushort)val;
         }
 
         public byte ReadBit() {

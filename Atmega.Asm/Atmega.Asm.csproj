@@ -66,6 +66,8 @@
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
     <Compile Include="Opcodes\BasePort64Reg32Opcode.cs" />
+    <Compile Include="Opcodes\BaseImm16Reg32Opcode.cs" />
+    <Compile Include="Opcodes\BaseReg32Imm16Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Port64Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32SelfOpcode.cs" />
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="Opcodes\BaseReg32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BaseStatusBitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BasePort32BitOpcode.cs" />
-    <Compile Include="Opcodes\Bit\BSetOpcode.cs" />
+    <Compile Include="Opcodes\Bit\BsetOpcode.cs" />
     <Compile Include="Opcodes\Bit\BclrOpcode.cs" />
     <Compile Include="Opcodes\Bit\BldOpcode.cs" />
     <Compile Include="Opcodes\Bit\BstOpcode.cs" />
@@ -139,6 +141,8 @@
     <Compile Include="Opcodes\Logic\OrOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndiOpcode.cs" />
+    <Compile Include="Opcodes\Move\StsOpcode.cs" />
+    <Compile Include="Opcodes\Move\LdsOpcode.cs" />
     <Compile Include="Opcodes\Move\OutOpcode.cs" />
     <Compile Include="Opcodes\Move\InOpcode.cs" />
     <Compile Include="Opcodes\Move\SpmOpcode.cs" />
