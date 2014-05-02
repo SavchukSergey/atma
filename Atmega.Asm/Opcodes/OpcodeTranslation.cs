@@ -49,14 +49,6 @@
             get { return (byte)((Opcode << 1) & 0x1e); }
         }
 
-
-        public short Offset12 {
-            get {
-                var offset = Opcode & 0xfff;
-                if (offset >= 0x800) offset = -(((offset ^ 0xfff) + 1) & 0xfff);
-                return (short)offset;
-            }
-        }
         */
 
         public byte Destination32 {
@@ -145,6 +137,23 @@
                     value = (sbyte)(256 + value);
                 }
                 Opcode |= (ushort)((value << 3) & 0x03f8);
+            }
+        }
+
+        public short Offset12 {
+            get {
+                var offset = (short)(Opcode & 0x0fff);
+                if (offset >= 0x800) {
+                    return (short)(offset - 4096);
+                }
+                return offset;
+            }
+            set {
+                Opcode &= 0xf000;
+                if (value < 0) {
+                    value = (short)(4096 + value);
+                }
+                Opcode |= (ushort)(value & 0xfff);
             }
         }
 

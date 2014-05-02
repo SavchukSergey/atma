@@ -80,6 +80,16 @@ namespace Atmega.Asm.Tests.Tokens {
         }
 
         [Test]
+        public void Offset12Test() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.Offset12);
+            translation.Offset12 = 620;
+            Assert.AreEqual(620, translation.Offset12);
+            translation.Offset12 = -620;
+            Assert.AreEqual(-620, translation.Offset12);
+        }
+
+        [Test]
         public void Offset22HighTest() {
             var translation = new OpcodeTranslation();
             Assert.AreEqual(0, translation.Offset22High);

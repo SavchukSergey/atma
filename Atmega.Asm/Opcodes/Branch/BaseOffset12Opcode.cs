@@ -1,8 +1,8 @@
 ﻿using Atmega.Asm.Tokens;
 
-namespace Atmega.Asm.Opcodes {
-    public abstract class BaseOffset7Opcode : BaseOpcode {
-        protected BaseOffset7Opcode(string opcodeTemplate)
+namespace Atmega.Asm.Opcodes.Branch {
+    public abstract class BaseOffset12Opcode : BaseOpcode {
+        protected BaseOffset12Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
@@ -15,11 +15,11 @@ namespace Atmega.Asm.Opcodes {
                 throw new TokenException("invalid relative jump", firstToken);
             }
             delta /= 2;
-            if (delta > 63 || delta < -64) {
-                throw new TokenException("relative jump out of range (-64; 63)", firstToken);
+            if (delta < -2048 || delta > 2047) {
+                throw new TokenException("relative jump out of range (-2047; 2048)", firstToken);
             }
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            translation.Offset7 = (sbyte)delta;
+            translation.Offset12 = (short)delta;
             context.EmitCode(translation.Opcode);
         }
     }

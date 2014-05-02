@@ -92,6 +92,8 @@ namespace Atmega.Asm.Opcodes {
                 case "reti": return new RetiOpcode();
                 case "jmp": return new JmpOpcode();
                 case "call": return new CallOpcode();
+                case "rjmp": return new RjmpOpcode();
+                case "rcall": return new RcallOpcode();
                 
                 case "cpse": return new CpseOpcode();
                 case "sbic": return new SbicOpcode();
@@ -135,8 +137,6 @@ namespace Atmega.Asm.Opcodes {
              10010111KKddKKKK   sbiw    w,K
              111101lllllllsss   brbc    s,l
              111100lllllllsss   brbs    s,l
-             1101LLLLLLLLLLLL   rcall   L
-             1100LLLLLLLLLLLL   rjmp    L
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a

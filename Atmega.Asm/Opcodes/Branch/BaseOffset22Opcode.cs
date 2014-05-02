@@ -1,6 +1,6 @@
 ﻿using Atmega.Asm.Tokens;
 
-namespace Atmega.Asm.Opcodes {
+namespace Atmega.Asm.Opcodes.Branch {
     public abstract class BaseOffset22Opcode : BaseOpcode {
         protected BaseOffset22Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {

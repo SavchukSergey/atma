@@ -5,6 +5,6 @@ section code
 main:
 	ldi	r17, 1
 	ldi	r18, 0
-	mov	r16, 2
+	ldi	r16, 2
 	call EEPROM_write
 	jmp	main

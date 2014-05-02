@@ -68,8 +68,9 @@
     <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
-    <Compile Include="Opcodes\BaseOffset22Opcode.cs" />
-    <Compile Include="Opcodes\BaseOffset7Opcode.cs" />
+    <Compile Include="Opcodes\Branch\BaseOffset12Opcode.cs" />
+    <Compile Include="Opcodes\Branch\BaseOffset22Opcode.cs" />
+    <Compile Include="Opcodes\Branch\BaseOffset7Opcode.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
     <Compile Include="Opcodes\BasePort64Reg32Opcode.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Opcodes\Bit\SenOpcode.cs" />
     <Compile Include="Opcodes\Bit\SecOpcode.cs" />
     <Compile Include="Opcodes\Bit\ClcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\RcallOpcode.cs" />
+    <Compile Include="Opcodes\Branch\RjmpOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbisOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbicOpcode.cs" />
     <Compile Include="Opcodes\Branch\CpseOpcode.cs" />

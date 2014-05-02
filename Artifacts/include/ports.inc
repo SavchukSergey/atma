@@ -74,3 +74,6 @@ V equ 3
 N equ 2
 Z equ 1
 C equ 0
+
+;EECR
+EEWE equ 1
