@@ -136,18 +136,21 @@ namespace Atmega.Asm.Tokens {
                                 res.Add(new Token {
                                     Type = TokenType.Integer,
                                     IntegerValue = ParsePrefixedHexInteger(literal),
+                                    StringValue = literal,
                                     Position = new TokenPosition { File = fileName, Line = lineNumber }
                                 });
                             } else if (literal.EndsWith("h")) {
                                 res.Add(new Token {
                                     Type = TokenType.Integer,
                                     IntegerValue = ParsePostfixedHexInteger(literal),
+                                    StringValue = literal,
                                     Position = new TokenPosition { File = fileName, Line = lineNumber }
                                 });
                             } else {
                                 res.Add(new Token {
                                     Type = TokenType.Integer,
                                     IntegerValue = ReadInteger(literal),
+                                    StringValue = literal,
                                     Position = new TokenPosition { File = fileName, Line = lineNumber }
                                 });
                             }
@@ -250,6 +253,8 @@ namespace Atmega.Asm.Tokens {
             switch (ch) {
                 case ',':
                     return TokenType.Comma;
+                case ':':
+                    return TokenType.Colon;
                 case ' ':
                 case '\t':
                 case '\r':
@@ -267,7 +272,6 @@ namespace Atmega.Asm.Tokens {
                 case ']':
                 case '{':
                 case '}':
-                case ':':
                 case '|':
                 case '&':
                 case '~':

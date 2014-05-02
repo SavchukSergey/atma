@@ -40,6 +40,16 @@ namespace Atmega.Asm.Tests {
             var compiled = new Assembler().Assemble(content);
         }
 
+
+        [Test]
+        public void EmptyLabelTest() {
+            var content = @"
+section code
+main:
+";
+            var compiled = new Assembler().Assemble(content);
+        }
+
         private string LoadEmbeded(string name) {
             var type = GetType();
             var ns = type.Namespace;

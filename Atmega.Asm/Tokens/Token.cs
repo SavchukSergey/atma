@@ -7,6 +7,10 @@
 
         public string StringValue { get; set; }
         public long IntegerValue { get; set; }
+
+        public override string ToString() {
+            return StringValue;
+        }
     }
 
     public enum TokenType {
@@ -16,6 +20,7 @@
         Literal,
         Punctuation,
         NewLine,
-        Comma
+        Comma,
+        Colon
     }
 }
