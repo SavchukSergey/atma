@@ -91,6 +91,8 @@ namespace Atmega.Asm.Opcodes {
                 case "jmp": return new JmpOpcode();
                 case "call": return new CallOpcode();
                 
+                case "cpse": return new CpseOpcode();
+
                 case "breq": return new BreqOpcode();
                 case "brne": return new BrneOpcode();
                 case "brcc": return new BrccOpcode();
@@ -125,7 +127,6 @@ namespace Atmega.Asm.Opcodes {
              1001000ddddd011+   elpm    r,z
              1001010110011000   break
 
-             000100rdddddrrrr   cpse    r,r
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
              10011001pppppsss   sbic    p,s
