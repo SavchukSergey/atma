@@ -94,6 +94,8 @@ namespace Atmega.Asm.Opcodes {
                 case "call": return new CallOpcode();
                 
                 case "cpse": return new CpseOpcode();
+                case "sbic": return new SbicOpcode();
+                case "sbis": return new SbisOpcode();
 
                 case "breq": return new BreqOpcode();
                 case "brne": return new BrneOpcode();
@@ -131,8 +133,6 @@ namespace Atmega.Asm.Opcodes {
 
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
-             10011001pppppsss   sbic    p,s
-             10011011pppppsss   sbis    p,s
              111101lllllllsss   brbc    s,l
              111100lllllllsss   brbs    s,l
              1101LLLLLLLLLLLL   rcall   L

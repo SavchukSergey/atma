@@ -81,7 +81,7 @@
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BaseStatusBitOpcode.cs" />
-    <Compile Include="Opcodes\Bit\BasePort32BitOpcode.cs" />
+    <Compile Include="Opcodes\BasePort32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BsetOpcode.cs" />
     <Compile Include="Opcodes\Bit\BclrOpcode.cs" />
     <Compile Include="Opcodes\Bit\BldOpcode.cs" />
@@ -109,6 +109,8 @@
     <Compile Include="Opcodes\Bit\SenOpcode.cs" />
     <Compile Include="Opcodes\Bit\SecOpcode.cs" />
     <Compile Include="Opcodes\Bit\ClcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\SbisOpcode.cs" />
+    <Compile Include="Opcodes\Branch\SbicOpcode.cs" />
     <Compile Include="Opcodes\Branch\CpseOpcode.cs" />
     <Compile Include="Opcodes\Branch\EicallOpcode.cs" />
     <Compile Include="Opcodes\Branch\EijmpOpcode.cs" />
