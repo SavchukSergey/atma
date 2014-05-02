@@ -50,6 +50,7 @@
     <Compile Include="Expressions\BaseExpression.cs" />
     <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
+    <Compile Include="Expressions\ModExpression.cs" />
     <Compile Include="Expressions\MulExpression.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="IO\EmbeddedAsmSource.cs" />

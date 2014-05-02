@@ -59,5 +59,11 @@ namespace Atmega.Asm.Tests.Expressions {
             var expr = new ExpressionCalculator(null).Parse("(345 * 452) + 123");
             Assert.AreEqual((345 * 452) + 123, expr.Evaluate());
         }
+
+        [Test]
+        public void ModTest() {
+            var expr = new ExpressionCalculator(null).Parse("345 * 452 % 123");
+            Assert.AreEqual(345 * (452 % 123), expr.Evaluate());
+        }
     }
 }

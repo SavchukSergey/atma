@@ -77,6 +77,7 @@
         Plus,
         Minus,
         Multiply,
-        Divide
+        Divide,
+        Mod
     }
 }

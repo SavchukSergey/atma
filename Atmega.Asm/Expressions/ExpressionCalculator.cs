@@ -55,14 +55,9 @@ namespace Atmega.Asm.Expressions {
                         stack.Push(new NumberExpression { Value = token.IntegerValue });
                         break;
                     case TokenType.Plus:
-                        //TODO: range check and count
-                        var otherAdd = ParseWithPriority(tokens, tokenPriority + 1);
-                        stack.Push(new AddExpression(stack.Pop(), otherAdd));
-                        break;
                     case TokenType.Multiply:
-                        //TODO: range check and count
-                        var otherMul = ParseWithPriority(tokens, tokenPriority + 1);
-                        stack.Push(new MulExpression(stack.Pop(), otherMul));
+                    case TokenType.Mod:
+                        ProcessBinaryExpression(token, stack, tokens);
                         break;
                     case TokenType.Literal:
                         stack.Push(ParseLiteral(token));
@@ -92,6 +87,31 @@ namespace Atmega.Asm.Expressions {
             return stack.Pop();
         }
 
+        private void ProcessBinaryExpression(Token opToken, Stack<BaseExpression> stack, TokensQueue tokens) {
+            var tokenPriority = GetPriority(opToken.Type);
+
+            var other = ParseWithPriority(tokens, tokenPriority + 1);
+            if (stack.Count == 0) {
+                throw new TokenException("unexpected operator", opToken);
+            }
+
+            var left = stack.Pop();
+            switch (opToken.Type) {
+                case TokenType.Plus:
+                    stack.Push(new AddExpression(left, other));
+                    break;
+                case TokenType.Multiply:
+                    stack.Push(new MulExpression(left, other));
+                    break;
+                case TokenType.Mod:
+                    stack.Push(new ModExpression(left, other));
+                    break;
+                default:
+                    throw new TokenException("unexpected operator", opToken);
+            }
+
+        }
+
         private static int GetPriority(TokenType type) {
             switch (type) {
                 case TokenType.Plus:
@@ -100,6 +120,8 @@ namespace Atmega.Asm.Expressions {
                 case TokenType.Multiply:
                 case TokenType.Divide:
                     return 1;
+                case TokenType.Mod:
+                    return 2;
                 default:
                     return -1;
             }
