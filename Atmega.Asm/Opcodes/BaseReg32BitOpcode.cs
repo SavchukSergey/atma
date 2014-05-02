@@ -1,6 +1,6 @@
 ﻿using Atmega.Asm.Tokens;
 
-namespace Atmega.Asm.Opcodes.Bit {
+namespace Atmega.Asm.Opcodes {
     public class BaseReg32BitOpcode : BaseOpcode {
         public BaseReg32BitOpcode(string opcodeTemplate)
             : base(opcodeTemplate) {

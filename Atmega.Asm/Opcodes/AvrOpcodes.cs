@@ -1,5 +1,6 @@
 ﻿using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
+using Atmega.Asm.Opcodes.Branch;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;
 
@@ -65,6 +66,9 @@ namespace Atmega.Asm.Opcodes {
                 case "push": return new PushOpcode();
                 case "pop": return new PopOpcode();
 
+                case "sbrc": return new SbrcOpcode();
+                case "sbrs": return new SbrsOpcode();
+
                 default: return null;
             }
         }
@@ -91,8 +95,6 @@ namespace Atmega.Asm.Opcodes {
              000011rdddddrrrr   lsl     r
              000111rdddddrrrr   rol     r
              1110KKKKddddKKKK   ldi     d,M
-             1111110rrrrr0sss   sbrc    r,s
-             1111111rrrrr0sss   sbrs    r,s
              10110PPdddddPPPP   in      r,P
              10111PPrrrrrPPPP   out     P,r
              10010110KKddKKKK   adiw    w,K
