@@ -93,6 +93,18 @@ namespace Atmega.Asm.Opcodes {
                 case "brcs": return new BrcsOpcode();
                 case "brhc": return new BrhcOpcode();
                 case "brhs": return new BrhsOpcode();
+                case "brsh": return new BrshOpcode();
+                case "brlo": return new BrloOpcode();
+                case "brpl": return new BrplOpcode();
+                case "brmi": return new BrmiOpcode();
+                case "brge": return new BrgeOpcode();
+                case "brlt": return new BrltOpcode();
+                case "brtc": return new BrtcOpcode();
+                case "brts": return new BrtsOpcode();
+                case "brvc": return new BrvcOpcode();
+                case "brvs": return new BrvsOpcode();
+                case "brie": return new BrieOpcode();
+                case "brid": return new BridOpcode();
                 
                 case "nop": return new NopOpcode();
 
@@ -116,18 +128,6 @@ namespace Atmega.Asm.Opcodes {
              10010111KKddKKKK   sbiw    w,K
              10011001pppppsss   sbic    p,s
              10011011pppppsss   sbis    p,s
-             111101lllllll100   brge    l
-             111101lllllll111   brid    l
-             111100lllllll111   brie    l
-             111100lllllll000   brlo    l
-             111100lllllll100   brlt    l
-             111100lllllll010   brmi    l
-             111101lllllll010   brpl    l
-             111101lllllll000   brsh    l
-             111101lllllll110   brtc    l
-             111100lllllll110   brts    l
-             111101lllllll011   brvc    l
-             111100lllllll011   brvs    l
              111101lllllllsss   brbc    s,l
              111100lllllllsss   brbs    s,l
              1101LLLLLLLLLLLL   rcall   L

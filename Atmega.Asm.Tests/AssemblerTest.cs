@@ -53,6 +53,22 @@ main:
         [Test]
         [TestCase("breq")]
         [TestCase("brne")]
+        [TestCase("brcc")]
+        [TestCase("brcs")]
+        [TestCase("brhc")]
+        [TestCase("brhs")]
+        [TestCase("brsh")]
+        [TestCase("brlo")]
+        [TestCase("brpl")]
+        [TestCase("brmi")]
+        [TestCase("brge")]
+        [TestCase("brlt")]
+        [TestCase("brtc")]
+        [TestCase("brts")]
+        [TestCase("brvc")]
+        [TestCase("brvs")]
+        [TestCase("brie")]
+        [TestCase("brid")]
         public void StatusBranchTest(string op) {
             const string template = @"
 section code
