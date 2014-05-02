@@ -104,6 +104,8 @@
     <Compile Include="Opcodes\Branch\RetOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrsOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BrhsOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BrhcOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrcsOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrccOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrneOpcode.cs" />

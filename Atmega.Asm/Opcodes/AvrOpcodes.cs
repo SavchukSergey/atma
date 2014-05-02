@@ -91,6 +91,8 @@ namespace Atmega.Asm.Opcodes {
                 case "brne": return new BrneOpcode();
                 case "brcc": return new BrccOpcode();
                 case "brcs": return new BrcsOpcode();
+                case "brhc": return new BrhcOpcode();
+                case "brhs": return new BrhsOpcode();
                 
                 case "nop": return new NopOpcode();
 
@@ -115,8 +117,6 @@ namespace Atmega.Asm.Opcodes {
              10011001pppppsss   sbic    p,s
              10011011pppppsss   sbis    p,s
              111101lllllll100   brge    l
-             111101lllllll101   brhc    l
-             111100lllllll101   brhs    l
              111101lllllll111   brid    l
              111100lllllll111   brie    l
              111100lllllll000   brlo    l
