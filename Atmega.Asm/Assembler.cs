@@ -130,11 +130,7 @@ namespace Atmega.Asm {
 
         private bool TheSame(AsmContext prev, AsmContext current) {
             if (prev == null) return false;
-            if (prev.Code.Count != current.Code.Count) return false;
-            for (var i = 0; i < current.Code.Count; i++) {
-                if (prev.Code[i] != current.Code[i]) return false;
-            }
-            return true;
+            return current.CodeSection.TheSame(prev.CodeSection);
         }
 
         private void AssemblePass(AsmContext context) {
@@ -205,7 +201,7 @@ namespace Atmega.Asm {
                 throw new Exception("integer value expected");
             }
 
-            context.CodeOffset = (int)token.IntegerValue;
+            context.Offset = (int)token.IntegerValue;
         }
 
         private void ProcessDataBytes(AsmContext context) {

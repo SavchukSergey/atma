@@ -9,13 +9,13 @@ namespace Atmega.Asm.Tests {
             var compiled = Compile(@"
 Name equ adc r12, r12
 ");
-            Assert.AreEqual(0, compiled.Code.Count);
+            Assert.AreEqual(0, compiled.CodeSection.Content.Count);
 
             compiled = Compile(@"
 Name equ adc r12, r12
 Name
 ");
-            Assert.AreEqual(2, compiled.Code.Count);
+            Assert.AreEqual(2, compiled.CodeSection.Content.Count);
         }
 
     }

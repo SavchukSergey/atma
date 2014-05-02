@@ -6,55 +6,59 @@ using Atmega.Asm.Tokens;
 namespace Atmega.Asm {
     public class AsmContext {
 
-        private readonly IList<byte> _code = new List<byte>();
-
         public int Pass { get; set; }
 
         public TokensQueue Queue { get; set; }
 
         public AsmSymbols Symbols { get; set; }
 
-        public int CodeOffset { get; set; }
+        private readonly AsmSection _codeSection = new AsmSection();
+        private readonly AsmSection _dataSection = new AsmSection();
+        private readonly AsmSection _flashSection = new AsmSection();
+        private AsmSectionType _currentSection;
 
-        public int Offset {
-            get { return CodeOffset; }
-            set { CodeOffset = value; }
+        public AsmSection CodeSection {
+            get { return _codeSection; }
         }
 
-        public IList<byte> Code {
-            get { return _code; }
+        public AsmSection DataSection {
+            get { return _dataSection; }
+        }
+
+        public AsmSection FlashSection {
+            get { return _flashSection; }
+        }
+
+        public AsmSection CurrentSection {
+            get {
+                switch (_currentSection) {
+                    case AsmSectionType.Code:
+                        return _codeSection;
+                    case AsmSectionType.Data:
+                        return _dataSection;
+                    case AsmSectionType.Flash:
+                        return _flashSection;
+                    default:
+                        return _codeSection;
+                }
+            }
+        }
+
+        public void SetSection(AsmSectionType type) {
+            _currentSection = type;
+        }
+
+        public int Offset {
+            get { return CurrentSection.Offset; }
+            set { CurrentSection.Offset = value; }
         }
 
         public void EmitCode(ushort opcode) {
-            AlignCode(2);
-            _code.Add((byte)(opcode & 0xff));
-            _code.Add((byte)((opcode >> 8) & 0xff));
-            CodeOffset += 2;
+            CurrentSection.EmitCode(opcode);
         }
 
         public void EmitByte(byte bt) {
-            _code.Add(bt);
-            Offset++;
-        }
-
-        public void ReserveByte() {
-            //TODO: alignment should take any space if put at the end of section. put uninitialized pointer
-            Code.Add(0);
-            CodeOffset++;
-        }
-
-        public void AlignCode(byte alignment) {
-            switch (alignment) {
-                case 2:
-                    var mask = ~(alignment - 1);
-                    var targetOffset = (CodeOffset + 1) & mask;
-                    while (CodeOffset < targetOffset) {
-                        ReserveByte();
-                    }
-                    break;
-                default:
-                    throw new Exception("Invalid alignment");
-            }
+            CurrentSection.EmitByte(bt);
         }
 
         public Token ReadRequiredToken() {

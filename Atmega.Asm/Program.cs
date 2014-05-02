@@ -14,7 +14,7 @@ namespace Atmega.Asm {
             try {
                 var res = assembler.Load(sourceName);
                 Console.WriteLine("passes: {0}", res.Pass);
-                Console.WriteLine("code size: {0}", res.Code.Count);
+                Console.WriteLine("code size: {0}", res.CodeSection.Content.Count);
             } catch (TokenException exc) {
                 Console.WriteLine("error: {0}:{1}", exc.Token.Position.File, exc.Token.Position.Line);
                 Console.WriteLine(exc.Message);

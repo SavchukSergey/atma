@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsmContext.cs" />
+    <Compile Include="AsmSection.cs" />
+    <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
     <Compile Include="Expressions\BaseExpression.cs" />
