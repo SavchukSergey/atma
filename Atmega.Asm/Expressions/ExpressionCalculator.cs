@@ -12,16 +12,23 @@ namespace Atmega.Asm.Expressions {
             }
             var stack = new Stack<BaseExpression>();
             do {
-                if (context.Queue.Peek().Type == TokenType.NewLine) break;
+                var preview = context.Queue.Peek();
+                if (preview.Type == TokenType.NewLine) break;
+                if (preview.Type == TokenType.Comma) break;
+
                 var token = context.Queue.Read();
                 if (token.Type == TokenType.Integer) {
                     stack.Push(new NumberExpression { Value = token.IntegerValue });
                 } else if (token.Type == TokenType.Literal) {
-                    var lblValue = context.GetLabel(token.StringValue);
-                    if (lblValue == null) {
-                        throw new TokenException("unknown symbol " + token.StringValue, token);
+                    if (token.StringValue == "$") {
+                        stack.Push(new NumberExpression { Value = context.Offset });
+                    } else {
+                        var lblValue = context.GetLabel(token.StringValue);
+                        if (lblValue == null) {
+                            throw new TokenException("unknown symbol " + token.StringValue, token);
+                        }
+                        stack.Push(new NumberExpression { Value = (long)lblValue });
                     }
-                    stack.Push(new NumberExpression { Value = (long)lblValue });
                 }
 
             } while (context.Queue.Count > 0);

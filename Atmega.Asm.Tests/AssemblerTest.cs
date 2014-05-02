@@ -52,6 +52,7 @@ main:
 
         [Test]
         [TestCase("breq")]
+        [TestCase("brne")]
         public void StatusBranchTest(string op) {
             const string template = @"
 section code
