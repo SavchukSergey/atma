@@ -16,3 +16,5 @@ section code
 	cp r22,r23;	Сравнение регистров	Rn - Rk	Z, C, N, V, S, H	1
 	cpi r22,10;	Сравнение регистра с константой	Rn - K	Z, C, N, V, S, H	1
 	CPC R12,r22;	Сравнение регистров с заемом	Rn - Rk - C	Z, C, N, V, S, H	1
+
+	mul r3, r22

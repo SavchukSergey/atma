@@ -13,6 +13,7 @@ namespace Atmega.Asm.Opcodes {
                 case "add": return new AddOpcode();
                 case "sub": return new SubOpcode();
                 case "sbc": return new SbcOpcode();
+                case "mul": return new MulOpcode();
 
                 case "inc": return new IncOpcode();
                 case "dec": return new DecOpcode();
@@ -61,6 +62,12 @@ namespace Atmega.Asm.Opcodes {
                 case "bst": return new BstOpcode();
                 case "bld": return new BldOpcode();
                 
+                case "lsl": return new LslOpcode();
+                case "lsr": return new LsrOpcode();
+                case "rol": return new RolOpcode();
+                case "ror": return new RorOpcode();
+                case "asr": return new AsrOpcode();
+                
                 case "mov": return new MovOpcode();
                 case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
@@ -93,9 +100,6 @@ namespace Atmega.Asm.Opcodes {
              1001010111101000   spm
 
              000100rdddddrrrr   cpse    r,r
-             100111rdddddrrrr   mul     r,r
-             000011rdddddrrrr   lsl     r
-             000111rdddddrrrr   rol     r
              1110KKKKddddKKKK   ldi     d,M
              10110PPdddddPPPP   in      r,P
              10111PPrrrrrPPPP   out     P,r
@@ -127,9 +131,6 @@ namespace Atmega.Asm.Opcodes {
              1100LLLLLLLLLLLL   rjmp    L
              1001010hhhhh111h   call    h
              1001010hhhhh110h   jmp     h
-             1001010rrrrr0101   asr     r
-             1001010rrrrr0110   lsr     r
-             1001010rrrrr0111   ror     r
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a

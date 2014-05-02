@@ -55,6 +55,7 @@
     <Compile Include="Opcodes\Arithmetics\AdcOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\AddOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SbcOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
@@ -66,6 +67,11 @@
     <Compile Include="Opcodes\Bit\BasePort32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BldOpcode.cs" />
     <Compile Include="Opcodes\Bit\BstOpcode.cs" />
+    <Compile Include="Opcodes\Bit\AsrOpcode.cs" />
+    <Compile Include="Opcodes\Bit\RorOpcode.cs" />
+    <Compile Include="Opcodes\Bit\RolOpcode.cs" />
+    <Compile Include="Opcodes\Bit\LsrOpcode.cs" />
+    <Compile Include="Opcodes\Bit\LslOpcode.cs" />
     <Compile Include="Opcodes\Bit\SbiOpcode.cs" />
     <Compile Include="Opcodes\Bit\CbiOpcode.cs" />
     <Compile Include="Opcodes\Bit\ClhOpcode.cs" />
