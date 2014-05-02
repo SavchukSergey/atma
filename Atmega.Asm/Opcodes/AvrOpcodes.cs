@@ -61,7 +61,9 @@ namespace Atmega.Asm.Opcodes {
                 case "bld": return new BldOpcode();
                 
                 case "mov": return new MovOpcode();
+                case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
+                case "pop": return new PopOpcode();
 
                 default: return null;
             }
@@ -123,9 +125,7 @@ namespace Atmega.Asm.Opcodes {
              1001010hhhhh110h   jmp     h
              1001010rrrrr0101   asr     r
              1001010rrrrr0110   lsr     r
-             1001000rrrrr1111   pop     r
              1001010rrrrr0111   ror     r
-             1001010rrrrr0010   swap    r
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a
