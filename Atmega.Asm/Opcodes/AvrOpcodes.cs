@@ -69,6 +69,7 @@ namespace Atmega.Asm.Opcodes {
                 case "asr": return new AsrOpcode();
                 
                 case "mov": return new MovOpcode();
+                case "ldi": return new LdiOpcode();
                 case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
                 case "pop": return new PopOpcode();
@@ -100,7 +101,6 @@ namespace Atmega.Asm.Opcodes {
              1001010111101000   spm
 
              000100rdddddrrrr   cpse    r,r
-             1110KKKKddddKKKK   ldi     d,M
              10110PPdddddPPPP   in      r,P
              10111PPrrrrrPPPP   out     P,r
              10010110KKddKKKK   adiw    w,K
