@@ -123,6 +123,7 @@
     <Compile Include="Opcodes\Move\PopOpcode.cs" />
     <Compile Include="Opcodes\Move\PushOpcode.cs" />
     <Compile Include="Opcodes\Move\MovOpcode.cs" />
+    <Compile Include="Opcodes\NopOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
     <Compile Include="Opcodes\BaseSimpleOpcode.cs" />
     <Compile Include="Program.cs" />

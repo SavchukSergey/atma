@@ -88,6 +88,8 @@ namespace Atmega.Asm.Opcodes {
                 case "reti": return new RetiOpcode();
                 
                 case "breq": return new BreqOpcode();
+                
+                case "nop": return new NopOpcode();
 
                 default: return null;
             }
@@ -100,7 +102,6 @@ namespace Atmega.Asm.Opcodes {
              1001000ddddd010+   lpm     r,z
              1001010111011000   elpm    ?
              1001000ddddd011+   elpm    r,z
-             0000000000000000   nop
              1001010110001000   sleep
              1001010110011000   break
              1001010110101000   wdr
@@ -112,7 +113,6 @@ namespace Atmega.Asm.Opcodes {
              10011011pppppsss   sbis    p,s
              111101lllllll000   brcc    l
              111100lllllll000   brcs    l
-             111100lllllll001   breq    l
              111101lllllll100   brge    l
              111101lllllll101   brhc    l
              111100lllllll101   brhs    l

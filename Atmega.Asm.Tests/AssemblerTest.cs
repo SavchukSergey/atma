@@ -21,7 +21,7 @@ namespace Atmega.Asm.Tests {
             var content = LoadEmbeded("logic.asm");
             var compiled = new Assembler().Assemble(content);
         }
-        
+
         [Test]
         public void BitTest() {
             var content = LoadEmbeded("bit.asm");
@@ -47,6 +47,25 @@ namespace Atmega.Asm.Tests {
 section code
 main:
 ";
+            var compiled = new Assembler().Assemble(content);
+        }
+
+        [Test]
+        [TestCase("breq")]
+        public void StatusBranchTest(string op) {
+            const string template = @"
+section code
+main:
+.back:
+    nop
+.self: {Operation} .self
+    {Operation} .zero
+.zero:
+    {Operation} .forward
+    nop
+.forward:
+";
+            var content = template.Replace("{Operation}", op);
             var compiled = new Assembler().Assemble(content);
         }
 

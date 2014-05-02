@@ -12,8 +12,8 @@ namespace Atmega.Asm.Expressions {
             }
             var stack = new Stack<BaseExpression>();
             do {
+                if (context.Queue.Peek().Type == TokenType.NewLine) break;
                 var token = context.Queue.Read();
-                if (token.Type == TokenType.NewLine) break;
                 if (token.Type == TokenType.Integer) {
                     stack.Push(new NumberExpression { Value = token.IntegerValue });
                 } else if (token.Type == TokenType.Literal) {
