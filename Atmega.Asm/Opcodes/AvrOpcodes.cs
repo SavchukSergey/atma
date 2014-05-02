@@ -1,6 +1,7 @@
 ﻿using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Logic;
+using Atmega.Asm.Opcodes.Move;
 
 namespace Atmega.Asm.Opcodes {
     public static class AvrOpcodes {
@@ -58,6 +59,9 @@ namespace Atmega.Asm.Opcodes {
                 case "sbi": return new SbiOpcode();
                 case "bst": return new BstOpcode();
                 case "bld": return new BldOpcode();
+                
+                case "mov": return new MovOpcode();
+                case "push": return new PushOpcode();
 
                 default: return null;
             }
@@ -81,7 +85,6 @@ namespace Atmega.Asm.Opcodes {
              1001010111101000   spm
 
              000100rdddddrrrr   cpse    r,r
-             001011rdddddrrrr   mov     r,r
              100111rdddddrrrr   mul     r,r
              000011rdddddrrrr   lsl     r
              000111rdddddrrrr   rol     r
@@ -121,7 +124,6 @@ namespace Atmega.Asm.Opcodes {
              1001010rrrrr0101   asr     r
              1001010rrrrr0110   lsr     r
              1001000rrrrr1111   pop     r
-             1001001rrrrr1111   push    r
              1001010rrrrr0111   ror     r
              1001010rrrrr0010   swap    r
              00000001ddddrrrr   movw    v,v
