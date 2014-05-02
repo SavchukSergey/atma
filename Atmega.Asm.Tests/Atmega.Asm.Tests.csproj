@@ -50,6 +50,7 @@
     <Compile Include="DirectivesTest.cs" />
     <Compile Include="AssemblerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokens\TokenTest.cs" />
     <EmbeddedResource Include="Samples\arithmetics.asm" />
     <Compile Include="Tokens\TokenizerTests.cs" />
   </ItemGroup>
