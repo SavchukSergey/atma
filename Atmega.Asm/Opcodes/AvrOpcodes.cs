@@ -86,6 +86,7 @@ namespace Atmega.Asm.Opcodes {
                 case "eicall": return new EicallOpcode();
                 case "ret": return new RetOpcode();
                 case "reti": return new RetiOpcode();
+                case "jmp": return new JmpOpcode();
                 
                 case "breq": return new BreqOpcode();
                 case "brne": return new BrneOpcode();
@@ -133,7 +134,6 @@ namespace Atmega.Asm.Opcodes {
              1101LLLLLLLLLLLL   rcall   L
              1100LLLLLLLLLLLL   rjmp    L
              1001010hhhhh111h   call    h
-             1001010hhhhh110h   jmp     h
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a

@@ -147,5 +147,18 @@ namespace Atmega.Asm.Opcodes {
             }
         }
 
+        public byte Offset22High {
+            get {
+                var offset = 0;
+                offset |= (Opcode & 0x01f0) >> 3;
+                offset |= (Opcode & 0x0001);
+                return (byte)offset;
+            }
+            set {
+                Opcode &= 0xfe0e;
+                Opcode |= (ushort)((value << 3) & 0x01f0);
+                Opcode |= (ushort)(value & 0x0001);
+            }
+        }
     }
 }

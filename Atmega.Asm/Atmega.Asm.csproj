@@ -61,6 +61,7 @@
     <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
+    <Compile Include="Opcodes\BaseOffset22Opcode.cs" />
     <Compile Include="Opcodes\BaseOffset7Opcode.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Opcodes\Branch\EijmpOpcode.cs" />
     <Compile Include="Opcodes\Branch\IcallOpcode.cs" />
     <Compile Include="Opcodes\Branch\IjmpOpcode.cs" />
+    <Compile Include="Opcodes\Branch\JmpOpcode.cs" />
     <Compile Include="Opcodes\Branch\RetiOpcode.cs" />
     <Compile Include="Opcodes\Branch\RetOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrsOpcode.cs" />

@@ -109,7 +109,9 @@ namespace Atmega.Asm {
                 if (symbolConstants.TryGetValue(tkn.StringValue, out replaced)) {
                     foreach (var repl in replaced) {
                         if (repl.Type != TokenType.NewLine) {
-                            target.Add(repl);
+                            var item = repl;
+                            item.Position = tkn.Position;
+                            target.Add(item);
                         }
                     }
                 } else {
