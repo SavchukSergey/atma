@@ -76,4 +76,6 @@ Z equ 1
 C equ 0
 
 ;EECR
+EERE equ 0
 EEWE equ 1
+EEMWE equ 2

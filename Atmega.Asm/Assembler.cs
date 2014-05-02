@@ -90,6 +90,7 @@ namespace Atmega.Asm {
                     if (string.IsNullOrWhiteSpace(path)) throw new TokenException("file is not found " + nameToken.StringValue, token);
                     var otherContent = _source.LoadContent(path);
                     LoadRecursive(otherContent, result, nameToken.StringValue);
+                    result.Add(new Token { Type = TokenType.NewLine });
                 } else {
                     i--;
                     CopyLine(fileTokens, result, ref i);
