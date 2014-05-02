@@ -81,8 +81,10 @@ namespace Atmega.Asm {
                         }
                     }
 
-                    var otherContent = LoadContent(nameToken.StringValue);
-                    LoadRecursive(otherContent, result);
+                    var path = ResolveFile(nameToken.StringValue, fileName);
+                    if (string.IsNullOrWhiteSpace(path)) throw new TokenException("file is not found " + nameToken.StringValue, token);
+                    var otherContent = LoadContent(path);
+                    LoadRecursive(otherContent, result, nameToken.StringValue);
                 } else {
                     i--;
                     CopyLine(fileTokens, result, ref i);
@@ -126,6 +128,21 @@ namespace Atmega.Asm {
                 return reader.ReadToEnd();
             }
         }
+
+        protected virtual bool FileExists(string fileName) {
+            return File.Exists(fileName);
+        }
+
+        protected string ResolveFile(string fileName, string referrer) {
+            var basePath = referrer != null ? Path.GetDirectoryName(referrer) : null;
+            if (basePath != null) {
+                var path = Path.Combine(basePath, fileName);
+                if (FileExists(path)) return path;
+            }
+
+            return null;
+        }
+
 
         private bool TheSame(AsmContext prev, AsmContext current) {
             if (prev == null) return false;
