@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
     public class Assembler {
 
+
         public AsmContext Assemble(string content) {
-            var tokenizer = new Tokenizer();
-            var tokens = tokenizer.Read(content);
+            var tokens = new List<Token>();
+            LoadRecursive(content, tokens);
 
             AsmContext last = null;
             for (var i = 0; i < 10; i++) {
@@ -21,6 +22,48 @@ namespace Atmega.Asm {
                 last = context;
             }
             return last;
+        }
+
+        protected IList<Token> LoadRecursive(string content, IList<Token> result) {
+            var tokenizer = new Tokenizer();
+            var fileTokens = tokenizer.Read(content);
+
+            for (var i = 0; i < fileTokens.Count; ) {
+                var token = fileTokens[i++];
+                if (token.Type == TokenType.Literal && token.StringValue == "include") {
+                    if (i >= fileTokens.Count) {
+                        throw new TokenException("file name expected", token);
+                    }
+                    var nameToken = fileTokens[i++];
+                    if (nameToken.Type != TokenType.String) {
+                        throw new TokenException("file name expected", token);
+                    }
+
+                    if (i < fileTokens.Count) {
+                        var nlToken = fileTokens[i++];
+                        if (nlToken.Type != TokenType.NewLine) {
+                            throw new TokenException("extra characters on line", token);
+                        }
+                    }
+
+                    var otherContent = LoadContent(nameToken.StringValue);
+                    LoadRecursive(otherContent, result);
+                } else {
+                    result.Add(token);
+                    while (i < fileTokens.Count) {
+                        var tkn = fileTokens[i++];
+                        result.Add(tkn);
+                        if (tkn.Type == TokenType.NewLine) break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected virtual string LoadContent(string fileName) {
+            using (var reader = new StreamReader(fileName)) {
+                return reader.ReadToEnd();
+            }
         }
 
         private bool TheSame(AsmContext prev, AsmContext current) {
