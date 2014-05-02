@@ -57,6 +57,8 @@ namespace Atmega.Asm.Opcodes {
                 case "set": return new SetOpcode();
                 case "clh": return new ClhOpcode();
                 case "seh": return new SehOpcode();
+                case "bclr": return new BclrOpcode();
+                case "bset": return new BSetOpcode();
                 
                 case "cbi": return new CbiOpcode();
                 case "sbi": return new SbiOpcode();
@@ -117,8 +119,6 @@ namespace Atmega.Asm.Opcodes {
         }
 
         /*
-             100101001SSS1000   bclr    S
-             100101000SSS1000   bset    S
              1001010111001000   lpm     ?
              1001000ddddd010+   lpm     r,z
              1001010111011000   elpm    ?

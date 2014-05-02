@@ -1,8 +1,4 @@
-﻿using System;
-using System.Configuration;
-using Atmega.Asm.Tokens;
-
-namespace Atmega.Asm.Opcodes {
+﻿namespace Atmega.Asm.Opcodes {
     public struct OpcodeTranslation {
 
         public ushort Opcode { get; set; }
@@ -19,8 +15,6 @@ namespace Atmega.Asm.Opcodes {
         public byte UImm6 {
             get { return (byte)(((Opcode & 0xc0) >> 2) | (Opcode & 0x0f)); }
         }
-
-       
 
         public bool Increment {
             get { return (Opcode & 0x01) > 0; }
@@ -56,7 +50,6 @@ namespace Atmega.Asm.Opcodes {
         }
 
 
-            
         public short Offset12 {
             get {
                 var offset = Opcode & 0xfff;
@@ -129,6 +122,14 @@ namespace Atmega.Asm.Opcodes {
             set {
                 Opcode &= 0xfff8;
                 Opcode |= (ushort)(value & 0x07);
+            }
+        }
+
+        public byte StatusBitNumber {
+            get { return (byte)((Opcode & 0x0070) >> 4); }
+            set {
+                Opcode &= 0xff8f;
+                Opcode |= (ushort)((value << 4) & 0x0070);
             }
         }
 

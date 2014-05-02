@@ -71,7 +71,10 @@
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32BitOpcode.cs" />
+    <Compile Include="Opcodes\Bit\BaseStatusBitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BasePort32BitOpcode.cs" />
+    <Compile Include="Opcodes\Bit\BSetOpcode.cs" />
+    <Compile Include="Opcodes\Bit\BclrOpcode.cs" />
     <Compile Include="Opcodes\Bit\BldOpcode.cs" />
     <Compile Include="Opcodes\Bit\BstOpcode.cs" />
     <Compile Include="Opcodes\Bit\AsrOpcode.cs" />
