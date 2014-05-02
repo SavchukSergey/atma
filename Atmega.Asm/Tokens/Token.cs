@@ -47,6 +47,16 @@
             }
         }
 
+        public AsmSectionType ParseSectionType() {
+            switch (StringValue.ToLower()) {
+                case "code": return AsmSectionType.Code;
+                case "data": return AsmSectionType.Data;
+                case "flash": return AsmSectionType.Flash;
+                default:
+                    return AsmSectionType.None;
+            }
+        }
+
         public override string ToString() {
             return StringValue;
         }

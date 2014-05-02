@@ -192,7 +192,16 @@ namespace Atmega.Asm {
         }
 
         private void ProcessSection(AsmContext context) {
-            var type = context.Queue.Read(TokenType.Literal);
+            var typeToken = context.Queue.Read();
+            if (typeToken.Type != TokenType.Literal) {
+                throw new TokenException("expected section type", typeToken);
+            }
+
+            var type = typeToken.ParseSectionType();
+            if (type == AsmSectionType.None) {
+                throw new TokenException("invalid section type", typeToken);
+            }
+            context.SetSection(type);
         }
 
         private void ProcessOrg(AsmContext context) {
