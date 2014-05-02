@@ -73,6 +73,7 @@ namespace Atmega.Asm.Opcodes {
                 case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
                 case "pop": return new PopOpcode();
+                case "spm": return new SpmOpcode();
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
@@ -98,7 +99,6 @@ namespace Atmega.Asm.Opcodes {
              1001010110001000   sleep
              1001010110011000   break
              1001010110101000   wdr
-             1001010111101000   spm
 
              000100rdddddrrrr   cpse    r,r
              10110PPdddddPPPP   in      r,P

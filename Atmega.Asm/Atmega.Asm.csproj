@@ -108,6 +108,7 @@
     <Compile Include="Opcodes\Logic\OrOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndOpcode.cs" />
     <Compile Include="Opcodes\Logic\AndiOpcode.cs" />
+    <Compile Include="Opcodes\Move\SpmOpcode.cs" />
     <Compile Include="Opcodes\Move\LdiOpcode.cs" />
     <Compile Include="Opcodes\Move\SwapOpcode.cs" />
     <Compile Include="Opcodes\Move\PopOpcode.cs" />
