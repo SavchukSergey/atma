@@ -1,6 +1,7 @@
 ﻿using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Branch;
+using Atmega.Asm.Opcodes.Branch.Status;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;
 
@@ -85,6 +86,8 @@ namespace Atmega.Asm.Opcodes {
                 case "eicall": return new EicallOpcode();
                 case "ret": return new RetOpcode();
                 case "reti": return new RetiOpcode();
+                
+                case "breq": return new BreqOpcode();
 
                 default: return null;
             }

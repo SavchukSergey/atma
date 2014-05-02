@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes {
     public struct OpcodeTranslation {
@@ -55,14 +56,7 @@ namespace Atmega.Asm.Opcodes {
         }
 
 
-              public sbyte Offset7 {
-            get {
-                var offset = (Opcode >> 3) & 0x7f;
-                if (offset >= 0x40) offset = -(((offset ^ 0x7f) + 1) & 0x7f);
-                return (sbyte)offset;
-            }
-        }
-
+            
         public short Offset12 {
             get {
                 var offset = Opcode & 0xfff;
@@ -137,5 +131,21 @@ namespace Atmega.Asm.Opcodes {
                 Opcode |= (ushort)(value & 0x07);
             }
         }
+
+        public sbyte Offset7 {
+            get {
+                var offset = (Opcode >> 3) & 0x7f;
+                if (offset >= 0x40) offset = -(((offset ^ 0x7f) + 1) & 0x7f);
+                return (sbyte)offset;
+            }
+            set {
+                Opcode &= 0xfc07;
+                if (value < 0) {
+                    value = (sbyte)(256 + value);
+                }
+                Opcode |= (ushort)((value << 3) & 0x03f8);
+            }
+        }
+
     }
 }

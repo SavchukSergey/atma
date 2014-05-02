@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="AsmContext.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="Expressions\BaseExpression.cs" />
+    <Compile Include="Expressions\ExpressionCalculator.cs" />
+    <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="Opcodes\Arithmetics\CpcOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\CpOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\DecOpcode.cs" />
@@ -58,6 +61,7 @@
     <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
+    <Compile Include="Opcodes\BaseOffset7Opcode.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
     <Compile Include="Opcodes\BasePort64Reg32Opcode.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Opcodes\Branch\RetOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrsOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BreqOpcode.cs" />
     <Compile Include="Opcodes\Logic\TstOpcode.cs" />
     <Compile Include="Opcodes\Logic\SerOpcode.cs" />
     <Compile Include="Opcodes\Logic\ClrOpcode.cs" />

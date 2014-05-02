@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atmega.Asm.Expressions;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
@@ -7,9 +8,16 @@ namespace Atmega.Asm {
 
         private readonly IList<byte> _code = new List<byte>();
 
+        public int Pass { get; set; }
+
         public TokensQueue Queue { get; set; }
 
         public int CodeOffset { get; set; }
+
+        public int Offset {
+            get { return CodeOffset; }
+            set { CodeOffset = value; }
+        }
 
         public IList<byte> Code {
             get { return _code; }
@@ -91,10 +99,10 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
-        private long CalculateExpression() {
-            //TODO: eof and eol check
-            var token = Queue.Read(TokenType.Integer);
-            return token.IntegerValue;
+        private readonly ExpressionCalculator _calculator = new ExpressionCalculator();
+
+        public long CalculateExpression() {
+            return _calculator.Calculate(this);
         }
 
         private byte ParseReg() {
@@ -138,7 +146,19 @@ namespace Atmega.Asm {
             }
         }
 
+        private readonly IDictionary<string, ushort> _labels = new Dictionary<string, ushort>();
+
         public void DefineLabel(string name) {
+            _labels[name] = (ushort)Offset;
+        }
+
+        public ushort? GetLabel(string name) {
+            ushort val;
+            if (_labels.TryGetValue(name, out val)) {
+                return val;
+            }
+            if (Pass <= 1) return 0;
+            return null;
         }
     }
 }
