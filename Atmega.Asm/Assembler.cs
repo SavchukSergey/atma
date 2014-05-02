@@ -8,9 +8,14 @@ namespace Atmega.Asm {
     public class Assembler {
 
 
-        public AsmContext Assemble(string content) {
+        public AsmContext Load(string fileName) {
+            var content = LoadContent(fileName);
+            return Assemble(content, fileName);
+        }
+
+        public AsmContext Assemble(string content, string fileName = null) {
             var tokens = new List<Token>();
-            LoadRecursive(content, tokens);
+            LoadRecursive(content, tokens, fileName);
 
             AsmContext last = null;
             for (var i = 0; i < 10; i++) {
@@ -24,9 +29,9 @@ namespace Atmega.Asm {
             return last;
         }
 
-        protected IList<Token> LoadRecursive(string content, IList<Token> result) {
+        protected IList<Token> LoadRecursive(string content, IList<Token> result, string fileName = null) {
             var tokenizer = new Tokenizer();
-            var fileTokens = tokenizer.Read(content);
+            var fileTokens = tokenizer.Read(content, fileName);
 
             for (var i = 0; i < fileTokens.Count; ) {
                 var token = fileTokens[i++];
@@ -90,7 +95,7 @@ namespace Atmega.Asm {
                         if (opcode != null) {
                             opcode.Compile(context);
                         } else {
-                            throw new Exception("Illegal instruction " + token.StringValue);
+                            throw new TokenException("Illegal instruction " + token.StringValue, token);
                         }
                         break;
                 }
