@@ -143,6 +143,7 @@
     <Compile Include="Opcodes\Move\PopOpcode.cs" />
     <Compile Include="Opcodes\Move\PushOpcode.cs" />
     <Compile Include="Opcodes\Move\MovOpcode.cs" />
+    <Compile Include="Opcodes\SleepOpcode.cs" />
     <Compile Include="Opcodes\WdrOpcode.cs" />
     <Compile Include="Opcodes\NopOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
