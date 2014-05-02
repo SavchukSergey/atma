@@ -78,6 +78,22 @@
   <ItemGroup>
     <EmbeddedResource Include="Samples\branch.asm" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Artifacts\include\atmega8.inc">
+      <Link>Samples\include\atmega8.inc</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Artifacts\include\ports.inc">
+      <Link>Samples\include\ports.inc</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Artifacts\include\eeprom.inc">
+      <Link>Samples\include\eeprom.inc</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Samples\flash.asm" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -16,10 +16,6 @@ namespace Atmega.Asm.IO {
             throw new InvalidOperationException();
         }
 
-        public bool FileExists(string fileName) {
-            return false;
-        }
-
         public string ResolveFile(string fileName, string referrer) {
             return fileName;
         }

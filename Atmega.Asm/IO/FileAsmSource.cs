@@ -9,10 +9,6 @@ namespace Atmega.Asm.IO {
             }
         }
 
-        public virtual bool FileExists(string fileName) {
-            return File.Exists(fileName);
-        }
-
         public virtual string ResolveFile(string fileName, string referrer) {
             var basePath = referrer != null ? Path.GetDirectoryName(referrer) : null;
             if (basePath != null) {
@@ -21,6 +17,10 @@ namespace Atmega.Asm.IO {
             }
 
             return null;
+        }
+
+        private bool FileExists(string fileName) {
+            return File.Exists(fileName);
         }
 
     }

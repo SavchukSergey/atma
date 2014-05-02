@@ -49,6 +49,7 @@
     <Compile Include="Expressions\BaseExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
+    <Compile Include="IO\EmbeddedAsmSource.cs" />
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />
     <Compile Include="IO\MemoryAsmSource.cs" />
@@ -175,10 +176,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="inc\atmega8.inc">
+    <Content Include="..\Artifacts\include\atmega8.inc">
+      <Link>inc\atmega8.inc</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="inc\ports.inc">
+    <Content Include="..\Artifacts\include\eeprom.inc">
+      <Link>inc\eeprom.inc</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Artifacts\include\ports.inc">
+      <Link>inc\ports.inc</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

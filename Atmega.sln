@@ -7,6 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Asm", "Atmega.Asm\At
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Asm.Tests", "Atmega.Asm.Tests\Atmega.Asm.Tests.csproj", "{374B2480-436F-423A-92C1-E2E0F21D6DC2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artifacts", "artifacts", "{478F1F1C-402E-4AB4-8313-BF46553D3A5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{266847E6-603E-4AFC-B2E2-A58E2BDBF1F3}"
+	ProjectSection(SolutionItems) = preProject
+		Artifacts\include\atmega8.inc = Artifacts\include\atmega8.inc
+		Artifacts\include\eeprom.inc = Artifacts\include\eeprom.inc
+		Artifacts\include\ports.inc = Artifacts\include\ports.inc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{266847E6-603E-4AFC-B2E2-A58E2BDBF1F3} = {478F1F1C-402E-4AB4-8313-BF46553D3A5D}
 	EndGlobalSection
 EndGlobal
