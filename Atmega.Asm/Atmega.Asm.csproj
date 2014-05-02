@@ -84,6 +84,12 @@
     <Compile Include="Opcodes\Bit\SenOpcode.cs" />
     <Compile Include="Opcodes\Bit\SecOpcode.cs" />
     <Compile Include="Opcodes\Bit\ClcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\EicallOpcode.cs" />
+    <Compile Include="Opcodes\Branch\EijmpOpcode.cs" />
+    <Compile Include="Opcodes\Branch\IcallOpcode.cs" />
+    <Compile Include="Opcodes\Branch\IjmpOpcode.cs" />
+    <Compile Include="Opcodes\Branch\RetiOpcode.cs" />
+    <Compile Include="Opcodes\Branch\RetOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrsOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrcOpcode.cs" />
     <Compile Include="Opcodes\Logic\TstOpcode.cs" />

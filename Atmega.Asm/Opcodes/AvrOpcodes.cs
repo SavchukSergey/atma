@@ -68,6 +68,12 @@ namespace Atmega.Asm.Opcodes {
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
+                case "ijmp": return new IjmpOpcode();
+                case "icall": return new IcallOpcode();
+                case "eijmp": return new EijmpOpcode();
+                case "eicall": return new EicallOpcode();
+                case "ret": return new RetOpcode();
+                case "reti": return new RetiOpcode();
 
                 default: return null;
             }
@@ -76,15 +82,11 @@ namespace Atmega.Asm.Opcodes {
         /*
              100101001SSS1000   bclr    S
              100101000SSS1000   bset    S
-             1001010100001001   icall
-             1001010000001001   ijmp
              1001010111001000   lpm     ?
              1001000ddddd010+   lpm     r,z
              1001010111011000   elpm    ?
              1001000ddddd011+   elpm    r,z
              0000000000000000   nop
-             1001010100001000   ret
-             1001010100011000   reti
              1001010110001000   sleep
              1001010110011000   break
              1001010110101000   wdr
@@ -140,8 +142,6 @@ namespace Atmega.Asm.Opcodes {
              100!000dddddee-+   ld      r,e
              10o0oo1rrrrrbooo   std     b,r
              100!001rrrrree-+   st      e,r
-             1001010100011001   eicall
-             1001010000011001   eijmp
          */
     }
 }
