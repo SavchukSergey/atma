@@ -70,6 +70,13 @@
         Punctuation,
         NewLine,
         Comma,
-        Colon
+        Colon,
+        
+        CloseParenthesis,
+        OpenParenthesis,
+        Plus,
+        Minus,
+        Multiply,
+        Divide
     }
 }

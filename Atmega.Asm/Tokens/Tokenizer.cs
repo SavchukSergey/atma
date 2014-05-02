@@ -255,19 +255,23 @@ namespace Atmega.Asm.Tokens {
                     return TokenType.Comma;
                 case ':':
                     return TokenType.Colon;
+                case '(':
+                    return TokenType.OpenParenthesis;
+                case ')':
+                    return TokenType.CloseParenthesis;
+                case '+':
+                    return TokenType.Plus;
+                case '*':
+                    return TokenType.Multiply;
                 case ' ':
                 case '\t':
                 case '\r':
                 case '\n':
-                case '+':
                 case '-':
                 case '/':
-                case '*':
                 case '=':
                 case '<':
                 case '>':
-                case '(':
-                case ')':
                 case '[':
                 case ']':
                 case '{':

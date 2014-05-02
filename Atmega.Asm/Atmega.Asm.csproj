@@ -46,8 +46,11 @@
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="Expressions\AddExpression.cs" />
     <Compile Include="Expressions\BaseExpression.cs" />
+    <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
+    <Compile Include="Expressions\MulExpression.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="IO\EmbeddedAsmSource.cs" />
     <Compile Include="IO\FileAsmSource.cs" />

@@ -17,6 +17,12 @@ namespace Atmega.Asm {
         private readonly AsmSection _flashSection = new AsmSection();
         private AsmSectionType _currentSection;
 
+        private readonly ExpressionCalculator _calculator;
+
+        public AsmContext() {
+            _calculator = new ExpressionCalculator(this);
+        }
+
         public AsmSection CodeSection {
             get { return _codeSection; }
         }
@@ -150,10 +156,8 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
-        private readonly ExpressionCalculator _calculator = new ExpressionCalculator();
-
         public long CalculateExpression() {
-            return _calculator.Calculate(this);
+            return _calculator.Parse(Queue).Evaluate();
         }
 
 
