@@ -1,4 +1,5 @@
 ﻿using System;
+using Atmega.Asm.IO;
 
 namespace Atmega.Asm {
     class Program {
@@ -9,7 +10,7 @@ namespace Atmega.Asm {
                 return;
             }
             var sourceName = args[0];
-            var assembler = new Assembler();
+            var assembler = new Assembler(new FileAsmSource());
             try {
                 var res = assembler.Load(sourceName);
                 Console.WriteLine("passes: {0}", res.Pass);

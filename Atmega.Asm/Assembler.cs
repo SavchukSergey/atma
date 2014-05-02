@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
     public class Assembler {
+        private readonly IAsmSource _source;
 
+        public Assembler(IAsmSource source) {
+            _source = source;
+        }
 
         public AsmContext Load(string fileName) {
-            var content = LoadContent(fileName);
+            var content = _source.LoadContent(fileName);
             return Assemble(content, fileName);
         }
 
@@ -81,9 +86,9 @@ namespace Atmega.Asm {
                         }
                     }
 
-                    var path = ResolveFile(nameToken.StringValue, fileName);
+                    var path = _source.ResolveFile(nameToken.StringValue, fileName);
                     if (string.IsNullOrWhiteSpace(path)) throw new TokenException("file is not found " + nameToken.StringValue, token);
-                    var otherContent = LoadContent(path);
+                    var otherContent = _source.LoadContent(path);
                     LoadRecursive(otherContent, result, nameToken.StringValue);
                 } else {
                     i--;
@@ -122,27 +127,6 @@ namespace Atmega.Asm {
                 }
             }
         }
-
-        protected virtual string LoadContent(string fileName) {
-            using (var reader = new StreamReader(fileName)) {
-                return reader.ReadToEnd();
-            }
-        }
-
-        protected virtual bool FileExists(string fileName) {
-            return File.Exists(fileName);
-        }
-
-        protected string ResolveFile(string fileName, string referrer) {
-            var basePath = referrer != null ? Path.GetDirectoryName(referrer) : null;
-            if (basePath != null) {
-                var path = Path.Combine(basePath, fileName);
-                if (FileExists(path)) return path;
-            }
-
-            return null;
-        }
-
 
         private bool TheSame(AsmContext prev, AsmContext current) {
             if (prev == null) return false;

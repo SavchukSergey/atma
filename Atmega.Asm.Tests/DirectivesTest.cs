@@ -2,16 +2,16 @@
 
 namespace Atmega.Asm.Tests {
     [TestFixture]
-    public class DirectivesTest {
+    public class DirectivesTest : BaseTestFixture {
 
         [Test]
         public void EquTest() {
-            var compiled = new Assembler().Assemble(@"
+            var compiled = Compile(@"
 Name equ adc r12, r12
 ");
             Assert.AreEqual(0, compiled.Code.Count);
 
-            compiled = new Assembler().Assemble(@"
+            compiled = Compile(@"
 Name equ adc r12, r12
 Name
 ");

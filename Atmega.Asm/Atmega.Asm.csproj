@@ -47,6 +47,9 @@
     <Compile Include="Expressions\BaseExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
+    <Compile Include="IO\FileAsmSource.cs" />
+    <Compile Include="IO\IAsmSource.cs" />
+    <Compile Include="IO\MemoryAsmSource.cs" />
     <Compile Include="Opcodes\Arithmetics\CpcOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\CpOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\DecOpcode.cs" />
@@ -153,6 +156,7 @@
     <Compile Include="Opcodes\Move\PushOpcode.cs" />
     <Compile Include="Opcodes\Move\MovOpcode.cs" />
     <Compile Include="Opcodes\SleepOpcode.cs" />
+    <Compile Include="Opcodes\BreakOpcode.cs" />
     <Compile Include="Opcodes\WdrOpcode.cs" />
     <Compile Include="Opcodes\NopOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />

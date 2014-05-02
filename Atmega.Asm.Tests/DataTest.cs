@@ -2,11 +2,11 @@
 
 namespace Atmega.Asm.Tests {
     [TestFixture]
-    public class DataTest {
+    public class DataTest : BaseTestFixture {
 
         [Test]
         public void BytesTest() {
-            var compiled = new Assembler().Assemble(@"
+            var compiled = Compile(@"
 section code
 db 12
 db 0x34, 45, 'abc', 0

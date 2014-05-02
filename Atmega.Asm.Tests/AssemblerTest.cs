@@ -8,46 +8,46 @@ using NUnit.Framework;
 
 namespace Atmega.Asm.Tests {
     [TestFixture]
-    public class AssemblerTest {
+    public class AssemblerTest : BaseTestFixture {
 
         [Test]
         public void ArithmeticsTest() {
             var content = LoadEmbeded("arithmetics.asm");
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         [Test]
         public void LogicTest() {
             var content = LoadEmbeded("logic.asm");
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         [Test]
         public void BitTest() {
             var content = LoadEmbeded("bit.asm");
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         [Test]
         public void MoveTest() {
             var content = LoadEmbeded("move.asm");
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         [Test]
         public void BranchTest() {
             var content = LoadEmbeded("branch.asm");
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
 
         [Test]
         public void EmptyLabelTest() {
-            var content = @"
+            const string content = @"
 section code
 main:
 ";
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         [Test]
@@ -83,7 +83,7 @@ main:
 .forward:
 ";
             var content = template.Replace("{Operation}", op);
-            var compiled = new Assembler().Assemble(content);
+            var compiled = Compile(content);
         }
 
         private string LoadEmbeded(string name) {

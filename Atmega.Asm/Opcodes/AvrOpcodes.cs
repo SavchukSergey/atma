@@ -117,6 +117,7 @@ namespace Atmega.Asm.Opcodes {
                 case "nop": return new NopOpcode();
                 case "wdr": return new WdrOpcode();
                 case "sleep": return new SleepOpcode();
+                case "break": return new BreakOpcode();
 
                 default: return null;
             }
@@ -127,7 +128,6 @@ namespace Atmega.Asm.Opcodes {
              1001000ddddd010+   lpm     r,z
              1001010111011000   elpm    ?
              1001000ddddd011+   elpm    r,z
-             1001010110011000   break
 
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
