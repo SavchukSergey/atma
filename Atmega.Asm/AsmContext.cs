@@ -32,6 +32,11 @@ namespace Atmega.Asm {
             CodeOffset += 2;
         }
 
+        public void EmitByte(byte bt) {
+            _code.Add(bt);
+            Offset++;
+        }
+
         public void ReserveByte() {
             //TODO: alignment should take any space if put at the end of section. put uninitialized pointer
             Code.Add(0);
@@ -147,7 +152,7 @@ namespace Atmega.Asm {
             return _calculator.Calculate(this);
         }
 
-       
+
 
         private readonly IDictionary<string, ushort> _passLabels = new Dictionary<string, ushort>();
 
@@ -171,5 +176,6 @@ namespace Atmega.Asm {
             if (Pass <= 1) return 0;
             return null;
         }
+
     }
 }

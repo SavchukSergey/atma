@@ -170,6 +170,9 @@ namespace Atmega.Asm {
                     case "org":
                         ProcessOrg(context);
                         break;
+                    case "db":
+                        ProcessDataBytes(context);
+                        break;
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
                         if (opcode != null) {
@@ -213,10 +216,7 @@ namespace Atmega.Asm {
         }
 
         private void ProcessOrg(AsmContext context) {
-            if (context.Queue.Count == 0) {
-                throw new Exception("org value expected");
-            }
-            var token = context.Queue.Read();
+            var token = context.ReadRequiredToken();
             if (token.Type != TokenType.Integer) {
                 throw new Exception("integer value expected");
             }
@@ -224,5 +224,34 @@ namespace Atmega.Asm {
             context.CodeOffset = (int)token.IntegerValue;
         }
 
+        private void ProcessDataBytes(AsmContext context) {
+            context.PeekRequiredToken();
+            while (context.Queue.Count > 0) {
+                var token = context.Queue.Peek();
+                if (token.Type == TokenType.NewLine) break;
+
+                if (token.Type == TokenType.String) {
+                    token = context.Queue.Read();
+                    foreach (var ch in token.StringValue) {
+                        if (ch > 255) {
+                            throw new TokenException("unicode character cannot be translated to byte", token);
+                        }
+                        context.EmitByte((byte)ch);
+                    }
+                } else {
+                    var val = context.CalculateExpression();
+                    if (val > 255 || val < 0) {
+                        throw new TokenException("value is beyond of byte boundary", token);
+                    }
+                    context.EmitByte((byte)val);
+                }
+
+                if (context.Queue.Count > 0) {
+                    var commaPreview = context.Queue.Peek();
+                    if (commaPreview.Type != TokenType.Comma) break;
+                    context.Queue.Read();
+                }
+            }
+        }
     }
 }
