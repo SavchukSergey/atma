@@ -17,6 +17,7 @@ namespace Atmega.Asm {
                 var hexName = Path.GetFileNameWithoutExtension(sourceName) + ".hex";
                 var hex = res.BuildHexFile();
                 hex.Save(hexName);
+                //SaveBin(res, Path.GetFileNameWithoutExtension(sourceName) + ".binhex");
                 Console.WriteLine("passes: {0}", res.Pass);
                 Console.WriteLine("code size: {0}", res.CodeSection.Content.Count);
             } catch (TokenException exc) {
@@ -24,6 +25,20 @@ namespace Atmega.Asm {
                 Console.WriteLine(exc.Message);
                 Environment.Exit(1);
             }
+        }
+
+        private static void SaveBin(AsmContext context, string path) {
+            using (var writer = new StreamWriter(path, false)) {
+                foreach (var bt in context.CodeSection.Content) {
+                    writer.Write(FormatByte(bt));
+                    writer.Write(" ");
+                }
+            }
+        }
+
+        private static string FormatByte(byte bt) {
+            const string hex = "0123456789ABCDEF";
+            return hex[bt >> 4].ToString() + hex[bt & 0x0f];
         }
 
         private static void Usage() {
