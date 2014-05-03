@@ -46,6 +46,7 @@
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="Expressions\BitAndExpression.cs" />
     <Compile Include="Expressions\AddExpression.cs" />
     <Compile Include="Expressions\BaseExpression.cs" />
     <Compile Include="Expressions\UnaryExpression.cs" />

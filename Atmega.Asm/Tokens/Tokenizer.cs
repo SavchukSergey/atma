@@ -285,6 +285,7 @@ namespace Atmega.Asm.Tokens {
                 case '<': return TokenType.Less;
                 case '>': return TokenType.Greater;
                 case '|': return TokenType.BitOr;
+                case '&': return TokenType.BitAnd;
                 case ' ':
                 case '\t':
                 case '\r':
@@ -295,7 +296,6 @@ namespace Atmega.Asm.Tokens {
                 case ']':
                 case '{':
                 case '}':
-                case '&':
                 case '~':
                 case '#':
                 case '`':

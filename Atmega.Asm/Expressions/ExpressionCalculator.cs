@@ -84,6 +84,7 @@ namespace Atmega.Asm.Expressions {
                     case TokenType.Mod:
                     case TokenType.LeftShift:
                     case TokenType.BitOr:
+                    case TokenType.BitAnd:
                         left = ProcessBinaryExpression(token, left, tokens);
                         break;
                     default:
@@ -98,20 +99,14 @@ namespace Atmega.Asm.Expressions {
             var tokenPriority = GetPriority(opToken.Type);
             var other = ParseWithPriority(tokens, tokenPriority + 1);
             switch (opToken.Type) {
-                case TokenType.Plus:
-                    return new AddExpression(left, other);
-                case TokenType.Minus:
-                    return new SubExpression(left, other);
-                case TokenType.Multiply:
-                    return new MulExpression(left, other);
-                case TokenType.Divide:
-                    return new DivExpression(left, other);
-                case TokenType.Mod:
-                    return new ModExpression(left, other);
-                case TokenType.LeftShift:
-                    return new ShiftLeftExpression(left, other);
-                case TokenType.BitOr:
-                    return new BitOrExpression(left, other);
+                case TokenType.Plus: return new AddExpression(left, other);
+                case TokenType.Minus: return new SubExpression(left, other);
+                case TokenType.Multiply:return new MulExpression(left, other);
+                case TokenType.Divide: return new DivExpression(left, other);
+                case TokenType.Mod: return new ModExpression(left, other);
+                case TokenType.LeftShift: return new ShiftLeftExpression(left, other);
+                case TokenType.BitOr: return new BitOrExpression(left, other);
+                case TokenType.BitAnd: return new BitAndExpression(left, other);
                 default:
                     throw new TokenException("unexpected operator", opToken);
             }

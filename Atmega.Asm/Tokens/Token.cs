@@ -81,7 +81,11 @@
         Mod,
         LeftShift,
         RightShift,
+        
         BitOr,
+        BitAnd,
+        BitXor,
+
         Less,
         Greater
     }
