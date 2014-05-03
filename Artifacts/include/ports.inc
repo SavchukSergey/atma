@@ -80,4 +80,6 @@ EERE equ 0
 EEWE equ 1
 EEMWE equ 2
 
-;WDTCRWDCE equ 4WDE equ 3
+;WDTCR
+WDCE equ 4
+WDE equ 3

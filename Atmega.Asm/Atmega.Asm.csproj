@@ -52,6 +52,7 @@
     <Compile Include="Expressions\BitOrExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
     <Compile Include="Expressions\ModExpression.cs" />
+    <Compile Include="Expressions\DivExpression.cs" />
     <Compile Include="Expressions\MulExpression.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="Expressions\ShiftLeftExpression.cs" />

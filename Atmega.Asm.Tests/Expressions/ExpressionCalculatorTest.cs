@@ -6,76 +6,25 @@ namespace Atmega.Asm.Tests.Expressions {
     public class ExpressionCalculatorTest {
 
         [Test]
-        public void NumberTest() {
-            var expr = new ExpressionCalculator(null).Parse("345");
-            Assert.AreEqual(345, expr.Evaluate());
-        }
-
-        [Test]
-        public void SumTest() {
-            var expr = new ExpressionCalculator(null).Parse("345 + 452");
-            Assert.AreEqual(345 + 452, expr.Evaluate());
-        }
-
-
-        [Test]
-        public void SumSumTest() {
-            var expr = new ExpressionCalculator(null).Parse("345 + 452 + 123");
-            Assert.AreEqual(345 + 452 + 123, expr.Evaluate());
-        }
-
-        [Test]
-        public void SumMulTest() {
-            var expr = new ExpressionCalculator(null).Parse("345 + 452 * 123");
-            Assert.AreEqual(345 + 452 * 123, expr.Evaluate());
-        }
-
-        [Test]
-        public void MulSumTest() {
-            var expr = new ExpressionCalculator(null).Parse("345 * 452 + 123");
-            Assert.AreEqual(345 * 452 + 123, expr.Evaluate());
-        }
-
-        [Test]
-        public void SumMul2Test() {
-            var expr = new ExpressionCalculator(null).Parse("(345 + 452) * 123");
-            Assert.AreEqual((345 + 452) * 123, expr.Evaluate());
-        }
-
-        [Test]
-        public void MulSum2Test() {
-            var expr = new ExpressionCalculator(null).Parse("345 * (452 + 123)");
-            Assert.AreEqual(345 * (452 + 123), expr.Evaluate());
-        }
-
-        [Test]
-        public void SumMul3Test() {
-            var expr = new ExpressionCalculator(null).Parse("345 + (452 * 123)");
-            Assert.AreEqual(345 + (452 * 123), expr.Evaluate());
-        }
-
-        [Test]
-        public void MulSum3Test() {
-            var expr = new ExpressionCalculator(null).Parse("(345 * 452) + 123");
-            Assert.AreEqual((345 * 452) + 123, expr.Evaluate());
-        }
-
-        [Test]
-        public void ModTest() {
-            var expr = new ExpressionCalculator(null).Parse("345 * 452 % 123");
-            Assert.AreEqual(345 * (452 % 123), expr.Evaluate());
-        }
-
-        [Test]
-        public void ShiftLeftTest() {
-            var expr = new ExpressionCalculator(null).Parse("3 << 5");
-            Assert.AreEqual(3 << 5, expr.Evaluate());
-        }
-
-        [Test]
-        public void ShiftOrShiftTest() {
-            var expr = new ExpressionCalculator(null).Parse("(1 << 3) | (1 << 2)");
-            Assert.AreEqual((1 << 3) | (1 << 2), expr.Evaluate());
+        [TestCase("345", 345)]
+        [TestCase("345 + 452", 345 + 452)]
+        [TestCase("(345 + 452)", (345 + 452))]
+        [TestCase("345 + 452 + 123", 345 + 452 + 123)]
+        [TestCase("345 + 452 * 123", 345 + 452 * 123)]
+        [TestCase("345 * 452 + 123", 345 * 452 + 123)]
+        [TestCase("(345 + 452) * 123", (345 + 452) * 123)]
+        [TestCase("345 * (452 + 123)", 345 * (452 + 123))]
+        [TestCase("345 + (452 * 123)", 345 + (452 * 123))]
+        [TestCase("(345 * 452) + 123", (345 * 452) + 123)]
+        [TestCase("345 + 452 * 123 * 789 + 243", 345 + 452 * 123 * 789 + 243)]
+        [TestCase("345 * 452 % 123", 345 * (452 % 123))]
+        [TestCase("3 << 5", 3 << 5)]
+        [TestCase("(1 << 3) | (1 << 2)", (1 << 3) | (1 << 2))]
+        [TestCase("(123*456)*(78*452)", (123 * 456) * (78 * 452))]
+        [TestCase("345 + 242, 111", 345 + 242)]
+        public void PositiveTests(string expression, long result) {
+            var expr = new ExpressionCalculator(null).Parse(expression);
+            Assert.AreEqual(result, expr.Evaluate());
         }
     }
 }

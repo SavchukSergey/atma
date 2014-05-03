@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Expressions {
@@ -33,91 +32,87 @@ namespace Atmega.Asm.Expressions {
             return ParseWithPriority(tokens, 0);
         }
 
-        private BaseExpression ParseWithPriority(TokensQueue tokens, int priority) {
+        private BaseExpression ParseOperand(TokensQueue tokens) {
             if (tokens.Count == 0) {
-                throw new Exception("unexpected end of file"); //todo custom exception
+                throw new Exception("unexpected end of expression");
             }
-            var stack = new Stack<BaseExpression>();
-            do {
+
+            var token = tokens.Read();
+            switch (token.Type) {
+                case TokenType.Integer:
+                    return new NumberExpression { Value = token.IntegerValue };
+                case TokenType.Literal:
+                    return ParseLiteral(token);
+                case TokenType.OpenParenthesis:
+                    var inner = Parse(tokens);
+                    if (tokens.Count == 0) {
+                        throw new Exception("missing closing parenthesis");
+                    }
+                    var close = tokens.Read();
+                    if (close.Type != TokenType.CloseParenthesis) {
+                        throw new TokenException("expected closing parenthesis", close);
+                    }
+                    return inner;
+                default:
+                    throw new TokenException("unexpected token " + token.StringValue, token);
+            }
+        }
+
+        private BaseExpression ParseWithPriority(TokensQueue tokens, int priority) {
+
+            BaseExpression left = ParseOperand(tokens);
+            while (tokens.Count > 0) {
                 var preview = tokens.Peek();
-                if (preview.Type == TokenType.NewLine) break;
-                if (preview.Type == TokenType.Comma) break;
-                if (preview.Type == TokenType.CloseParenthesis) break;
+                switch (preview.Type) {
+                    case TokenType.NewLine:
+                    case TokenType.Comma:
+                    case TokenType.CloseParenthesis:
+                        return left;
+                }
+
                 var tokenPriority = GetPriority(preview.Type);
                 if (tokenPriority >= 0 && tokenPriority < priority) {
-                    //TODO: range check and count
-                    return stack.Pop();
+                    if (left != null) return left;
+                    throw new Exception("some case");
                 }
 
                 var token = tokens.Read();
                 switch (token.Type) {
-                    case TokenType.Integer:
-                        stack.Push(new NumberExpression { Value = token.IntegerValue });
-                        break;
                     case TokenType.Plus:
                     case TokenType.Multiply:
+                    case TokenType.Divide:
                     case TokenType.Mod:
                     case TokenType.LeftShift:
                     case TokenType.BitOr:
-                        ProcessBinaryExpression(token, stack, tokens);
-                        break;
-                    case TokenType.Literal:
-                        stack.Push(ParseLiteral(token));
-                        break;
-                    case TokenType.OpenParenthesis: {
-                            var inner = Parse(tokens);
-                            stack.Push(inner);
-                            if (tokens.Count == 0) {
-                                throw new Exception("missing closing parenthesis");
-                            }
-                            var close = tokens.Read();
-                            if (close.Type != TokenType.CloseParenthesis) {
-                                throw new TokenException("expected closing parenthesis", close);
-                            }
-                        }
+                        left = ProcessBinaryExpression(token, left, tokens);
                         break;
                     default:
                         throw new TokenException("unexpected token " + token.StringValue, token);
                 }
-
-            } while (tokens.Count > 0);
-
-            if (stack.Count != 1) {
-                throw new Exception("unexpected end of line"); //todo custom exception
             }
 
-            return stack.Pop();
+            return left;
         }
 
-        private void ProcessBinaryExpression(Token opToken, Stack<BaseExpression> stack, TokensQueue tokens) {
+        private BaseExpression ProcessBinaryExpression(Token opToken, BaseExpression left, TokensQueue tokens) {
             var tokenPriority = GetPriority(opToken.Type);
-
             var other = ParseWithPriority(tokens, tokenPriority + 1);
-            if (stack.Count == 0) {
-                throw new TokenException("unexpected operator", opToken);
-            }
-
-            var left = stack.Pop();
             switch (opToken.Type) {
                 case TokenType.Plus:
-                    stack.Push(new AddExpression(left, other));
-                    break;
+                    return new AddExpression(left, other);
                 case TokenType.Multiply:
-                    stack.Push(new MulExpression(left, other));
-                    break;
+                    return new MulExpression(left, other);
+                case TokenType.Divide:
+                    return new DivExpression(left, other);
                 case TokenType.Mod:
-                    stack.Push(new ModExpression(left, other));
-                    break;
+                    return new ModExpression(left, other);
                 case TokenType.LeftShift:
-                    stack.Push(new ShiftLeftExpression(left, other));
-                    break;
+                    return new ShiftLeftExpression(left, other);
                 case TokenType.BitOr:
-                    stack.Push(new BitOrExpression(left, other));
-                    break;
+                    return new BitOrExpression(left, other);
                 default:
                     throw new TokenException("unexpected operator", opToken);
             }
-
         }
 
         private static int GetPriority(TokenType type) {
