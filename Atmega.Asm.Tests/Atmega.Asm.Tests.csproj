@@ -52,6 +52,8 @@
     <Compile Include="DirectivesTest.cs" />
     <Compile Include="AssemblerTest.cs" />
     <Compile Include="Expressions\ExpressionCalculatorTest.cs" />
+    <Compile Include="Hex\HexFileLineTest.cs" />
+    <Compile Include="Hex\HexFileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokens\OpcodeTranslationTest.cs" />
     <Compile Include="Tokens\TokenTest.cs" />

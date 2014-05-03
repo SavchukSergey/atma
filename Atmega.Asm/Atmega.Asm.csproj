@@ -60,6 +60,9 @@
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="Expressions\ShiftLeftExpression.cs" />
     <Compile Include="Expressions\SubExpression.cs" />
+    <Compile Include="Hex\HexFile.cs" />
+    <Compile Include="Hex\HexFileLine.cs" />
+    <Compile Include="Hex\HexFileLineType.cs" />
     <Compile Include="IO\EmbeddedAsmSource.cs" />
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />
@@ -208,6 +211,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
