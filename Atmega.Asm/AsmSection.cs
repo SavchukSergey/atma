@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Atmega.Asm.Hex;
 
 namespace Atmega.Asm {
     public class AsmSection {
@@ -52,6 +54,19 @@ namespace Atmega.Asm {
                 if (Content[i] != other.Content[i]) return false;
             }
             return true;
+        }
+
+        public void WriteTo(HexFile hexFile) {
+            var lines = (Content.Count + 15) / 16;
+            for (var i = 0; i < lines; i++) {
+                var adr = i * 16;
+                var line = new HexFileLine {
+                    Address = (ushort)adr,
+                    Type = HexFileLineType.Data,
+                    Data = Content.Skip(adr).Take(16).ToArray()
+                };
+                hexFile.Lines.Add(line);
+            }
         }
     }
 }

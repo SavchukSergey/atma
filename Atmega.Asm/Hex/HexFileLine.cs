@@ -23,12 +23,14 @@ namespace Atmega.Asm.Hex {
 
         private byte[] GetLineBytes() {
             var bytes = new List<byte> {
-                (byte) Data.Length,
+                (byte) (Data != null ? Data.Length : 0),
                 (byte) ((Address >> 8) & 0xff),
                 (byte) (Address & 0xff),
                 (byte) Type
             };
-            bytes.AddRange(Data);
+            if (Data != null) {
+                bytes.AddRange(Data);
+            }
             return bytes.ToArray();
         }
 

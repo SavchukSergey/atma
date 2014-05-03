@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Atmega.Asm.Expressions;
+using Atmega.Asm.Hex;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
@@ -143,7 +144,7 @@ namespace Atmega.Asm {
         public ushort ReadUshort() {
             var val = CalculateExpression();
             if (val < 0 || val > 0x10000) {
-                throw new Exception("addres is beyound 64k boundary");
+                throw new Exception("address is beyond 64k boundary");
             }
             return (ushort)val;
         }
@@ -151,7 +152,7 @@ namespace Atmega.Asm {
         public byte ReadBit() {
             var val = CalculateExpression();
             if (val < 0 || val > 7) {
-                throw new Exception("Expected bit number 0-7");
+                throw new Exception("expected bit number 0-7");
             }
             return (byte)val;
         }
@@ -160,7 +161,12 @@ namespace Atmega.Asm {
             return _calculator.Parse(Queue).Evaluate();
         }
 
-
+        public HexFile BuildHexFile() {
+            var hexFile = new HexFile();
+            CodeSection.WriteTo(hexFile);
+            hexFile.Lines.Add(new HexFileLine { Type = HexFileLineType.Eof });
+            return hexFile;
+        }
 
         private readonly IDictionary<string, ushort> _passLabels = new Dictionary<string, ushort>();
 

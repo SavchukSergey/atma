@@ -60,5 +60,18 @@ namespace Atmega.Asm.Hex {
             }
             return res;
         }
+
+        public void Save(string hexName) {
+            using (var writer = new StreamWriter(hexName, false)) {
+                Save(writer);
+            }
+        }
+
+
+        public void Save(StreamWriter writer) {
+            foreach (var line in Lines) {
+                writer.WriteLine(line.ToString());
+            }
+        }
     }
 }

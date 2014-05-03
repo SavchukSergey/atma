@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Atmega.Asm.IO;
 
 namespace Atmega.Asm {
@@ -13,6 +14,9 @@ namespace Atmega.Asm {
             var assembler = new Assembler(new FileAsmSource());
             try {
                 var res = assembler.Load(sourceName);
+                var hexName = Path.GetFileNameWithoutExtension(sourceName) + ".hex";
+                var hex = res.BuildHexFile();
+                hex.Save(hexName);
                 Console.WriteLine("passes: {0}", res.Pass);
                 Console.WriteLine("code size: {0}", res.CodeSection.Content.Count);
             } catch (TokenException exc) {
