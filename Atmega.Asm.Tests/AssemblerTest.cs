@@ -85,6 +85,30 @@ main:
             var complied = ComplieEmbeded("flash.asm");
         }
 
+        [Test]
+        public void RjmpTest() {
+            var compiled = Compile(@"
+section code
+back:
+    nop
+    rjmp back
+self:
+    rjmp self
+    rjmp zero
+zero:
+    rjmp forward
+    nop
+forward:
+");
+            Assert.AreEqual(new[] {
+                0, 0,
+                0xfe, 0xcf,
+                0xff, 0xcf,
+                0x00, 0xc0,
+                0x01, 0xc0,
+                0x00, 0x00
+            }, compiled.CodeSection.Content);
+        }
 
     }
 }
