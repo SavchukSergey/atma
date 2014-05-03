@@ -45,12 +45,18 @@ namespace Atmega.Asm.Hex {
 
         public static HexFile Parse(TextReader reader) {
             var res = new HexFile();
-            while (reader.Peek() != -1) {
-                var rawLine = reader.ReadLine();
-                if (!string.IsNullOrWhiteSpace(rawLine)) {
-                    var line = HexFileLine.Parse(rawLine);
-                    res.Lines.Add(line);
+            var lineNumber = 1;
+            try {
+                while (reader.Peek() != -1) {
+                    var rawLine = reader.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(rawLine)) {
+                        var line = HexFileLine.Parse(rawLine);
+                        res.Lines.Add(line);
+                    }
+                    lineNumber++;
                 }
+            } catch (Exception e) {
+                throw new Exception("couldn't parse line " + lineNumber + ". " + e.Message);
             }
             return res;
         }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Atmega.Asm.Hex {
     public class HexFileLine {
@@ -12,6 +11,26 @@ namespace Atmega.Asm.Hex {
         public byte[] Data { get; set; }
 
         public HexFileLineType Type { get; set; }
+
+        public byte Checksum {
+            get {
+                var bytes = GetLineBytes();
+                var sum = bytes.Sum(bt => bt);
+                var neg = (256 - sum) & 0xff;
+                return (byte)neg;
+            }
+        }
+
+        private byte[] GetLineBytes() {
+            var bytes = new List<byte> {
+                (byte) Data.Length,
+                (byte) ((Address >> 8) & 0xff),
+                (byte) (Address & 0xff),
+                (byte) Type
+            };
+            bytes.AddRange(Data);
+            return bytes.ToArray();
+        }
 
         public static HexFileLine Parse(string line) {
             if (!line.StartsWith(":")) throw new ArgumentException();
@@ -25,11 +44,33 @@ namespace Atmega.Asm.Hex {
             }
             var checksum = ReadHexByte(ref line, ref pointer);
 
-            return new HexFileLine {
+            var res = new HexFileLine {
                 Address = addr,
                 Data = array,
                 Type = type
             };
+
+            if (res.Checksum != checksum) {
+                throw new Exception("checksum mismatch");
+            }
+
+            return res;
+        }
+
+        public override string ToString() {
+            var sb = new StringBuilder();
+            sb.Append(":");
+            var bytes = GetLineBytes();
+            foreach (var bt in bytes) {
+                sb.Append(FormatByte(bt));
+            }
+            sb.Append(FormatByte(Checksum));
+            return sb.ToString();
+        }
+
+        private static string FormatByte(byte bt) {
+            const string hex = "0123456789ABCDEF";
+            return hex[bt >> 4].ToString() + hex[bt & 0x0f];
         }
 
         private static ushort ReadHexUShort(ref string line, ref int start) {
