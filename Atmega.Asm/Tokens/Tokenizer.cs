@@ -279,6 +279,7 @@ namespace Atmega.Asm.Tokens {
                 case '(': return TokenType.OpenParenthesis;
                 case ')': return TokenType.CloseParenthesis;
                 case '+': return TokenType.Plus;
+                case '-': return TokenType.Minus;
                 case '*': return TokenType.Multiply;
                 case '%': return TokenType.Mod;
                 case '<': return TokenType.Less;
@@ -288,7 +289,6 @@ namespace Atmega.Asm.Tokens {
                 case '\t':
                 case '\r':
                 case '\n':
-                case '-':
                 case '/':
                 case '=':
                 case '[':

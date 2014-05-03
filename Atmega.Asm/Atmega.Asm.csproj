@@ -48,14 +48,17 @@
     <Compile Include="Assembler.cs" />
     <Compile Include="Expressions\AddExpression.cs" />
     <Compile Include="Expressions\BaseExpression.cs" />
+    <Compile Include="Expressions\UnaryExpression.cs" />
     <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\BitOrExpression.cs" />
     <Compile Include="Expressions\ExpressionCalculator.cs" />
     <Compile Include="Expressions\ModExpression.cs" />
     <Compile Include="Expressions\DivExpression.cs" />
     <Compile Include="Expressions\MulExpression.cs" />
+    <Compile Include="Expressions\NegateExpression.cs" />
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="Expressions\ShiftLeftExpression.cs" />
+    <Compile Include="Expressions\SubExpression.cs" />
     <Compile Include="IO\EmbeddedAsmSource.cs" />
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />

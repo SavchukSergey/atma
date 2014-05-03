@@ -39,10 +39,9 @@ namespace Atmega.Asm.Expressions {
 
             var token = tokens.Read();
             switch (token.Type) {
-                case TokenType.Integer:
-                    return new NumberExpression { Value = token.IntegerValue };
-                case TokenType.Literal:
-                    return ParseLiteral(token);
+                case TokenType.Integer: return new NumberExpression { Value = token.IntegerValue };
+                case TokenType.Literal: return ParseLiteral(token);
+                case TokenType.Minus: return new NegateExpression(ParseOperand(tokens));
                 case TokenType.OpenParenthesis:
                     var inner = Parse(tokens);
                     if (tokens.Count == 0) {
@@ -79,6 +78,7 @@ namespace Atmega.Asm.Expressions {
                 var token = tokens.Read();
                 switch (token.Type) {
                     case TokenType.Plus:
+                    case TokenType.Minus:
                     case TokenType.Multiply:
                     case TokenType.Divide:
                     case TokenType.Mod:
@@ -100,6 +100,8 @@ namespace Atmega.Asm.Expressions {
             switch (opToken.Type) {
                 case TokenType.Plus:
                     return new AddExpression(left, other);
+                case TokenType.Minus:
+                    return new SubExpression(left, other);
                 case TokenType.Multiply:
                     return new MulExpression(left, other);
                 case TokenType.Divide:
