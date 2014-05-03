@@ -15,8 +15,8 @@ SBRC r11,1	;Пропустить, если Rn(K) = 0	if (Rn(K) = 0) PC <- PC + 2
 SBRS r22,2	;Пропустить, если Rn(K) = 1	if (Rn(K) = 1) PC <- PC + 2 or 3	-	1 / 2 / 3
 SBIC 23, 3	;Пропустить, если IR(K) = 0	if (IR(K) = 0) PC <- PC + 2 or 3	-	1 / 2 / 3
 SBIS 31,4	;Пропустить, если IR(K) = 1	if (IR(K) = 1) PC <- PC + 2 or 3	-	1 / 2 / 3
-;BRBS b,K	;Перейти, если SREG(b) = 1	if (SREG(b) = 1) PC <- PC + K + 1	-	1 / 2
-;BRBC b,K	;Перейти, если SREG(b) = 0	if (SREG(b) = 0) PC <- PC + K + 1	-	1 / 2
+BRBS 3,$	;Перейти, если SREG(b) = 1	if (SREG(b) = 1) PC <- PC + K + 1	-	1 / 2
+BRBC 2,$	;Перейти, если SREG(b) = 0	if (SREG(b) = 0) PC <- PC + K + 1	-	1 / 2
 BREQ $	;Перейти, если Z = 1	if (Z = 1) PC <- PC + K + 1	-	1 / 2
 BRNE $	;Перейти, если Z = 0	if (Z = 0) PC <- PC + K + 1	-	1 / 2
 BRCC $	;Перейти, если C = 0	if (C = 0) PC <- PC + K + 1	-	1 / 2

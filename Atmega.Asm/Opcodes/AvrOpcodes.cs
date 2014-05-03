@@ -117,6 +117,8 @@ namespace Atmega.Asm.Opcodes {
                 case "brvs": return new BrvsOpcode();
                 case "brie": return new BrieOpcode();
                 case "brid": return new BridOpcode();
+                case "brbc": return new BrbcOpcode();
+                case "brbs": return new BrbsOpcode();
                 
                 case "nop": return new NopOpcode();
                 case "wdr": return new WdrOpcode();
@@ -135,8 +137,6 @@ namespace Atmega.Asm.Opcodes {
 
              10010110KKddKKKK   adiw    w,K
              10010111KKddKKKK   sbiw    w,K
-             111101lllllllsss   brbc    s,l
-             111100lllllllsss   brbs    s,l
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a

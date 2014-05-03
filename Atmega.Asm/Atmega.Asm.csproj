@@ -81,6 +81,7 @@
     <Compile Include="Opcodes\AvrOpcodes.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset12Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset22Opcode.cs" />
+    <Compile Include="Opcodes\Branch\BaseStatusBitOffset7.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset7Opcode.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="Opcodes\Branch\RetOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrsOpcode.cs" />
     <Compile Include="Opcodes\Branch\SbrcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BrbcOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BrbsOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BridOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrieOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrvsOpcode.cs" />
