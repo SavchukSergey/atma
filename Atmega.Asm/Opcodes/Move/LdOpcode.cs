@@ -13,9 +13,9 @@ namespace Atmega.Asm.Opcodes.Move {
         }
 
         public override void Compile(AsmContext context) {
-            var dest = context.ReadReg32();
+            var dest = context.Parser.ReadReg32();
             context.Queue.Read(TokenType.Comma);
-            var operand = context.ReadIndirectOperand();
+            var operand = context.Parser.ReadIndirectOperand();
 
             var translation = new OpcodeTranslation {
                 Opcode = GetOpcodeTemplate(operand.Register),

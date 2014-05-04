@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsmContext.cs" />
+    <Compile Include="AsmParser.cs" />
     <Compile Include="AsmSection.cs" />
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />

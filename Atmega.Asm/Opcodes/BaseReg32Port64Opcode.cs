@@ -9,10 +9,10 @@ namespace Atmega.Asm.Opcodes {
 
         public override void Compile(AsmContext context) {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.ReadReg32();
+            var dest = context.Parser.ReadReg32();
             translation.Destination32 = dest;
             context.Queue.Read(TokenType.Comma);
-            var value = context.ReadPort64();
+            var value = context.Parser.ReadPort64();
             translation.Port64 = value;
             context.EmitCode(translation.Opcode);
         }

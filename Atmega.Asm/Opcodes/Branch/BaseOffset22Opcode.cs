@@ -8,7 +8,7 @@ namespace Atmega.Asm.Opcodes.Branch {
 
         public override void Compile(AsmContext context) {
             Token firstToken;
-            var target = context.CalculateExpression(out firstToken);
+            var target = context.Parser.CalculateExpression(out firstToken);
 
             if ((target & 0x1) > 0) {
                 throw new TokenException("invalid absolute jump", firstToken);

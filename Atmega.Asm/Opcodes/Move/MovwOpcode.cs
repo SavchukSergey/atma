@@ -22,7 +22,7 @@ namespace Atmega.Asm.Opcodes.Move {
 
         private byte ReadWordReg(AsmContext context) {
             var token = context.Queue.Peek();
-            var high = context.ReadReg32();
+            var high = context.Parser.ReadReg32();
             if ((high & 0x01) == 0) {
                 throw new TokenException("expected odd register (r1, r3, ..., r29, r31)", token);
             }
@@ -30,7 +30,7 @@ namespace Atmega.Asm.Opcodes.Move {
             context.Queue.Read(TokenType.Colon);
 
             token = context.Queue.Peek();
-            var low = context.ReadReg32();
+            var low = context.Parser.ReadReg32();
             if (low != high - 1) {
                 throw new TokenException("expected register r" + (high - 1), token);
             }

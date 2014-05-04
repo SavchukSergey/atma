@@ -8,11 +8,11 @@ namespace Atmega.Asm.Opcodes.Branch {
         }
 
         public override void Compile(AsmContext context) {
-            var bit = context.ReadBit();
+            var bit = context.Parser.ReadBit();
             context.Queue.Read(TokenType.Comma);
 
             Token firstToken;
-            var offset = context.CalculateExpression(out firstToken);
+            var offset = context.Parser.CalculateExpression(out firstToken);
             var currentOffset = context.Offset + 2;
             var delta = offset - currentOffset;
             if ((delta & 0x1) > 0) {

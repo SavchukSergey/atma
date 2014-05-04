@@ -13,7 +13,7 @@ namespace Atmega.Asm.Opcodes.Move {
                 return;
             }
             var translation = new OpcodeTranslation { Opcode = 0x9004 };
-            var dest = context.ReadReg32();
+            var dest = context.Parser.ReadReg32();
             translation.Destination32 = dest;
 
             context.Queue.Read(TokenType.Comma);

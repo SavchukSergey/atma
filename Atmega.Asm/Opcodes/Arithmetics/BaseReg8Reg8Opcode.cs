@@ -8,10 +8,10 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
 
         public override void Compile(AsmContext context) {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.ReadReg8();
+            var dest = context.Parser.ReadReg8();
             translation.Destination8 = dest;
             context.Queue.Read(TokenType.Comma);
-            var reg = context.ReadReg8();
+            var reg = context.Parser.ReadReg8();
             translation.Register8 = reg;
             context.EmitCode(translation.Opcode);
         }

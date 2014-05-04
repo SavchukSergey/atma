@@ -9,9 +9,9 @@ namespace Atmega.Asm.Opcodes {
 
         public override void Compile(AsmContext context) {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var value = context.ReadUshort();
+            var value = context.Parser.ReadUshort();
             context.Queue.Read(TokenType.Comma);
-            var dest = context.ReadReg32();
+            var dest = context.Parser.ReadReg32();
 
             translation.Destination32 = dest;
             context.EmitCode(translation.Opcode);

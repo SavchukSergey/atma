@@ -213,7 +213,7 @@ namespace Atmega.Asm {
         }
 
         private void ProcessOrg(AsmContext context) {
-            var val = context.CalculateExpression();
+            var val = context.Parser.CalculateExpression();
             context.Offset = (int)val;
         }
 
@@ -234,7 +234,7 @@ namespace Atmega.Asm {
                         context.EmitByte((byte)ch);
                     }
                 } else {
-                    var val = context.ReadByte();
+                    var val = context.Parser.ReadByte();
                     context.EmitByte(val);
                 }
 
@@ -260,7 +260,7 @@ namespace Atmega.Asm {
                         context.EmitWord(ch);
                     }
                 } else {
-                    var val = context.ReadUshort();
+                    var val = context.Parser.ReadUshort();
                     context.EmitWord(val);
                 }
 
@@ -273,12 +273,12 @@ namespace Atmega.Asm {
         }
 
         private void ProcessReserveBytes(AsmContext context) {
-            var cnt = context.CalculateExpression();
+            var cnt = context.Parser.CalculateExpression();
             context.CurrentSection.ReserveBytes((int)cnt);
         }
 
         private void ProcessReserveWords(AsmContext context) {
-            var cnt = context.CalculateExpression();
+            var cnt = context.Parser.CalculateExpression();
             context.CurrentSection.ReserveBytes((int)cnt * 2);
         }
     }
