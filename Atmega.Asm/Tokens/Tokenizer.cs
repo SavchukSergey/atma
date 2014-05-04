@@ -75,14 +75,20 @@ namespace Atmega.Asm.Tokens {
             return token;
         }
 
-        public IList<Token> Read(string content, string fileName = null) {
+        public IList<Token> Read(string content) {
+            return Read(new FileSource { Content = content, FileName = null });
+        }
+
+        public IList<Token> Read(FileSource source) {
+            var content = source.Content;
             var res = new List<Token>();
             var pos = 0;
             var lineNumber = 1;
+            var lineStart = 0;
             while (pos < content.Length) {
                 SkipWhitespace(ref content, ref pos);
                 if (pos >= content.Length) break;
-                var position = new TokenPosition {File = fileName, Line = lineNumber};
+                var position = new TokenPosition { File = source, Line = lineNumber, LineStart = lineStart };
 
                 var ch = content[pos++];
                 var preview = (char)(0xffff);
@@ -112,6 +118,7 @@ namespace Atmega.Asm.Tokens {
                     case '\n':
                         SkipNewLineChar(ref content, ref pos, ch);
                         lineNumber++;
+                        lineStart = pos;
                         res.Add(new Token {
                             Type = TokenType.NewLine,
                             Position = position
@@ -120,6 +127,7 @@ namespace Atmega.Asm.Tokens {
                     case ';':
                         SkipLine(ref content, ref pos);
                         lineNumber++;
+                        lineStart = pos;
                         res.Add(new Token {
                             Type = TokenType.NewLine,
                             Position = position
@@ -141,6 +149,7 @@ namespace Atmega.Asm.Tokens {
                         if (ch == '\r' || ch == '\n') {
                             SkipNewLineChar(ref content, ref pos, ch);
                             lineNumber++;
+                            lineStart = pos;
                         } else {
                             throw new Exception("Unexpected character after backslash");
                         }

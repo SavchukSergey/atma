@@ -13,6 +13,7 @@ namespace Atmega.Asm.Tests.Tokens {
         [TestCase("|", TokenType.BitOr)]
         [TestCase("&", TokenType.BitAnd)]
         [TestCase("<<", TokenType.LeftShift)]
+        [TestCase(">>", TokenType.RightShift)]
         public void OperatorsTest(string op, TokenType type) {
             var res = Tokenize("1 {Operator} 2".Replace("{Operator}", op));
             Assert.AreEqual(3, res.Count);

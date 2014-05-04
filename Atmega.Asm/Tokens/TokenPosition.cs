@@ -1,9 +1,22 @@
-﻿namespace Atmega.Asm.Tokens {
+﻿using System.Text;
+
+namespace Atmega.Asm.Tokens {
     public struct TokenPosition {
 
         public int Line;
 
-        public string File;
+        public int LineStart;
 
+        public FileSource File;
+
+        public string GetLine() {
+            var sb = new StringBuilder();
+            for (var i = LineStart; i < File.Content.Length; i++) {
+                var ch = File.Content[i];
+                if (ch == '\r' || ch == '\n') break;
+                sb.Append(ch);
+            }
+            return sb.ToString();
+        }
     }
 }

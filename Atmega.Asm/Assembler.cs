@@ -66,7 +66,7 @@ namespace Atmega.Asm {
 
         protected IList<Token> LoadRecursive(string content, IList<Token> result, string fileName = null) {
             var tokenizer = new Tokenizer();
-            var fileTokens = tokenizer.Read(content, fileName);
+            var fileTokens = tokenizer.Read(new FileSource { FileName = fileName, Content = content });
 
             for (var i = 0; i < fileTokens.Count; ) {
                 var token = fileTokens[i++];

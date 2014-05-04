@@ -21,7 +21,8 @@ namespace Atmega.Asm {
                 Console.WriteLine("passes: {0}", res.Pass);
                 Console.WriteLine("code size: {0}", res.CodeSection.Content.Count);
             } catch (TokenException exc) {
-                Console.WriteLine("error: {0}:{1}", exc.Token.Position.File, exc.Token.Position.Line);
+                Console.WriteLine("error: {0}:{1}", exc.Token.Position.File.FileName, exc.Token.Position.Line);
+                Console.WriteLine(exc.Token.Position.GetLine());
                 Console.WriteLine(exc.Message);
                 Environment.Exit(1);
             }
