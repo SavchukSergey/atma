@@ -83,6 +83,8 @@ namespace Atmega.Asm.Opcodes {
                 case "ldi": return new LdiOpcode();
                 case "lds": return new LdsOpcode();
                 case "sts": return new StsOpcode();
+                case "ldd": return new LddOpcode();
+                case "std": return new StdOpcode();
                 case "ld": return new LdOpcode();
                 case "st": return new StOpcode();
                 case "swap": return new SwapOpcode();
@@ -141,9 +143,5 @@ namespace Atmega.Asm.Opcodes {
             }
         }
 
-        /*
-             10o0oo0dddddbooo   ldd     r,b
-             10o0oo1rrrrrbooo   std     b,r
-         */
     }
 }

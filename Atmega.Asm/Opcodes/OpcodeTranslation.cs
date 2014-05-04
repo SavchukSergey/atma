@@ -9,23 +9,6 @@
             get { return (byte)(((Opcode & 0x2000) >> 8) | ((Opcode & 0x0c00) >> 7) | (Opcode & 0x0f)); }
         }
 
-        public IndirectRegister IndirectWordRegister {
-            get {
-                var raw = (Opcode >> 4) & 0x3;
-                switch (raw) {
-                    case 0:
-                        return IndirectRegister.R24;
-                    case 1:
-                        return IndirectRegister.X;
-                    case 2:
-                        return IndirectRegister.Y;
-                    case 3:
-                        return IndirectRegister.Z;
-                }
-                throw new InvalidOperationException();
-            }
-        }
-
         public byte DestinationWordRegister {
             get { return (byte)((Opcode >> 3) & 0x1e); }
         }
@@ -227,6 +210,21 @@
             }
         }
 
+        public byte Displacement {
+            get {
+                var offset = 0;
+                offset |= (Opcode & 0x2000) >> 8;
+                offset |= (Opcode & 0x0300) >> 7;
+                offset |= (Opcode & 0x0007) >> 0;
+                return (byte)offset;
+            }
+            set {
+                Opcode &= 0xd3f8;
+                Opcode |= (ushort)((value << 0) & 0x0007);
+                Opcode |= (ushort)((value << 7) & 0x0300);
+                Opcode |= (ushort)((value << 8) & 0x2000);
+            }
+        }
     }
 
     public enum IndirectRegister {
@@ -236,12 +234,20 @@
     }
 
     public struct IndirectOperand {
-        
+
         public IndirectRegister Register;
 
         public bool Increment;
 
         public bool Decrement;
+
+    }
+
+    public struct IndirectOperandWithDisplacement {
+
+        public IndirectRegister Register;
+
+        public byte Displacement;
 
     }
 }

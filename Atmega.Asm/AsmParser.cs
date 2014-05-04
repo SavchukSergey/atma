@@ -142,6 +142,34 @@ namespace Atmega.Asm {
             };
         }
 
+        public IndirectOperandWithDisplacement ReadIndirectWithDisplacement() {
+            IndirectOperandWithDisplacement res;
+            var reg = _context.Queue.Read(TokenType.Literal);
+            switch (reg.StringValue.ToLower()) {
+                case "y":
+                    res.Register = IndirectRegister.Y;
+                    break;
+                case "z":
+                    res.Register = IndirectRegister.Z;
+                    break;
+                default:
+                    throw new TokenException("Y or Z register expected", reg);
+            }
+
+            res.Displacement = 0;
+            var preview = _context.Queue.Peek();
+            if (preview.Type == TokenType.Plus) {
+                _context.Queue.Read(TokenType.Plus);
+                Token exprToken;
+                var displacement = CalculateExpression(out exprToken);
+                if (displacement < 0 || displacement > 63) {
+                    throw new TokenException("displacement must be between 0 and 63", exprToken);
+                }
+                res.Displacement = (byte)displacement;
+            }
+            return res;
+        }
+
         public long CalculateExpression(out Token firstToken) {
             if (_context.Queue.IsEndOfLine) {
                 throw new TokenException("expression expected", _context.Queue.LastReadToken);

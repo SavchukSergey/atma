@@ -1,6 +1,9 @@
 ﻿include "ports.inc"
 include "eeprom.inc"
 
+ZL equ r30
+ZH equ r31
+
 WDT_off:
 	; reset WDT
 	WDR

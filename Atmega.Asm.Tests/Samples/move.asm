@@ -23,7 +23,16 @@ ST -X, R5	;Ri <- Ri - 1, (Ri) <- Rn	-	2
 ST -Y, R5	;Ri <- Ri - 1, (Ri) <- Rn	-	2
 ST -Z, R5	;Ri <- Ri - 1, (Ri) <- Rn	-	2
 
-;LDD Rn, Ri + q	;Rn <- (Ri + q)	-	2
+STD y + 2, r11;	(Ri + q) <- Rn	-	2
+STD y, r11;	(Ri + q) <- Rn	-	2
+STD z + 2, r11;	(Ri + q) <- Rn	-	2
+STD z, r11;	(Ri + q) <- Rn	-	2
+
+LDD r22, y + 63	;Rn <- (Ri + q)	-	2
+LDD r22, y	;Rn <- (Ri + q)	-	2
+LDD r22, z + 63	;Rn <- (Ri + q)	-	2
+LDD r22, z	;Rn <- (Ri + q)	-	2
+
 LDI R18,253	;Загрузить константу в регистр	Rn <- K	-	1
 
 LDS r12, $ ;Загрузить в регистр из памяти данных	Rn <- (K)	-	2
@@ -36,7 +45,6 @@ ELPM	;R0 <- (RAMPZ:Z)	-	3
 ELPM R22, Z	;Rn <- (RAMPZ:Z)	-	3
 ELPM R23, Z+	;Rn <- (RAMPZ:Z), Z <- Z + 1	-	3
 SPM	;Загрузить в память программ	(Z) <- R1:R0	-	3
-;STD Ri + q, Rn;	(Ri + q) <- Rn	-	2
 IN r12,60	;Прочитать I/O-регистр I в Rn	Rn <- I	-	1
 OUT 0x3e,r11	;Записать Rn в I/O-регистр I	I <- Rk	-	1
 push	r12	;Сохранить Rn в стеке	STACK <- Rn	-	2
