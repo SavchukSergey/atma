@@ -1,5 +1,4 @@
-﻿using System;
-using Atmega.Asm.Tokens;
+﻿using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes.Move {
     public class ElpmOpcode : BaseOpcode {

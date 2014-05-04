@@ -4,16 +4,9 @@
         public ushort Opcode { get; set; }
 
         /*
-        public IndirectRegister YZSelector {
-            get { return (Opcode & 0x08) > 0 ? IndirectRegister.Y : IndirectRegister.Z; }
-        }
 
         public byte YZOffset {
             get { return (byte)(((Opcode & 0x2000) >> 8) | ((Opcode & 0x0c00) >> 7) | (Opcode & 0x0f)); }
-        }
-
-        public bool Decrement {
-            get { return (Opcode & 0x02) > 0; }
         }
 
         public IndirectRegister IndirectWordRegister {
@@ -225,5 +218,30 @@
                 if (value) Opcode |= 1;
             }
         }
+
+        public bool Decrement {
+            get { return (Opcode & 0x02) > 0; }
+            set {
+                Opcode &= 0xfffd;
+                if (value) Opcode |= 2;
+            }
+        }
+
+        public IndirectRegister YZSelector {
+            get { return (Opcode & 0x08) > 0 ? IndirectRegister.Y : IndirectRegister.Z; }
+            set {
+                Opcode &= 0xfff7;
+                if (value == IndirectRegister.Y) {
+                    Opcode |= 0x0008;
+                }
+            }
+        }
+
+    }
+
+    public enum IndirectRegister {
+        X,
+        Y,
+        Z
     }
 }

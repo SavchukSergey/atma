@@ -82,6 +82,7 @@ namespace Atmega.Asm.Opcodes {
                 case "movw": return new MovwOpcode();
                 case "ldi": return new LdiOpcode();
                 case "lds": return new LdsOpcode();
+                case "ld": return new LdOpcode();
                 case "sts": return new StsOpcode();
                 case "swap": return new SwapOpcode();
                 case "push": return new PushOpcode();
@@ -141,7 +142,6 @@ namespace Atmega.Asm.Opcodes {
 
         /*
              10o0oo0dddddbooo   ldd     r,b
-             100!000dddddee-+   ld      r,e
              10o0oo1rrrrrbooo   std     b,r
              100!001rrrrree-+   st      e,r
          */

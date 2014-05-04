@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Atmega.Asm.Expressions;
 using Atmega.Asm.Hex;
+using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
@@ -109,6 +110,17 @@ namespace Atmega.Asm {
                 throw new TokenException("register expected", token);
             }
             return token.ParseRegister();
+        }
+
+        public IndirectRegister ReadIndirectReg() {
+            var reg = Queue.Read(TokenType.Literal);
+            switch (reg.StringValue.ToLower()) {
+                case "x": return IndirectRegister.X;
+                case "y": return IndirectRegister.Y;
+                case "z": return IndirectRegister.Z;
+                default:
+                    throw new TokenException("X, Y or Z register expected", reg);
+            }
         }
 
         public byte ReadPort32() {
