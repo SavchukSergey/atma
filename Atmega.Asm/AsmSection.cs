@@ -68,5 +68,9 @@ namespace Atmega.Asm {
                 hexFile.Lines.Add(line);
             }
         }
+
+        public void ReserveBytes(int cnt) {
+            for (var i = 0; i < cnt; i++) ReserveByte();
+        }
     }
 }

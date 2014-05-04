@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
@@ -154,6 +152,9 @@ namespace Atmega.Asm {
                     case "db":
                         ProcessDataBytes(context);
                         break;
+                    case "rb":
+                        ProcessReserveBytes(context);
+                        break;
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
                         if (opcode != null) {
@@ -242,6 +243,11 @@ namespace Atmega.Asm {
                     context.Queue.Read();
                 }
             }
+        }
+
+        private void ProcessReserveBytes(AsmContext context) {
+            var cnt = context.CalculateExpression();
+            context.CurrentSection.ReserveBytes((int)cnt);
         }
     }
 }

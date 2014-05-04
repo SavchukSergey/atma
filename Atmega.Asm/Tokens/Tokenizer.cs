@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace Atmega.Asm.Tokens {
     public class Tokenizer {
@@ -163,29 +164,7 @@ namespace Atmega.Asm.Tokens {
                             });
                         } else if (char.IsDigit(ch)) {
                             pos--;
-                            var literal = ReadLiteral(ref content, ref pos).ToLower();
-                            if (literal.StartsWith("0x")) {
-                                res.Add(new Token {
-                                    Type = TokenType.Integer,
-                                    IntegerValue = ParsePrefixedHexInteger(literal),
-                                    StringValue = literal,
-                                    Position = position
-                                });
-                            } else if (literal.EndsWith("h")) {
-                                res.Add(new Token {
-                                    Type = TokenType.Integer,
-                                    IntegerValue = ParsePostfixedHexInteger(literal),
-                                    StringValue = literal,
-                                    Position = position
-                                });
-                            } else {
-                                res.Add(new Token {
-                                    Type = TokenType.Integer,
-                                    IntegerValue = ReadInteger(literal),
-                                    StringValue = literal,
-                                    Position = position
-                                });
-                            }
+                            res.Add(ReadIntegerToken(ref content, ref pos, position));
                         } else {
                             pos--;
                             res.Add(new Token {
@@ -200,7 +179,33 @@ namespace Atmega.Asm.Tokens {
             return res;
         }
 
-        private long ReadInteger(string literal) {
+        private Token ReadIntegerToken(ref string content, ref int pos, TokenPosition position) {
+            var literal = ReadLiteral(ref content, ref pos).ToLower();
+            if (literal.StartsWith("0x")) {
+                return new Token {
+                    Type = TokenType.Integer,
+                    IntegerValue = ParsePrefixedHexInteger(literal),
+                    StringValue = literal,
+                    Position = position
+                };
+            }
+            if (literal.EndsWith("h")) {
+                return new Token {
+                    Type = TokenType.Integer,
+                    IntegerValue = ParsePostfixedHexInteger(literal),
+                    StringValue = literal,
+                    Position = position
+                };
+            }
+            return new Token {
+                Type = TokenType.Integer,
+                IntegerValue = ReadDecimalInteger(literal),
+                StringValue = literal,
+                Position = position
+            };
+        }
+
+        private long ReadDecimalInteger(string literal) {
             long val = 0;
             var pos = 0;
             while (pos < literal.Length) {
