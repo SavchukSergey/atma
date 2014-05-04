@@ -152,8 +152,14 @@ namespace Atmega.Asm {
                     case "db":
                         ProcessDataBytes(context);
                         break;
+                    case "dw":
+                        ProcessDataWords(context);
+                        break;
                     case "rb":
                         ProcessReserveBytes(context);
+                        break;
+                    case "rw":
+                        ProcessReserveWords(context);
                         break;
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
@@ -240,9 +246,40 @@ namespace Atmega.Asm {
             }
         }
 
+        private void ProcessDataWords(AsmContext context) {
+            if (context.Queue.IsEndOfLine) {
+                throw new TokenException("expected data words", context.Queue.LastReadToken);
+            }
+            while (context.Queue.Count > 0) {
+                var token = context.Queue.Peek();
+                if (token.Type == TokenType.NewLine) break;
+
+                if (token.Type == TokenType.String) {
+                    token = context.Queue.Read();
+                    foreach (var ch in token.StringValue) {
+                        context.EmitWord(ch);
+                    }
+                } else {
+                    var val = context.ReadUshort();
+                    context.EmitWord(val);
+                }
+
+                if (context.Queue.Count > 0) {
+                    var commaPreview = context.Queue.Peek();
+                    if (commaPreview.Type != TokenType.Comma) break;
+                    context.Queue.Read();
+                }
+            }
+        }
+
         private void ProcessReserveBytes(AsmContext context) {
             var cnt = context.CalculateExpression();
             context.CurrentSection.ReserveBytes((int)cnt);
+        }
+
+        private void ProcessReserveWords(AsmContext context) {
+            var cnt = context.CalculateExpression();
+            context.CurrentSection.ReserveBytes((int)cnt * 2);
         }
     }
 }

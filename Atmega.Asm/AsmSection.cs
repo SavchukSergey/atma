@@ -18,13 +18,17 @@ namespace Atmega.Asm {
             if ((Offset & 0x01) > 0) {
                 ReserveByte();
             }
-            EmitByte((byte)(opcode & 0xff));
-            EmitByte((byte)((opcode >> 8) & 0xff));
+            EmitWord(opcode);
         }
 
         public void EmitByte(byte bt) {
             _content.Add(bt);
             Offset++;
+        }
+
+        public void EmitWord(ushort val) {
+            EmitByte((byte)(val & 0xff));
+            EmitByte((byte)((val >> 8) & 0xff));
         }
 
         public void AlignCode(byte alignment) {

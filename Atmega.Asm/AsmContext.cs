@@ -68,6 +68,10 @@ namespace Atmega.Asm {
             CurrentSection.EmitByte(bt);
         }
 
+        public void EmitWord(ushort val) {
+            CurrentSection.EmitWord(val);
+        }
+
         public byte ReadRegW24() {
             var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
