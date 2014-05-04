@@ -227,21 +227,21 @@
             }
         }
 
-        public IndirectRegister YZSelector {
-            get { return (Opcode & 0x08) > 0 ? IndirectRegister.Y : IndirectRegister.Z; }
-            set {
-                Opcode &= 0xfff7;
-                if (value == IndirectRegister.Y) {
-                    Opcode |= 0x0008;
-                }
-            }
-        }
-
     }
 
     public enum IndirectRegister {
         X,
         Y,
         Z
+    }
+
+    public struct IndirectOperand {
+        
+        public IndirectRegister Register;
+
+        public bool Increment;
+
+        public bool Decrement;
+
     }
 }

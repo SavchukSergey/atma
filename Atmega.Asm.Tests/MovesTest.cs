@@ -15,5 +15,16 @@ namespace Atmega.Asm.Tests {
             } catch (TokenException) {
             }
         }
+
+        [Test]
+        public void Imm16Reg32Opcode() {
+            var complied = Compile("sts $, r31");
+            Assert.AreEqual(4, complied.CodeSection.Content.Count);
+            try {
+                Compile("sts $, rn");
+                Assert.Fail();
+            } catch (TokenException) {
+            }
+        }
     }
 }

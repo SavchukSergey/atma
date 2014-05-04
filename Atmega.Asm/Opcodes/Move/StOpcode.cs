@@ -2,20 +2,20 @@
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes.Move {
-    public class LdOpcode : BaseOpcode {
+    public class StOpcode : BaseOpcode {
 
-        private static readonly ushort _xTemplate = ParseOpcodeTemplate("1001001rrrrr1100");
-        private static readonly ushort _yTemplate = ParseOpcodeTemplate("1000001rrrrr1000");
-        private static readonly ushort _zTemplate = ParseOpcodeTemplate("1000001rrrrr0000");
+        private static readonly ushort _xTemplate = ParseOpcodeTemplate("1001000ddddd1100");
+        private static readonly ushort _yTemplate = ParseOpcodeTemplate("1000000ddddd1000");
+        private static readonly ushort _zTemplate = ParseOpcodeTemplate("1000000ddddd0000");
 
-        public LdOpcode()
+        public StOpcode()
             : base("1000000ddddd1000") {
         }
 
         public override void Compile(AsmContext context) {
-            var dest = context.ReadReg32();
-            context.Queue.Read(TokenType.Comma);
             var operand = context.ReadIndirectOperand();
+            context.Queue.Read(TokenType.Comma);
+            var dest = context.ReadReg32();
 
             var translation = new OpcodeTranslation {
                 Opcode = GetOpcodeTemplate(operand.Register),

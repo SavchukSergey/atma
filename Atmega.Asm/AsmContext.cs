@@ -177,6 +177,32 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
+        public IndirectOperand ReadIndirectOperand() {
+            var decrement = false;
+            if (Queue.Peek().Type == TokenType.Minus) {
+                decrement = true;
+                Queue.Read(TokenType.Minus);
+            }
+
+            var reg = ReadIndirectReg();
+
+            var increment = false;
+            if (Queue.Peek().Type == TokenType.Plus) {
+                increment = true;
+                Queue.Read(TokenType.Plus);
+            }
+
+            if (increment && decrement) {
+                throw new TokenException("Only pre-decrement or post-increment can be specified at one time", Queue.LastReadToken);
+            }
+
+            return new IndirectOperand {
+                Register = reg,
+                Increment = increment,
+                Decrement = decrement
+            };
+        }
+
         public long CalculateExpression(out Token firstToken) {
             if (Queue.IsEndOfLine) {
                 throw new TokenException("expression expected", Queue.LastReadToken);
