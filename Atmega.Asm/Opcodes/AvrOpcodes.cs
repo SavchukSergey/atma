@@ -84,6 +84,7 @@ namespace Atmega.Asm.Opcodes {
                 case "spm": return new SpmOpcode();
                 case "in": return new InOpcode();
                 case "out": return new OutOpcode();
+                case "elpm": return new ElpmOpcode();
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
@@ -135,8 +136,6 @@ namespace Atmega.Asm.Opcodes {
         /*
              1001010111001000   lpm     ?
              1001000ddddd010+   lpm     r,z
-             1001010111011000   elpm    ?
-             1001000ddddd011+   elpm    r,z
 
              00000001ddddrrrr   movw    v,v
              000000110ddd0rrr   mulsu   a,a

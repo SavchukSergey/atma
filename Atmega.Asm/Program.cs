@@ -19,7 +19,7 @@ namespace Atmega.Asm {
                 hex.Save(hexName);
                 //SaveBin(res, Path.GetFileNameWithoutExtension(sourceName) + ".binhex");
                 Console.WriteLine("passes: {0}", res.Pass);
-                Console.WriteLine("code size: {0}", res.CodeSection.Content.Count);
+                Console.WriteLine("code size: {0} words", (res.CodeSection.Content.Count + 1) / 2);
             } catch (TokenException exc) {
                 Console.WriteLine("error: {0}:{1}", exc.Token.Position.File.FileName, exc.Token.Position.Line);
                 Console.WriteLine(exc.Token.Position.GetLine());

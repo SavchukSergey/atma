@@ -11,9 +11,9 @@ LDI R18,253	;Загрузить константу в регистр	Rn <- K	-	1
 ;LPM	;Загрузить из памяти программ	R0 <- (Z)	-	3
 ;LPM Rn, Z	;Rn <- (Z)	-	3
 ;LPM Rn, Z+	;Rn <- (Z), Z <- Z + 1	-	3
-;ELPM	;R0 <- (RAMPZ:Z)	-	3
-;ELPM Rn, Z	;Rn <- (RAMPZ:Z)	-	3
-;ELPM Rn, Z+	;Rn <- (RAMPZ:Z), Z <- Z + 1	-	3
+ELPM	;R0 <- (RAMPZ:Z)	-	3
+ELPM R22, Z	;Rn <- (RAMPZ:Z)	-	3
+ELPM R23, Z+	;Rn <- (RAMPZ:Z), Z <- Z + 1	-	3
 SPM	;Загрузить в память программ	(Z) <- R1:R0	-	3
 ;STS K,Rn	;Загрузить в память данных	(K) <- Rn	-	2
 ;ST Ri, Rn	;Загрузить в память данных, используя индексный регистр	(Ri) <- Rn	-	2

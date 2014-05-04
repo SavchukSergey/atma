@@ -12,10 +12,6 @@
             get { return (byte)(((Opcode & 0x2000) >> 8) | ((Opcode & 0x0c00) >> 7) | (Opcode & 0x0f)); }
         }
 
-        public bool Increment {
-            get { return (Opcode & 0x01) > 0; }
-        }
-
         public bool Decrement {
             get { return (Opcode & 0x02) > 0; }
         }
@@ -199,6 +195,14 @@
                 Opcode &= 0xffc0;
                 var val = (value - 24) / 2;
                 Opcode |= (ushort)((val << 4) & 0x0030);
+            }
+        }
+
+        public bool Increment {
+            get { return (Opcode & 0x01) > 0; }
+            set {
+                Opcode &= 0xfffe;
+                if (value) Opcode |= 1;
             }
         }
     }
