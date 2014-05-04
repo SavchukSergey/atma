@@ -109,7 +109,12 @@ namespace Atmega.Asm {
             if (token.Type != TokenType.Literal) {
                 throw new TokenException("register expected", token);
             }
-            return token.ParseRegister();
+            var res = token.ParseRegister();
+            if (res >= 32) {
+                throw new TokenException("register expected", token);
+            }
+
+            return res;
         }
 
         public IndirectRegister ReadIndirectReg() {
