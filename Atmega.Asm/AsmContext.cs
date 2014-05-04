@@ -70,11 +70,11 @@ namespace Atmega.Asm {
 
         public Token ReadRequiredToken() {
             if (Queue.Count == 0) {
-                throw new Exception("Unexpected end of file");
+                throw new TokenException("Unexpected end of file", Queue.LastReadToken);
             }
             var token = Queue.Read();
             if (token.Type == TokenType.NewLine) {
-                throw new Exception("Unexpected end of line");
+                throw new TokenException("Unexpected end of line", Queue.LastReadToken);
             }
             return token;
         }
@@ -91,36 +91,34 @@ namespace Atmega.Asm {
         }
 
         public byte ReadRegW24() {
-            var token = ReadRequiredToken();
-            if (token.Type != TokenType.Literal) {
-                throw new TokenException("register expected", token);
-            }
-            var reg = token.ParseRegister();
+            var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
-                throw new TokenException("word register expected (r24, r26, r28, r30)", token);
+                throw new TokenException("word register expected (r24, r26, r28, r30)", Queue.LastReadToken);
             }
             return reg;
         }
 
         public byte ReadReg32() {
-            var token = ReadRequiredToken();
-            if (token.Type != TokenType.Literal) {
-                throw new TokenException("register expected", token);
-            }
-            var reg = token.ParseRegister();
-            return reg;
+            return ReadRegister();
         }
 
         public byte ReadReg16() {
-            var token = ReadRequiredToken();
+            var reg = ReadRegister();
+            if (reg < 16) {
+                throw new TokenException("expected r16-r31", Queue.LastReadToken);
+            }
+            return reg;
+        }
+
+        private byte ReadRegister() {
+            if (Queue.IsEndOfLine) {
+                throw new TokenException("register expected", Queue.LastReadToken);
+            }
+            var token = Queue.Read();
             if (token.Type != TokenType.Literal) {
                 throw new TokenException("register expected", token);
             }
-            var reg = token.ParseRegister();
-            if (reg < 16) {
-                throw new TokenException("Expected r16-r31", token);
-            }
-            return reg;
+            return token.ParseRegister();
         }
 
         public byte ReadByte() {

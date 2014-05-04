@@ -207,12 +207,8 @@ namespace Atmega.Asm {
         }
 
         private void ProcessOrg(AsmContext context) {
-            var token = context.ReadRequiredToken();
-            if (token.Type != TokenType.Integer) {
-                throw new TokenException("integer value expected", token);
-            }
-
-            context.Offset = (int)token.IntegerValue;
+            var val = context.CalculateExpression();
+            context.Offset = (int) val;
         }
 
         private void ProcessDataBytes(AsmContext context) {

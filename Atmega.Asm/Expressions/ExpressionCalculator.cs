@@ -41,6 +41,7 @@ namespace Atmega.Asm.Expressions {
             switch (token.Type) {
                 case TokenType.Integer: return new NumberExpression { Value = token.IntegerValue };
                 case TokenType.Literal: return ParseLiteral(token);
+                case TokenType.NewLine: throw new TokenException("value expected", token);
                 case TokenType.Minus: return new NegateExpression(ParseOperand(tokens));
                 case TokenType.OpenParenthesis:
                     var inner = Parse(tokens);

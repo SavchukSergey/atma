@@ -18,5 +18,12 @@ Name
             Assert.AreEqual(2, compiled.CodeSection.Content.Count);
         }
 
+        [Test]
+        public void OrgTest() {
+            var complied = Compile(@"
+org 10 * 20
+");
+            Assert.AreEqual(200, complied.CodeSection.Offset);
+        }
     }
 }
