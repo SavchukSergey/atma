@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Expressions {
@@ -10,7 +12,13 @@ namespace Atmega.Asm.Expressions {
             _context = context;
         }
 
-        protected BaseExpression ParseLiteral(Token token) {
+        protected BaseExpression ParseLiteral(Token token, TokensQueue queue) {
+            if (queue.Count > 0) {
+                var preview = queue.Peek();
+                if (preview.Type == TokenType.OpenParenthesis) {
+                    return Func(token, queue);
+                }
+            }
             if (token.StringValue == "$") {
                 return new NumberExpression { Value = _context.Offset };
             }
@@ -19,6 +27,26 @@ namespace Atmega.Asm.Expressions {
                 throw new TokenException("unknown symbol " + token.StringValue, token);
             }
             return new NumberExpression { Value = (long)lblValue };
+        }
+
+        protected BaseExpression Func(Token nameToken, TokensQueue tokens) {
+            tokens.Read(TokenType.OpenParenthesis);
+            var args = ParseArguments(tokens);
+            tokens.Read(TokenType.CloseParenthesis);
+            switch (nameToken.StringValue.ToLower()) {
+                case "low":
+                    if (args.Count != 1) {
+                        throw new TokenException("expected 1 argument", nameToken);
+                    }
+                    return new LowByteExpression(args.First());
+                case "high":
+                    if (args.Count != 1) {
+                        throw new TokenException("expected 1 argument", nameToken);
+                    }
+                    return new HighByteExpression(args.First());
+                default:
+                    throw new TokenException("unknown function " + nameToken.StringValue, nameToken);
+            }
         }
 
         public BaseExpression Parse(string source) {
@@ -32,6 +60,20 @@ namespace Atmega.Asm.Expressions {
             return ParseWithPriority(tokens, 0);
         }
 
+        public IList<BaseExpression> ParseArguments(TokensQueue tokens) {
+            var res = new List<BaseExpression>();
+            while (!tokens.IsEndOfLine) {
+                var preview = tokens.Peek();
+                if (preview.Type == TokenType.CloseParenthesis) return res;
+                var arg = Parse(tokens);
+                res.Add(arg);
+                preview = tokens.Peek();
+                if (preview.Type != TokenType.Comma) break;
+                tokens.Read(TokenType.Comma);
+            }
+            return res;
+        }
+
         private BaseExpression ParseOperand(TokensQueue tokens) {
             if (tokens.IsEndOfLine) {
                 throw new TokenException("operand expected", tokens.LastReadToken);
@@ -40,7 +82,7 @@ namespace Atmega.Asm.Expressions {
             var token = tokens.Read();
             switch (token.Type) {
                 case TokenType.Integer: return new NumberExpression { Value = token.IntegerValue };
-                case TokenType.Literal: return ParseLiteral(token);
+                case TokenType.Literal: return ParseLiteral(token, tokens);
                 case TokenType.NewLine: throw new TokenException("value expected", token);
                 case TokenType.Minus: return new NegateExpression(ParseOperand(tokens));
                 case TokenType.OpenParenthesis:

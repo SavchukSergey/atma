@@ -29,6 +29,8 @@ namespace Atmega.Asm.Tests.Expressions {
         [TestCase("(1 << 3) | (1 << 2)", (1 << 3) | (1 << 2))]
         [TestCase("(123*456)*(78*452)", (123 * 456) * (78 * 452))]
         [TestCase("345 + 242, 111", 345 + 242)]
+        [TestCase("LOW(345 + 242)", (345 + 242) & 0xff)]
+        [TestCase("HIGH(345 + 242)", (345 + 242) >> 8)]
         public void PositiveTests(string expression, long result) {
             var expr = new ExpressionCalculator(null).Parse(expression);
             Assert.AreEqual(result, expr.Evaluate());
