@@ -21,6 +21,8 @@ namespace Atmega.Asm.Tokens {
                 switch (type) {
                     case TokenType.Comma:
                         throw new TokenException("comma expected", tkn);
+                    case TokenType.Colon:
+                        throw new TokenException("colon expected", tkn);
                     case TokenType.CloseParenthesis:
                         throw new TokenException("closing parenthesis expected", tkn);
                     default:

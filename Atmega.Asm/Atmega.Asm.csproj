@@ -184,6 +184,7 @@
     <Compile Include="Opcodes\Logic\AndiOpcode.cs" />
     <Compile Include="Opcodes\Move\LpmOpcode.cs" />
     <Compile Include="Opcodes\Move\ElpmOpcode.cs" />
+    <Compile Include="Opcodes\Move\MovwOpcode.cs" />
     <Compile Include="Opcodes\Move\StsOpcode.cs" />
     <Compile Include="Opcodes\Move\LdsOpcode.cs" />
     <Compile Include="Opcodes\Move\OutOpcode.cs" />
