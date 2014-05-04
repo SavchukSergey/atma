@@ -14,10 +14,11 @@ namespace Atmega.Asm.Opcodes {
                 case "add": return new AddOpcode();
                 case "sub": return new SubOpcode();
                 case "sbc": return new SbcOpcode();
-                case "mul": return new MulOpcode();
-                case "muls": return new MulsOpcode();
                 case "adiw": return new AdiwOpcode();
                 case "sbiw": return new SbiwOpcode();
+                case "mul": return new MulOpcode();
+                case "muls": return new MulsOpcode();
+                case "mulsu": return new MulsuOpcode();
                 case "fmul": return new FmulOpcode();
                 case "fmuls": return new FmulsOpcode();
                 case "fmulsu": return new FmulsuOpcode();
@@ -139,7 +140,6 @@ namespace Atmega.Asm.Opcodes {
 
         /*
              00000001ddddrrrr   movw    v,v
-             000000110ddd0rrr   mulsu   a,a
              10o0oo0dddddbooo   ldd     r,b
              100!000dddddee-+   ld      r,e
              10o0oo1rrrrrbooo   std     b,r
