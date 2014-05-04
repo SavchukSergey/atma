@@ -33,8 +33,8 @@ namespace Atmega.Asm.Expressions {
         }
 
         private BaseExpression ParseOperand(TokensQueue tokens) {
-            if (tokens.Count == 0) {
-                throw new Exception("unexpected end of expression");
+            if (tokens.IsEndOfLine) {
+                throw new TokenException("operand expected", tokens.LastReadToken);
             }
 
             var token = tokens.Read();
@@ -102,7 +102,7 @@ namespace Atmega.Asm.Expressions {
             switch (opToken.Type) {
                 case TokenType.Plus: return new AddExpression(left, other);
                 case TokenType.Minus: return new SubExpression(left, other);
-                case TokenType.Multiply:return new MulExpression(left, other);
+                case TokenType.Multiply: return new MulExpression(left, other);
                 case TokenType.Divide: return new DivExpression(left, other);
                 case TokenType.Mod: return new ModExpression(left, other);
                 case TokenType.LeftShift: return new ShiftLeftExpression(left, other);

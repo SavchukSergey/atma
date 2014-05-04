@@ -16,9 +16,16 @@ namespace Atmega.Asm.Tokens {
         }
 
         public Token Read(TokenType type) {
-            var token = Read();
-            if (token.Type != type) throw new TokenException("Unexpected token", token);
-            return token;
+            if (_queue.Count == 0 || Peek().Type != type) {
+                var tkn = _queue.Count > 0 ? Read() : LastReadToken;
+                switch (type) {
+                    case TokenType.Comma:
+                        throw new TokenException("comma expected", tkn);
+                    default:
+                        throw new TokenException("unexpected token", tkn);
+                }
+            }
+            return Read();
         }
 
         public Token Peek() {
