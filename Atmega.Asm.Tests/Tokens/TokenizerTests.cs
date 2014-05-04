@@ -3,11 +3,7 @@ using NUnit.Framework;
 
 namespace Atmega.Asm.Tests.Tokens {
     [TestFixture]
-    public class TokenizerTests {
-
-        private TokensQueue Tokenize(string content) {
-            return new TokensQueue(new Tokenizer().Read(content));
-        }
+    public class TokenizerTests : BaseTestFixture {
 
         [Test]
         public void SimpleInstructionTest() {
@@ -32,24 +28,6 @@ namespace Atmega.Asm.Tests.Tokens {
             Assert.AreEqual("r16", tokens.Read(TokenType.Literal).StringValue);
             Assert.AreEqual(",", tokens.Read(TokenType.Comma).StringValue);
             Assert.AreEqual("r22", tokens.Read(TokenType.Literal).StringValue);
-        }
-
-        [Test]
-        public void StringSingleQuoteTest() {
-            var tokens = Tokenize("db 'Test '' String'");
-            Assert.AreEqual(2, tokens.Count);
-
-            Assert.AreEqual("db", tokens.Read(TokenType.Literal).StringValue);
-            Assert.AreEqual("Test ' String", tokens.Read(TokenType.String).StringValue);
-        }
-
-        [Test]
-        public void StringDoubleQuoteTest() {
-            var tokens = Tokenize("db \"Test \"\" String\"");
-            Assert.AreEqual(2, tokens.Count);
-
-            Assert.AreEqual("db", tokens.Read(TokenType.Literal).StringValue);
-            Assert.AreEqual("Test \" String", tokens.Read(TokenType.String).StringValue);
         }
 
         [Test]
@@ -122,5 +100,6 @@ db 3
             Assert.AreEqual(3, tokens.Read(TokenType.Integer).Position.Line);
             tokens.Read(TokenType.NewLine);
         }
+
     }
 }

@@ -38,13 +38,13 @@ namespace Atmega.Asm.Tokens {
             }
         }
 
-        private string ReadString(ref string content, ref int pos) {
+        private string ReadString(ref string content, ref int pos, TokenPosition position) {
             var quoteCh = content[pos++];
             var token = "";
             while (pos < content.Length) {
                 var ch = content[pos++];
                 if (ch == '\r' || ch == '\n') {
-                    throw new Exception("Missing end quote");
+                    throw new TokenException("missing end quote", new Token { Position = position });
                 }
                 if (ch == quoteCh) {
                     if (pos >= content.Length) return token;
@@ -59,7 +59,7 @@ namespace Atmega.Asm.Tokens {
                     token += ch;
                 }
             }
-            throw new Exception("Missing end quote");
+            throw new TokenException("missing end quote", new Token { Position = position });
         }
 
         private string ReadLiteral(ref string content, ref int chIndex) {
@@ -82,6 +82,7 @@ namespace Atmega.Asm.Tokens {
             while (pos < content.Length) {
                 SkipWhitespace(ref content, ref pos);
                 if (pos >= content.Length) break;
+                var position = new TokenPosition {File = fileName, Line = lineNumber};
 
                 var ch = content[pos++];
                 var preview = (char)(0xffff);
@@ -92,7 +93,7 @@ namespace Atmega.Asm.Tokens {
                     res.Add(new Token {
                         Type = TokenType.RightShift,
                         StringValue = ">",
-                        Position = new TokenPosition { File = fileName, Line = lineNumber }
+                        Position = position
                     });
                     pos++;
                     continue;
@@ -101,7 +102,7 @@ namespace Atmega.Asm.Tokens {
                     res.Add(new Token {
                         Type = TokenType.LeftShift,
                         StringValue = "<",
-                        Position = new TokenPosition { File = fileName, Line = lineNumber }
+                        Position = position
                     });
                     pos++;
                     continue;
@@ -113,7 +114,7 @@ namespace Atmega.Asm.Tokens {
                         lineNumber++;
                         res.Add(new Token {
                             Type = TokenType.NewLine,
-                            Position = new TokenPosition { File = fileName, Line = lineNumber }
+                            Position = position
                         });
                         break;
                     case ';':
@@ -121,7 +122,7 @@ namespace Atmega.Asm.Tokens {
                         lineNumber++;
                         res.Add(new Token {
                             Type = TokenType.NewLine,
-                            Position = new TokenPosition { File = fileName, Line = lineNumber }
+                            Position = position
                         });
                         break;
                     case '"':
@@ -129,8 +130,8 @@ namespace Atmega.Asm.Tokens {
                         pos--;
                         res.Add(new Token {
                             Type = TokenType.String,
-                            StringValue = ReadString(ref content, ref pos),
-                            Position = new TokenPosition { File = fileName, Line = lineNumber }
+                            StringValue = ReadString(ref content, ref pos, position),
+                            Position = position
                         });
                         break;
                     case '\\':
@@ -149,7 +150,7 @@ namespace Atmega.Asm.Tokens {
                             res.Add(new Token {
                                 Type = GetPunctuationTokenType(ch),
                                 StringValue = ch.ToString(),
-                                Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                Position = position
                             });
                         } else if (char.IsDigit(ch)) {
                             pos--;
@@ -159,21 +160,21 @@ namespace Atmega.Asm.Tokens {
                                     Type = TokenType.Integer,
                                     IntegerValue = ParsePrefixedHexInteger(literal),
                                     StringValue = literal,
-                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                    Position = position
                                 });
                             } else if (literal.EndsWith("h")) {
                                 res.Add(new Token {
                                     Type = TokenType.Integer,
                                     IntegerValue = ParsePostfixedHexInteger(literal),
                                     StringValue = literal,
-                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                    Position = position
                                 });
                             } else {
                                 res.Add(new Token {
                                     Type = TokenType.Integer,
                                     IntegerValue = ReadInteger(literal),
                                     StringValue = literal,
-                                    Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                    Position = position
                                 });
                             }
                         } else {
@@ -181,7 +182,7 @@ namespace Atmega.Asm.Tokens {
                             res.Add(new Token {
                                 Type = TokenType.Literal,
                                 StringValue = ReadLiteral(ref content, ref pos),
-                                Position = new TokenPosition { File = fileName, Line = lineNumber }
+                                Position = position
                             });
                         }
                         break;
@@ -272,7 +273,7 @@ namespace Atmega.Asm.Tokens {
             }
         }
 
-        private TokenType GetPunctuationTokenType(char ch) {
+        private static TokenType GetPunctuationTokenType(char ch) {
             switch (ch) {
                 case ',': return TokenType.Comma;
                 case ':': return TokenType.Colon;
@@ -281,6 +282,7 @@ namespace Atmega.Asm.Tokens {
                 case '+': return TokenType.Plus;
                 case '-': return TokenType.Minus;
                 case '*': return TokenType.Multiply;
+                case '/': return TokenType.Divide;
                 case '%': return TokenType.Mod;
                 case '<': return TokenType.Less;
                 case '>': return TokenType.Greater;
@@ -290,7 +292,6 @@ namespace Atmega.Asm.Tokens {
                 case '\t':
                 case '\r':
                 case '\n':
-                case '/':
                 case '=':
                 case '[':
                 case ']':

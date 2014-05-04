@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Atmega.Asm.IO;
+using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Tests {
     public abstract class BaseTestFixture {
@@ -23,5 +24,11 @@ namespace Atmega.Asm.Tests {
             var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
+
+        protected TokensQueue Tokenize(string content) {
+            return new TokensQueue(new Tokenizer().Read(content));
+        }
+
+
     }
 }
