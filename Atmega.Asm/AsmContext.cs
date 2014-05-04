@@ -92,6 +92,14 @@ namespace Atmega.Asm {
             return reg;
         }
 
+        public byte ReadReg8() {
+            var reg = ReadRegister();
+            if (reg < 16 || reg > 23) {
+                throw new TokenException("expected r16-r23", Queue.LastReadToken);
+            }
+            return reg;
+        }
+
         private byte ReadRegister() {
             if (Queue.IsEndOfLine) {
                 throw new TokenException("register expected", Queue.LastReadToken);

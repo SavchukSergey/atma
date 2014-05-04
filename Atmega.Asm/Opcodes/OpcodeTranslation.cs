@@ -82,6 +82,26 @@
             }
         }
 
+        public byte Register8 {
+            get {
+                return (byte)(16 + (Opcode & 0x07));
+            }
+            set {
+                var val = value - 16;
+                Opcode &= 0xfff8;
+                Opcode |= (ushort)(val & 0x07);
+            }
+        }
+
+        public byte Destination8 {
+            get { return (byte)(16 + (byte)((Opcode & 0x0070) >> 4)); }
+            set {
+                Opcode &= 0xff8f;
+                value -= 16;
+                Opcode |= (ushort)((value & 0x07) << 4);
+            }
+        }
+
         public byte Imm8 {
             get {
                 return (byte)(((Opcode & 0x0f00) >> 4) | (Opcode & 0x0f));

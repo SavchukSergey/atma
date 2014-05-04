@@ -19,3 +19,4 @@ section code
 
 	mul r3, r22
 	muls r23, r31
+	fmul r23, r23
