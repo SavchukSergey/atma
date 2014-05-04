@@ -31,33 +31,6 @@ namespace Atmega.Asm.Tests.Tokens {
         }
 
         [Test]
-        public void IntegerTest() {
-            var tokens = Tokenize("db 123");
-            Assert.AreEqual(2, tokens.Count);
-
-            Assert.AreEqual("db", tokens.Read(TokenType.Literal).StringValue);
-            Assert.AreEqual(123, tokens.Read(TokenType.Integer).IntegerValue);
-        }
-
-        [Test]
-        public void IntegerPrefixedHexTest() {
-            var tokens = Tokenize("dw 0x123");
-            Assert.AreEqual(2, tokens.Count);
-
-            Assert.AreEqual("dw", tokens.Read(TokenType.Literal).StringValue);
-            Assert.AreEqual(0x123, tokens.Read(TokenType.Integer).IntegerValue);
-        }
-
-        [Test]
-        public void IntegerPostfixedHexTest() {
-            var tokens = Tokenize("dw 123h");
-            Assert.AreEqual(2, tokens.Count);
-
-            Assert.AreEqual("dw", tokens.Read(TokenType.Literal).StringValue);
-            Assert.AreEqual(0x123, tokens.Read(TokenType.Integer).IntegerValue);
-        }
-
-        [Test]
         public void MultilineTestTest() {
             var tokens = Tokenize(@"
 db 2

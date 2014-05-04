@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 
 namespace Atmega.Asm.Tokens {
     public class Tokenizer {
@@ -182,30 +181,15 @@ namespace Atmega.Asm.Tokens {
         private Token ReadIntegerToken(ref string content, ref int pos, TokenPosition position) {
             var literal = ReadLiteral(ref content, ref pos).ToLower();
             if (literal.StartsWith("0x")) {
-                return new Token {
-                    Type = TokenType.Integer,
-                    IntegerValue = ParsePrefixedHexInteger(literal),
-                    StringValue = literal,
-                    Position = position
-                };
+                return ParsePrefixedHexInteger(literal, position);
             }
             if (literal.EndsWith("h")) {
-                return new Token {
-                    Type = TokenType.Integer,
-                    IntegerValue = ParsePostfixedHexInteger(literal),
-                    StringValue = literal,
-                    Position = position
-                };
+                return ParsePostfixedHexInteger(literal, position);
             }
-            return new Token {
-                Type = TokenType.Integer,
-                IntegerValue = ReadDecimalInteger(literal),
-                StringValue = literal,
-                Position = position
-            };
+            return ReadDecimalInteger(literal, position);
         }
 
-        private long ReadDecimalInteger(string literal) {
+        private Token ReadDecimalInteger(string literal, TokenPosition position) {
             long val = 0;
             var pos = 0;
             while (pos < literal.Length) {
@@ -213,36 +197,51 @@ namespace Atmega.Asm.Tokens {
                 if (char.IsDigit(ch)) {
                     val = val * 10 + (ch - '0');
                 } else {
-                    throw new Exception("Unexpected symbol");
+                    throw new TokenException("unexpected decimal symbol '" + ch + "'", new Token { Position = position, StringValue = literal });
                 }
             }
-            return val;
+            return new Token {
+                Type = TokenType.Integer,
+                IntegerValue = val,
+                StringValue = literal,
+                Position = position
+            };
         }
 
-        private long ParsePrefixedHexInteger(string literal) {
+        private Token ParsePrefixedHexInteger(string literal, TokenPosition position) {
             long val = 0;
             var pos = 2;
             if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
             while (pos < literal.Length) {
                 var ch = literal[pos++];
                 var hex = GetHexValue(ch);
-                if (hex < 0) throw new Exception("Unexpected symbol");
+                if (hex < 0) throw new TokenException("unexpected hex symbol '" + ch + "'", new Token { Position = position, StringValue = literal });
                 val = val * 16 + hex;
             }
-            return val;
+            return new Token {
+                Type = TokenType.Integer,
+                IntegerValue = val,
+                StringValue = literal,
+                Position = position
+            };
         }
 
-        private long ParsePostfixedHexInteger(string literal) {
+        private Token ParsePostfixedHexInteger(string literal, TokenPosition position) {
             long val = 0;
             var pos = 0;
             if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
             while (pos < literal.Length - 1) {
                 var ch = literal[pos++];
                 var hex = GetHexValue(ch);
-                if (hex < 0) throw new Exception("Unexpected symbol");
+                if (hex < 0) throw new TokenException("unexpected hex symbol '" + ch + "'", new Token { Position = position, StringValue = literal });
                 val = val * 16 + hex;
             }
-            return val;
+            return new Token {
+                Type = TokenType.Integer,
+                IntegerValue = val,
+                StringValue = literal,
+                Position = position
+            };
         }
 
         private int GetHexValue(char ch) {
