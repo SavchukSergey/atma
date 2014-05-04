@@ -19,6 +19,8 @@ namespace Atmega.Asm.Opcodes {
                 case "adiw": return new AdiwOpcode();
                 case "sbiw": return new SbiwOpcode();
                 case "fmul": return new FmulOpcode();
+                case "fmuls": return new FmulsOpcode();
+                case "fmulsu": return new FmulsuOpcode();
 
                 case "inc": return new IncOpcode();
                 case "dec": return new DecOpcode();
@@ -138,8 +140,6 @@ namespace Atmega.Asm.Opcodes {
         /*
              00000001ddddrrrr   movw    v,v
              000000110ddd0rrr   mulsu   a,a
-             000000111ddd0rrr   fmuls   a,a
-             000000111ddd1rrr   fmulsu  a,a
              10o0oo0dddddbooo   ldd     r,b
              100!000dddddee-+   ld      r,e
              10o0oo1rrrrrbooo   std     b,r

@@ -70,6 +70,8 @@
     <Compile Include="IO\IAsmSource.cs" />
     <Compile Include="IO\MemoryAsmSource.cs" />
     <Compile Include="Opcodes\Arithmetics\BaseReg8Reg8Opcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\FmulsuOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\FmulsOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\FmulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\MulsOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SbiwOpcode.cs" />
