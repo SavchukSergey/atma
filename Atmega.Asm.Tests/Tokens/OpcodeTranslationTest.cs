@@ -30,11 +30,27 @@ namespace Atmega.Asm.Tests.Tokens {
         }
 
         [Test]
+        public void RegisterW24Test() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(24, translation.RegW24);
+            translation.RegW24 = 28;
+            Assert.AreEqual(28, translation.RegW24);
+        }
+
+        [Test]
         public void Imm8Test() {
             var translation = new OpcodeTranslation();
             Assert.AreEqual(0, translation.Imm8);
             translation.Imm8 = 123;
             Assert.AreEqual(123, translation.Imm8);
+        }
+
+        [Test]
+        public void Imm6Test() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.Imm6);
+            translation.Imm6 = 42;
+            Assert.AreEqual(42, translation.Imm6);
         }
 
         [Test]

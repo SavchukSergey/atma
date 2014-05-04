@@ -90,6 +90,18 @@ namespace Atmega.Asm {
             return token;
         }
 
+        public byte ReadRegW24() {
+            var token = ReadRequiredToken();
+            if (token.Type != TokenType.Literal) {
+                throw new TokenException("register expected", token);
+            }
+            var reg = token.ParseRegister();
+            if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
+                throw new TokenException("word register expected (r24, r26, r28, r30)", token);
+            }
+            return reg;
+        }
+
         public byte ReadReg32() {
             var token = ReadRequiredToken();
             if (token.Type != TokenType.Literal) {

@@ -67,6 +67,9 @@
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />
     <Compile Include="IO\MemoryAsmSource.cs" />
+    <Compile Include="Opcodes\Arithmetics\SbiwOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\AdiwOpcode.cs" />
+    <Compile Include="Opcodes\Arithmetics\BaseRegWImm6Opcode.cs" />
     <Compile Include="Opcodes\Arithmetics\CpcOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\CpOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\DecOpcode.cs" />

@@ -3,12 +3,12 @@
 section code
 	ADC	r12,r22;	Сложение c переносом	Rn <- Rn + Rk + C	Z, C, N, V, S, H	1
 	ADD	r12,r22;	Сложение без переноса	Rn <- Rn + Rk	Z, C, N, V, S, H	1
-;	ADIW	r12,10;	Сложение с константой	(Rn+1):Rn <- (Rn+1):Rn + K	Z, C, N, V, S	2
+	ADIW r24,10;	Сложение с константой	(Rn+1):Rn <- (Rn+1):Rn + K	Z, C, N, V, S	2
 	SUB	r12,r22;	Вычитание без заема	Rn <- Rn - Rk	Z, C, N, V, S, H	1
 	subi R22,10;	Вычитание константы без заема	Rn <- Rn - K	Z, C, N, V, S, H	1
 	sbci r22,10;	Вычитание константы с заемом	Rn <- Rn - K - C	Z, C, N, V, S, H	1
 	SBC R12,r22;	Вычитание c заемом	Rn <- Rn - Rk - C	Z, C, N, V, S, H	1
-;	SBIW R12,10;	Вычитание константы	Rn+1):Rn <- (Rn+1):Rn - K	Z, C, N, V, S	2
+	SBIW R24,10;	Вычитание константы	Rn+1):Rn <- (Rn+1):Rn - K	Z, C, N, V, S	2
 	COM R12;	Дополнение до 1	Rn <- 0FFh - Rn	Z, C, N, V, S	1
 	NEG R12;	Дополнение до 2	Rn <- 0 - Rn	Z, C, N, V, S, H	1
 	INC R12;	Увеличение на 1	Rn <- Rn + 1	Z, N, V, S	1

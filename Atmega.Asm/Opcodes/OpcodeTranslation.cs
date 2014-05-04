@@ -90,6 +90,17 @@
             }
         }
 
+        public byte Imm6 {
+            get {
+                return (byte)(((Opcode & 0x00c0) >> 2) | (Opcode & 0x0f));
+            }
+            set {
+                Opcode &= 0xf0f0;
+                Opcode |= (ushort)(value & 0x0f);
+                Opcode |= (ushort)((value << 2) & 0x00c0);
+            }
+        }
+
         public byte Port32 {
             get {
                 return (byte)((Opcode >> 3) & 0x1f);
@@ -168,6 +179,19 @@
                 Opcode &= 0xfe0e;
                 Opcode |= (ushort)((value << 3) & 0x01f0);
                 Opcode |= (ushort)(value & 0x0001);
+            }
+        }
+
+        public byte RegW24 {
+            get {
+                var val = (Opcode & 0x0030) >> 4;
+                val = val * 2 + 24;
+                return (byte)val;
+            }
+            set {
+                Opcode &= 0xffc0;
+                var val = (value - 24) / 2;
+                Opcode |= (ushort)((val << 4) & 0x0030);
             }
         }
     }

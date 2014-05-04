@@ -15,6 +15,8 @@ namespace Atmega.Asm.Opcodes {
                 case "sub": return new SubOpcode();
                 case "sbc": return new SbcOpcode();
                 case "mul": return new MulOpcode();
+                case "adiw": return new AdiwOpcode();
+                case "sbiw": return new SbiwOpcode();
 
                 case "inc": return new IncOpcode();
                 case "dec": return new DecOpcode();
@@ -36,11 +38,11 @@ namespace Atmega.Asm.Opcodes {
                 case "eor": return new EorOpcode();
                 case "cbr": return new CbrOpcode();
                 case "sbr": return new SbrOpcode();
-                
+
                 case "clr": return new ClrOpcode();
                 case "ser": return new SerOpcode();
                 case "tst": return new TstOpcode();
-                
+
                 case "clc": return new ClcOpcode();
                 case "sec": return new SecOpcode();
                 case "cln": return new ClnOpcode();
@@ -59,18 +61,18 @@ namespace Atmega.Asm.Opcodes {
                 case "seh": return new SehOpcode();
                 case "bclr": return new BclrOpcode();
                 case "bset": return new BsetOpcode();
-                
+
                 case "cbi": return new CbiOpcode();
                 case "sbi": return new SbiOpcode();
                 case "bst": return new BstOpcode();
                 case "bld": return new BldOpcode();
-                
+
                 case "lsl": return new LslOpcode();
                 case "lsr": return new LsrOpcode();
                 case "rol": return new RolOpcode();
                 case "ror": return new RorOpcode();
                 case "asr": return new AsrOpcode();
-                
+
                 case "mov": return new MovOpcode();
                 case "ldi": return new LdiOpcode();
                 case "lds": return new LdsOpcode();
@@ -94,7 +96,7 @@ namespace Atmega.Asm.Opcodes {
                 case "call": return new CallOpcode();
                 case "rjmp": return new RjmpOpcode();
                 case "rcall": return new RcallOpcode();
-                
+
                 case "cpse": return new CpseOpcode();
                 case "sbic": return new SbicOpcode();
                 case "sbis": return new SbisOpcode();
@@ -119,7 +121,7 @@ namespace Atmega.Asm.Opcodes {
                 case "brid": return new BridOpcode();
                 case "brbc": return new BrbcOpcode();
                 case "brbs": return new BrbsOpcode();
-                
+
                 case "nop": return new NopOpcode();
                 case "wdr": return new WdrOpcode();
                 case "sleep": return new SleepOpcode();
@@ -135,8 +137,6 @@ namespace Atmega.Asm.Opcodes {
              1001010111011000   elpm    ?
              1001000ddddd011+   elpm    r,z
 
-             10010110KKddKKKK   adiw    w,K
-             10010111KKddKKKK   sbiw    w,K
              00000001ddddrrrr   movw    v,v
              00000010ddddrrrr   muls    d,d
              000000110ddd0rrr   mulsu   a,a
