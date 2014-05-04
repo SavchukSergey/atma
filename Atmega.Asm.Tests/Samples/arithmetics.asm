@@ -18,3 +18,4 @@ section code
 	CPC R12,r22;	Сравнение регистров с заемом	Rn - Rk - C	Z, C, N, V, S, H	1
 
 	mul r3, r22
+	muls r23, r31

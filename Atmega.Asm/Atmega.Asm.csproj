@@ -67,6 +67,7 @@
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />
     <Compile Include="IO\MemoryAsmSource.cs" />
+    <Compile Include="Opcodes\Arithmetics\MulsOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SbiwOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\AdiwOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\BaseRegWImm6Opcode.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
+    <Compile Include="Opcodes\BaseReg16Reg16Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset12Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset22Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseStatusBitOffset7.cs" />

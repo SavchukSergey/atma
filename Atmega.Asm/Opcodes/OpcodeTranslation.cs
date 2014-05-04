@@ -12,10 +12,6 @@
             get { return (byte)(((Opcode & 0x2000) >> 8) | ((Opcode & 0x0c00) >> 7) | (Opcode & 0x0f)); }
         }
 
-        public byte UImm6 {
-            get { return (byte)(((Opcode & 0xc0) >> 2) | (Opcode & 0x0f)); }
-        }
-
         public bool Increment {
             get { return (Opcode & 0x01) > 0; }
         }
@@ -67,6 +63,17 @@
                 Opcode &= 0xfdf0;
                 Opcode |= (ushort)(value & 0x0f);
                 Opcode |= (ushort)((value & 0x10) << 5);
+            }
+        }
+
+        public byte Register16 {
+            get {
+                return (byte)(16 + (Opcode & 0x0f));
+            }
+            set {
+                var val = value - 16;
+                Opcode &= 0xfff0;
+                Opcode |= (ushort)(val & 0x0f);
             }
         }
 
