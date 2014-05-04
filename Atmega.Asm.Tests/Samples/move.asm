@@ -8,9 +8,9 @@ MOV r12,r22	;Копировать Rk в Rn	Rn <- Rk	-	1
 ;LDD Rn, Ri + q	;Rn <- (Ri + q)	-	2
 LDI R18,253	;Загрузить константу в регистр	Rn <- K	-	1
 ;LDS Rn,K	;Загрузить в регистр из памяти данных	Rn <- (K)	-	2
-;LPM	;Загрузить из памяти программ	R0 <- (Z)	-	3
-;LPM Rn, Z	;Rn <- (Z)	-	3
-;LPM Rn, Z+	;Rn <- (Z), Z <- Z + 1	-	3
+LPM	;Загрузить из памяти программ	R0 <- (Z)	-	3
+LPM R1, Z	;Rn <- (Z)	-	3
+LPM R2, Z+	;Rn <- (Z), Z <- Z + 1	-	3
 ELPM	;R0 <- (RAMPZ:Z)	-	3
 ELPM R22, Z	;Rn <- (RAMPZ:Z)	-	3
 ELPM R23, Z+	;Rn <- (RAMPZ:Z), Z <- Z + 1	-	3
