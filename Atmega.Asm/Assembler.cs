@@ -208,11 +208,13 @@ namespace Atmega.Asm {
 
         private void ProcessOrg(AsmContext context) {
             var val = context.CalculateExpression();
-            context.Offset = (int) val;
+            context.Offset = (int)val;
         }
 
         private void ProcessDataBytes(AsmContext context) {
-            context.PeekRequiredToken();
+            if (context.Queue.IsEndOfLine) {
+                throw new TokenException("expected data bytes", context.Queue.LastReadToken);
+            }
             while (context.Queue.Count > 0) {
                 var token = context.Queue.Peek();
                 if (token.Type == TokenType.NewLine) break;

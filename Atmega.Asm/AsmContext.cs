@@ -68,28 +68,6 @@ namespace Atmega.Asm {
             CurrentSection.EmitByte(bt);
         }
 
-        public Token ReadRequiredToken() {
-            if (Queue.Count == 0) {
-                throw new TokenException("Unexpected end of file", Queue.LastReadToken);
-            }
-            var token = Queue.Read();
-            if (token.Type == TokenType.NewLine) {
-                throw new TokenException("Unexpected end of line", Queue.LastReadToken);
-            }
-            return token;
-        }
-
-        public Token PeekRequiredToken() {
-            if (Queue.Count == 0) {
-                throw new Exception("Unexpected end of file");
-            }
-            var token = Queue.Peek();
-            if (token.Type == TokenType.NewLine) {
-                throw new Exception("Unexpected end of line");
-            }
-            return token;
-        }
-
         public byte ReadRegW24() {
             var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
@@ -121,50 +99,61 @@ namespace Atmega.Asm {
             return token.ParseRegister();
         }
 
-        public byte ReadByte() {
-            var val = CalculateExpression();
-            if (val < 0) {
-                val = 256 + val;
-            }
-            if (val > 255) {
-                throw new Exception("Value is out of range");
-            }
-
-            return (byte)val;
-        }
-
         public byte ReadPort32() {
-            var token = PeekRequiredToken();
-            var val = CalculateExpression();
-            if (val < 0 || val > 32) {
-                throw new TokenException("expected port address 0-31", token);
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
+            if (val < 0 || val >= 32) {
+                throw new TokenException("expected port address 0-31", firstToken);
             }
             return (byte)val;
         }
 
         public byte ReadPort64() {
-            var token = PeekRequiredToken();
-            var val = CalculateExpression();
-            if (val < 0 || val > 64) {
-                throw new TokenException("expected port address 0-63", token);
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
+            if (val < 0 || val >= 64) {
+                throw new TokenException("expected port address 0-63", firstToken);
             }
             return (byte)val;
         }
 
+        public byte ReadByte() {
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
+            if (val < 0) {
+                val = 256 + val;
+            }
+            if (val > 255) {
+                throw new TokenException("byte value is out of range", firstToken);
+            }
+
+            return (byte)val;
+        }
+
         public ushort ReadUshort() {
-            var val = CalculateExpression();
-            if (val < 0 || val > 0x10000) {
-                throw new Exception("address is beyond 64k boundary");
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
+            if (val < 0 || val >= 0x10000) {
+                throw new TokenException("address is beyond 64k boundary", firstToken);
             }
             return (ushort)val;
         }
 
         public byte ReadBit() {
-            var val = CalculateExpression();
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
             if (val < 0 || val > 7) {
-                throw new Exception("expected bit number 0-7");
+                throw new TokenException("expected bit number 0-7", firstToken);
             }
             return (byte)val;
+        }
+
+        public long CalculateExpression(out Token firstToken) {
+            if (Queue.IsEndOfLine) {
+                throw new TokenException("expression expected", Queue.LastReadToken);
+            }
+            firstToken = Queue.Peek();
+            return _calculator.Parse(Queue).Evaluate();
         }
 
         public long CalculateExpression() {
