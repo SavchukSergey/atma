@@ -2,13 +2,14 @@
 
 namespace Atmega.Asm.Opcodes.Branch {
     public abstract class BaseOffset7Opcode : BaseOpcode {
+        
         protected BaseOffset7Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
         public override void Compile(AsmContext context) {
-            var firstToken = context.Queue.Count > 0 ? context.Queue.Peek() : new Token();
-            var offset = context.CalculateExpression();
+            Token firstToken;
+            var offset = context.CalculateExpression(out firstToken);
             var currentOffset = context.Offset + 2;
             var delta = offset - currentOffset;
             if ((delta & 0x1) > 0) {

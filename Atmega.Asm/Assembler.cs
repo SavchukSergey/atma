@@ -228,11 +228,8 @@ namespace Atmega.Asm {
                         context.EmitByte((byte)ch);
                     }
                 } else {
-                    var val = context.CalculateExpression();
-                    if (val > 255 || val < 0) {
-                        throw new TokenException("value is beyond of byte boundary", token);
-                    }
-                    context.EmitByte((byte)val);
+                    var val = context.ReadByte();
+                    context.EmitByte(val);
                 }
 
                 if (context.Queue.Count > 0) {

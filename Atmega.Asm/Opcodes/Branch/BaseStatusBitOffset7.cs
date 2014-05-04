@@ -2,6 +2,7 @@
 
 namespace Atmega.Asm.Opcodes.Branch {
     public abstract class BaseStatusBitOffset7 : BaseOpcode {
+        
         protected BaseStatusBitOffset7(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
@@ -10,8 +11,8 @@ namespace Atmega.Asm.Opcodes.Branch {
             var bit = context.ReadBit();
             context.Queue.Read(TokenType.Comma);
 
-            var firstToken = context.Queue.Count > 0 ? context.Queue.Peek() : new Token();
-            var offset = context.CalculateExpression();
+            Token firstToken;
+            var offset = context.CalculateExpression(out firstToken);
             var currentOffset = context.Offset + 2;
             var delta = offset - currentOffset;
             if ((delta & 0x1) > 0) {

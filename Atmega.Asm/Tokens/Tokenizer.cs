@@ -211,7 +211,7 @@ namespace Atmega.Asm.Tokens {
         private Token ParsePrefixedHexInteger(string literal, TokenPosition position) {
             long val = 0;
             var pos = 2;
-            if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
+            if (pos >= literal.Length) throw new TokenException("Unexpeced end of hex constant", new Token { Position = position, StringValue = literal });
             while (pos < literal.Length) {
                 var ch = literal[pos++];
                 var hex = GetHexValue(ch);
@@ -229,7 +229,7 @@ namespace Atmega.Asm.Tokens {
         private Token ParsePostfixedHexInteger(string literal, TokenPosition position) {
             long val = 0;
             var pos = 0;
-            if (pos >= literal.Length) throw new Exception("Unexpeced end of hex constant");
+            if (pos >= literal.Length) throw new TokenException("Unexpeced end of hex constant", new Token { Position = position, StringValue = literal });
             while (pos < literal.Length - 1) {
                 var ch = literal[pos++];
                 var hex = GetHexValue(ch);
