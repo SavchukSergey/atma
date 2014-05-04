@@ -7,6 +7,7 @@ namespace Atmega.Asm.Tests.Expressions {
 
         [Test]
         [TestCase("345", 345)]
+        [TestCase("(345)", (345))]
         [TestCase("-345", -345)]
         [TestCase("345 + 452", 345 + 452)]
         [TestCase("(345 + 452)", (345 + 452))]

@@ -45,13 +45,10 @@ namespace Atmega.Asm.Expressions {
                 case TokenType.Minus: return new NegateExpression(ParseOperand(tokens));
                 case TokenType.OpenParenthesis:
                     var inner = Parse(tokens);
-                    if (tokens.Count == 0) {
-                        throw new Exception("missing closing parenthesis");
+                    if (tokens.IsEndOfLine) {
+                        throw new TokenException("missing closing parenthesis", tokens.LastReadToken);
                     }
-                    var close = tokens.Read();
-                    if (close.Type != TokenType.CloseParenthesis) {
-                        throw new TokenException("expected closing parenthesis", close);
-                    }
+                    tokens.Read(TokenType.CloseParenthesis);
                     return inner;
                 default:
                     throw new TokenException("unexpected token " + token.StringValue, token);

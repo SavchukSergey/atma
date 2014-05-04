@@ -1,5 +1,4 @@
-﻿using System;
-using Atmega.Asm.Tokens;
+﻿using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes.Arithmetics {
     public class BaseRegWImm6Opcode : BaseOpcode {
@@ -12,9 +11,10 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
             var dest = context.ReadRegW24();
             translation.RegW24 = dest;
             context.Queue.Read(TokenType.Comma);
-            var imm = context.CalculateExpression();
+            Token exprToken;
+            var imm = context.CalculateExpression(out exprToken);
             if (imm > 63) {
-                throw new Exception("value must be less than 64");
+                throw new TokenException("value must be less than 64", exprToken);
             }
             translation.Imm6 = (byte)imm;
             context.EmitCode(translation.Opcode);
