@@ -34,16 +34,6 @@ namespace Atmega.Asm.Tests {
             var compiled = Compile(content);
         }
 
-
-        [Test]
-        public void EmptyLabelTest() {
-            const string content = @"
-section code
-main:
-";
-            var compiled = Compile(content);
-        }
-
         [Test]
         [TestCase("breq")]
         [TestCase("brne")]
@@ -82,7 +72,7 @@ main:
 
         [Test]
         public void FlashTest() {
-            var complied = ComplieEmbeded("flash.asm");
+            var complied = CompileEmbedded("flash.asm");
         }
 
         [Test]
@@ -108,6 +98,15 @@ forward:
                 0x01, 0xc0,
                 0x00, 0x00
             }, compiled.CodeSection.Content);
+        }
+
+        [Test]
+        public void IllegalInstructionTest() {
+            try {
+                Compile("illegalOpcode");
+                Assert.Fail();
+            } catch (TokenException) {
+            }
         }
 
     }

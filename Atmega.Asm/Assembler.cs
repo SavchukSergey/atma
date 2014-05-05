@@ -141,6 +141,9 @@ namespace Atmega.Asm {
                 if (CheckLabel(token, context)) {
                     continue;
                 }
+                if (CheckData(token, context)) {
+                    continue;
+                }
 
                 switch (token.StringValue.ToLower()) {
                     case "section":
@@ -148,18 +151,6 @@ namespace Atmega.Asm {
                         break;
                     case "org":
                         ProcessOrg(context);
-                        break;
-                    case "db":
-                        ProcessDataBytes(context);
-                        break;
-                    case "dw":
-                        ProcessDataWords(context);
-                        break;
-                    case "rb":
-                        ProcessReserveBytes(context);
-                        break;
-                    case "rw":
-                        ProcessReserveWords(context);
                         break;
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
@@ -191,6 +182,22 @@ namespace Atmega.Asm {
             return false;
         }
 
+        private bool CheckData(Token token, AsmContext context) {
+            if (IsDataDirective(token)) {
+                ProcessDataDirective(token, context);
+                return true;
+            }
+            if (!context.Queue.IsEndOfLine) {
+                var preview = context.Queue.Peek();
+                if (IsDataDirective(preview)) {
+                    context.Queue.Read(TokenType.Literal);
+                    ProcessDataDirective(preview, context, token.StringValue);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void SkipEmptyLines(AsmContext context) {
             while (context.Queue.Count > 0) {
                 Token token = context.Queue.Peek();
@@ -215,6 +222,28 @@ namespace Atmega.Asm {
         private void ProcessOrg(AsmContext context) {
             var val = context.Parser.CalculateExpression();
             context.Offset = (int)val;
+        }
+
+        private void ProcessDataDirective(Token token, AsmContext context, string labelName = null) {
+            if (!string.IsNullOrWhiteSpace(labelName)) {
+                context.DefineLabel(labelName);
+            }
+            switch (token.StringValue.ToLower()) {
+                case "db":
+                    ProcessDataBytes(context);
+                    break;
+                case "dw":
+                    ProcessDataWords(context);
+                    break;
+                case "rb":
+                    ProcessReserveBytes(context);
+                    break;
+                case "rw":
+                    ProcessReserveWords(context);
+                    break;
+                default:
+                    throw new TokenException("invalid directive " + token.StringValue, token);
+            }
         }
 
         private void ProcessDataBytes(AsmContext context) {
@@ -280,6 +309,17 @@ namespace Atmega.Asm {
         private void ProcessReserveWords(AsmContext context) {
             var cnt = context.Parser.CalculateExpression();
             context.CurrentSection.ReserveBytes((int)cnt * 2);
+        }
+
+        private static bool IsDataDirective(Token token) {
+            if (token.Type != TokenType.Literal) return false;
+            switch (token.StringValue.ToLower()) {
+                case "db": return true;
+                case "dw": return true;
+                case "rb": return true;
+                case "rw": return true;
+                default: return false;
+            }
         }
     }
 }

@@ -76,5 +76,18 @@ namespace Atmega.Asm {
         public void ReserveBytes(int cnt) {
             for (var i = 0; i < cnt; i++) ReserveByte();
         }
+
+        public ushort[] ReadAsUshorts() {
+            var res = new ushort[(Content.Count + 1) / 2];
+            for (var i = 0; i < Content.Count / 2; i++) {
+                var low = Content[i * 2];
+                var high = Content[i * 2 + 1];
+                res[i] = (ushort)(high * 256 + low);
+            }
+            if ((Content.Count & 1) != 0) {
+                res[res.Length - 1] = Content[Content.Count - 1];
+            }
+            return res;
+        }
     }
 }

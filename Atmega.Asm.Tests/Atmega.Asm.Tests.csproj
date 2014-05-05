@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsmParserTest.cs" />
+    <Compile Include="LabelsTest.cs" />
     <Compile Include="MovesTest.cs" />
     <Compile Include="ArithmeticsTest.cs" />
     <Compile Include="BaseTestFixture.cs" />

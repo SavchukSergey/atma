@@ -9,7 +9,7 @@ namespace Atmega.Asm.Tests {
             return new Assembler(new MemoryAsmSource(content)).Load("main.asm");
         }
 
-        protected AsmContext ComplieEmbeded(string name) {
+        protected AsmContext CompileEmbedded(string name) {
             var type = GetType();
             var ns = type.Namespace;
             var basePath = ns + ".Samples.";
