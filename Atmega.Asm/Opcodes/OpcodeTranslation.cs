@@ -94,7 +94,7 @@
                 return (byte)(((Opcode & 0x00c0) >> 2) | (Opcode & 0x0f));
             }
             set {
-                Opcode &= 0xf0f0;
+                Opcode &= 0xff30;
                 Opcode |= (ushort)(value & 0x0f);
                 Opcode |= (ushort)((value << 2) & 0x00c0);
             }
@@ -188,7 +188,7 @@
                 return (byte)val;
             }
             set {
-                Opcode &= 0xffc0;
+                Opcode &= 0xffcf;
                 var val = (value - 24) / 2;
                 Opcode |= (ushort)((val << 4) & 0x0030);
             }
