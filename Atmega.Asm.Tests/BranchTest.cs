@@ -15,6 +15,16 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("brbs 0, ($+2)+0", (ushort)0xf000)]
+        [TestCase("brbs 7, ($+2)+0", (ushort)0xf007)]
+        [TestCase("brbs 0, ($+2)+63*2", (ushort)0xf1f8)]
+        [TestCase("brbs 0, ($+2)-64*2", (ushort)0xf200)]
+        public void BrbsTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("breq")]
         [TestCase("brne")]
         [TestCase("brcc")]
@@ -55,6 +65,9 @@ main:
         [TestCase("brbc 0, ($+2)+64*2")]
         [TestCase("brbc 0, ($+2)-65*2")]
         [TestCase("brbc 8, ($+2)+0*2")]
+        [TestCase("brbs 0, ($+2)+64*2")]
+        [TestCase("brbs 0, ($+2)-65*2")]
+        [TestCase("brbs 8, ($+2)+0*2")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
