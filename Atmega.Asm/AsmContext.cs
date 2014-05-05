@@ -83,21 +83,43 @@ namespace Atmega.Asm {
 
         private readonly IDictionary<string, ushort> _passLabels = new Dictionary<string, ushort>();
 
-        public bool LabelDefined(string name) {
-            return _passLabels.ContainsKey(name);
+        public string LastGlobalLabel { get; set; }
+
+        private bool LabelDefined(Token token) {
+            var fullname = GetFullLabelName(token);
+            return _passLabels.ContainsKey(fullname);
         }
 
-        public void DefineLabel(string name) {
-            _passLabels[name] = (ushort)Offset;
-            Symbols.Labels[name] = (ushort)Offset;
+        public void DefineLabel(Token token) {
+            if (LabelDefined(token)) {
+                throw new TokenException("duplicate label", token);
+            }
+            if (!token.StringValue.StartsWith(".")) {
+                LastGlobalLabel = token.StringValue;
+            }
+            var fullname = GetFullLabelName(token);
+            _passLabels[fullname] = (ushort)Offset;
+            Symbols.Labels[fullname] = (ushort)Offset;
         }
 
-        public ushort? GetLabel(string name) {
+        public string GetFullLabelName(Token token) {
+            var name = token.StringValue;
+            if (name.StartsWith(".")) {
+                if (string.IsNullOrWhiteSpace(LastGlobalLabel)) {
+                    throw new TokenException("local label must be preceded by global name", token);
+                }
+                return LastGlobalLabel + name;
+            }
+            return name;
+        }
+
+        public ushort? GetLabel(Token token) {
+            var fullname = GetFullLabelName(token);
             ushort val;
-            if (_passLabels.TryGetValue(name, out val)) {
+            if (_passLabels.TryGetValue(fullname, out val)) {
                 return val;
             }
-            if (Symbols.Labels.TryGetValue(name, out val)) {
+            if (Symbols.Labels.TryGetValue(fullname, out val)) {
                 return val;
             }
             if (Pass <= 1) return 0;

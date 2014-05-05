@@ -175,7 +175,7 @@ namespace Atmega.Asm {
                 var next = context.Queue.Peek();
                 if (next.Type == TokenType.Colon) {
                     context.Queue.Read();
-                    context.DefineLabel(token.StringValue);
+                    context.DefineLabel(token);
                     return true;
                 }
             }
@@ -191,7 +191,7 @@ namespace Atmega.Asm {
                 var preview = context.Queue.Peek();
                 if (IsDataDirective(preview)) {
                     context.Queue.Read(TokenType.Literal);
-                    ProcessDataDirective(preview, context, token.StringValue);
+                    ProcessDataDirective(preview, context, token);
                     return true;
                 }
             }
@@ -224,9 +224,9 @@ namespace Atmega.Asm {
             context.Offset = (int)val;
         }
 
-        private void ProcessDataDirective(Token token, AsmContext context, string labelName = null) {
-            if (!string.IsNullOrWhiteSpace(labelName)) {
-                context.DefineLabel(labelName);
+        private void ProcessDataDirective(Token token, AsmContext context, Token? labelNameToken = null) {
+            if (labelNameToken.HasValue) {
+                context.DefineLabel(labelNameToken.Value);
             }
             switch (token.StringValue.ToLower()) {
                 case "db":

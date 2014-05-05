@@ -22,7 +22,7 @@ namespace Atmega.Asm.Expressions {
             if (token.StringValue == "$") {
                 return new NumberExpression { Value = _context.Offset };
             }
-            var lblValue = _context.GetLabel(token.StringValue);
+            var lblValue = _context.GetLabel(token);
             if (lblValue == null) {
                 throw new TokenException("unknown symbol " + token.StringValue, token);
             }
