@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchTest.cs" />
+    <Compile Include="BitTest.cs" />
+    <Compile Include="StatusTest.cs" />
     <Compile Include="AsmParserTest.cs" />
     <Compile Include="LabelsTest.cs" />
     <Compile Include="MovesTest.cs" />

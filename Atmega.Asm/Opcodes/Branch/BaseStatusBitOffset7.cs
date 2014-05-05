@@ -24,7 +24,7 @@ namespace Atmega.Asm.Opcodes.Branch {
             }
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
             translation.Offset7 = (sbyte)delta;
-            translation.StatusBitNumber = bit;
+            translation.BitNumber = bit;
 
             context.EmitCode(translation.Opcode);
         }
