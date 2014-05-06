@@ -13,6 +13,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("cpse r31, r0", (ushort)0x11f0)]
+        [TestCase("cpse r0, r31", (ushort)0x120f)]
+        public void CpseTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("brbc 0, ($+2)+0", (ushort)0xf400)]
         [TestCase("brbc 7, ($+2)+0", (ushort)0xf407)]
         [TestCase("brbc 0, ($+2)+63*2", (ushort)0xf5f8)]
@@ -101,6 +109,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("brvs ($+2)+64*2")]
         [TestCase("brvs ($+2)-65*2")]
         [TestCase("call ((1 << 22) - 0) * 2")]
+        [TestCase("cpse r0, r32")]
+        [TestCase("cpse r32, r0")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

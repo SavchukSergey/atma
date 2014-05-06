@@ -60,6 +60,22 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("dec r0", (ushort)0x940a)]
+        [TestCase("dec r31", (ushort)0x95fa)]
+        public void DecTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("inc r0", (ushort)0x9403)]
+        [TestCase("inc r31", (ushort)0x95f3)]
+        public void IncTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("cp r31, r0", (ushort)0x15f0)]
         [TestCase("cp r0, r31", (ushort)0x160f)]
         public void CpTest(string asm, ushort opcode) {
@@ -96,6 +112,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("adiw r25, 0")]
         [TestCase("sbiw r25, 0")]
         [TestCase("com r32")]
+        [TestCase("dec r32")]
+        [TestCase("inc r32")]
         [TestCase("cbr r0, 0")]
         [TestCase("cbr r32, 0")]
         [TestCase("cp r0, r32")]
