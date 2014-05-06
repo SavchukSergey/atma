@@ -5,6 +5,14 @@ namespace Atmega.Asm.Tests {
     public class BranchTest : BaseTestFixture {
 
         [Test]
+        [TestCase("eicall", (ushort)0x9519)]
+        [TestCase("eijmp", (ushort)0x9419)]
+        public void SimpleInstructionTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("call 0x1234 * 2", (ushort)0x940e, (ushort)0x1234)]
         [TestCase("call ((1 << 22) - 1) * 2", (ushort)0x95ff, (ushort)0xffff)]
         public void CallTest(string asm, ushort opcode, ushort adr) {
