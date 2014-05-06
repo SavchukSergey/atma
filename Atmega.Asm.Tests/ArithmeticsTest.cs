@@ -21,24 +21,6 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
-        [TestCase("and r31, r1", (ushort)0x21f1)]
-        [TestCase("and r1, r31", (ushort)0x221f)]
-        public void AndTest(string asm, ushort opcode) {
-            var compiled = Compile(asm);
-            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
-        }
-
-        [Test]
-        [TestCase("andi r16, 0", (ushort)0x7000)]
-        [TestCase("andi r16, 255", (ushort)0x7f0f)]
-        [TestCase("andi r31, 0", (ushort)0x70f0)]
-        [TestCase("andi r31, 255", (ushort)0x7fff)]
-        public void Reg16Imm8OpcodeTest(string asm, ushort opcode) {
-            var compiled = Compile(asm);
-            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
-        }
-
-        [Test]
         [TestCase("cbr r16, 255", (ushort)0x7000)]
         [TestCase("cbr r16, 0", (ushort)0x7f0f)]
         [TestCase("cbr r31, 255", (ushort)0x70f0)]
@@ -70,19 +52,57 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("com r0", (ushort)0x9400)]
+        [TestCase("com r31", (ushort)0x95f0)]
+        public void ComTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("cp r31, r0", (ushort)0x15f0)]
+        [TestCase("cp r0, r31", (ushort)0x160f)]
+        public void CpTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("cpc r31, r0", (ushort)0x05f0)]
+        [TestCase("cpc r0, r31", (ushort)0x060f)]
+        public void CpcTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("cpi r16, 0", (ushort)0x3000)]
+        [TestCase("cpi r16, 255", (ushort)0x3f0f)]
+        [TestCase("cpi r31, 0", (ushort)0x30f0)]
+        [TestCase("cpi r31, 255", (ushort)0x3fff)]
+        public void CpiTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("add r0, r32")]
         [TestCase("add r32, r0")]
         [TestCase("adc r0, r32")]
         [TestCase("adc r32, r0")]
-        [TestCase("and r0, r32")]
-        [TestCase("and r32, r0")]
         [TestCase("asr r32")]
         [TestCase("adiw r24, 64")]
         [TestCase("sbiw r24, 64")]
         [TestCase("adiw r25, 0")]
         [TestCase("sbiw r25, 0")]
-        [TestCase("andi r8, 0")]
-        [TestCase("andi r24, 1234")]
+        [TestCase("com r32")]
+        [TestCase("cbr r0, 0")]
+        [TestCase("cbr r32, 0")]
+        [TestCase("cp r0, r32")]
+        [TestCase("cp r32, r0")]
+        [TestCase("cpc r0, r32")]
+        [TestCase("cpc r32, r0")]
+        [TestCase("cpi r0, 0")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
