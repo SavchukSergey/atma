@@ -85,6 +85,16 @@ namespace Atmega.Asm {
             return (byte)val;
         }
 
+        public byte ReadDesRound() {
+            Token firstToken;
+            var val = CalculateExpression(out firstToken);
+            if (val < 0 || val > 15) {
+                throw new TokenException("DES round must be between 0 and 15", firstToken);
+            }
+
+            return (byte)val;
+        }
+
         public byte ReadByte() {
             Token firstToken;
             var val = CalculateExpression(out firstToken);

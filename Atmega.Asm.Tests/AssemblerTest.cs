@@ -73,6 +73,7 @@ forward:
             }
         }
 
+
         [Test]
         [TestCase("break", (ushort)0x9598)]
         public void SimpleInstructionTest(string asm, ushort opcode) {

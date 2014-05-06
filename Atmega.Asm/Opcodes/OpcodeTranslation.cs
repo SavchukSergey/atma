@@ -225,6 +225,16 @@
                 Opcode |= (ushort)((value << 8) & 0x2000);
             }
         }
+
+        public byte DesRound {
+            get {
+                return (byte)((Opcode & 0x00f0) >> 4);
+            }
+            set {
+                Opcode &= 0xff0f;
+                Opcode |= (ushort)((value << 4) & 0x00f0);
+            }
+        }
     }
 
     public enum IndirectRegister {

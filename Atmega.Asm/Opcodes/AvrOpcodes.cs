@@ -28,6 +28,7 @@ namespace Atmega.Asm.Opcodes {
 
                 case "com": return new ComOpcode();
                 case "neg": return new NegOpcode();
+                case "des": return new DesOpcode();
 
                 case "subi": return new SubiOpcode();
                 case "sbci": return new SbciOpcode();

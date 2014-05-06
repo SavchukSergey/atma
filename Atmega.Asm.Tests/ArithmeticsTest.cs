@@ -101,6 +101,16 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
+
+        [Test]
+        [TestCase("des 0", (ushort)0x940b)]
+        [TestCase("des 1", (ushort)0x941b)]
+        [TestCase("des 15", (ushort)0x94fb)]
+        public void DesTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
         [Test]
         [TestCase("add r0, r32")]
         [TestCase("add r32, r0")]
@@ -121,6 +131,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("cpc r0, r32")]
         [TestCase("cpc r32, r0")]
         [TestCase("cpi r0, 0")]
+        [TestCase("des 16")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
