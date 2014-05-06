@@ -34,6 +34,22 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("las z, r0", (ushort)0x9205)]
+        [TestCase("las z, r31", (ushort)0x93f5)]
+        public void LasTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("lat z, r0", (ushort)0x9207)]
+        [TestCase("lat z, r31", (ushort)0x93f7)]
+        public void LatTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         public void Reg32Imm16Opcode() {
             var complied = Compile("lds r31, $");
             Assert.AreEqual(4, complied.CodeSection.Content.Count);
@@ -67,6 +83,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("elpm r0, x+")]
         [TestCase("in r0, 64")]
         [TestCase("in r32, 0")]
+        
         [TestCase("lac z, r32")]
         [TestCase("lac z+, r0")]
         [TestCase("lac z-, r0")]
@@ -76,6 +93,27 @@ namespace Atmega.Asm.Tests {
         [TestCase("lac x, r0")]
         [TestCase("lac x+, r0")]
         [TestCase("lac x-, r0")]
+
+        [TestCase("las z, r32")]
+        [TestCase("las z+, r0")]
+        [TestCase("las z-, r0")]
+        [TestCase("las y, r0")]
+        [TestCase("las y+, r0")]
+        [TestCase("las y-, r0")]
+        [TestCase("las x, r0")]
+        [TestCase("las x+, r0")]
+        [TestCase("las x-, r0")]
+
+        [TestCase("lat z, r32")]
+        [TestCase("lat z+, r0")]
+        [TestCase("lat z-, r0")]
+        [TestCase("lat y, r0")]
+        [TestCase("lat y+, r0")]
+        [TestCase("lat y-, r0")]
+        [TestCase("lat x, r0")]
+        [TestCase("lat x+, r0")]
+        [TestCase("lat x-, r0")]
+
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

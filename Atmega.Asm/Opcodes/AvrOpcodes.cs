@@ -97,6 +97,8 @@ namespace Atmega.Asm.Opcodes {
                 case "lpm": return new LpmOpcode();
                 case "elpm": return new ElpmOpcode();
                 case "lac": return new LacOpcode();
+                case "las": return new LasOpcode();
+                case "lat": return new LatOpcode();
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
