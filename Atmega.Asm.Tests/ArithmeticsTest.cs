@@ -39,6 +39,16 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("cbr r16, 255", (ushort)0x7000)]
+        [TestCase("cbr r16, 0", (ushort)0x7f0f)]
+        [TestCase("cbr r31, 255", (ushort)0x70f0)]
+        [TestCase("cbr r31, 0", (ushort)0x7fff)]
+        public void Reg16ComplementImm8OpcodeTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("asr r0", (ushort)0x9405)]
         [TestCase("asr r16", (ushort)0x9505)]
         [TestCase("asr r31", (ushort)0x95f5)]

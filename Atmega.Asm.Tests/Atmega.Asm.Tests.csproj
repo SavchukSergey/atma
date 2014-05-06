@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BranchTest.cs" />
     <Compile Include="BitTest.cs" />
+    <Compile Include="LogicTest.cs" />
     <Compile Include="StatusTest.cs" />
     <Compile Include="AsmParserTest.cs" />
     <Compile Include="LabelsTest.cs" />

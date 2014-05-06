@@ -25,10 +25,22 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("cbi 0, 0", (ushort)0x9800)]
+        [TestCase("cbi 0, 7", (ushort)0x9807)]
+        [TestCase("cbi 31, 0", (ushort)0x98f8)]
+        [TestCase("cbi 31, 7", (ushort)0x98ff)]
+        public void CbiTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("bld r32, 0")]
         [TestCase("bld r0, 8")]
         [TestCase("bst r32, 0")]
         [TestCase("bst r0, 8")]
+        [TestCase("cbi 32, 0")]
+        [TestCase("cbi 0, 8")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

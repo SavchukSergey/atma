@@ -31,5 +31,19 @@ namespace Atmega.Asm.Tests {
             }
         }
 
+        [Test]
+        [TestCase("clc", (ushort)0x9488)]
+        [TestCase("clz", (ushort)0x9498)]
+        [TestCase("cln", (ushort)0x94a8)]
+        [TestCase("clv", (ushort)0x94b8)]
+        [TestCase("cls", (ushort)0x94c8)]
+        [TestCase("clh", (ushort)0x94d8)]
+        [TestCase("clt", (ushort)0x94e8)]
+        [TestCase("cli", (ushort)0x94f8)]
+        public void SimpleInstructionTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
     }
 }
