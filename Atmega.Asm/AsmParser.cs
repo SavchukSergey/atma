@@ -191,5 +191,9 @@ namespace Atmega.Asm {
         public long CalculateExpression() {
             return _calculator.Parse(_context.Queue).Evaluate();
         }
+
+        public Token ReadToken(TokenType type) {
+            return _context.Queue.Read(type);
+        }
     }
 }

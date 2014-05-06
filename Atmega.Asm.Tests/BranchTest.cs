@@ -23,6 +23,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("jmp 0x1234 * 2", (ushort)0x940c, (ushort)0x1234)]
+        [TestCase("jmp ((1 << 22) - 1) * 2", (ushort)0x95fd, (ushort)0xffff)]
+        public void JmpTest(string asm, ushort opcode, ushort adr) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode, adr }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("cpse r31, r0", (ushort)0x11f0)]
         [TestCase("cpse r0, r31", (ushort)0x120f)]
         public void CpseTest(string asm, ushort opcode) {
@@ -119,6 +127,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("brvs ($+2)+64*2")]
         [TestCase("brvs ($+2)-65*2")]
         [TestCase("call ((1 << 22) - 0) * 2")]
+        [TestCase("jmp ((1 << 22) - 0) * 2")]
         [TestCase("cpse r0, r32")]
         [TestCase("cpse r32, r0")]
         public void FailTest(string opcode) {

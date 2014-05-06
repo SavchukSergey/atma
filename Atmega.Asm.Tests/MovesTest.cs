@@ -16,6 +16,24 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("in r0, 0", (ushort)0xb000)]
+        [TestCase("in r0, 63", (ushort)0xb60f)]
+        [TestCase("in r31, 0", (ushort)0xb1f0)]
+        [TestCase("in r31, 63", (ushort)0xb7ff)]
+        public void InTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("lac z, r0", (ushort)0x9206)]
+        [TestCase("lac z, r31", (ushort)0x93f6)]
+        public void LacTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         public void Reg32Imm16Opcode() {
             var complied = Compile("lds r31, $");
             Assert.AreEqual(4, complied.CodeSection.Content.Count);
@@ -47,6 +65,17 @@ namespace Atmega.Asm.Tests {
         [TestCase("elpm r0, x")]
         [TestCase("elpm r0, x-")]
         [TestCase("elpm r0, x+")]
+        [TestCase("in r0, 64")]
+        [TestCase("in r32, 0")]
+        [TestCase("lac z, r32")]
+        [TestCase("lac z+, r0")]
+        [TestCase("lac z-, r0")]
+        [TestCase("lac y, r0")]
+        [TestCase("lac y+, r0")]
+        [TestCase("lac y-, r0")]
+        [TestCase("lac x, r0")]
+        [TestCase("lac x+, r0")]
+        [TestCase("lac x-, r0")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

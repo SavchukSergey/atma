@@ -96,6 +96,7 @@ namespace Atmega.Asm.Opcodes {
                 case "out": return new OutOpcode();
                 case "lpm": return new LpmOpcode();
                 case "elpm": return new ElpmOpcode();
+                case "lac": return new LacOpcode();
 
                 case "sbrc": return new SbrcOpcode();
                 case "sbrs": return new SbrsOpcode();
