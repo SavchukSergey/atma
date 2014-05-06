@@ -73,5 +73,11 @@ forward:
             }
         }
 
+        [Test]
+        [TestCase("break", (ushort)0x9598)]
+        public void SimpleInstructionTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
     }
 }

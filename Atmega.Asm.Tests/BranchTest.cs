@@ -25,39 +25,27 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
-        [TestCase("breq")]
-        [TestCase("brne")]
-        [TestCase("brcc")]
-        [TestCase("brcs")]
-        [TestCase("brhc")]
-        [TestCase("brhs")]
-        [TestCase("brsh")]
-        [TestCase("brlo")]
-        [TestCase("brpl")]
-        [TestCase("brmi")]
-        [TestCase("brge")]
-        [TestCase("brlt")]
-        [TestCase("brtc")]
-        [TestCase("brts")]
-        [TestCase("brvc")]
-        [TestCase("brvs")]
-        [TestCase("brie")]
-        [TestCase("brid")]
-        public void StatusBranchTest(string op) {
-            const string template = @"
-section code
-main:
-.back:
-    nop
-.self: {Operation} .self
-    {Operation} .zero
-.zero:
-    {Operation} .forward
-    nop
-.forward:
-";
-            var content = template.Replace("{Operation}", op);
-            var compiled = Compile(content);
+        [TestCase("brsh $+2", (ushort)0xf400)]
+        [TestCase("brlo $+2", (ushort)0xf000)]
+        [TestCase("brcc $+2", (ushort)0xf400)]
+        [TestCase("brcs $+2", (ushort)0xf000)]
+        [TestCase("breq $+2", (ushort)0xf001)]
+        [TestCase("brne $+2", (ushort)0xf401)]
+        [TestCase("brpl $+2", (ushort)0xf402)]
+        [TestCase("brmi $+2", (ushort)0xf002)]
+        [TestCase("brvc $+2", (ushort)0xf403)]
+        [TestCase("brvs $+2", (ushort)0xf003)]
+        [TestCase("brge $+2", (ushort)0xf404)]
+        [TestCase("brlt $+2", (ushort)0xf004)]
+        [TestCase("brhc $+2", (ushort)0xf405)]
+        [TestCase("brhs $+2", (ushort)0xf005)]
+        [TestCase("brtc $+2", (ushort)0xf406)]
+        [TestCase("brts $+2", (ushort)0xf006)]
+        [TestCase("brie $+2", (ushort)0xf007)]
+        [TestCase("brid $+2", (ushort)0xf407)]
+        public void StatusBranchTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
 
@@ -68,6 +56,42 @@ main:
         [TestCase("brbs 0, ($+2)+64*2")]
         [TestCase("brbs 0, ($+2)-65*2")]
         [TestCase("brbs 8, ($+2)+0*2")]
+        [TestCase("brcc ($+2)+64*2")]
+        [TestCase("brcc ($+2)-65*2")]
+        [TestCase("brcs ($+2)+64*2")]
+        [TestCase("brcs ($+2)-65*2")]
+        [TestCase("breq ($+2)+64*2")]
+        [TestCase("breq ($+2)-65*2")]
+        [TestCase("brge ($+2)+64*2")]
+        [TestCase("brge ($+2)-65*2")]
+        [TestCase("brhc ($+2)+64*2")]
+        [TestCase("brhc ($+2)-65*2")]
+        [TestCase("brhs ($+2)+64*2")]
+        [TestCase("brhs ($+2)-65*2")]
+        [TestCase("brid ($+2)+64*2")]
+        [TestCase("brid ($+2)-65*2")]
+        [TestCase("brie ($+2)+64*2")]
+        [TestCase("brie ($+2)-65*2")]
+        [TestCase("brlo ($+2)+64*2")]
+        [TestCase("brlo ($+2)-65*2")]
+        [TestCase("brlt ($+2)+64*2")]
+        [TestCase("brlt ($+2)-65*2")]
+        [TestCase("brmi ($+2)+64*2")]
+        [TestCase("brmi ($+2)-65*2")]
+        [TestCase("brne ($+2)+64*2")]
+        [TestCase("brne ($+2)-65*2")]
+        [TestCase("brpl ($+2)+64*2")]
+        [TestCase("brpl ($+2)-65*2")]
+        [TestCase("brsh ($+2)+64*2")]
+        [TestCase("brsh ($+2)-65*2")]
+        [TestCase("brtc ($+2)+64*2")]
+        [TestCase("brtc ($+2)-65*2")]
+        [TestCase("brts ($+2)+64*2")]
+        [TestCase("brts ($+2)-65*2")]
+        [TestCase("brvc ($+2)+64*2")]
+        [TestCase("brvc ($+2)-65*2")]
+        [TestCase("brvs ($+2)+64*2")]
+        [TestCase("brvs ($+2)-65*2")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
