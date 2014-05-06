@@ -15,6 +15,7 @@ namespace Atmega.Asm.Opcodes.Branch {
             }
             target /= 2;
 
+            //todo: for 64k devices limit is 64k
             if (target < 0 || target >= (1 << 22)) {
                 throw new TokenException("jump beyond 4m boundary", firstToken);
             }

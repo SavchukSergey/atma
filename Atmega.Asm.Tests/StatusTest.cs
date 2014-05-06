@@ -13,7 +13,16 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("bset 0", (ushort)0x9408)]
+        [TestCase("bset 7", (ushort)0x9478)]
+        public void BsetTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("bclr 8")]
+        [TestCase("bset 8")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

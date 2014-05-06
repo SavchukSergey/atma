@@ -5,6 +5,14 @@ namespace Atmega.Asm.Tests {
     public class BranchTest : BaseTestFixture {
 
         [Test]
+        [TestCase("call 0x1234 * 2", (ushort)0x940e, (ushort)0x1234)]
+        [TestCase("call ((1 << 22) - 1) * 2", (ushort)0x95ff, (ushort)0xffff)]
+        public void CallTest(string asm, ushort opcode, ushort adr) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode, adr }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("brbc 0, ($+2)+0", (ushort)0xf400)]
         [TestCase("brbc 7, ($+2)+0", (ushort)0xf407)]
         [TestCase("brbc 0, ($+2)+63*2", (ushort)0xf5f8)]
@@ -92,6 +100,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("brvc ($+2)-65*2")]
         [TestCase("brvs ($+2)+64*2")]
         [TestCase("brvs ($+2)-65*2")]
+        [TestCase("call ((1 << 22) - 0) * 2")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
