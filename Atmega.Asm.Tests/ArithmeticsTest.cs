@@ -101,6 +101,36 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
+        [Test]
+        [TestCase("fmul r16, r16", (ushort)0x0308)]
+        [TestCase("fmul r16, r23", (ushort)0x030f)]
+        [TestCase("fmul r23, r16", (ushort)0x0378)]
+        [TestCase("fmul r23, r23", (ushort)0x037f)]
+        public void FmulTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+
+        [Test]
+        [TestCase("fmuls r16, r16", (ushort)0x0380)]
+        [TestCase("fmuls r16, r23", (ushort)0x0387)]
+        [TestCase("fmuls r23, r16", (ushort)0x03f0)]
+        [TestCase("fmuls r23, r23", (ushort)0x03f7)]
+        public void FmulsTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("fmulsu r16, r16", (ushort)0x0388)]
+        [TestCase("fmulsu r16, r23", (ushort)0x038f)]
+        [TestCase("fmulsu r23, r16", (ushort)0x03f8)]
+        [TestCase("fmulsu r23, r23", (ushort)0x03ff)]
+        public void FmulsuTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
 
         [Test]
         [TestCase("des 0", (ushort)0x940b)]
@@ -132,6 +162,18 @@ namespace Atmega.Asm.Tests {
         [TestCase("cpc r32, r0")]
         [TestCase("cpi r0, 0")]
         [TestCase("des 16")]
+        [TestCase("fmul r15, r16")]
+        [TestCase("fmul r16, r15")]
+        [TestCase("fmul r16, r24")]
+        [TestCase("fmul r24, r16")]
+        [TestCase("fmuls r15, r16")]
+        [TestCase("fmuls r16, r15")]
+        [TestCase("fmuls r16, r24")]
+        [TestCase("fmuls r24, r16")]
+        [TestCase("fmulsu r15, r16")]
+        [TestCase("fmulsu r16, r15")]
+        [TestCase("fmulsu r16, r24")]
+        [TestCase("fmulsu r24, r16")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

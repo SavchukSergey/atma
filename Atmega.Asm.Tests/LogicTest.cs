@@ -21,6 +21,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("eor r31, r1", (ushort)0x25f1)]
+        [TestCase("eor r1, r31", (ushort)0x261f)]
+        public void EorTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("andi r16, 0", (ushort)0x7000)]
         [TestCase("andi r16, 255", (ushort)0x7f0f)]
         [TestCase("andi r31, 0", (ushort)0x70f0)]
@@ -34,6 +42,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("clr r32")]
         [TestCase("and r0, r32")]
         [TestCase("and r32, r0")]
+        [TestCase("eor r0, r32")]
+        [TestCase("eor r32, r0")]
         [TestCase("andi r8, 0")]
         [TestCase("andi r24, 1234")]
         public void FailTest(string opcode) {

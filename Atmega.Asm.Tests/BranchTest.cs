@@ -7,6 +7,8 @@ namespace Atmega.Asm.Tests {
         [Test]
         [TestCase("eicall", (ushort)0x9519)]
         [TestCase("eijmp", (ushort)0x9419)]
+        [TestCase("icall", (ushort)0x9509)]
+        [TestCase("ijmp", (ushort)0x9409)]
         public void SimpleInstructionTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
