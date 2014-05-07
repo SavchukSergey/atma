@@ -12,8 +12,8 @@ namespace Atmega.Asm.Opcodes {
             var dest = context.Parser.ReadReg32();
             translation.Destination32 = dest;
             context.Queue.Read(TokenType.Comma);
-            context.EmitCode(translation.Opcode);
             var value = context.Parser.ReadUshort();
+            context.EmitCode(translation.Opcode);
             context.EmitCode(value);
         }
 

@@ -88,14 +88,24 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
-        public void Reg32Imm16Opcode() {
-            var complied = Compile("lds r31, $");
-            Assert.AreEqual(4, complied.CodeSection.Content.Count);
-            try {
-                Compile("lds rn, $");
-                Assert.Fail();
-            } catch (TokenException) {
-            }
+        [TestCase("ldi r16, 0", (ushort)0xe000)]
+        [TestCase("ldi r16, 255", (ushort)0xef0f)]
+        [TestCase("ldi r31, 0", (ushort)0xe0f0)]
+        [TestCase("ldi r31, 255", (ushort)0xefff)]
+        public void LdiTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("lds r0, $", (ushort)0x9000, (ushort)0x0000)]
+        [TestCase("lds r0, 0", (ushort)0x9000, (ushort)0x0000)]
+        [TestCase("lds r0, 0xffff", (ushort)0x9000, (ushort)0xffff)]
+        [TestCase("lds r31, 0", (ushort)0x91f0, (ushort)0x0000)]
+        [TestCase("lds r31, 0xffff", (ushort)0x91f0, (ushort)0xffff)]
+        public void LdsTest(string asm, ushort opcode, ushort address) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode, address }, compiled.CodeSection.ReadAsUshorts());
         }
 
         [Test]
@@ -160,6 +170,10 @@ namespace Atmega.Asm.Tests {
         [TestCase("ldd r0, y+64")]
         [TestCase("ldd r32, z+0")]
         [TestCase("ldd r0, z+64")]
+        [TestCase("ldi r15, 0")]
+        [TestCase("ldi r15, 256")]
+        [TestCase("lds r0, 0x10000")]
+        [TestCase("lds r32, 0")]
 
         public void FailTest(string opcode) {
             try {
