@@ -58,6 +58,26 @@
             }
         }
 
+        public byte Register16Word {
+            get {
+                return (byte)(2 * (Opcode & 0x0f));
+            }
+            set {
+                var val = value / 2;
+                Opcode &= 0xfff0;
+                Opcode |= (ushort)(val & 0x0f);
+            }
+        }
+
+        public byte Destination16Word {
+            get { return (byte)(2 * (byte)((Opcode & 0x00f0) >> 4)); }
+            set {
+                Opcode &= 0xff0f;
+                value /= 2;
+                Opcode |= (ushort)((value & 0x0f) << 4);
+            }
+        }
+
         public byte Register8 {
             get {
                 return (byte)(16 + (Opcode & 0x07));

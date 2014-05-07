@@ -128,6 +128,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("movw r1:r0, r31:r30", (ushort)0x010f)]
+        [TestCase("movw r31:r30, r1:r0", (ushort)0x01f0)]
+        public void MovwTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         public void Imm16Reg32Opcode() {
             var complied = Compile("sts $, r31");
             Assert.AreEqual(4, complied.CodeSection.Content.Count);

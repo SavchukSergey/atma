@@ -4,7 +4,7 @@ namespace Atmega.Asm.Opcodes.Move {
     public class MovwOpcode : BaseOpcode {
 
         public MovwOpcode()
-            : base("0000 0001 dddd rrrr") {
+            : base("00000001ddddrrrr") {
         }
 
         public override void Compile(AsmContext context) {
@@ -14,8 +14,8 @@ namespace Atmega.Asm.Opcodes.Move {
 
             var translation = new OpcodeTranslation {
                 Opcode = _opcodeTemplate,
-                Destination16 = target,
-                Register16 = source
+                Destination16Word = target,
+                Register16Word = source
             };
             context.EmitCode(translation.Opcode);
         }
