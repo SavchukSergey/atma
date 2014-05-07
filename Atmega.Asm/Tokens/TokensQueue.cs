@@ -16,6 +16,7 @@ namespace Atmega.Asm.Tokens {
         }
 
         public Token Read(TokenType type) {
+            if (_queue.Count == 0) throw new TokenException("unexpected end of line", LastReadToken); //TODO: what if file is empty??
             if (_queue.Count == 0 || Peek().Type != type) {
                 var tkn = _queue.Count > 0 ? Read() : LastReadToken;
                 switch (type) {

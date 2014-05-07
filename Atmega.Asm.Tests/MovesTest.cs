@@ -50,6 +50,44 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("ld r0, x", (ushort)0x900c)]
+        [TestCase("ld r0, x+", (ushort)0x900d)]
+        [TestCase("ld r0, -x", (ushort)0x900e)]
+        [TestCase("ld r31, x", (ushort)0x91fc)]
+        [TestCase("ld r31, x+", (ushort)0x91fd)]
+        [TestCase("ld r31, -x", (ushort)0x91fe)]
+        [TestCase("ld r0, y", (ushort)0x8008)]
+        [TestCase("ld r0, y+", (ushort)0x9009)]
+        [TestCase("ld r0, -y", (ushort)0x900a)]
+        [TestCase("ld r31, y", (ushort)0x81f8)]
+        [TestCase("ld r31, y+", (ushort)0x91f9)]
+        [TestCase("ld r31, -y", (ushort)0x91fa)]
+        [TestCase("ld r0, z", (ushort)0x8000)]
+        [TestCase("ld r0, z+", (ushort)0x9001)]
+        [TestCase("ld r0, -z", (ushort)0x9002)]
+        [TestCase("ld r31, z", (ushort)0x81f0)]
+        [TestCase("ld r31, z+", (ushort)0x91f1)]
+        [TestCase("ld r31, -z", (ushort)0x91f2)]
+        public void LdTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("ldd r0, y", (ushort)0x8008)]
+        [TestCase("ldd r0, y+1", (ushort)0x8009)]
+        [TestCase("ldd r0, y+63", (ushort)0xac0f)]
+        [TestCase("ldd r31, y+63", (ushort)0xadff)]
+        [TestCase("ldd r0, z", (ushort)0x8000)]
+        [TestCase("ldd r0, z+1", (ushort)0x8001)]
+        [TestCase("ldd r0, z+63", (ushort)0xac07)]
+        [TestCase("ldd r31, z+63", (ushort)0xadf7)]
+        public void LddTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         public void Reg32Imm16Opcode() {
             var complied = Compile("lds r31, $");
             Assert.AreEqual(4, complied.CodeSection.Content.Count);
@@ -113,6 +151,15 @@ namespace Atmega.Asm.Tests {
         [TestCase("lat x, r0")]
         [TestCase("lat x+, r0")]
         [TestCase("lat x-, r0")]
+        
+        [TestCase("ld r32, x")]
+        [TestCase("ld r0, -x+")]
+        [TestCase("ld r32, y")]
+        [TestCase("ld r0, -y+")]
+        [TestCase("ldd r32, y+0")]
+        [TestCase("ldd r0, y+64")]
+        [TestCase("ldd r32, z+0")]
+        [TestCase("ldd r0, z+64")]
 
         public void FailTest(string opcode) {
             try {

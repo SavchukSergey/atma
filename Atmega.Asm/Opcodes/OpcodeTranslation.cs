@@ -214,14 +214,14 @@
             get {
                 var offset = 0;
                 offset |= (Opcode & 0x2000) >> 8;
-                offset |= (Opcode & 0x0300) >> 7;
+                offset |= (Opcode & 0x0c00) >> 7;
                 offset |= (Opcode & 0x0007) >> 0;
                 return (byte)offset;
             }
             set {
                 Opcode &= 0xd3f8;
                 Opcode |= (ushort)((value << 0) & 0x0007);
-                Opcode |= (ushort)((value << 7) & 0x0300);
+                Opcode |= (ushort)((value << 7) & 0x0c00);
                 Opcode |= (ushort)((value << 8) & 0x2000);
             }
         }

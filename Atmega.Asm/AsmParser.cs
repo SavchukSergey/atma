@@ -128,7 +128,7 @@ namespace Atmega.Asm {
 
         public IndirectOperand ReadIndirectOperand() {
             var decrement = false;
-            if (_context.Queue.Peek().Type == TokenType.Minus) {
+            if (!_context.Queue.IsEndOfLine && _context.Queue.Peek().Type == TokenType.Minus) {
                 decrement = true;
                 _context.Queue.Read(TokenType.Minus);
             }
@@ -136,7 +136,7 @@ namespace Atmega.Asm {
             var reg = ReadIndirectReg();
 
             var increment = false;
-            if (_context.Queue.Peek().Type == TokenType.Plus) {
+            if (!_context.Queue.IsEndOfLine && _context.Queue.Peek().Type == TokenType.Plus) {
                 increment = true;
                 _context.Queue.Read(TokenType.Plus);
             }
@@ -167,15 +167,17 @@ namespace Atmega.Asm {
             }
 
             res.Displacement = 0;
-            var preview = _context.Queue.Peek();
-            if (preview.Type == TokenType.Plus) {
-                _context.Queue.Read(TokenType.Plus);
-                Token exprToken;
-                var displacement = CalculateExpression(out exprToken);
-                if (displacement < 0 || displacement > 63) {
-                    throw new TokenException("displacement must be between 0 and 63", exprToken);
+            if (!_context.Queue.IsEndOfLine) {
+                var preview = _context.Queue.Peek();
+                if (preview.Type == TokenType.Plus) {
+                    _context.Queue.Read(TokenType.Plus);
+                    Token exprToken;
+                    var displacement = CalculateExpression(out exprToken);
+                    if (displacement < 0 || displacement > 63) {
+                        throw new TokenException("displacement must be between 0 and 63", exprToken);
+                    }
+                    res.Displacement = (byte)displacement;
                 }
-                res.Displacement = (byte)displacement;
             }
             return res;
         }
