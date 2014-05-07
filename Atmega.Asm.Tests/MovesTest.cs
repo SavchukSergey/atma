@@ -16,6 +16,17 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("lpm", (ushort)0x95c8)]
+        [TestCase("lpm r0, Z", (ushort)0x9004)]
+        [TestCase("lpm r31, Z", (ushort)0x91f4)]
+        [TestCase("lpm r0, Z+", (ushort)0x9005)]
+        [TestCase("lpm r31, Z+", (ushort)0x91f5)]
+        public void LpmTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("in r0, 0", (ushort)0xb000)]
         [TestCase("in r0, 63", (ushort)0xb60f)]
         [TestCase("in r31, 0", (ushort)0xb1f0)]
@@ -109,6 +120,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("mov r31, r0", (ushort)0x2df0)]
+        [TestCase("mov r0, r31", (ushort)0x2e0f)]
+        public void MovTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         public void Imm16Reg32Opcode() {
             var complied = Compile("sts $, r31");
             Assert.AreEqual(4, complied.CodeSection.Content.Count);
@@ -129,6 +148,17 @@ namespace Atmega.Asm.Tests {
         [TestCase("elpm r0, x")]
         [TestCase("elpm r0, x-")]
         [TestCase("elpm r0, x+")]
+        
+        [TestCase("lpm r32, z")]
+        [TestCase("lpm r32, z+")]
+        [TestCase("lpm r0, z-")]
+        [TestCase("lpm r0, y")]
+        [TestCase("lpm r0, y-")]
+        [TestCase("lpm r0, y+")]
+        [TestCase("lpm r0, x")]
+        [TestCase("lpm r0, x-")]
+        [TestCase("lpm r0, x+")]
+        
         [TestCase("in r0, 64")]
         [TestCase("in r32, 0")]
         
@@ -174,6 +204,9 @@ namespace Atmega.Asm.Tests {
         [TestCase("ldi r15, 256")]
         [TestCase("lds r0, 0x10000")]
         [TestCase("lds r32, 0")]
+
+        [TestCase("mov r0, r32")]
+        [TestCase("mov r32, r0")]
 
         public void FailTest(string opcode) {
             try {

@@ -35,12 +35,30 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("lsl r0", (ushort)0x0c00)]
+        [TestCase("lsl r31", (ushort)0x0fff)]
+        public void LslTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("lsr r0", (ushort)0x9406)]
+        [TestCase("lsr r31", (ushort)0x95f6)]
+        public void LsrTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("bld r32, 0")]
         [TestCase("bld r0, 8")]
         [TestCase("bst r32, 0")]
         [TestCase("bst r0, 8")]
         [TestCase("cbi 32, 0")]
         [TestCase("cbi 0, 8")]
+        [TestCase("lsl r32")]
+        [TestCase("lsr r32")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
