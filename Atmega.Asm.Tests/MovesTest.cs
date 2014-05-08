@@ -37,6 +37,32 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("out 0, r0", (ushort)0xb800)]
+        [TestCase("out 63, r0", (ushort)0xbe0f)]
+        [TestCase("out 0, r31", (ushort)0xb9f0)]
+        [TestCase("out 63, r31", (ushort)0xbfff)]
+        public void OutTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("pop r0", (ushort)0x900f)]
+        [TestCase("pop r31", (ushort)0x91ff)]
+        public void PopTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("push r0", (ushort)0x920f)]
+        [TestCase("push r31", (ushort)0x93ff)]
+        public void PushTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("lac z, r0", (ushort)0x9206)]
         [TestCase("lac z, r31", (ushort)0x93f6)]
         public void LacTest(string asm, ushort opcode) {
@@ -166,9 +192,14 @@ namespace Atmega.Asm.Tests {
         [TestCase("lpm r0, x")]
         [TestCase("lpm r0, x-")]
         [TestCase("lpm r0, x+")]
-        
+
+        [TestCase("push r32")]
+        [TestCase("pop r32")]
+
         [TestCase("in r0, 64")]
         [TestCase("in r32, 0")]
+        [TestCase("out 64, r0")]
+        [TestCase("out 0, r32")]
         
         [TestCase("lac z, r32")]
         [TestCase("lac z+, r0")]

@@ -21,6 +21,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("or r31, r0", (ushort)0x29f0)]
+        [TestCase("or r0, r31", (ushort)0x2a0f)]
+        public void OrTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("eor r31, r1", (ushort)0x25f1)]
         [TestCase("eor r1, r31", (ushort)0x261f)]
         public void EorTest(string asm, ushort opcode) {
@@ -39,13 +47,27 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("ori r16, 0", (ushort)0x6000)]
+        [TestCase("ori r16, 255", (ushort)0x6f0f)]
+        [TestCase("ori r31, 0", (ushort)0x60f0)]
+        [TestCase("ori r31, 255", (ushort)0x6fff)]
+        public void OriTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("clr r32")]
         [TestCase("and r0, r32")]
         [TestCase("and r32, r0")]
+        [TestCase("or r0, r32")]
+        [TestCase("or r32, r0")]
         [TestCase("eor r0, r32")]
         [TestCase("eor r32, r0")]
         [TestCase("andi r8, 0")]
         [TestCase("andi r24, 1234")]
+        [TestCase("ori r8, 0")]
+        [TestCase("ori r24, 1234")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

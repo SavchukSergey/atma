@@ -60,6 +60,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("neg r0", (ushort)0x9401)]
+        [TestCase("neg r31", (ushort)0x95f1)]
+        public void NegTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("dec r0", (ushort)0x940a)]
         [TestCase("dec r31", (ushort)0x95fa)]
         public void DecTest(string asm, ushort opcode) {
@@ -175,6 +183,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("adiw r25, 0")]
         [TestCase("sbiw r25, 0")]
         [TestCase("com r32")]
+        [TestCase("neg r32")]
         [TestCase("dec r32")]
         [TestCase("inc r32")]
         [TestCase("cbr r0, 0")]
