@@ -111,7 +111,6 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
-
         [Test]
         [TestCase("fmuls r16, r16", (ushort)0x0380)]
         [TestCase("fmuls r16, r23", (ushort)0x0387)]
@@ -128,6 +127,30 @@ namespace Atmega.Asm.Tests {
         [TestCase("fmulsu r23, r16", (ushort)0x03f8)]
         [TestCase("fmulsu r23, r23", (ushort)0x03ff)]
         public void FmulsuTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("mul r0, r31", (ushort)0x9e0f)]
+        [TestCase("mul r31, r0", (ushort)0x9df0)]
+        public void MulTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("muls r16, r31", (ushort)0x020f)]
+        [TestCase("muls r31, r16", (ushort)0x02f0)]
+        public void MulsTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("mulsu r16, r23", (ushort)0x0307)]
+        [TestCase("mulsu r23, r16", (ushort)0x0370)]
+        public void MulsuTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -174,6 +197,19 @@ namespace Atmega.Asm.Tests {
         [TestCase("fmulsu r16, r15")]
         [TestCase("fmulsu r16, r24")]
         [TestCase("fmulsu r24, r16")]
+
+        [TestCase("mul r0, r32")]
+        [TestCase("mul r32, r0")]
+
+        [TestCase("muls r16, r32")]
+        [TestCase("muls r32, r16")]
+        [TestCase("muls r16, r15")]
+        [TestCase("muls r15, r16")]
+
+        [TestCase("mulsu r16, r24")]
+        [TestCase("mulsu r24, r16")]
+        [TestCase("mulsu r16, r15")]
+        [TestCase("mulsu r15, r16")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

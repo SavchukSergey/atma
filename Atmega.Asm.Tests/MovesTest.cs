@@ -215,6 +215,11 @@ namespace Atmega.Asm.Tests {
 
         [TestCase("mov r0, r32")]
         [TestCase("mov r32, r0")]
+        
+        [TestCase("movw r2:r1, r1:r0")]
+        [TestCase("movw r3:r1, r1:r0")]
+        [TestCase("movw r1:r0, r2:r1")]
+        [TestCase("movw r1:r0, r3:r1")]
 
         public void FailTest(string opcode) {
             try {
