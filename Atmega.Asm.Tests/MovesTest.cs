@@ -120,6 +120,30 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("st x, r0", (ushort)0x920c)]
+        [TestCase("st x+, r0", (ushort)0x920d)]
+        [TestCase("st -x, r0", (ushort)0x920e)]
+        [TestCase("st x, r31", (ushort)0x93fc)]
+        [TestCase("st x+, r31", (ushort)0x93fd)]
+        [TestCase("st -x, r31", (ushort)0x93fe)]
+        [TestCase("st y, r0", (ushort)0x8208)]
+        [TestCase("st y+, r0", (ushort)0x9209)]
+        [TestCase("st -y, r0", (ushort)0x920a)]
+        [TestCase("st y, r31", (ushort)0x83f8)]
+        [TestCase("st y+, r31", (ushort)0x93f9)]
+        [TestCase("st -y, r31", (ushort)0x93fa)]
+        [TestCase("st z, r0", (ushort)0x8200)]
+        [TestCase("st z+, r0", (ushort)0x9201)]
+        [TestCase("st -z, r0", (ushort)0x9202)]
+        [TestCase("st z, r31", (ushort)0x83f0)]
+        [TestCase("st z+, r31", (ushort)0x93f1)]
+        [TestCase("st -z, r31", (ushort)0x93f2)]
+        public void StTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("ldd r0, y", (ushort)0x8008)]
         [TestCase("ldd r0, y+1", (ushort)0x8009)]
         [TestCase("ldd r0, y+63", (ushort)0xac0f)]
@@ -129,6 +153,20 @@ namespace Atmega.Asm.Tests {
         [TestCase("ldd r0, z+63", (ushort)0xac07)]
         [TestCase("ldd r31, z+63", (ushort)0xadf7)]
         public void LddTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("std y, r0", (ushort)0x8208)]
+        [TestCase("std y+1, r0", (ushort)0x8209)]
+        [TestCase("std y+63, r0", (ushort)0xae0f)]
+        [TestCase("std y+63, r31", (ushort)0xafff)]
+        [TestCase("std z, r0", (ushort)0x8200)]
+        [TestCase("std z+1, r0", (ushort)0x8201)]
+        [TestCase("std z+63, r0", (ushort)0xae07)]
+        [TestCase("std z+63, r31", (ushort)0xaff7)]
+        public void StdTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -253,10 +291,20 @@ namespace Atmega.Asm.Tests {
         [TestCase("ld r0, -x+")]
         [TestCase("ld r32, y")]
         [TestCase("ld r0, -y+")]
+        [TestCase("st x, r32")]
+        [TestCase("st -x+, r0")]
+        [TestCase("st y, r32")]
+        [TestCase("st -y+, r0")]
+
         [TestCase("ldd r32, y+0")]
         [TestCase("ldd r0, y+64")]
         [TestCase("ldd r32, z+0")]
         [TestCase("ldd r0, z+64")]
+        [TestCase("std y+0, r32")]
+        [TestCase("std y+64, r0")]
+        [TestCase("std z+0, r32")]
+        [TestCase("std z+64, r0")]
+
         [TestCase("ldi r15, 0")]
         [TestCase("ldi r15, 256")]
         [TestCase("lds r0, 0x10000")]
