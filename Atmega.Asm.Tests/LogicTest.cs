@@ -13,6 +13,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("ser r16", (ushort)0xef0f)]
+        [TestCase("ser r31", (ushort)0xefff)]
+        public void SerTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("and r31, r1", (ushort)0x21f1)]
         [TestCase("and r1, r31", (ushort)0x221f)]
         public void AndTest(string asm, ushort opcode) {
@@ -58,6 +66,8 @@ namespace Atmega.Asm.Tests {
 
         [Test]
         [TestCase("clr r32")]
+        [TestCase("ser r15")]
+        [TestCase("ser r32")]
         [TestCase("and r0, r32")]
         [TestCase("and r32, r0")]
         [TestCase("or r0, r32")]

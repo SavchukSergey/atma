@@ -73,6 +73,26 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("sbrc r0, 0", (ushort)0xfc00)]
+        [TestCase("sbrc r0, 7", (ushort)0xfc07)]
+        [TestCase("sbrc r31, 0", (ushort)0xfdf0)]
+        [TestCase("sbrc r31, 7", (ushort)0xfdf7)]
+        public void SbrcTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("sbrs r0, 0", (ushort)0xfe00)]
+        [TestCase("sbrs r0, 7", (ushort)0xfe07)]
+        [TestCase("sbrs r31, 0", (ushort)0xfff0)]
+        [TestCase("sbrs r31, 7", (ushort)0xfff7)]
+        public void SbrsTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("cpse r31, r0", (ushort)0x11f0)]
         [TestCase("cpse r0, r31", (ushort)0x120f)]
         public void CpseTest(string asm, ushort opcode) {
@@ -181,6 +201,12 @@ namespace Atmega.Asm.Tests {
 
         [TestCase("sbis 32, 0")]
         [TestCase("sbis 0, 8")]
+
+        [TestCase("sbrc r32, 0")]
+        [TestCase("sbrc r0, 8")]
+
+        [TestCase("sbrs r32, 0")]
+        [TestCase("sbrs r0, 8")]
 
         public void FailTest(string opcode) {
             try {
