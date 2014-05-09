@@ -136,5 +136,21 @@ namespace Atmega.Asm.Tests.Tokens {
             translation.Destination16Word = 24;
             Assert.AreEqual(24, translation.Destination16Word);
         }
+
+        [Test]
+        public void DisplacementTest() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.Displacement);
+            translation.Displacement = 63;
+            Assert.AreEqual(63, translation.Displacement);
+        }
+
+        [Test]
+        public void DesRoundTest() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.DesRound);
+            translation.DesRound = 15;
+            Assert.AreEqual(15, translation.DesRound);
+        }
     }
 }
