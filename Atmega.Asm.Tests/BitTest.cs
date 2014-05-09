@@ -51,6 +51,22 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("rol r0", (ushort)0x1c00)]
+        [TestCase("rol r31", (ushort)0x1fff)]
+        public void RolTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("ror r0", (ushort)0x9407)]
+        [TestCase("ror r31", (ushort)0x95f7)]
+        public void RorTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("bld r32, 0")]
         [TestCase("bld r0, 8")]
         [TestCase("bst r32, 0")]
@@ -59,6 +75,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("cbi 0, 8")]
         [TestCase("lsl r32")]
         [TestCase("lsr r32")]
+        [TestCase("rol r32")]
+        [TestCase("ror r32")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

@@ -20,6 +20,26 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
+
+        [Test]
+        [TestCase("sbc r31, r0", (ushort)0x09f0)]
+        [TestCase("sbc r0, r31", (ushort)0x0a0f)]
+        public void SbcTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+
+        [Test]
+        [TestCase("sbci r16, 0", (ushort)0x4000)]
+        [TestCase("sbci r16, 255", (ushort)0x4f0f)]
+        [TestCase("sbci r31, 0", (ushort)0x40f0)]
+        [TestCase("sbci r31, 255", (ushort)0x4fff)]
+        public void SbciTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+        
         [Test]
         [TestCase("cbr r16, 255", (ushort)0x7000)]
         [TestCase("cbr r16, 0", (ushort)0x7f0f)]
@@ -177,6 +197,10 @@ namespace Atmega.Asm.Tests {
         [TestCase("add r32, r0")]
         [TestCase("adc r0, r32")]
         [TestCase("adc r32, r0")]
+        [TestCase("sbc r0, r32")]
+        [TestCase("sbc r32, r0")]
+        [TestCase("sbci r15, 0")]
+        [TestCase("sbci r16, 256")]
         [TestCase("asr r32")]
         [TestCase("adiw r24, 64")]
         [TestCase("sbiw r24, 64")]

@@ -120,5 +120,21 @@ namespace Atmega.Asm.Tests.Tokens {
             translation.Offset22High = 62;
             Assert.AreEqual(62, translation.Offset22High);
         }
+
+        [Test]
+        public void Register16WordTest() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.Register16Word);
+            translation.Register16Word = 24;
+            Assert.AreEqual(24, translation.Register16Word);
+        }
+
+        [Test]
+        public void Destination16WordTest() {
+            var translation = new OpcodeTranslation();
+            Assert.AreEqual(0, translation.Destination16Word);
+            translation.Destination16Word = 24;
+            Assert.AreEqual(24, translation.Destination16Word);
+        }
     }
 }

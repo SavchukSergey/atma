@@ -5,63 +5,44 @@ namespace Atmega.Asm.Tests {
     public class AssemblerTest : BaseTestFixture {
 
         [Test]
+        [Ignore]
         public void ArithmeticsTest() {
             var content = LoadEmbeded("arithmetics.asm");
             var compiled = Compile(content);
         }
 
         [Test]
+        [Ignore]
         public void LogicTest() {
             var content = LoadEmbeded("logic.asm");
             var compiled = Compile(content);
         }
 
         [Test]
+        [Ignore]
         public void BitTest() {
             var content = LoadEmbeded("bit.asm");
             var compiled = Compile(content);
         }
 
         [Test]
+        [Ignore]
         public void MoveTest() {
             var content = LoadEmbeded("move.asm");
             var compiled = Compile(content);
         }
 
         [Test]
+        [Ignore]
         public void BranchTest() {
             var content = LoadEmbeded("branch.asm");
             var compiled = Compile(content);
         }
 
         [Test]
+        [Ignore]
         public void FlashTest() {
             var complied = CompileEmbedded("flash.asm");
-        }
-
-        [Test]
-        public void RjmpTest() {
-            var compiled = Compile(@"
-section code
-back:
-    nop
-    rjmp back
-self:
-    rjmp self
-    rjmp zero
-zero:
-    rjmp forward
-    nop
-forward:
-");
-            Assert.AreEqual(new[] {
-                0, 0,
-                0xfe, 0xcf,
-                0xff, 0xcf,
-                0x00, 0xc0,
-                0x01, 0xc0,
-                0x00, 0x00
-            }, compiled.CodeSection.Content);
         }
 
         [Test]

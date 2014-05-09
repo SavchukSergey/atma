@@ -9,7 +9,29 @@ namespace Atmega.Asm.Tests {
         [TestCase("eijmp", (ushort)0x9419)]
         [TestCase("icall", (ushort)0x9509)]
         [TestCase("ijmp", (ushort)0x9409)]
+        [TestCase("ret", (ushort)0x9508)]
+        [TestCase("reti", (ushort)0x9518)]
         public void SimpleInstructionTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("rcall ($+2) + 4094", (ushort)0xd7ff)]
+        [TestCase("rcall ($+2) - 4096", (ushort)0xd800)]
+        [TestCase("rcall ($+2)", (ushort)0xd000)]
+        [TestCase("rcall $", (ushort)0xdfff)]
+        public void RcallTestTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("rjmp ($+2) + 4094", (ushort)0xc7ff)]
+        [TestCase("rjmp ($+2) - 4096", (ushort)0xc800)]
+        [TestCase("rjmp ($+2)", (ushort)0xc000)]
+        [TestCase("rjmp $", (ushort)0xcfff)]
+        public void RjmpTestTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -82,7 +104,6 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
-
         [Test]
         [TestCase("brbc 0, ($+2)+64*2")]
         [TestCase("brbc 0, ($+2)-65*2")]
@@ -130,6 +151,10 @@ namespace Atmega.Asm.Tests {
         [TestCase("jmp ((1 << 22) - 0) * 2")]
         [TestCase("cpse r0, r32")]
         [TestCase("cpse r32, r0")]
+        [TestCase("rcall $+2 + 4096")]
+        [TestCase("rcall $+2 - 4098")]
+        [TestCase("rjmp $+2 + 4096")]
+        [TestCase("rjmp $+2 - 4098")]
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);
