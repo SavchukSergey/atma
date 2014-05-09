@@ -29,6 +29,13 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
+        [Test]
+        [TestCase("sub r31, r1", (ushort)0x19f1)]
+        [TestCase("sub r1, r31", (ushort)0x1a1f)]
+        public void SubTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
 
         [Test]
         [TestCase("sbci r16, 0", (ushort)0x4000)]
@@ -36,6 +43,16 @@ namespace Atmega.Asm.Tests {
         [TestCase("sbci r31, 0", (ushort)0x40f0)]
         [TestCase("sbci r31, 255", (ushort)0x4fff)]
         public void SbciTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("subi r16, 0", (ushort)0x5000)]
+        [TestCase("subi r16, 255", (ushort)0x5f0f)]
+        [TestCase("subi r31, 0", (ushort)0x50f0)]
+        [TestCase("subi r31, 255", (ushort)0x5fff)]
+        public void SubiTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -213,12 +230,18 @@ namespace Atmega.Asm.Tests {
         [Test]
         [TestCase("add r0, r32")]
         [TestCase("add r32, r0")]
+        [TestCase("sub r0, r32")]
+        [TestCase("sub r32, r0")]
         [TestCase("adc r0, r32")]
         [TestCase("adc r32, r0")]
         [TestCase("sbc r0, r32")]
         [TestCase("sbc r32, r0")]
+
         [TestCase("sbci r15, 0")]
         [TestCase("sbci r16, 256")]
+        [TestCase("subi r15, 0")]
+        [TestCase("subi r16, 256")]
+        
         [TestCase("asr r32")]
         [TestCase("adiw r24, 64")]
         [TestCase("sbiw r24, 64")]

@@ -72,6 +72,14 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("swap r0", (ushort)0x9402)]
+        [TestCase("swap r31", (ushort)0x95f2)]
+        public void SwapTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("lac z, r0", (ushort)0x9206)]
         [TestCase("lac z, r31", (ushort)0x93f6)]
         public void LacTest(string asm, ushort opcode) {
@@ -262,6 +270,8 @@ namespace Atmega.Asm.Tests {
 
         [TestCase("push r32")]
         [TestCase("pop r32")]
+        
+        [TestCase("swap r32")]
 
         [TestCase("in r0, 64")]
         [TestCase("in r32, 0")]

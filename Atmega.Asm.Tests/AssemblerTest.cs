@@ -59,6 +59,7 @@ namespace Atmega.Asm.Tests {
         [TestCase("break", (ushort)0x9598)]
         [TestCase("nop", (ushort)0x0000)]
         [TestCase("sleep", (ushort)0x9588)]
+        [TestCase("wdr", (ushort)0x95a8)]
         public void SimpleInstructionTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
