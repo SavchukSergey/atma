@@ -79,6 +79,15 @@ namespace Atmega.Asm.Tests {
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
 
+
+        [Test]
+        [TestCase("xch z, r0", (ushort)0x9204)]
+        [TestCase("xch z, r31", (ushort)0x93f4)]
+        public void XchTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
         [Test]
         [TestCase("lac z, r0", (ushort)0x9206)]
         [TestCase("lac z, r31", (ushort)0x93f6)]
@@ -277,7 +286,11 @@ namespace Atmega.Asm.Tests {
         [TestCase("in r32, 0")]
         [TestCase("out 64, r0")]
         [TestCase("out 0, r32")]
-        
+
+        [TestCase("xch z, r32")]
+        [TestCase("xch y, r0")]
+        [TestCase("xch x, r0")]
+
         [TestCase("lac z, r32")]
         [TestCase("lac z+, r0")]
         [TestCase("lac z-, r0")]

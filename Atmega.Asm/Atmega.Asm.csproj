@@ -207,6 +207,7 @@
     <Compile Include="Opcodes\Move\PopOpcode.cs" />
     <Compile Include="Opcodes\Move\PushOpcode.cs" />
     <Compile Include="Opcodes\Move\MovOpcode.cs" />
+    <Compile Include="Opcodes\Move\XchOpcode.cs" />
     <Compile Include="Opcodes\SleepOpcode.cs" />
     <Compile Include="Opcodes\BreakOpcode.cs" />
     <Compile Include="Opcodes\WdrOpcode.cs" />
