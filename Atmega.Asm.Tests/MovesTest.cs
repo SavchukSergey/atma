@@ -27,6 +27,15 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("spm", (ushort)0x95e8)]
+        [TestCase("spm z+", (ushort)0x95f8)]
+        public void SpmTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+
+        [Test]
         [TestCase("in r0, 0", (ushort)0xb000)]
         [TestCase("in r0, 63", (ushort)0xb60f)]
         [TestCase("in r31, 0", (ushort)0xb1f0)]
@@ -192,6 +201,15 @@ namespace Atmega.Asm.Tests {
         [TestCase("lpm r0, x")]
         [TestCase("lpm r0, x-")]
         [TestCase("lpm r0, x+")]
+        
+        [TestCase("spm x")]
+        [TestCase("spm x+")]
+        [TestCase("spm x-")]
+        [TestCase("spm y")]
+        [TestCase("spm y+")]
+        [TestCase("spm y-")]
+        [TestCase("spm z")]
+        [TestCase("spm z-")]
 
         [TestCase("push r32")]
         [TestCase("pop r32")]
