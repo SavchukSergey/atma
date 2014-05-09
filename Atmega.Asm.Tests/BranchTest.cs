@@ -53,6 +53,26 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("sbic 0, 0", (ushort)0x9900)]
+        [TestCase("sbic 0, 7", (ushort)0x9907)]
+        [TestCase("sbic 31, 0", (ushort)0x99f8)]
+        [TestCase("sbic 31, 7", (ushort)0x99ff)]
+        public void SbicTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("sbis 0, 0", (ushort)0x9b00)]
+        [TestCase("sbis 0, 7", (ushort)0x9b07)]
+        [TestCase("sbis 31, 0", (ushort)0x9bf8)]
+        [TestCase("sbis 31, 7", (ushort)0x9bff)]
+        public void SbisTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("cpse r31, r0", (ushort)0x11f0)]
         [TestCase("cpse r0, r31", (ushort)0x120f)]
         public void CpseTest(string asm, ushort opcode) {
@@ -155,6 +175,13 @@ namespace Atmega.Asm.Tests {
         [TestCase("rcall $+2 - 4098")]
         [TestCase("rjmp $+2 + 4096")]
         [TestCase("rjmp $+2 - 4098")]
+
+        [TestCase("sbic 32, 0")]
+        [TestCase("sbic 0, 8")]
+
+        [TestCase("sbis 32, 0")]
+        [TestCase("sbis 0, 8")]
+
         public void FailTest(string opcode) {
             try {
                 Compile(opcode);

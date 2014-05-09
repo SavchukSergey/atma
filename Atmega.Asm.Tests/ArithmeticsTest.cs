@@ -45,7 +45,17 @@ namespace Atmega.Asm.Tests {
         [TestCase("cbr r16, 0", (ushort)0x7f0f)]
         [TestCase("cbr r31, 255", (ushort)0x70f0)]
         [TestCase("cbr r31, 0", (ushort)0x7fff)]
-        public void Reg16ComplementImm8OpcodeTest(string asm, ushort opcode) {
+        public void CbrTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
+        [TestCase("sbr r16, 0", (ushort)0x6000)]
+        [TestCase("sbr r16, 255", (ushort)0x6f0f)]
+        [TestCase("sbr r31, 0", (ushort)0x60f0)]
+        [TestCase("sbr r31, 255", (ushort)0x6fff)]
+        public void SbrTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -62,11 +72,19 @@ namespace Atmega.Asm.Tests {
         [Test]
         [TestCase("adiw r24, 0", (ushort)0x9600)]
         [TestCase("adiw r24, 63", (ushort)0x96cf)]
+        [TestCase("adiw r30, 0", (ushort)0x9630)]
         [TestCase("adiw r30, 63", (ushort)0x96ff)]
+        public void AdiwTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("sbiw r24, 0", (ushort)0x9700)]
         [TestCase("sbiw r24, 63", (ushort)0x97cf)]
+        [TestCase("sbiw r30, 0", (ushort)0x9730)]
         [TestCase("sbiw r30, 63", (ushort)0x97ff)]
-        public void RegWImm6BoundariesTest(string asm, ushort opcode) {
+        public void SbiwTest(string asm, ushort opcode) {
             var compiled = Compile(asm);
             Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
         }
@@ -210,8 +228,14 @@ namespace Atmega.Asm.Tests {
         [TestCase("neg r32")]
         [TestCase("dec r32")]
         [TestCase("inc r32")]
-        [TestCase("cbr r0, 0")]
+
+        [TestCase("cbr r15, 0")]
+        [TestCase("cbr r16, 256")]
         [TestCase("cbr r32, 0")]
+        [TestCase("sbr r15, 0")]
+        [TestCase("sbr r16, 256")]
+        [TestCase("sbr r32, 0")]
+
         [TestCase("cp r0, r32")]
         [TestCase("cp r32, r0")]
         [TestCase("cpc r0, r32")]

@@ -35,6 +35,16 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("sbi 0, 0", (ushort)0x9a00)]
+        [TestCase("sbi 0, 7", (ushort)0x9a07)]
+        [TestCase("sbi 31, 0", (ushort)0x9af8)]
+        [TestCase("sbi 31, 7", (ushort)0x9aff)]
+        public void SbiTest(string asm, ushort opcode) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("lsl r0", (ushort)0x0c00)]
         [TestCase("lsl r31", (ushort)0x0fff)]
         public void LslTest(string asm, ushort opcode) {
@@ -73,6 +83,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("bst r0, 8")]
         [TestCase("cbi 32, 0")]
         [TestCase("cbi 0, 8")]
+        [TestCase("sbi 32, 0")]
+        [TestCase("sbi 0, 8")]
         [TestCase("lsl r32")]
         [TestCase("lsr r32")]
         [TestCase("rol r32")]
