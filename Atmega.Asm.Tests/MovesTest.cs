@@ -193,6 +193,17 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
+        [TestCase("sts $, r0", (ushort)0x9200, (ushort)0x0000)]
+        [TestCase("sts 0, r0", (ushort)0x9200, (ushort)0x0000)]
+        [TestCase("sts 0xffff, r0", (ushort)0x9200, (ushort)0xffff)]
+        [TestCase("sts 0, r31", (ushort)0x93f0, (ushort)0x0000)]
+        [TestCase("sts 0xffff, r31", (ushort)0x93f0, (ushort)0xffff)]
+        public void StsTest(string asm, ushort opcode, ushort address) {
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { opcode, address }, compiled.CodeSection.ReadAsUshorts());
+        }
+
+        [Test]
         [TestCase("mov r31, r0", (ushort)0x2df0)]
         [TestCase("mov r0, r31", (ushort)0x2e0f)]
         public void MovTest(string asm, ushort opcode) {
@@ -309,6 +320,8 @@ namespace Atmega.Asm.Tests {
         [TestCase("ldi r15, 256")]
         [TestCase("lds r0, 0x10000")]
         [TestCase("lds r32, 0")]
+        [TestCase("sts 0x10000, r0")]
+        [TestCase("sts 0, r32")]
 
         [TestCase("mov r0, r32")]
         [TestCase("mov r32, r0")]
