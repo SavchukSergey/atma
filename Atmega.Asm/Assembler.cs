@@ -30,7 +30,8 @@ namespace Atmega.Asm {
                     Symbols = symbols,
                     Pass = i
                 };
-                AssemblePass(context);
+                var parser = new AsmParser(context);
+                AssemblePass(context, parser);
                 if (TheSame(last, context)) break;
                 last = context;
             }
@@ -132,7 +133,7 @@ namespace Atmega.Asm {
             return current.CodeSection.TheSame(prev.CodeSection);
         }
 
-        private void AssemblePass(AsmContext context) {
+        private void AssemblePass(AsmContext context, AsmParser parser) {
             while (context.Queue.Count > 0) {
                 SkipEmptyLines(context);
                 if (context.Queue.Count == 0) break;
@@ -141,7 +142,7 @@ namespace Atmega.Asm {
                 if (CheckLabel(token, context)) {
                     continue;
                 }
-                if (CheckData(token, context)) {
+                if (CheckData(token, context, parser)) {
                     continue;
                 }
 
@@ -150,12 +151,12 @@ namespace Atmega.Asm {
                         ProcessSection(context);
                         break;
                     case "org":
-                        ProcessOrg(context);
+                        ProcessOrg(parser, context.CurrentSection);
                         break;
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
                         if (opcode != null) {
-                            opcode.Compile(context.Parser, context.CurrentSection);
+                            opcode.Compile(parser, context.CurrentSection);
                         } else {
                             throw new TokenException("Illegal instruction " + token.StringValue, token);
                         }
@@ -182,16 +183,17 @@ namespace Atmega.Asm {
             return false;
         }
 
-        private bool CheckData(Token token, AsmContext context) {
+        private bool CheckData(Token token, AsmContext context, AsmParser parser) {
             if (IsDataDirective(token)) {
-                ProcessDataDirective(token, context);
+                ProcessDataDirective(token, parser, context.CurrentSection);
                 return true;
             }
             if (!context.Queue.IsEndOfLine) {
                 var preview = context.Queue.Peek();
                 if (IsDataDirective(preview)) {
                     context.Queue.Read(TokenType.Literal);
-                    ProcessDataDirective(preview, context, token);
+                    context.DefineLabel(token);
+                    ProcessDataDirective(preview, parser, context.CurrentSection);
                     return true;
                 }
             }
@@ -219,27 +221,24 @@ namespace Atmega.Asm {
             context.SetSection(type);
         }
 
-        private void ProcessOrg(AsmContext context) {
-            var val = context.Parser.CalculateExpression();
-            context.Offset = (int)val;
+        private void ProcessOrg(AsmParser parser, AsmSection output) {
+            var val = parser.CalculateExpression();
+            output.Offset = (int)val;
         }
 
-        private void ProcessDataDirective(Token token, AsmContext context, Token? labelNameToken = null) {
-            if (labelNameToken.HasValue) {
-                context.DefineLabel(labelNameToken.Value);
-            }
+        private void ProcessDataDirective(Token token, AsmParser parser, AsmSection output) {
             switch (token.StringValue.ToLower()) {
                 case "db":
-                    ProcessDataBytes(context.Parser, context.CurrentSection);
+                    ProcessDataBytes(parser, output);
                     break;
                 case "dw":
-                    ProcessDataWords(context.Parser, context.CurrentSection);
+                    ProcessDataWords(parser, output);
                     break;
                 case "rb":
-                    ProcessReserveBytes(context);
+                    ProcessReserveBytes(parser, output);
                     break;
                 case "rw":
-                    ProcessReserveWords(context);
+                    ProcessReserveWords(parser, output);
                     break;
                 default:
                     throw new TokenException("invalid directive " + token.StringValue, token);
@@ -301,14 +300,14 @@ namespace Atmega.Asm {
             } while (true);
         }
 
-        private void ProcessReserveBytes(AsmContext context) {
-            var cnt = context.Parser.CalculateExpression();
-            context.CurrentSection.ReserveBytes((int)cnt);
+        private static void ProcessReserveBytes(AsmParser parser, AsmSection output) {
+            var cnt = parser.CalculateExpression();
+            output.ReserveBytes((int)cnt);
         }
 
-        private void ProcessReserveWords(AsmContext context) {
-            var cnt = context.Parser.CalculateExpression();
-            context.CurrentSection.ReserveBytes((int)cnt * 2);
+        private static void ProcessReserveWords(AsmParser parser, AsmSection output) {
+            var cnt = parser.CalculateExpression();
+            output.ReserveBytes((int)cnt * 2);
         }
 
         private static bool IsDataDirective(Token token) {

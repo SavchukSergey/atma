@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Atmega.Asm.Hex;
 using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm {
     public class AsmContext {
-        private readonly AsmParser _parser;
 
         public int Pass { get; set; }
 
@@ -17,11 +15,6 @@ namespace Atmega.Asm {
         private readonly AsmSection _dataSection = new AsmSection();
         private readonly AsmSection _flashSection = new AsmSection();
         private AsmSectionType _currentSection;
-
-        public AsmContext() {
-            _parser = new AsmParser(this);
-
-        }
 
         public AsmSection CodeSection {
             get { return _codeSection; }
@@ -57,11 +50,6 @@ namespace Atmega.Asm {
         public int Offset {
             get { return CurrentSection.Offset; }
             set { CurrentSection.Offset = value; }
-        }
-
-        [Obsolete] //todo: remove
-        public AsmParser Parser {
-            get { return _parser; }
         }
 
         public HexFile BuildHexFile() {
