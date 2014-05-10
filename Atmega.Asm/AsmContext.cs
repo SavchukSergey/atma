@@ -64,18 +64,6 @@ namespace Atmega.Asm {
             get { return _parser; }
         }
 
-        public void EmitCode(ushort opcode) {
-            CurrentSection.EmitCode(opcode);
-        }
-
-        public void EmitByte(byte bt) {
-            CurrentSection.EmitByte(bt);
-        }
-
-        public void EmitWord(ushort val) {
-            CurrentSection.EmitWord(val);
-        }
-
         public HexFile BuildHexFile() {
             var hexFile = new HexFile();
             CodeSection.WriteTo(hexFile);
