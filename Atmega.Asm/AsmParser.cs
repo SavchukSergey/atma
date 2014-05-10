@@ -16,6 +16,10 @@ namespace Atmega.Asm {
             get { return _context.Queue.IsEndOfLine; }
         }
 
+        public Token LastReadToken {
+            get { return _context.Queue.LastReadToken; }
+        }
+
         public byte ReadRegW24() {
             var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
@@ -77,7 +81,6 @@ namespace Atmega.Asm {
 
             return low;
         }
-
 
         public IndirectRegister ReadIndirectReg() {
             var reg = _context.Queue.Read(TokenType.Literal);
@@ -219,6 +222,10 @@ namespace Atmega.Asm {
 
         public Token ReadToken(TokenType type) {
             return _context.Queue.Read(type);
+        }
+
+        public Token PeekToken() {
+            return _context.Queue.Peek();
         }
     }
 }

@@ -230,10 +230,10 @@ namespace Atmega.Asm {
             }
             switch (token.StringValue.ToLower()) {
                 case "db":
-                    ProcessDataBytes(context);
+                    ProcessDataBytes(context.Parser, context.CurrentSection);
                     break;
                 case "dw":
-                    ProcessDataWords(context);
+                    ProcessDataWords(context.Parser, context.CurrentSection);
                     break;
                 case "rb":
                     ProcessReserveBytes(context);
@@ -246,59 +246,59 @@ namespace Atmega.Asm {
             }
         }
 
-        private void ProcessDataBytes(AsmContext context) {
-            if (context.Queue.IsEndOfLine) {
-                throw new TokenException("expected data bytes", context.Queue.LastReadToken);
-            }
-            while (context.Queue.Count > 0) {
-                var token = context.Queue.Peek();
-                if (token.Type == TokenType.NewLine) break;
+        private void ProcessDataBytes(AsmParser parser, AsmSection output) {
+            do {
+                if (parser.IsEndOfLine) {
+                    throw new TokenException("expected data bytes", parser.LastReadToken);
+                }
+
+                var token = parser.PeekToken();
 
                 if (token.Type == TokenType.String) {
-                    token = context.Queue.Read();
+                    token = parser.ReadToken(TokenType.String);
                     foreach (var ch in token.StringValue) {
                         if (ch > 255) {
                             throw new TokenException("unicode character cannot be translated to byte", token);
                         }
-                        context.EmitByte((byte)ch);
+                        output.EmitByte((byte)ch);
                     }
                 } else {
-                    var val = context.Parser.ReadByte();
-                    context.EmitByte(val);
+                    var val = parser.ReadByte();
+                    output.EmitByte(val);
                 }
 
-                if (context.Queue.Count > 0) {
-                    var commaPreview = context.Queue.Peek();
-                    if (commaPreview.Type != TokenType.Comma) break;
-                    context.Queue.Read();
-                }
-            }
+                if (parser.IsEndOfLine) break;
+
+                var commaPreview = parser.PeekToken();
+                if (commaPreview.Type != TokenType.Comma) break;
+                parser.ReadToken(TokenType.Comma);
+            } while (true);
         }
 
-        private void ProcessDataWords(AsmContext context) {
-            if (context.Queue.IsEndOfLine) {
-                throw new TokenException("expected data words", context.Queue.LastReadToken);
-            }
-            while (context.Queue.Count > 0) {
-                var token = context.Queue.Peek();
-                if (token.Type == TokenType.NewLine) break;
+        private void ProcessDataWords(AsmParser parser, AsmSection output) {
+            do {
+                if (parser.IsEndOfLine) {
+                    throw new TokenException("expected data words", parser.LastReadToken);
+                }
+
+                var token = parser.PeekToken();
 
                 if (token.Type == TokenType.String) {
-                    token = context.Queue.Read();
+                    token = parser.ReadToken(TokenType.String);
                     foreach (var ch in token.StringValue) {
-                        context.EmitWord(ch);
+                        output.EmitWord(ch);
                     }
                 } else {
-                    var val = context.Parser.ReadUshort();
-                    context.EmitWord(val);
+                    var val = parser.ReadUshort();
+                    output.EmitWord(val);
                 }
 
-                if (context.Queue.Count > 0) {
-                    var commaPreview = context.Queue.Peek();
-                    if (commaPreview.Type != TokenType.Comma) break;
-                    context.Queue.Read();
-                }
-            }
+                if (parser.IsEndOfLine) break;
+
+                var commaPreview = parser.PeekToken();
+                if (commaPreview.Type != TokenType.Comma) break;
+                parser.ReadToken(TokenType.Comma);
+            } while (true);
         }
 
         private void ProcessReserveBytes(AsmContext context) {

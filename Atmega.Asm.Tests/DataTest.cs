@@ -47,5 +47,16 @@ db 0x34, 45, 'abc', 0
             Assert.AreEqual(12, compiled.CodeSection.Content.Count);
             Assert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 0, 0x34, 45, (byte)'a', (byte)'b', (byte)'c', 0 }, compiled.CodeSection.Content);
         }
+
+        [Test]
+        [TestCase("db 1,")]
+        [TestCase("dw 1,")]
+        public void FailTest(string asm) {
+            try {
+                Compile(asm);
+                Assert.Fail("Must fail");
+            } catch (TokenException) {
+            }
+        }
     }
 }
