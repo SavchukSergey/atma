@@ -54,6 +54,17 @@ namespace Atmega.Asm.Tests {
             }
         }
 
+        [Test]
+        public void AlignCodeTest() {
+            const string asm = @"
+db 3
+nop
+dw 0x1234
+nop
+";
+            var compiled = Compile(asm);
+            Assert.AreEqual(new[] { 0x0003, 0x0000, 0x1234, 0x0000 }, compiled.CodeSection.ReadAsUshorts());
+        }
 
         [Test]
         [TestCase("break", (ushort)0x9598)]

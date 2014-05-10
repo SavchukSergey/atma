@@ -6,14 +6,14 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmContext context) {
+        public override void Compile(AsmParser parser, AsmSection output) {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.Parser.ReadReg8();
+            var dest = parser.ReadReg8();
             translation.Destination8 = dest;
-            context.Queue.Read(TokenType.Comma);
-            var reg = context.Parser.ReadReg8();
+            parser.ReadToken(TokenType.Comma);
+            var reg = parser.ReadReg8();
             translation.Register8 = reg;
-            context.EmitCode(translation.Opcode);
+            output.EmitCode(translation.Opcode);
         }
     }
 }

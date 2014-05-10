@@ -9,14 +9,14 @@ namespace Atmega.Asm.Opcodes.Move {
             : base("1001010111101000") {
         }
 
-        public override void Compile(AsmContext context) {
-            if (context.Queue.IsEndOfLine) {
-                context.EmitCode(_opcodeTemplate);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            if (parser.IsEndOfLine) {
+                output.EmitCode(_opcodeTemplate);
             } else {
-                var zReg = context.Parser.ReadToken(TokenType.Literal);
+                var zReg = parser.ReadToken(TokenType.Literal);
                 if (zReg.StringValue.ToLower() != "z") throw new TokenException("Z+ expected", zReg);
-                context.Parser.ReadToken(TokenType.Plus);
-                context.EmitCode(_postIncrementTemplate);
+                parser.ReadToken(TokenType.Plus);
+                output.EmitCode(_postIncrementTemplate);
             }
         }
 

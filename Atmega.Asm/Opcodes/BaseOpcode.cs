@@ -7,7 +7,7 @@
             _opcodeTemplate = ParseOpcodeTemplate(opcodeTemplate);
         }
 
-        public abstract void Compile(AsmContext context);
+        public abstract void Compile(AsmParser parser, AsmSection output);
 
         protected static ushort ParseOpcodeTemplate(string template) {
             ushort val = 0;

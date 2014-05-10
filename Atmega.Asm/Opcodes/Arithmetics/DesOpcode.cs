@@ -5,11 +5,11 @@
             : base("10010100KKKK1011") {
         }
 
-        public override void Compile(AsmContext context) {
+        public override void Compile(AsmParser parser, AsmSection output) {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.Parser.ReadDesRound();
+            var dest = parser.ReadDesRound();
             translation.DesRound = dest;
-            context.EmitCode(translation.Opcode);
+            output.EmitCode(translation.Opcode);
         }
     }
 }

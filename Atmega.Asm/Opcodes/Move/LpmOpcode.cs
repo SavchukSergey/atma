@@ -7,25 +7,25 @@ namespace Atmega.Asm.Opcodes.Move {
             : base("1001010111001000") {
         }
 
-        public override void Compile(AsmContext context) {
-            if (context.Queue.IsEndOfLine) {
-                context.EmitCode(_opcodeTemplate);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            if (parser.IsEndOfLine) {
+                output.EmitCode(_opcodeTemplate);
                 return;
             }
-            var translation = new OpcodeTranslation { Opcode = 0x9004 };
-            var dest = context.Parser.ReadReg32();
-            translation.Destination32 = dest;
+            var dest = parser.ReadReg32();
 
-            context.Queue.Read(TokenType.Comma);
-            var zReg = context.Queue.Read(TokenType.Literal);
+            parser.ReadToken(TokenType.Comma);
+            var zReg = parser.ReadToken(TokenType.Literal);
             if (zReg.StringValue.ToLower() != "z") throw new TokenException("Z register expected", zReg);
 
-            if (!context.Queue.IsEndOfLine) {
-                context.Queue.Read(TokenType.Plus);
-                translation.Increment = true;
+            var increment = false;
+            if (!parser.IsEndOfLine) {
+                parser.ReadToken(TokenType.Plus);
+                increment = true;
             }
 
-            context.EmitCode(translation.Opcode);
+            var translation = new OpcodeTranslation { Opcode = 0x9004, Destination32 = dest, Increment = increment };
+            output.EmitCode(translation.Opcode);
         }
     }
 }

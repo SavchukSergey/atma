@@ -34,6 +34,7 @@ namespace Atmega.Asm.Tokens {
         }
 
         public Token Peek() {
+            if (_queue.Count == 0) throw new TokenException("unexpected end of line", LastReadToken); //TODO: what if file is empty??
             return _queue.Peek();
         }
 

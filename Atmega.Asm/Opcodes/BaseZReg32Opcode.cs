@@ -1,5 +1,4 @@
-﻿using System;
-using Atmega.Asm.Tokens;
+﻿using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes {
     public abstract class BaseZReg32Opcode : BaseOpcode {
@@ -8,14 +7,13 @@ namespace Atmega.Asm.Opcodes {
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmContext context) {
-            var zToken = context.Parser.ReadToken(TokenType.Literal);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            var zToken = parser.ReadToken(TokenType.Literal);
             if (zToken.StringValue.ToLower() != "z") throw new TokenException("Z register expected", zToken);
-            context.Parser.ReadToken(TokenType.Comma);
-            var dest = context.Parser.ReadReg32();
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            translation.Destination32 = dest;
-            context.EmitCode(translation.Opcode);
+            parser.ReadToken(TokenType.Comma);
+            var dest = parser.ReadReg32();
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Destination32 = dest };
+            output.EmitCode(translation.Opcode);
         }
 
     }

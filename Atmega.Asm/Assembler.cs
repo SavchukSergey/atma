@@ -155,7 +155,7 @@ namespace Atmega.Asm {
                     default:
                         var opcode = AvrOpcodes.Get(token.StringValue);
                         if (opcode != null) {
-                            opcode.Compile(context);
+                            opcode.Compile(context.Parser, context.CurrentSection);
                         } else {
                             throw new TokenException("Illegal instruction " + token.StringValue, token);
                         }

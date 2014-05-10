@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Atmega.Asm.Hex;
 using Atmega.Asm.Tokens;
 
@@ -58,6 +59,7 @@ namespace Atmega.Asm {
             set { CurrentSection.Offset = value; }
         }
 
+        [Obsolete] //todo: remove
         public AsmParser Parser {
             get { return _parser; }
         }

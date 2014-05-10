@@ -6,18 +6,16 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmContext context) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.Parser.ReadRegW24();
-            translation.RegW24 = dest;
-            context.Queue.Read(TokenType.Comma);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            var dest = parser.ReadRegW24();
+            parser.ReadToken(TokenType.Comma);
             Token exprToken;
-            var imm = context.Parser.CalculateExpression(out exprToken);
+            var imm = parser.CalculateExpression(out exprToken);
             if (imm > 63) {
                 throw new TokenException("value must be less than 64", exprToken);
             }
-            translation.Imm6 = (byte)imm;
-            context.EmitCode(translation.Opcode);
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, RegW24 = dest, Imm6 = (byte)imm };
+            output.EmitCode(translation.Opcode);
         }
     }
 }

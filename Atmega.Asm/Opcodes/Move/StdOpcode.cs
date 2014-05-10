@@ -11,10 +11,10 @@ namespace Atmega.Asm.Opcodes.Move {
             : base("10q0qq1rrrrr1qqq") {
         }
 
-        public override void Compile(AsmContext context) {
-            var operand = context.Parser.ReadIndirectWithDisplacement();
-            context.Queue.Read(TokenType.Comma);
-            var dest = context.Parser.ReadReg32();
+        public override void Compile(AsmParser parser, AsmSection output) {
+            var operand = parser.ReadIndirectWithDisplacement();
+            parser.ReadToken(TokenType.Comma);
+            var dest = parser.ReadReg32();
 
             var translation = new OpcodeTranslation {
                 Opcode = GetOpcodeTemplate(operand.Register),
@@ -22,7 +22,7 @@ namespace Atmega.Asm.Opcodes.Move {
                 Displacement = operand.Displacement
             };
 
-            context.EmitCode(translation.Opcode);
+            output.EmitCode(translation.Opcode);
         }
 
         private static ushort GetOpcodeTemplate(IndirectRegister register) {

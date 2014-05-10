@@ -6,14 +6,13 @@ namespace Atmega.Asm.Opcodes {
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmContext context) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.Parser.ReadPort32();
-            translation.Port32 = dest;
-            context.Queue.Read(TokenType.Comma);
-            var value = context.Parser.ReadBit();
-            translation.BitNumber = value;
-            context.EmitCode(translation.Opcode);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            var dest = parser.ReadPort32();
+            parser.ReadToken(TokenType.Comma);
+            var value = parser.ReadBit();
+
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Port32 = dest, BitNumber = value };
+            output.EmitCode(translation.Opcode);
         }
     }
 }

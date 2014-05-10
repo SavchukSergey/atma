@@ -5,11 +5,10 @@
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmContext context) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = context.Parser.ReadReg32();
-            translation.Destination32 = dest;
-            context.EmitCode(translation.Opcode);
+        public override void Compile(AsmParser parser, AsmSection output) {
+            var dest = parser.ReadReg32();
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Destination32 = dest };
+            output.EmitCode(translation.Opcode);
         }
 
     }

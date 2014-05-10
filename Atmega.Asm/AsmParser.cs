@@ -12,6 +12,10 @@ namespace Atmega.Asm {
             _calculator = new ExpressionCalculator(context);
         }
 
+        public bool IsEndOfLine {
+            get { return _context.Queue.IsEndOfLine; }
+        }
+
         public byte ReadRegW24() {
             var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {
@@ -55,6 +59,25 @@ namespace Atmega.Asm {
 
             return res;
         }
+
+        public byte ReadWordReg() {
+            var token = _context.Queue.Peek();
+            var high = ReadReg32();
+            if ((high & 0x01) == 0) {
+                throw new TokenException("expected odd register (r1, r3, ..., r29, r31)", token);
+            }
+
+            _context.Queue.Read(TokenType.Colon);
+
+            token = _context.Queue.Peek();
+            var low = ReadReg32();
+            if (low != high - 1) {
+                throw new TokenException("expected register r" + (high - 1), token);
+            }
+
+            return low;
+        }
+
 
         public IndirectRegister ReadIndirectReg() {
             var reg = _context.Queue.Read(TokenType.Literal);
