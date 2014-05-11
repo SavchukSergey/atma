@@ -126,6 +126,7 @@ namespace Atmega.Asm.Expressions {
                     case TokenType.RightShift:
                     case TokenType.BitOr:
                     case TokenType.BitAnd:
+                    case TokenType.BitXor:
                         left = ProcessBinaryExpression(token, left, tokens);
                         break;
                     default:
@@ -149,6 +150,7 @@ namespace Atmega.Asm.Expressions {
                 case TokenType.RightShift: return new ShiftRightExpression(left, other);
                 case TokenType.BitOr: return new BitOrExpression(left, other);
                 case TokenType.BitAnd: return new BitAndExpression(left, other);
+                case TokenType.BitXor: return new BitXorExpression(left, other);
                 default:
                     throw new TokenException("unexpected operator", opToken);
             }
