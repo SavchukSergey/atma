@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using Atmega.Asm.Elf;
 using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
@@ -36,6 +38,40 @@ namespace Atmega.Asm {
                 last = context;
             }
             return last;
+        }
+
+        public void SaveElf(AsmContext context, string fileName) {
+            using (var file = File.Open(fileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                SaveElf(context, file);
+                file.Flush();
+                file.Close();
+            }
+        }
+
+        public void SaveElf(AsmContext context, Stream stream) {
+            var writer = new BinaryWriter(stream);
+            var header = new ElfHeader {
+                Identification = {
+                    Magic = new [] { (char)0x7f, 'E', 'L', 'F' },
+                    FileClass = ElfFileClass.Elf32,
+                    DataType = ElfDataType.Lsb,
+                    Version = 1,
+                },
+                Type = ElfType.Executable,
+                Machine = 0x53,
+                Version = 1,
+                Entry = 0x0,
+                ProgramHeaderOffset = 0x34,
+                SectionHeaderOffset = 0x5c4,
+                Flags = 0x84,
+                ElfHeaderSize = 0x34,
+                ProgramHeaderEntrySize = 0x20,
+                ProgramHeaderCount = 2,
+                SectionHeaderEntrySize = 0x28,
+                SectionHeaderCount = 0x0d,
+                StringSectionIndex = 0x0a
+            };
+            writer.WriteElf32(header);
         }
 
         protected IList<Token> ProcessSymbolConstants(IList<Token> tokens, AsmSymbols symbols) {

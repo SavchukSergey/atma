@@ -47,6 +47,12 @@
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="Elf\ElfDataType.cs" />
+    <Compile Include="Elf\ElfFileClass.cs" />
+    <Compile Include="Elf\ElfHeader.cs" />
+    <Compile Include="Elf\ElfIdentification.cs" />
+    <Compile Include="Elf\ElfStreamExt.cs" />
+    <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Expressions\BitXorExpression.cs" />
     <Compile Include="Expressions\BitAndExpression.cs" />
     <Compile Include="Expressions\AddExpression.cs" />

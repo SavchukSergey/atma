@@ -16,8 +16,10 @@ namespace Atmega.Asm {
                 var res = assembler.Load(sourceName);
                 var hexName = Path.GetFileNameWithoutExtension(sourceName) + ".hex";
                 var eepName = Path.GetFileNameWithoutExtension(sourceName) + ".eep";
+                var elfName = Path.GetFileNameWithoutExtension(sourceName) + ".elf";
                 res.CodeSection.BuildHexFile().Save(hexName);
                 res.FlashSection.BuildHexFile().Save(eepName);
+                assembler.SaveElf(res, elfName);
                 //SaveBin(res, Path.GetFileNameWithoutExtension(sourceName) + ".binhex");
                 Console.WriteLine("passes: {0}", res.Pass);
                 Console.WriteLine("Segment   Size");
