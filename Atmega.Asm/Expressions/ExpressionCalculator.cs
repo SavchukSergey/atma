@@ -123,6 +123,7 @@ namespace Atmega.Asm.Expressions {
                     case TokenType.Divide:
                     case TokenType.Mod:
                     case TokenType.LeftShift:
+                    case TokenType.RightShift:
                     case TokenType.BitOr:
                     case TokenType.BitAnd:
                         left = ProcessBinaryExpression(token, left, tokens);
@@ -145,6 +146,7 @@ namespace Atmega.Asm.Expressions {
                 case TokenType.Divide: return new DivExpression(left, other);
                 case TokenType.Mod: return new ModExpression(left, other);
                 case TokenType.LeftShift: return new ShiftLeftExpression(left, other);
+                case TokenType.RightShift: return new ShiftRightExpression(left, other);
                 case TokenType.BitOr: return new BitOrExpression(left, other);
                 case TokenType.BitAnd: return new BitAndExpression(left, other);
                 default:

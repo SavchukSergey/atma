@@ -5,8 +5,13 @@ using Atmega.Asm.Hex;
 
 namespace Atmega.Asm {
     public class AsmSection {
+        private readonly AsmSectionType _type;
 
         private readonly IList<byte> _content = new List<byte>();
+
+        public AsmSection(AsmSectionType type) {
+            _type = type;
+        }
 
         public int Offset { get; set; }
 
@@ -15,6 +20,7 @@ namespace Atmega.Asm {
         }
 
         public void EmitCode(ushort opcode) {
+            if (_type == AsmSectionType.Data) throw new PureSectionDataException("cannot write initialized data to data section");
             if ((Offset & 0x01) > 0) {
                 ReserveByte();
             }
@@ -22,11 +28,13 @@ namespace Atmega.Asm {
         }
 
         public void EmitByte(byte bt) {
+            if (_type == AsmSectionType.Data) throw new PureSectionDataException("cannot write initialized data to data section");
             _content.Add(bt);
             Offset++;
         }
 
         public void EmitWord(ushort val) {
+            if (_type == AsmSectionType.Data) throw new PureSectionDataException("cannot write initialized data to data section");
             EmitByte((byte)(val & 0xff));
             EmitByte((byte)((val >> 8) & 0xff));
         }

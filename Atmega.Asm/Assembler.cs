@@ -98,7 +98,7 @@ namespace Atmega.Asm {
             return result;
         }
 
-        private void CopyLine(IList<Token> source, IList<Token> target, ref int pointer) {
+        private static void CopyLine(IList<Token> source, IList<Token> target, ref int pointer) {
             while (pointer < source.Count) {
                 var tkn = source[pointer++];
                 target.Add(tkn);
@@ -106,7 +106,7 @@ namespace Atmega.Asm {
             }
         }
 
-        private void CopyLine(IList<Token> source, IList<Token> target, AsmSymbols symbols, ref int pointer) {
+        private static void CopyLine(IList<Token> source, IList<Token> target, AsmSymbols symbols, ref int pointer) {
             while (pointer < source.Count) {
                 var tkn = source[pointer++];
                 if (tkn.Type == TokenType.NewLine) {
@@ -128,22 +128,28 @@ namespace Atmega.Asm {
             }
         }
 
-        private bool TheSame(AsmContext prev, AsmContext current) {
+        private static bool TheSame(AsmContext prev, AsmContext current) {
             if (prev == null) return false;
             return current.CodeSection.TheSame(prev.CodeSection);
         }
 
-        private void AssemblePass(AsmContext context, AsmParser parser) {
+        private static void AssemblePass(AsmContext context, AsmParser parser) {
             while (context.Queue.Count > 0) {
                 SkipEmptyLines(context);
                 if (context.Queue.Count == 0) break;
 
-                var token = context.Queue.Read(TokenType.Literal);
+                AssembleLine(context, parser);
+            }
+        }
+
+        private static void AssembleLine(AsmContext context, AsmParser parser) {
+            var token = context.Queue.Read(TokenType.Literal);
+            try {
                 if (CheckLabel(token, context)) {
-                    continue;
+                    return;
                 }
                 if (CheckData(token, context, parser)) {
-                    continue;
+                    return;
                 }
 
                 switch (token.StringValue.ToLower()) {
@@ -168,10 +174,12 @@ namespace Atmega.Asm {
                         throw new TokenException("Extra characters on line", nl);
                     }
                 }
+            } catch (PureSectionDataException exc) {
+                throw new PureSectionDataException(exc.Message, token);
             }
         }
 
-        private bool CheckLabel(Token token, AsmContext context) {
+        private static bool CheckLabel(Token token, AsmContext context) {
             if (context.Queue.Count > 0) {
                 var next = context.Queue.Peek();
                 if (next.Type == TokenType.Colon) {
@@ -183,7 +191,7 @@ namespace Atmega.Asm {
             return false;
         }
 
-        private bool CheckData(Token token, AsmContext context, AsmParser parser) {
+        private static bool CheckData(Token token, AsmContext context, AsmParser parser) {
             if (IsDataDirective(token)) {
                 ProcessDataDirective(token, parser, context.CurrentSection);
                 return true;
@@ -200,7 +208,7 @@ namespace Atmega.Asm {
             return false;
         }
 
-        private void SkipEmptyLines(AsmContext context) {
+        private static void SkipEmptyLines(AsmContext context) {
             while (context.Queue.Count > 0) {
                 Token token = context.Queue.Peek();
                 if (token.Type != TokenType.NewLine) return;
@@ -208,7 +216,7 @@ namespace Atmega.Asm {
             }
         }
 
-        private void ProcessSection(AsmContext context) {
+        private static void ProcessSection(AsmContext context) {
             var typeToken = context.Queue.Read();
             if (typeToken.Type != TokenType.Literal) {
                 throw new TokenException("expected section type", typeToken);
@@ -221,12 +229,12 @@ namespace Atmega.Asm {
             context.SetSection(type);
         }
 
-        private void ProcessOrg(AsmParser parser, AsmSection output) {
+        private static void ProcessOrg(AsmParser parser, AsmSection output) {
             var val = parser.CalculateExpression();
             output.Offset = (int)val;
         }
 
-        private void ProcessDataDirective(Token token, AsmParser parser, AsmSection output) {
+        private static void ProcessDataDirective(Token token, AsmParser parser, AsmSection output) {
             switch (token.StringValue.ToLower()) {
                 case "db":
                     ProcessDataBytes(parser, output);
@@ -245,7 +253,7 @@ namespace Atmega.Asm {
             }
         }
 
-        private void ProcessDataBytes(AsmParser parser, AsmSection output) {
+        private static void ProcessDataBytes(AsmParser parser, AsmSection output) {
             do {
                 if (parser.IsEndOfLine) {
                     throw new TokenException("expected data bytes", parser.LastReadToken);
@@ -274,7 +282,7 @@ namespace Atmega.Asm {
             } while (true);
         }
 
-        private void ProcessDataWords(AsmParser parser, AsmSection output) {
+        private static void ProcessDataWords(AsmParser parser, AsmSection output) {
             do {
                 if (parser.IsEndOfLine) {
                     throw new TokenException("expected data words", parser.LastReadToken);

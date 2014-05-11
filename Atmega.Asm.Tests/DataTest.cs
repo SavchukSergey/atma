@@ -25,7 +25,7 @@ dw 0x1234, 0x5678
             Assert.AreEqual(4, compiled.CodeSection.Content.Count);
             Assert.AreEqual(new byte[] { 0x34, 0x12, 0x78, 0x56 }, compiled.CodeSection.Content);
         }
-        
+
         [Test]
         public void ReserveBytesTest() {
             var compiled = Compile(@"
@@ -52,6 +52,19 @@ db 0x34, 45, 'abc', 0
         [TestCase("db 1,")]
         [TestCase("dw 1,")]
         public void FailTest(string asm) {
+            try {
+                Compile(asm);
+                Assert.Fail("Must fail");
+            } catch (TokenException) {
+            }
+        }
+
+        [Test]
+        public void DataSectionTest() {
+            const string asm = @"
+section data
+db 1";
+
             try {
                 Compile(asm);
                 Assert.Fail("Must fail");

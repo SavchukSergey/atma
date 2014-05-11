@@ -52,6 +52,7 @@
     <Compile Include="Expressions\BaseExpression.cs" />
     <Compile Include="Expressions\HighByteExpression.cs" />
     <Compile Include="Expressions\LowByteExpression.cs" />
+    <Compile Include="Expressions\ShiftRightExpression.cs" />
     <Compile Include="Expressions\UnaryExpression.cs" />
     <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\BitOrExpression.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Opcodes\BaseSimpleOpcode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PureSectionDataException.cs" />
     <Compile Include="TokenException.cs" />
     <Compile Include="Tokens\FileSource.cs" />
     <Compile Include="Tokens\Token.cs" />

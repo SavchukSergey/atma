@@ -11,9 +11,9 @@ namespace Atmega.Asm {
 
         public AsmSymbols Symbols { get; set; }
 
-        private readonly AsmSection _codeSection = new AsmSection();
-        private readonly AsmSection _dataSection = new AsmSection();
-        private readonly AsmSection _flashSection = new AsmSection();
+        private readonly AsmSection _codeSection = new AsmSection(AsmSectionType.Code);
+        private readonly AsmSection _dataSection = new AsmSection(AsmSectionType.Data);
+        private readonly AsmSection _flashSection = new AsmSection(AsmSectionType.Flash);
         private AsmSectionType _currentSection;
 
         public AsmSection CodeSection {

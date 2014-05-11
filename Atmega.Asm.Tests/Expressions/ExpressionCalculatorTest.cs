@@ -31,6 +31,7 @@ namespace Atmega.Asm.Tests.Expressions {
         [TestCase("0x12f3 | 0x3012", 0x12f3 | 0x3012)]
         [TestCase("0x12f3 & 0x3012", 0x12f3 & 0x3012)]
         [TestCase("(1 << 3) | (1 << 2)", (1 << 3) | (1 << 2))]
+        [TestCase("0x123 >> 3", 0x123 >> 3)]
         [TestCase("(123*456)*(78*452)", (123 * 456) * (78 * 452))]
         [TestCase("(123*456)/(78*452)", (123 * 456) / (78 * 452))]
         [TestCase("345 + 242, 111", 345 + 242)]
