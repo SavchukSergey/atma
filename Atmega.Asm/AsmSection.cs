@@ -19,6 +19,14 @@ namespace Atmega.Asm {
             get { return _content; }
         }
 
+        public int WordsCount {
+            get { return (Content.Count + 1) / 2; }
+        }
+
+        public int BytesCount {
+            get { return Content.Count; }
+        }
+
         public void EmitCode(ushort opcode) {
             if (_type == AsmSectionType.Data) throw new PureSectionDataException("cannot write initialized data to data section");
             if ((Offset & 0x01) > 0) {
@@ -66,6 +74,13 @@ namespace Atmega.Asm {
                 if (Content[i] != other.Content[i]) return false;
             }
             return true;
+        }
+
+        public HexFile BuildHexFile() {
+            var hexFile = new HexFile();
+            WriteTo(hexFile);
+            hexFile.Lines.Add(new HexFileLine { Type = HexFileLineType.Eof });
+            return hexFile;
         }
 
         public void WriteTo(HexFile hexFile) {

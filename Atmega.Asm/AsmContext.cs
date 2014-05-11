@@ -53,10 +53,7 @@ namespace Atmega.Asm {
         }
 
         public HexFile BuildHexFile() {
-            var hexFile = new HexFile();
-            CodeSection.WriteTo(hexFile);
-            hexFile.Lines.Add(new HexFileLine { Type = HexFileLineType.Eof });
-            return hexFile;
+            return CodeSection.BuildHexFile();
         }
 
         private readonly IDictionary<string, ushort> _passLabels = new Dictionary<string, ushort>();

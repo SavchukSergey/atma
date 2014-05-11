@@ -74,6 +74,12 @@ namespace Atmega.Asm.Tokens {
                         case '\\':
                             token += '\\';
                             break;
+                        case '\'':
+                            token += '\'';
+                            break;
+                        case '\"':
+                            token += '\"';
+                            break;
                         case '0':
                             token += '\0';
                             break;
