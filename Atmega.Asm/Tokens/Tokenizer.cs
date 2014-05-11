@@ -46,7 +46,41 @@ namespace Atmega.Asm.Tokens {
                 if (ch == '\r' || ch == '\n') {
                     throw new TokenException("missing end quote", new Token { Position = position });
                 }
-                if (ch == quoteCh) {
+                if (ch == '\\') {
+                    if (pos >= content.Length) throw new TokenException("missing end quote", new Token { Position = position });
+                    ch = content[pos++];
+                    switch (ch) {
+                        case 'n':
+                            token += '\n';
+                            break;
+                        case 'r':
+                            token += '\r';
+                            break;
+                        case 'a':
+                            token += '\a';
+                            break;
+                        case 'b':
+                            token += '\b';
+                            break;
+                        case 'f':
+                            token += '\f';
+                            break;
+                        case 't':
+                            token += '\t';
+                            break;
+                        case 'v':
+                            token += '\v';
+                            break;
+                        case '\\':
+                            token += '\\';
+                            break;
+                        case '0':
+                            token += '\0';
+                            break;
+                        default:
+                            throw new TokenException("invalid escape character " + ch, new Token { Position = position });
+                    }
+                } else if (ch == quoteCh) {
                     if (pos >= content.Length) return token;
                     var next = content[pos++];
                     if (next == quoteCh) {

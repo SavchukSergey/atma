@@ -40,5 +40,12 @@ namespace Atmega.Asm.Tests.Tokens {
             Assert.AreEqual("db", tokens.Read(TokenType.Literal).StringValue);
             Assert.AreEqual("Test ' String", tokens.Read(TokenType.String).StringValue);
         }
+
+        [Test]
+        public void EscapedTest() {
+            var tokens = Tokenize(@"'abs\n\r\a\b\f\t\v\\\0'");
+            Assert.AreEqual("abs\n\r\a\b\f\t\v\\\0", tokens.Read(TokenType.String).StringValue);
+        }
+
     }
 }
