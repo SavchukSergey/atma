@@ -79,6 +79,10 @@
       <Project>{93B689CE-8AB5-496D-AEBF-23C88BE1C212}</Project>
       <Name>Atmega.Asm</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Atmega\Atmega.csproj">
+      <Project>{f188cc08-77e9-46c8-b696-0e9b9c9a6aef}</Project>
+      <Name>Atmega</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Samples\logic.asm" />
@@ -104,9 +108,6 @@
     <EmbeddedResource Include="..\Artifacts\include\eeprom.inc">
       <Link>Samples\include\eeprom.inc</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Samples\flash.asm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

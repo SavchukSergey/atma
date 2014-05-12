@@ -1,3 +1,6 @@
+/Atmega/bin/
+/Atmega/obj/
+
 /Atmega.Asm/bin/
 /Atmega.Asm/obj/
 
@@ -8,3 +11,4 @@
 /Atmega.v12.suo
 /Atmega.sln.DotSettings.user
 /Atmega.Asm/Atmega.Asm.csproj.user
+

@@ -35,11 +35,6 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
-        public void FlashTest() {
-            var complied = CompileEmbedded("flash.asm");
-        }
-
-        [Test]
         public void IllegalInstructionTest() {
             try {
                 Compile("illegalOpcode");

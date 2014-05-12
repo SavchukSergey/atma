@@ -47,12 +47,6 @@
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
-    <Compile Include="Elf\ElfDataType.cs" />
-    <Compile Include="Elf\ElfFileClass.cs" />
-    <Compile Include="Elf\ElfHeader.cs" />
-    <Compile Include="Elf\ElfIdentification.cs" />
-    <Compile Include="Elf\ElfStreamExt.cs" />
-    <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Expressions\BitXorExpression.cs" />
     <Compile Include="Expressions\BitAndExpression.cs" />
     <Compile Include="Expressions\AddExpression.cs" />
@@ -71,9 +65,6 @@
     <Compile Include="Expressions\NumberExpression.cs" />
     <Compile Include="Expressions\ShiftLeftExpression.cs" />
     <Compile Include="Expressions\SubExpression.cs" />
-    <Compile Include="Hex\HexFile.cs" />
-    <Compile Include="Hex\HexFileLine.cs" />
-    <Compile Include="Hex\HexFileLineType.cs" />
     <Compile Include="IO\EmbeddedAsmSource.cs" />
     <Compile Include="IO\FileAsmSource.cs" />
     <Compile Include="IO\IAsmSource.cs" />
@@ -249,7 +240,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Atmega\Atmega.csproj">
+      <Project>{f188cc08-77e9-46c8-b696-0e9b9c9a6aef}</Project>
+      <Name>Atmega</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

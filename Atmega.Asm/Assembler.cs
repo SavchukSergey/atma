@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using Atmega.Asm.Elf;
+using System.Linq;
 using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
+using Atmega.Elf;
 
 namespace Atmega.Asm {
     public class Assembler {
@@ -50,9 +53,97 @@ namespace Atmega.Asm {
 
         public void SaveElf(AsmContext context, Stream stream) {
             var writer = new BinaryWriter(stream);
+            var mem = new MemoryStream();
+            var sections = new List<ElfSection>();
+            var segments = new List<ElfSegment>();
+            var sectionStrings = new ElfStrings();
+            sections.Add(new ElfSection());
+            if (context.CodeSection.VirtualSize > 0) {
+                sections.Add(new ElfSection {
+                    Name = sectionStrings.SaveString(".text"),
+                    Type = ElfSectionType.ProgBits,
+                    Address = 0,
+                    Flags = ElfSectionFlags.Alloc | ElfSectionFlags.Executable,
+                    Size = (uint)context.CodeSection.BytesCount,
+                    Align = 2,
+                    Offset = (uint)mem.Position
+                });
+                segments.Add(new ElfSegment {
+                    Type = ElfSegmentType.Load,
+                    Offset = (uint)mem.Position,
+                    VirtualAddress = 0,
+                    PhysicalAddress = 0,
+                    FileSize = (uint)context.CodeSection.BytesCount,
+                    MemorySize = (uint)context.CodeSection.VirtualSize,
+                    Flags = ElfSegmentFlags.Executable | ElfSegmentFlags.Readable,
+                    Align = 1
+                });
+                mem.Write(context.CodeSection.Content.ToArray(), 0, context.CodeSection.BytesCount);
+            }
+            if (context.DataSection.VirtualSize > 0) {
+                sections.Add(new ElfSection {
+                    Name = sectionStrings.SaveString(".bss"),
+                    Type = ElfSectionType.NoBits,
+                    Address = 0x800060,
+                    Flags = ElfSectionFlags.Alloc | ElfSectionFlags.Writeable,
+                    Size = (uint)context.DataSection.BytesCount,
+                    Align = 1,
+                    Offset = (uint)mem.Position
+                });
+                segments.Add(new ElfSegment {
+                    Type = ElfSegmentType.Load,
+                    Offset = (uint)mem.Position,
+                    VirtualAddress = 0x800060,
+                    PhysicalAddress = 0,
+                    FileSize = (uint)context.DataSection.BytesCount,
+                    MemorySize = (uint)context.DataSection.VirtualSize,
+                    Flags = ElfSegmentFlags.Writeable | ElfSegmentFlags.Readable,
+                    Align = 1,
+                });
+                mem.Write(context.DataSection.Content.ToArray(), 0, context.DataSection.BytesCount);
+            }
+            if (context.FlashSection.VirtualSize > 0) {
+                sections.Add(new ElfSection {
+                    Name = sectionStrings.SaveString(".flash"),
+                    Type = ElfSectionType.ProgBits,
+                    Address = 0x810000,
+                    Flags = ElfSectionFlags.Alloc | ElfSectionFlags.Writeable,
+                    Size = (uint)context.FlashSection.BytesCount,
+                    Align = 1,
+                    Offset = (uint)mem.Position
+                });
+                segments.Add(new ElfSegment {
+                    Type = ElfSegmentType.Load,
+                    Offset = (uint)mem.Position,
+                    VirtualAddress = 0x810000,
+                    PhysicalAddress = 0,
+                    FileSize = (uint)context.FlashSection.BytesCount,
+                    MemorySize = (uint)context.FlashSection.VirtualSize,
+                    Flags = ElfSegmentFlags.Writeable | ElfSegmentFlags.Readable,
+                    Align = 1,
+                });
+                mem.Write(context.FlashSection.Content.ToArray(), 0, context.FlashSection.BytesCount);
+            }
+            var sectionsStringsIndex = sections.Count;
+            sections.Add(new ElfSection {
+                Name = sectionStrings.SaveString(".shstrtab"),
+                Type = ElfSectionType.StrTab,
+                Address = 0,
+                Flags = ElfSectionFlags.None,
+                Size = (uint)sectionStrings.BytesSize,
+                Align = 1,
+                Offset = (uint)mem.Position
+            });
+            mem.Write(sectionStrings.ToArray(), 0, sectionStrings.BytesSize);
+
+            const int headerSize = 0x34;
+            const int segmentsOffset = headerSize;
+            const int segmentEntrySize = 0x20;
+            var segmentsDataOffset = segmentsOffset + segments.Count * segmentEntrySize;
+            var sectionsOffset = segmentsDataOffset + mem.Length;
             var header = new ElfHeader {
                 Identification = {
-                    Magic = new [] { (char)0x7f, 'E', 'L', 'F' },
+                    Magic = new[] { (char)0x7f, 'E', 'L', 'F' },
                     FileClass = ElfFileClass.Elf32,
                     DataType = ElfDataType.Lsb,
                     Version = 1,
@@ -61,18 +152,32 @@ namespace Atmega.Asm {
                 Machine = 0x53,
                 Version = 1,
                 Entry = 0x0,
-                ProgramHeaderOffset = 0x34,
-                SectionHeaderOffset = 0x5c4,
+                ProgramHeaderOffset = segmentsOffset,
+                SectionHeaderOffset = (uint)sectionsOffset,
                 Flags = 0x84,
-                ElfHeaderSize = 0x34,
-                ProgramHeaderEntrySize = 0x20,
-                ProgramHeaderCount = 2,
+                ElfHeaderSize = headerSize,
+                ProgramHeaderEntrySize = segmentEntrySize,
+                ProgramHeaderCount = (ushort)segments.Count,
                 SectionHeaderEntrySize = 0x28,
-                SectionHeaderCount = 0x0d,
-                StringSectionIndex = 0x0a
+                SectionHeaderCount = (ushort)sections.Count,
+                StringSectionIndex = (ushort)sectionsStringsIndex
             };
             writer.WriteElf32(header);
+            foreach (var segment in segments) {
+                var cloned = segment;
+                cloned.Offset = (uint)(segment.Offset + segmentsDataOffset);
+                writer.WriteElf32(cloned);
+            }
+            writer.Write(mem.ToArray());
+            foreach (var section in sections) {
+                var cloned = section;
+                if (section.Type != ElfSectionType.Null) {
+                    cloned.Offset = (uint)(section.Offset + segmentsDataOffset);
+                }
+                writer.WriteElf32(cloned);
+            }
         }
+
 
         protected IList<Token> ProcessSymbolConstants(IList<Token> tokens, AsmSymbols symbols) {
             var result = new List<Token>();

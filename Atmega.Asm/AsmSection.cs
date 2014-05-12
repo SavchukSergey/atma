@@ -27,6 +27,14 @@ namespace Atmega.Asm {
             get { return Content.Count; }
         }
 
+        public int VirtualSize {
+            get { return BytesCount; }
+        }
+
+        public AsmSectionType Type {
+            get { return _type; }
+        }
+
         public void EmitCode(ushort opcode) {
             if (_type == AsmSectionType.Data) throw new PureSectionDataException("cannot write initialized data to data section");
             if ((Offset & 0x01) > 0) {
