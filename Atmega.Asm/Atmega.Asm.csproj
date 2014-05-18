@@ -47,6 +47,7 @@
     <Compile Include="AsmSectionType.cs" />
     <Compile Include="AsmSymbols.cs" />
     <Compile Include="Assembler.cs" />
+    <Compile Include="ElfBuilder.cs" />
     <Compile Include="Expressions\BitXorExpression.cs" />
     <Compile Include="Expressions\BitAndExpression.cs" />
     <Compile Include="Expressions\AddExpression.cs" />

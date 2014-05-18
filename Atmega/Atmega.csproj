@@ -39,7 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dwarf\DebugLine\DebugLineFile.cs" />
+    <Compile Include="Dwarf\DebugLine\DebugLineHeader.cs" />
+    <Compile Include="Dwarf\DebugLine\DebugLineState.cs" />
+    <Compile Include="Dwarf\DwarfStreamExt.cs" />
     <Compile Include="Elf\ElfDataType.cs" />
+    <Compile Include="Elf\ElfFile.cs" />
     <Compile Include="Elf\ElfFileClass.cs" />
     <Compile Include="Elf\ElfHeader.cs" />
     <Compile Include="Elf\ElfIdentification.cs" />
