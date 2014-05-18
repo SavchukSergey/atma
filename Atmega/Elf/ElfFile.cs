@@ -18,7 +18,7 @@ namespace Atmega.Elf {
             get { return _segments; }
         }
 
-        public Stream Data {
+        public MemoryStream Data {
             get { return _data; }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Atmega.Elf;
 
@@ -8,7 +9,6 @@ namespace Atmega.Asm {
         public void Save(AsmContext context, Stream stream) {
             var file = new ElfFile();
             var writer = new BinaryWriter(stream);
-            var mem = new MemoryStream();
             file.Sections.Add(new ElfSection());
             AddCode(file, context);
             AddData(file, context);
@@ -19,8 +19,8 @@ namespace Atmega.Asm {
             const int headerSize = 0x34;
             const int segmentsOffset = headerSize;
             const int segmentEntrySize = 0x20;
-            var segmentsDataOffset = segmentsOffset + file.Segments.Count * segmentEntrySize;
-            var sectionsOffset = segmentsDataOffset + mem.Length;
+            var dataOffset = (uint) (segmentsOffset + file.Segments.Count * segmentEntrySize);
+            var sectionsOffset = dataOffset + file.Data.Length;
             var header = new ElfHeader {
                 Identification = {
                     Magic = new[] { (char)0x7f, 'E', 'L', 'F' },
@@ -45,14 +45,14 @@ namespace Atmega.Asm {
             writer.WriteElf32(header);
             foreach (var segment in file.Segments) {
                 var cloned = segment;
-                cloned.Offset = (uint)(segment.Offset + segmentsDataOffset);
+                cloned.Offset += dataOffset;
                 writer.WriteElf32(cloned);
             }
-            writer.Write(mem.ToArray());
+            writer.Write(file.Data.ToArray());
             foreach (var section in file.Sections) {
                 var cloned = section;
                 if (section.Type != ElfSectionType.Null) {
-                    cloned.Offset = (uint)(section.Offset + segmentsDataOffset);
+                    cloned.Offset += dataOffset;
                 }
                 writer.WriteElf32(cloned);
             }

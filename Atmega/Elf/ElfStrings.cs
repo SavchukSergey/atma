@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Atmega.Elf {
@@ -22,6 +23,7 @@ namespace Atmega.Elf {
             var data = Encoding.ASCII.GetBytes(val);
             _data.AddRange(data);
             _data.Add(0);
+            _offsets[val] = offset;
             return offset;
         }
 
