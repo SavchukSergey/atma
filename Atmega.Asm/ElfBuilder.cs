@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Atmega.Dwarf;
+using Atmega.Dwarf.DebugLine;
 using Atmega.Elf;
 
 namespace Atmega.Asm {
@@ -13,13 +15,14 @@ namespace Atmega.Asm {
             AddCode(file, context);
             AddData(file, context);
             AddFlash(file, context);
+            AddDebugLine(file, context);
 
             var sectionsStringsIndex = file.AddStringsSection();
-            
+
             const int headerSize = 0x34;
             const int segmentsOffset = headerSize;
             const int segmentEntrySize = 0x20;
-            var dataOffset = (uint) (segmentsOffset + file.Segments.Count * segmentEntrySize);
+            var dataOffset = (uint)(segmentsOffset + file.Segments.Count * segmentEntrySize);
             var sectionsOffset = dataOffset + file.Data.Length;
             var header = new ElfHeader {
                 Identification = {
@@ -55,6 +58,31 @@ namespace Atmega.Asm {
                     cloned.Offset += dataOffset;
                 }
                 writer.WriteElf32(cloned);
+            }
+        }
+
+        private void AddDebugLine(ElfFile file, AsmContext context) {
+            var mem = new MemoryStream();
+            var writer = new BinaryWriter(mem);
+            var hdr = new DebugLineHeader {
+                FileNames = new[]
+                {
+                    new DebugLineFile {Name = "test.asm"}, 
+                    new DebugLineFile {Name = "test2.asm"}, 
+                }
+            };
+            writer.WriteDwarf2(hdr);
+            if (mem.Length > 0) {
+                file.Sections.Add(new ElfSection {
+                    Name = file.Strings.SaveString(".debug_line"),
+                    Type = ElfSectionType.ProgBits,
+                    Address = 0,
+                    Flags = ElfSectionFlags.None,
+                    Size = (uint)mem.Length,
+                    Align = 1,
+                    Offset = (uint)file.Data.Position
+                });
+                file.Data.Write(mem.ToArray(), 0, (int)mem.Length);
             }
         }
 
