@@ -56,22 +56,6 @@ namespace Atmega.Asm.Tests {
         }
 
         [Test]
-        [TestCase("pop r0", (ushort)0x900f)]
-        [TestCase("pop r31", (ushort)0x91ff)]
-        public void PopTest(string asm, ushort opcode) {
-            var compiled = Compile(asm);
-            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
-        }
-
-        [Test]
-        [TestCase("push r0", (ushort)0x920f)]
-        [TestCase("push r31", (ushort)0x93ff)]
-        public void PushTest(string asm, ushort opcode) {
-            var compiled = Compile(asm);
-            Assert.AreEqual(new[] { opcode }, compiled.CodeSection.ReadAsUshorts());
-        }
-
-        [Test]
         [TestCase("swap r0", (ushort)0x9402)]
         [TestCase("swap r31", (ushort)0x95f2)]
         public void SwapTest(string asm, ushort opcode) {

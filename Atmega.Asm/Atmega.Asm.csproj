@@ -95,6 +95,7 @@
     <Compile Include="Opcodes\Arithmetics\MulOpcode.cs" />
     <Compile Include="Opcodes\Arithmetics\SubOpcode.cs" />
     <Compile Include="Opcodes\AvrOpcodes.cs" />
+    <Compile Include="Opcodes\BaseMultiReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg16Opcode.cs" />
     <Compile Include="Opcodes\BaseZReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg16ComplementImm8Opcode.cs" />
