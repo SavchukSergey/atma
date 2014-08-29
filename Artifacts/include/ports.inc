@@ -66,14 +66,14 @@ TWSR equ 0x01
 TWBR equ 0x00
 
 
-I equ 7
-T equ 6
-H equ 5
-S equ 4
-V equ 3
-N equ 2
-Z equ 1
-C equ 0
+SREG_GIE equ 7
+SREG_T equ 6
+SREG_H equ 5
+SREG_S equ 4
+SREG_V equ 3
+SREG_N equ 2
+SREG_Z equ 1
+SREG_C equ 0
 
 ;EECR
 EERE equ 0

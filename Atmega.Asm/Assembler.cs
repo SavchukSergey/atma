@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
 using Atmega.Asm.Tokens;
-using Atmega.Elf;
 
 namespace Atmega.Asm {
     public class Assembler {

@@ -50,7 +50,7 @@ namespace Atmega.Asm {
         }
 
         private static void Usage() {
-            Console.WriteLine("Usage: atma -source.asm");
+            Console.WriteLine("Usage: atma source.asm");
         }
     }
 }
