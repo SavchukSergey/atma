@@ -168,6 +168,7 @@ namespace Atmega.Asm.Expressions {
                     return 2;
 
                 case TokenType.BitOr:
+                case TokenType.BitAnd:
                     return 3;
 
                 case TokenType.LeftShift:
