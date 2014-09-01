@@ -2,16 +2,26 @@
 
 namespace Atmega.Asm.Opcodes {
     public class BasePort32BitOpcode : BaseOpcode {
+
         public BasePort32BitOpcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
+        public byte Port { get; set; }
+
+        public byte Bit { get; set; }
+
+        protected override void Parse(AsmParser parser) {
             var dest = parser.ReadPort32();
             parser.ReadToken(TokenType.Comma);
             var value = parser.ReadBit();
 
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Port32 = dest, BitNumber = value };
+            Port = dest;
+            Bit = value;
+        }
+
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Port32 = Port, BitNumber = Bit };
             output.EmitCode(translation.Opcode);
         }
     }

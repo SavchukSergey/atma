@@ -5,5 +5,9 @@
             : base("10011000pppppsss") {
         }
 
+        public override string ToString() {
+            return string.Format("cbi {0}, {1}", FormatPort(Port), Bit);
+        }
+
     }
 }

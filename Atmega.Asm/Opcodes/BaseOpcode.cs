@@ -15,7 +15,16 @@ namespace Atmega.Asm.Opcodes {
             _opcodeTemplate = ParseOpcodeTemplate(opcodeTemplate);
         }
 
-        public abstract void Compile(AsmParser parser, AsmSection output);
+        public virtual void Compile(AsmParser parser, AsmSection output) {
+            Parse(parser);
+            Compile(output);
+        }
+
+        protected virtual void Parse(AsmParser parser) {
+        }
+
+        protected virtual void Compile(AsmSection output) {
+        }
 
         protected static ushort ParseOpcodeTemplate(string template) {
             ushort val = 0;
@@ -60,9 +69,9 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xff00) == 0x0100) {
             //    return new MovwOpcode { Source = translation.SourceWordRegister, Destination = translation.DestinationWordRegister };
             //}
-            //if ((bytecode & 0xff00) == 0x9800) {
-            //    return new CbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
-            //}
+            if ((bytecode & 0xff00) == 0x9800) {
+                return new CbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
+            }
             //if ((bytecode & 0xff00) == 0x9a00) {
             //    return new SbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             //}
@@ -188,7 +197,6 @@ namespace Atmega.Asm.Opcodes {
             //    return new StdOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Offset = translation.YZOffset };
             //}
             return new UnknownOpcode { Opcode = bytecode };
-            throw new ArgumentException();
         }
 
         private static ushort ReadUShort(Stream stream) {
@@ -196,5 +204,39 @@ namespace Atmega.Asm.Opcodes {
             var hi = stream.ReadByte();
             return (ushort)((hi << 8) + low);
         }
+
+        protected static string FormatPort(byte port) {
+            switch (port) {
+                case 21:
+                    return "MCUCR";
+                case 27:
+                    return "GICR";
+
+                case 0x10:
+                    return "PIND";
+                case 0x11:
+                    return "DDRD";
+                case 0x12:
+                    return "PORTD";
+
+                case 0x1c:
+                    return "EECR";
+                case 0x39:
+                    return "TIMSK";
+                case 0x3a:
+                    return "GIFR";
+                case 0x3b:
+                    return "GICR";
+                case 61:
+                    return "SPL";
+                case 62:
+                    return "SPH";
+                case 63:
+                    return "SREG";
+                default:
+                    return port.ToString();
+            }
+        }
+
     }
 }
