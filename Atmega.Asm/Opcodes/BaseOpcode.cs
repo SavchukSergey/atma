@@ -32,25 +32,25 @@ namespace Atmega.Asm.Opcodes {
 
         public static BaseOpcode Parse(Stream stream) {
             var bytecode = ReadUShort(stream);
-            //var translation = new OpcodeTranslation { Opcode = bytecode };
+            var translation = new OpcodeTranslation { Opcode = bytecode };
 
-            //switch (bytecode) {
-            //    case 0x0000:
-            //        return new NopOpcode();
+            switch (bytecode) {
+                case 0x0000:
+                    return new NopOpcode();
 
-            //    case 0x9468:
-            //        return new SetOpcode();
-            //    case 0x94e8:
-            //        return new CltOpcode();
+                case 0x9468:
+                    return new SetOpcode();
+                case 0x94e8:
+                    return new CltOpcode();
 
-            //    case 0x9478:
-            //        return new SeiOpcode();
-            //    case 0x94f8:
-            //        return new CliOpcode();
+                case 0x9478:
+                    return new SeiOpcode();
+                case 0x94f8:
+                    return new CliOpcode();
 
-            //    case 0x9508:
-            //        return new RetOpcode();
-            //}
+                case 0x9508:
+                    return new RetOpcode();
+            }
             //if ((bytecode & 0xff00) == 0x9700) {
             //    return new SbiwOpcode { Register = translation.IndirectWordRegister, Value = translation.UImm6 };
             //}

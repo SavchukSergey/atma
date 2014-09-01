@@ -82,7 +82,6 @@ namespace Atmega.Asm {
             output.Flush();
             output.Close();
             Console.WriteLine("Unknown: {0}", unknwn);
-            Console.ReadKey();
         }
 
         private static void SaveBin(AsmContext context, string path) {
