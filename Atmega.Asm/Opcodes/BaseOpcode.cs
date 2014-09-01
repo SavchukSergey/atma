@@ -72,9 +72,9 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xff00) == 0x9800) {
                 return new CbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }
-            //if ((bytecode & 0xff00) == 0x9a00) {
-            //    return new SbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
-            //}
+            if ((bytecode & 0xff00) == 0x9a00) {
+                return new SbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
+            }
             //if ((bytecode & 0xfe00) == 0x9200) {
             //    var target = GetIndirectAddress(translation);
             //    return new StOpcode { Register = translation.Destination32, Target = target };
@@ -115,33 +115,33 @@ namespace Atmega.Asm.Opcodes {
             //    }
             //}
 
-            //if ((bytecode & 0xfc00) == 0x0400) {
-            //    return new CpcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x0800) {
-            //    return new SbcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x0c00) {
-            //    return new AddOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x1400) {
-            //    return new CpOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x1800) {
-            //    return new SubOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x2400) {
-            //    return new EorOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x1c00) {
-            //    return new AdcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x2800) {
-            //    return new OrOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfc00) == 0x9c00) {
-            //    return new MulOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            //}
+            if ((bytecode & 0xfc00) == 0x0400) {
+                return new CpcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x0800) {
+                return new SbcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x0c00) {
+                return new AddOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x1400) {
+                return new CpOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x1800) {
+                return new SubOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x2400) {
+                return new EorOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x1c00) {
+                return new AdcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x2800) {
+                return new OrOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x9c00) {
+                return new MulOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
 
             //if ((bytecode & 0xf800) == 0xb800) {
             //    var target = GetRdDestination(bytecode);
@@ -236,6 +236,10 @@ namespace Atmega.Asm.Opcodes {
                 default:
                     return port.ToString();
             }
+        }
+
+        protected static string FormatRegister(byte reg) {
+            return "r" + reg;
         }
 
     }

@@ -5,6 +5,10 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
         public CpOpcode()
             : base("000101rdddddrrrr") {
         }
+
+        public override string ToString() {
+            return string.Format("cp {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+        }
      
     }
 }

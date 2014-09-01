@@ -6,5 +6,9 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
             : base("000010rdddddrrrr") {
         }
 
+        public override string ToString() {
+            return string.Format("sbc {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+        }
+
     }
 }
