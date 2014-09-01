@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
+using Atmega.Asm.Hex;
 using Atmega.Asm.IO;
+using Atmega.Asm.Opcodes;
 
 namespace Atmega.Asm {
     class Program {
@@ -10,7 +13,30 @@ namespace Atmega.Asm {
                 Usage();
                 return;
             }
-            var sourceName = args[0];
+            AtmaArgs atmaArgs;
+            try {
+                atmaArgs = AtmaArgs.Parse(args);
+            } catch {
+                Usage();
+                return;
+            }
+
+            switch (atmaArgs.Action) {
+                case AtmaAction.Assemble:
+                    Assemble(atmaArgs);
+                    break;
+                case AtmaAction.Disassemble:
+                    Disasm(atmaArgs);
+                    break;
+                default:
+                    Usage();
+                    return;
+            }
+
+        }
+
+        static void Assemble(AtmaArgs args) {
+            var sourceName = args.Source;
             var assembler = new Assembler(new FileAsmSource());
             try {
                 var res = assembler.Load(sourceName);
@@ -35,6 +61,30 @@ namespace Atmega.Asm {
             }
         }
 
+        static void Disasm(AtmaArgs args) {
+            var path = args.Source;
+            var output = new StreamWriter(path + ".asm");
+            var file = HexFile.Load(path);
+            var code = file.GetCode();
+            var codeStream = new MemoryStream(code);
+            int unknwn = 0;
+            while (codeStream.Position < codeStream.Length) {
+                var opcode = BaseOpcode.Parse(codeStream);
+                if (opcode is UnknownOpcode) {
+                    unknwn++;
+                }
+                if (opcode != null) {
+                    output.WriteLine(opcode.ToString());
+                } else {
+                    output.WriteLine("unknown");
+                }
+            }
+            output.Flush();
+            output.Close();
+            Console.WriteLine("Unknown: {0}", unknwn);
+            Console.ReadKey();
+        }
+
         private static void SaveBin(AsmContext context, string path) {
             using (var writer = new StreamWriter(path, false)) {
                 foreach (var bt in context.CodeSection.Content) {
@@ -52,5 +102,41 @@ namespace Atmega.Asm {
         private static void Usage() {
             Console.WriteLine("Usage: atma source.asm");
         }
+    }
+
+    public class AtmaArgs {
+
+        public string Source { get; set; }
+
+        public string Destination { get; set; }
+
+        public AtmaAction Action { get; set; }
+
+        public static AtmaArgs Parse(string[] args) {
+            var res = new AtmaArgs();
+            foreach (var arg in args) {
+                if (!arg.StartsWith("-")) {
+                    if (string.IsNullOrWhiteSpace(res.Source)) {
+                        res.Source = arg;
+                    } else if (string.IsNullOrWhiteSpace(res.Destination)) {
+                        res.Destination = arg;
+                    } else {
+                        throw new InvalidOperationException();
+                    }
+                }
+                switch (arg) {
+                    case "-d":
+                        res.Action = AtmaAction.Disassemble;
+                        break;
+                }
+            }
+            return res;
+        }
+
+    }
+
+    public enum AtmaAction {
+        Assemble,
+        Disassemble
     }
 }

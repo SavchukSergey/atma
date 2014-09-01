@@ -211,6 +211,7 @@
     <Compile Include="Opcodes\Move\XchOpcode.cs" />
     <Compile Include="Opcodes\SleepOpcode.cs" />
     <Compile Include="Opcodes\BreakOpcode.cs" />
+    <Compile Include="Opcodes\UnknownOpcode.cs" />
     <Compile Include="Opcodes\WdrOpcode.cs" />
     <Compile Include="Opcodes\NopOpcode.cs" />
     <Compile Include="Opcodes\OpcodeTranslation.cs" />
