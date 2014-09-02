@@ -1,4 +1,4 @@
-﻿namespace Atmega.Asm.Opcodes.Bit {
+﻿namespace Atmega.Asm.Opcodes.Bit.Status {
     public class SeiOpcode : BaseSimpleOpcode {
 
         public SeiOpcode()
