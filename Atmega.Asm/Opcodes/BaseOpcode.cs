@@ -61,6 +61,15 @@ namespace Atmega.Asm.Opcodes {
                 case 0x9508:
                     return new RetOpcode();
             }
+
+            if ((bytecode & 0xff8f) == 0x9408) {
+                return new BsetOpcode { Bit = translation.StatusBitNumber };
+            }
+            if ((bytecode & 0xff8f) == 0x9488) {
+                return new BclrOpcode { Bit = translation.StatusBitNumber };
+            }
+
+
             //if ((bytecode & 0xff00) == 0x9700) {
             //    return new SbiwOpcode { Register = translation.IndirectWordRegister, Value = translation.UImm6 };
             //}
@@ -191,12 +200,6 @@ namespace Atmega.Asm.Opcodes {
             //}
 
 
-            if ((bytecode & 0xff8f) == 0x9408) {
-                return new BsetOpcode { Bit = translation.StatusBitNumber };
-            }
-            if ((bytecode & 0xff8f) == 0x9488) {
-                return new BclrOpcode { Bit = translation.StatusBitNumber };
-            }
 
             return new UnknownOpcode { Opcode = bytecode };
         }
