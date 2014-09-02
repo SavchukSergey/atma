@@ -162,26 +162,21 @@ namespace Atmega.Asm.Opcodes {
             //    return new RcallOpcode { Offset = translation.Offset12 };
             //}
 
-            //if ((bytecode & 0xf000) == 0x3000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    return new CpiOpcode { Register = reg, Value = translation.Imm8 };
-            //}
-            //if ((bytecode & 0xf000) == 0x4000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    return new SbciOpcode { Register = reg, Value = translation.Imm8 };
-            //}
-            //if ((bytecode & 0xf000) == 0x5000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    return new SubiOpcode { Register = reg, Value = translation.Imm8 };
-            //}
-            //if ((bytecode & 0xf000) == 0x6000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    return new OriOpcode { Register = reg, Value = translation.Imm8 };
-            //}
-            //if ((bytecode & 0xf000) == 0x7000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    return new AndiOpcode { Register = reg, Value = translation.Imm8 };
-            //}
+            if ((bytecode & 0xf000) == 0x3000) {
+                return new CpiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
+            if ((bytecode & 0xf000) == 0x4000) {
+                return new SbciOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
+            if ((bytecode & 0xf000) == 0x5000) {
+                return new SubiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
+            if ((bytecode & 0xf000) == 0x6000) {
+                return new OriOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
+            if ((bytecode & 0xf000) == 0x7000) {
+                return new AndiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
             //if ((bytecode & 0xf000) == 0xe000) {
             //    var reg = GetKdDestination(bytecode);
             //    var value = GetKdValue(bytecode);

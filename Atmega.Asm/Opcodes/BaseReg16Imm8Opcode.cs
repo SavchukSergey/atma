@@ -3,20 +3,28 @@
 namespace Atmega.Asm.Opcodes {
     public abstract class BaseReg16Imm8Opcode : BaseOpcode {
 
+        public byte Register { get; set; }
+
+        public byte Value { get; set; }
+
+
         protected BaseReg16Imm8Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var dest = parser.ReadReg16();
-            translation.Destination16 = dest;
+        protected override void Parse(AsmParser parser) {
+            Register = parser.ReadReg16();
             parser.ReadToken(TokenType.Comma);
-            var value = parser.ReadByte();
-            translation.Imm8 = value;
-            output.EmitCode(translation.Opcode);
+            Value = parser.ReadByte();
         }
 
-
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation {
+                Opcode = _opcodeTemplate,
+                Destination16 = Register,
+                Imm8 = Value
+            };
+            output.EmitCode(translation.Opcode);
+        }
     }
 }

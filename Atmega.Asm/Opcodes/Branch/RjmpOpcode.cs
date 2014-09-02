@@ -5,5 +5,9 @@
             : base("1100LLLLLLLLLLLL") {
         }
 
+        public override string ToString() {
+            return string.Format("rjmp {0}", Offset);
+        }
+
     }
 }

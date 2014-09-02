@@ -5,5 +5,8 @@
             : base("1101LLLLLLLLLLLL") {
         }
 
+        public override string ToString() {
+            return string.Format("rcall {0}", Offset);
+        }
     }
 }

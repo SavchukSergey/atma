@@ -5,6 +5,9 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
         public SubiOpcode()
             : base("0101KKKKddddKKKK") {
         }
-     
+
+        public override string ToString() {
+            return string.Format("subi {0}, {1}", FormatRegister(Register), Value);
+        }
     }
 }

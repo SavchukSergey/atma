@@ -2,6 +2,9 @@
 
 namespace Atmega.Asm.Opcodes.Branch {
     public abstract class BaseOffset12Opcode : BaseOpcode {
+
+        public short Offset { get; set; }
+
         protected BaseOffset12Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
@@ -21,5 +24,6 @@ namespace Atmega.Asm.Opcodes.Branch {
             var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Offset12 = (short)delta };
             output.EmitCode(translation.Opcode);
         }
+
     }
 }
