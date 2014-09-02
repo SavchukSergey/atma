@@ -5,6 +5,7 @@ using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Branch;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;
+using Microsoft.Win32.SafeHandles;
 
 namespace Atmega.Asm.Opcodes {
     public abstract class BaseOpcode {
@@ -188,6 +189,15 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xd200) == 0x8200) {
             //    return new StdOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Offset = translation.YZOffset };
             //}
+
+
+            if ((bytecode & 0xff8f) == 0x9408) {
+                return new BsetOpcode { Bit = translation.StatusBitNumber };
+            }
+            if ((bytecode & 0xff8f) == 0x9488) {
+                return new BclrOpcode { Bit = translation.StatusBitNumber };
+            }
+
             return new UnknownOpcode { Opcode = bytecode };
         }
 
@@ -228,6 +238,14 @@ namespace Atmega.Asm.Opcodes {
                 default:
                     return port.ToString(CultureInfo.InvariantCulture);
             }
+        }
+
+        protected string FormatPortBit(byte port, byte bit) {
+            return bit.ToString();
+        }
+
+        protected string FormatStatusBit(byte bit) {
+            return bit.ToString();
         }
 
         protected static string FormatRegister(byte reg) {
