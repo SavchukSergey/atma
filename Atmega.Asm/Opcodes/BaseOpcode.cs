@@ -95,7 +95,7 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xfe0e) == 0x9004) {
             //    return new LpmOpcode { Register = translation.Destination32, Increment = translation.Increment };
             //}
-            if ((bytecode & 0xfe0e) == 0x9004) {
+            if ((bytecode & 0xffef) == 0x95e8) {
                 return new SpmOpcode { PostIncrement = translation.SpmIncrement };
             }
             //if ((bytecode & 0xfe0f) == 0x9000) {
