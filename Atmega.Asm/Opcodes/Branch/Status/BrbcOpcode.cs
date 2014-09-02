@@ -13,5 +13,8 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
             ParseOffset(parser);
         }
 
+        protected override string OpcodeName {
+            get { return "brbc"; }
+        }
     }
 }

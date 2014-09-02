@@ -1,9 +1,9 @@
 ﻿namespace Atmega.Asm.Opcodes.Branch.Status {
-    public class BaseStatusBitSetBranchOpcode : BrbsOpcode {
+    public abstract class BaseStatusBitSetBranchOpcode : BrbsOpcode {
 
         private readonly byte _bit;
 
-        public BaseStatusBitSetBranchOpcode(byte bit) {
+        protected BaseStatusBitSetBranchOpcode(byte bit) {
             _bit = bit;
         }
 
@@ -11,6 +11,24 @@
 
         protected override void Parse(AsmParser parser) {
             ParseOffset(parser);
+        }
+
+        public static new BrbsOpcode FromOpcode(ushort opcode) {
+            var translation = new OpcodeTranslation { Opcode = opcode };
+            var bit = translation.BitNumber;
+            var delta = translation.Offset7;
+            switch (bit) {
+                case 0: return new BrcsOpcode { Delta = delta };
+                case 1: return new BreqOpcode { Delta = delta };
+                case 2: return new BrmiOpcode { Delta = delta };
+                case 3: return new BrvsOpcode { Delta = delta };
+                case 4: return new BrltOpcode { Delta = delta };
+                case 5: return new BrhsOpcode { Delta = delta };
+                case 6: return new BrtsOpcode { Delta = delta };
+                case 7: return new BrieOpcode { Delta = delta };
+                default:
+                    return new BrbsOpcode { Bit = bit, Delta = delta };
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Bit.Status;
 using Atmega.Asm.Opcodes.Branch;
+using Atmega.Asm.Opcodes.Branch.Status;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;
 
@@ -158,9 +159,9 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xf800) == 0xb000) {
                 return new InOpcode { Port = translation.Port64, Register = translation.Destination32 };
             }
-            //if ((bytecode & 0xf800) == 0xf000) {
-            //    return GetBranchOpcode(translation);
-            //}
+            if ((bytecode & 0xf800) == 0xf000) {
+                return BaseStatusBitOffset7Opcode.FromOpcode(bytecode);
+            }
 
             //if ((bytecode & 0xf000) == 0xc000) {
             //    return new RjmpOpcode { Offset = translation.Offset12 };

@@ -31,5 +31,26 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
 
             Delta = (short)delta;
         }
+
+        protected abstract string OpcodeName { get; }
+
+        protected string FormatOffset() {
+            var delta = (Delta - 1) * 2;
+            if (delta == 0) return "$";
+            if (delta < 0) return "$" + delta;
+            return "$+" + delta;
+        }
+
+        public override string ToString() {
+            return string.Format("{0} {1}", OpcodeName, FormatOffset());
+        }
+
+
+        public static BaseStatusBitOffset7Opcode FromOpcode(ushort opcode) {
+            var clr = (opcode & 0x0400) > 0;
+            if (clr) return BaseStatusBitClearBranchOpcode.FromOpcode(opcode);
+            return BaseStatusBitSetBranchOpcode.FromOpcode(opcode);
+        }
+
     }
 }
