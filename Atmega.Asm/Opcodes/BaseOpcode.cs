@@ -144,6 +144,10 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xfc00) == 0x2800) {
                 return new OrOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
+            if ((bytecode & 0xfc00) == 0x2c00) {
+                return new MovOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+
             if ((bytecode & 0xfc00) == 0x9c00) {
                 return new MulOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
