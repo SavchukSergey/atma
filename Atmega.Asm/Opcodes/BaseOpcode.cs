@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Branch;
@@ -225,7 +226,7 @@ namespace Atmega.Asm.Opcodes {
                 case 63:
                     return "SREG";
                 default:
-                    return port.ToString();
+                    return port.ToString(CultureInfo.InvariantCulture);
             }
         }
 

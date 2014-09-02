@@ -5,8 +5,9 @@
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
+        protected override void Compile(AsmSection output) {
             output.EmitCode(_opcodeTemplate);
         }
+
     }
 }

@@ -5,10 +5,17 @@
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var value = parser.ReadBit();
-            translation.StatusBitNumber = value;
+        public byte Bit { get; set; }
+
+        protected override void Parse(AsmParser parser) {
+            Bit = parser.ReadBit();
+        }
+
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation {
+                Opcode = _opcodeTemplate,
+                StatusBitNumber = Bit
+            };
             output.EmitCode(translation.Opcode);
         }
     }
