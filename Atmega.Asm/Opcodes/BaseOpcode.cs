@@ -6,7 +6,6 @@ using Atmega.Asm.Opcodes.Bit.Status;
 using Atmega.Asm.Opcodes.Branch;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;
-using Microsoft.Win32.SafeHandles;
 
 namespace Atmega.Asm.Opcodes {
     public abstract class BaseOpcode {
@@ -124,17 +123,23 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xfc00) == 0x0c00) {
                 return new AddOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
+            if ((bytecode & 0xfc00) == 0x1000) {
+                return new CpseOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
             if ((bytecode & 0xfc00) == 0x1400) {
                 return new CpOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
             if ((bytecode & 0xfc00) == 0x1800) {
                 return new SubOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
-            if ((bytecode & 0xfc00) == 0x2400) {
-                return new EorOpcode { Register = translation.Register32, Destination = translation.Destination32 };
-            }
             if ((bytecode & 0xfc00) == 0x1c00) {
                 return new AdcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x2000) {
+                return new AndOpcode { Register = translation.Register32, Destination = translation.Destination32 };
+            }
+            if ((bytecode & 0xfc00) == 0x2400) {
+                return new EorOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
             if ((bytecode & 0xfc00) == 0x2800) {
                 return new OrOpcode { Register = translation.Register32, Destination = translation.Destination32 };

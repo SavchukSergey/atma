@@ -5,6 +5,10 @@ namespace Atmega.Asm.Opcodes.Logic {
         public AndOpcode()
             : base("001000rdddddrrrr") {
         }
-     
+
+        public override string ToString() {
+            if (Register == Destination) return string.Format("tst {0}", FormatRegister(Register));
+            return string.Format("and {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+        }
     }
 }

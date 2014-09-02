@@ -37,3 +37,29 @@ WDT_off:
 	ldi r16, (0<<WDE)
 	out WDTCR, r16
 	ret
+
+USART_Transmit:
+	; Wait for empty transmit buffer
+	sbis UCSRA,UDRE
+	rjmp USART_Transmit
+	; Copy ninth bit from r17 to TXB8
+	cbi UCSRB,TXB8
+	sbrc r17,0
+	sbi UCSRB,TXB8
+	; Put LSB data (r16) into buffer, sends the data
+	out UDR,r16
+ret
+
+USART_Receive:
+	; Wait for data to be received
+	sbis UCSRA, RXC
+	rjmp USART_Receive
+	; Get and return received data from buffer
+	in r16, UDR
+	ret
+
+USART_Flush:
+	sbis UCSRA, RXC
+	ret
+	in r16, UDR
+	rjmp USART_Flush
