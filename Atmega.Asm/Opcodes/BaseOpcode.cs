@@ -105,15 +105,15 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xfe0f) == 0x900f) {
             //    return new PopOpcode { Register = translation.Destination32 };
             //}
-            //if ((bytecode & 0xfe00) == 0x9400) {
-            //    var subop = bytecode & 0xf;
-            //    switch (subop) {
-            //        case 0x03:
-            //            return new IncOpcode { Register = GetRdDestination(bytecode) };
-            //        case 0x0a:
-            //            return new DecOpcode { Register = GetRdDestination(bytecode) };
-            //    }
-            //}
+            if ((bytecode & 0xfe00) == 0x9400) {
+                var subop = bytecode & 0xf;
+                switch (subop) {
+                    case 0x03:
+                        return new IncOpcode { Register = translation.Destination32 };
+                    case 0x0a:
+                        return new DecOpcode { Register = translation.Destination32 };
+                }
+            }
 
             if ((bytecode & 0xfc00) == 0x0400) {
                 return new CpcOpcode { Register = translation.Register32, Destination = translation.Destination32 };
