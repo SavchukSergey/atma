@@ -99,12 +99,12 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xfe0f) == 0x9000) {
             //    return new LdsOpcode { Register = translation.Destination32, Address = ReadUShort(stream) };
             //}
-            //if ((bytecode & 0xfe0f) == 0x920f) {
-            //    return new PushOpcode { Register = translation.Destination32 };
-            //}
-            //if ((bytecode & 0xfe0f) == 0x900f) {
-            //    return new PopOpcode { Register = translation.Destination32 };
-            //}
+            if ((bytecode & 0xfe0f) == 0x920f) {
+                return new PushOpcode { Register = translation.Destination32 };
+            }
+            if ((bytecode & 0xfe0f) == 0x900f) {
+                return new PopOpcode { Register = translation.Destination32 };
+            }
             if ((bytecode & 0xfe00) == 0x9400) {
                 var subop = bytecode & 0xf;
                 switch (subop) {
