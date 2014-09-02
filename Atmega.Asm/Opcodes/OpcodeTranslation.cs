@@ -230,6 +230,14 @@
             }
         }
 
+        public bool SpmIncrement {
+            get { return (Opcode & 0x10) > 0; }
+            set {
+                Opcode &= 0xffef;
+                if (value) Opcode |= 0x10;
+            }
+        }
+
         public byte Displacement {
             get {
                 var offset = 0;

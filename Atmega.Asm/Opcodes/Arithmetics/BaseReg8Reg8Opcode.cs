@@ -2,6 +2,7 @@
 
 namespace Atmega.Asm.Opcodes.Arithmetics {
     public class BaseReg8Reg8Opcode : BaseOpcode {
+       
         public BaseReg8Reg8Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }

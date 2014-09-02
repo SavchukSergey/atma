@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
 using Atmega.Asm.Opcodes.Branch;
@@ -96,6 +95,9 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xfe0e) == 0x9004) {
             //    return new LpmOpcode { Register = translation.Destination32, Increment = translation.Increment };
             //}
+            if ((bytecode & 0xfe0e) == 0x9004) {
+                return new SpmOpcode { PostIncrement = translation.SpmIncrement };
+            }
             //if ((bytecode & 0xfe0f) == 0x9000) {
             //    return new LdsOpcode { Register = translation.Destination32, Address = ReadUShort(stream) };
             //}

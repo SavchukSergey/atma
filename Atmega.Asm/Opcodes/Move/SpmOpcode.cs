@@ -3,22 +3,34 @@
 namespace Atmega.Asm.Opcodes.Move {
     public class SpmOpcode : BaseOpcode {
 
-        private static readonly ushort _postIncrementTemplate = ParseOpcodeTemplate("1001010111111000");
+        public bool PostIncrement { get; set; }
 
         public SpmOpcode()
             : base("1001010111101000") {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
+        protected override void Parse(AsmParser parser) {
             if (parser.IsEndOfLine) {
-                output.EmitCode(_opcodeTemplate);
+                PostIncrement = false;
             } else {
                 var zReg = parser.ReadToken(TokenType.Literal);
                 if (zReg.StringValue.ToLower() != "z") throw new TokenException("Z+ expected", zReg);
                 parser.ReadToken(TokenType.Plus);
-                output.EmitCode(_postIncrementTemplate);
+                PostIncrement = true;
             }
         }
 
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation {
+                Opcode = _opcodeTemplate,
+                SpmIncrement = PostIncrement
+            };
+            output.EmitCode(translation.Opcode);
+        }
+
+        public override string ToString() {
+            if (PostIncrement) return "spm z+";
+            return "spm";
+        }
     }
 }
