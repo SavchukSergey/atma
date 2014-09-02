@@ -2,16 +2,27 @@
 
 namespace Atmega.Asm.Opcodes {
     public class BaseReg32BitOpcode : BaseOpcode {
+
+        public byte Register { get; set; }
+
+        public byte Bit { get; set; }
+
         public BaseReg32BitOpcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var dest = parser.ReadReg32();
+        protected override void Parse(AsmParser parser) {
+            Register = parser.ReadReg32();
             parser.ReadToken(TokenType.Comma);
-            var value = parser.ReadBit();
+            Bit = parser.ReadBit();
+        }
 
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Destination32 = dest, BitNumber = value };
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation {
+                Opcode = _opcodeTemplate,
+                Destination32 = Register,
+                BitNumber = Bit
+            };
             output.EmitCode(translation.Opcode);
         }
     }

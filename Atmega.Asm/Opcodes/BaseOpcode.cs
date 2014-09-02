@@ -80,12 +80,12 @@ namespace Atmega.Asm.Opcodes {
             //    return new StOpcode { Register = translation.Destination32, Target = target };
             //}
 
-            //if ((bytecode & 0xfe08) == 0xf800) {
-            //    return new BldOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
-            //}
-            //if ((bytecode & 0xfe08) == 0xfa00) {
-            //    return new BstOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
-            //}
+            if ((bytecode & 0xfe08) == 0xf800) {
+                return new BldOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
+            }
+            if ((bytecode & 0xfe08) == 0xfa00) {
+                return new BstOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
+            }
             //if ((bytecode & 0xfe08) == 0xfc00) {
             //    return new SbrcOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
             //}
