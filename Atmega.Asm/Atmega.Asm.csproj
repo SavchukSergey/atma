@@ -103,8 +103,8 @@
     <Compile Include="Opcodes\Bit\Status\BaseSetStatusBitOpcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset12Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset22Opcode.cs" />
-    <Compile Include="Opcodes\Branch\Status\BaseStatusBitOffset7.cs" />
-    <Compile Include="Opcodes\Branch\Status\BaseOffset7Opcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BaseStatusBitClearBranchOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BaseStatusBitOffset7Opcode.cs" />
     <Compile Include="Opcodes\BaseOpcode.cs" />
     <Compile Include="Opcodes\BaseReg16Imm8Opcode.cs" />
     <Compile Include="Opcodes\BasePort64Reg32Opcode.cs" />
@@ -179,6 +179,7 @@
     <Compile Include="Opcodes\Branch\Status\BrshOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BrneOpcode.cs" />
     <Compile Include="Opcodes\Branch\Status\BreqOpcode.cs" />
+    <Compile Include="Opcodes\Branch\Status\BaseStatusBitSetBranchOpcode.cs" />
     <Compile Include="Opcodes\Logic\TstOpcode.cs" />
     <Compile Include="Opcodes\Logic\SerOpcode.cs" />
     <Compile Include="Opcodes\Logic\ClrOpcode.cs" />

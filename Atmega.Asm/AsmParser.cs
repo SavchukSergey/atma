@@ -20,6 +20,10 @@ namespace Atmega.Asm {
             get { return _context.Queue.LastReadToken; }
         }
 
+        public int CurrentOffset {
+            get { return _context.CurrentSection.Offset; }
+        }
+
         public byte ReadRegW24() {
             var reg = ReadRegister();
             if (reg != 24 && reg != 26 && reg != 28 && reg != 30) {

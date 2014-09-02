@@ -1,8 +1,8 @@
 ﻿namespace Atmega.Asm.Opcodes.Branch.Status {
-    public class BrcsOpcode : BaseOffset7Opcode {
+    public class BrcsOpcode : BaseStatusBitSetBranchOpcode {
 
         public BrcsOpcode()
-            : base("111100lllllll000") {
+            : base(0) {
         }
 
     }
