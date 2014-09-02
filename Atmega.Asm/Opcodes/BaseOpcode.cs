@@ -2,6 +2,7 @@
 using System.IO;
 using Atmega.Asm.Opcodes.Arithmetics;
 using Atmega.Asm.Opcodes.Bit;
+using Atmega.Asm.Opcodes.Bit.Status;
 using Atmega.Asm.Opcodes.Branch;
 using Atmega.Asm.Opcodes.Logic;
 using Atmega.Asm.Opcodes.Move;

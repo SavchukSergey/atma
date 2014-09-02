@@ -115,8 +115,8 @@
     <Compile Include="Opcodes\BaseReg32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\BaseStatusBitOpcode.cs" />
     <Compile Include="Opcodes\BasePort32BitOpcode.cs" />
-    <Compile Include="Opcodes\Bit\BsetOpcode.cs" />
-    <Compile Include="Opcodes\Bit\BclrOpcode.cs" />
+    <Compile Include="Opcodes\Bit\Status\BsetOpcode.cs" />
+    <Compile Include="Opcodes\Bit\Status\BclrOpcode.cs" />
     <Compile Include="Opcodes\Bit\BldOpcode.cs" />
     <Compile Include="Opcodes\Bit\BstOpcode.cs" />
     <Compile Include="Opcodes\Bit\AsrOpcode.cs" />
@@ -248,6 +248,7 @@
       <Name>Atmega</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
