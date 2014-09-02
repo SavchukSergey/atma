@@ -48,26 +48,12 @@ namespace Atmega.Asm.Opcodes {
             switch (bytecode) {
                 case 0x0000:
                     return new NopOpcode();
-
-                case 0x9468:
-                    return new SetOpcode();
-                case 0x94e8:
-                    return new CltOpcode();
-
-                case 0x9478:
-                    return new SeiOpcode();
-                case 0x94f8:
-                    return new CliOpcode();
-
                 case 0x9508:
                     return new RetOpcode();
             }
 
-            if ((bytecode & 0xff8f) == 0x9408) {
-                return new BsetOpcode { Bit = translation.StatusBitNumber };
-            }
-            if ((bytecode & 0xff8f) == 0x9488) {
-                return new BclrOpcode { Bit = translation.StatusBitNumber };
+            if ((bytecode & 0xff0f) == 0x9408) {
+                return BaseStatusBitOpcode.FromOpcode(bytecode);
             }
 
 

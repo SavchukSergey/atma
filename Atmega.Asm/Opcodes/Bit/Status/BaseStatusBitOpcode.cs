@@ -18,5 +18,11 @@
             };
             output.EmitCode(translation.Opcode);
         }
+
+        public static BaseStatusBitOpcode FromOpcode(ushort opcode) {
+            var clr = (opcode & 0x0080) > 0;
+            if (clr) return BaseClearStatusBitOpcode.FromOpcode(opcode);
+            return BaseSetStatusBitOpcode.FromOpcode(opcode);
+        }
     }
 }
