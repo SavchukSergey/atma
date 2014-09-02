@@ -113,7 +113,7 @@
     <Compile Include="Opcodes\BaseReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32Reg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg32BitOpcode.cs" />
-    <Compile Include="Opcodes\Bit\BaseStatusBitOpcode.cs" />
+    <Compile Include="Opcodes\Bit\Status\BaseStatusBitOpcode.cs" />
     <Compile Include="Opcodes\BasePort32BitOpcode.cs" />
     <Compile Include="Opcodes\Bit\Status\BsetOpcode.cs" />
     <Compile Include="Opcodes\Bit\Status\BclrOpcode.cs" />

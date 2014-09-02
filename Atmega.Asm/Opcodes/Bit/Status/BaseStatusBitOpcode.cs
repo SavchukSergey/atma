@@ -1,11 +1,11 @@
-﻿namespace Atmega.Asm.Opcodes.Bit {
+﻿namespace Atmega.Asm.Opcodes.Bit.Status {
     public abstract class BaseStatusBitOpcode : BaseOpcode {
 
         protected BaseStatusBitOpcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public byte Bit { get; set; }
+        public virtual byte Bit { get; set; }
 
         protected override void Parse(AsmParser parser) {
             Bit = parser.ReadBit();
