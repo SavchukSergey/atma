@@ -99,6 +99,8 @@
     <Compile Include="Opcodes\BaseZReg32Opcode.cs" />
     <Compile Include="Opcodes\BaseReg16ComplementImm8Opcode.cs" />
     <Compile Include="Opcodes\BaseReg16Reg16Opcode.cs" />
+    <Compile Include="Opcodes\Bit\Status\BaseClearStatusBitOpcode.cs" />
+    <Compile Include="Opcodes\Bit\Status\BaseSetStatusBitOpcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset12Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseOffset22Opcode.cs" />
     <Compile Include="Opcodes\Branch\BaseStatusBitOffset7.cs" />

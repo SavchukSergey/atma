@@ -1,12 +1,9 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class CltOpcode : BaseSimpleOpcode {
+    public class CltOpcode : BaseClearStatusBitOpcode {
 
         public CltOpcode()
-            : base("1001010011101000") {
+            : base(6) {
         }
 
-        public override string ToString() {
-            return "clt";
-        }
     }
 }

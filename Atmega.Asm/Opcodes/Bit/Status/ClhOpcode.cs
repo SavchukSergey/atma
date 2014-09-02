@@ -1,8 +1,8 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class ClhOpcode : BaseSimpleOpcode {
+    public class ClhOpcode : BaseClearStatusBitOpcode {
 
         public ClhOpcode()
-            : base("1001010011011000") {
+            : base(5) {
         }
 
     }

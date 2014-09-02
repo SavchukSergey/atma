@@ -1,12 +1,9 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class CliOpcode : BaseSimpleOpcode {
+    public class CliOpcode : BaseClearStatusBitOpcode {
 
         public CliOpcode()
-            : base("1001010011111000") {
+            : base(7) {
         }
 
-        public override string ToString() {
-            return "cli";
-        }
     }
 }

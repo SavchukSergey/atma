@@ -1,14 +1,9 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class SeiOpcode : BaseSimpleOpcode {
+    public class SeiOpcode : BaseSetStatusBitOpcode {
 
         public SeiOpcode()
-            : base("1001010001111000") {
+            : base(7) {
         }
-
-        public override string ToString() {
-            return "sei";
-        }
-
 
     }
 }

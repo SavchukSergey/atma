@@ -1,8 +1,8 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class SenOpcode : BaseSimpleOpcode {
+    public class SenOpcode : BaseSetStatusBitOpcode {
 
         public SenOpcode()
-            : base("1001010000101000") {
+            : base(2) {
         }
 
     }

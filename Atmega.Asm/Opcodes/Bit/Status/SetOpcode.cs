@@ -1,12 +1,9 @@
 ﻿namespace Atmega.Asm.Opcodes.Bit.Status {
-    public class SetOpcode : BaseSimpleOpcode {
+    public class SetOpcode : BaseSetStatusBitOpcode {
 
         public SetOpcode()
-            : base("1001010001101000") {
+            : base(6) {
         }
 
-        public override string ToString() {
-            return "set";
-        }
     }
 }
