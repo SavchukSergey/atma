@@ -5,6 +5,9 @@ namespace Atmega.Asm.Opcodes.Move {
         public LdiOpcode()
             : base("1110KKKKddddKKKK") {
         }
-     
+
+        public override string ToString() {
+            return string.Format("ldi {0}, {1}", FormatRegister(Register), Value);
+        }
     }
 }

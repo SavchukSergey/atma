@@ -3,19 +3,27 @@
 namespace Atmega.Asm.Opcodes {
     public abstract class BasePort64Reg32Opcode : BaseOpcode {
 
+        public byte Port { get; set; }
+
+        public byte Register { get; set; }
+
         protected BasePort64Reg32Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate };
-            var value = parser.ReadPort64();
-            translation.Port64 = value;
+        protected override void Parse(AsmParser parser) {
+            Port = parser.ReadPort64();
             parser.ReadToken(TokenType.Comma);
-            var dest = parser.ReadReg32();
-            translation.Destination32 = dest;
-            output.EmitCode(translation.Opcode);
+            Register = parser.ReadReg32();
         }
 
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation {
+                Opcode = _opcodeTemplate,
+                Port64 = Port,
+                Destination32 = Register
+            };
+            output.EmitCode(translation.Opcode);
+        }
     }
 }

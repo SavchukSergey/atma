@@ -143,14 +143,12 @@ namespace Atmega.Asm.Opcodes {
                 return new MulOpcode { Register = translation.Register32, Destination = translation.Destination32 };
             }
 
-            //if ((bytecode & 0xf800) == 0xb800) {
-            //    var target = GetRdDestination(bytecode);
-            //    return new OutOpcode { Port = translation.Port64, Register = target };
-            //}
-            //if ((bytecode & 0xf800) == 0xb000) {
-            //    var target = GetRdDestination(bytecode);
-            //    return new InOpcode { Port = translation.Port64, Register = target };
-            //}
+            if ((bytecode & 0xf800) == 0xb800) {
+                return new OutOpcode { Port = translation.Port64, Register = translation.Destination32 };
+            }
+            if ((bytecode & 0xf800) == 0xb000) {
+                return new InOpcode { Port = translation.Port64, Register = translation.Destination32 };
+            }
             //if ((bytecode & 0xf800) == 0xf000) {
             //    return GetBranchOpcode(translation);
             //}
@@ -177,13 +175,9 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xf000) == 0x7000) {
                 return new AndiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
             }
-            //if ((bytecode & 0xf000) == 0xe000) {
-            //    var reg = GetKdDestination(bytecode);
-            //    var value = GetKdValue(bytecode);
-            //    if (value != 255) {
-            //        return new LdiOpcode { Register = reg, Value = translation.Imm8 };
-            //    }
-            //}
+            if ((bytecode & 0xf000) == 0xe000) {
+                return new LdiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
+            }
 
             //if ((bytecode & 0xd200) == 0x8000) {
             //    return new LddOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Offset = translation.YZOffset };
