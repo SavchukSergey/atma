@@ -5,7 +5,7 @@ namespace Atmega.Asm.Opcodes {
 
         public byte Register { get; set; }
 
-        public byte Value { get; set; }
+        public virtual byte Value { get; set; }
 
 
         protected BaseReg16Imm8Opcode(string opcodeTemplate)

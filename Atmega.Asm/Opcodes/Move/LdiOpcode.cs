@@ -7,6 +7,9 @@ namespace Atmega.Asm.Opcodes.Move {
         }
 
         public override string ToString() {
+            if (Value == 255) {
+                return string.Format("ser {0}", FormatRegister(Register));
+            }
             return string.Format("ldi {0}, {1}", FormatRegister(Register), Value);
         }
     }
