@@ -5,5 +5,9 @@
             : base("1111111rrrrr0sss") {
         }
 
+        public override string ToString() {
+            return string.Format("sbrs {0}, {1}", FormatRegister(Register), Bit);
+        }
+
     }
 }
