@@ -50,6 +50,8 @@ namespace Atmega.Asm.Opcodes {
                     return new NopOpcode();
                 case 0x9508:
                     return new RetOpcode();
+                case 0x9518:
+                    return new RetiOpcode();
                 case 0x95a8:
                     return new WdrOpcode();
             }
@@ -120,6 +122,8 @@ namespace Atmega.Asm.Opcodes {
                         return new ComOpcode { Register = translation.Destination32 };
                     case 0x03:
                         return new IncOpcode { Register = translation.Destination32 };
+                    case 0x06:
+                        return new LsrOpcode { Register = translation.Destination32 };
                     case 0x0a:
                         return new DecOpcode { Register = translation.Destination32 };
                 }

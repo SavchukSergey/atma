@@ -5,5 +5,9 @@
             : base("1001010100011000") {
         }
 
+        public override string ToString() {
+            return "reti";
+        }
+
     }
 }
