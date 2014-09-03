@@ -120,10 +120,16 @@ namespace Atmega.Asm.Opcodes {
                 switch (subop) {
                     case 0x00:
                         return new ComOpcode { Register = translation.Destination32 };
+                    case 0x01:
+                        return new NegOpcode { Register = translation.Destination32 };
                     case 0x03:
                         return new IncOpcode { Register = translation.Destination32 };
+                    case 0x05:
+                        return new AsrOpcode { Register = translation.Destination32 };
                     case 0x06:
                         return new LsrOpcode { Register = translation.Destination32 };
+                    case 0x07:
+                        return new RorOpcode { Register = translation.Destination32 };
                     case 0x0a:
                         return new DecOpcode { Register = translation.Destination32 };
                 }

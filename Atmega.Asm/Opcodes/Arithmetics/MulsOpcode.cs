@@ -6,5 +6,8 @@ namespace Atmega.Asm.Opcodes.Arithmetics {
             : base("00000010ddddrrrr") {
         }
 
+        public override string ToString() {
+            return string.Format("muls {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+        }
     }
 }
