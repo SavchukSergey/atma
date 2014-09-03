@@ -57,12 +57,12 @@ namespace Atmega.Asm.Opcodes {
             }
 
 
-            //if ((bytecode & 0xff00) == 0x9700) {
-            //    return new SbiwOpcode { Register = translation.IndirectWordRegister, Value = translation.UImm6 };
-            //}
-            //if ((bytecode & 0xff00) == 0x9600) {
-            //    return new AdiwOpcode { Register = translation.IndirectWordRegister, Value = translation.UImm6 };
-            //}
+            if ((bytecode & 0xff00) == 0x9700) {
+                return new SbiwOpcode { Register = translation.RegW24, Value = translation.Imm6 };
+            }
+            if ((bytecode & 0xff00) == 0x9600) {
+                return new AdiwOpcode { Register = translation.RegW24, Value = translation.Imm6 };
+            }
             if ((bytecode & 0xff00) == 0x0100) {
                 return new MovwOpcode { Register = translation.Register16Word, Destination = translation.Destination16Word };
             }
@@ -108,6 +108,8 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xfe00) == 0x9400) {
                 var subop = bytecode & 0xf;
                 switch (subop) {
+                    case 0x00:
+                        return new ComOpcode { Register = translation.Destination32 };
                     case 0x03:
                         return new IncOpcode { Register = translation.Destination32 };
                     case 0x0a:
