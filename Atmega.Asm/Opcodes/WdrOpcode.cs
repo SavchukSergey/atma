@@ -5,5 +5,8 @@
             : base("1001010110101000") {
         }
 
+        public override string ToString() {
+            return "wdr";
+        }
     }
 }

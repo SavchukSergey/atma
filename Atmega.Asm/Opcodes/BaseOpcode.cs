@@ -50,6 +50,8 @@ namespace Atmega.Asm.Opcodes {
                     return new NopOpcode();
                 case 0x9508:
                     return new RetOpcode();
+                case 0x95a8:
+                    return new WdrOpcode();
             }
 
             if ((bytecode & 0xff0f) == 0x9408) {
@@ -71,6 +73,12 @@ namespace Atmega.Asm.Opcodes {
             }
             if ((bytecode & 0xff00) == 0x9a00) {
                 return new SbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
+            }
+            if ((bytecode & 0xff00) == 0x9b00) {
+                return new SbisOpcode { Port = translation.Port32, Bit = translation.BitNumber };
+            }
+            if ((bytecode & 0xff00) == 0x9900) {
+                return new SbicOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }
             //if ((bytecode & 0xfe00) == 0x9200) {
             //    var target = GetIndirectAddress(translation);
