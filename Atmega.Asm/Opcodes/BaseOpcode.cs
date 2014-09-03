@@ -63,9 +63,9 @@ namespace Atmega.Asm.Opcodes {
             //if ((bytecode & 0xff00) == 0x9600) {
             //    return new AdiwOpcode { Register = translation.IndirectWordRegister, Value = translation.UImm6 };
             //}
-            //if ((bytecode & 0xff00) == 0x0100) {
-            //    return new MovwOpcode { Source = translation.SourceWordRegister, Destination = translation.DestinationWordRegister };
-            //}
+            if ((bytecode & 0xff00) == 0x0100) {
+                return new MovwOpcode { Register = translation.Register16Word, Destination = translation.Destination16Word };
+            }
             if ((bytecode & 0xff00) == 0x9800) {
                 return new CbiOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }

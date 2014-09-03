@@ -3,22 +3,32 @@
 namespace Atmega.Asm.Opcodes.Move {
     public class MovwOpcode : BaseOpcode {
 
+        public byte Destination { get; set; }
+
+        public byte Register { get; set; }
+
         public MovwOpcode()
             : base("00000001ddddrrrr") {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var target = parser.ReadWordReg();
+        protected override void Parse(AsmParser parser) {
+            Destination = parser.ReadWordReg();
             parser.ReadToken(TokenType.Comma);
-            var source = parser.ReadWordReg();
+            Register = parser.ReadWordReg();
 
+        }
+
+        protected override void Compile(AsmSection output) {
             var translation = new OpcodeTranslation {
                 Opcode = _opcodeTemplate,
-                Destination16Word = target,
-                Register16Word = source
+                Destination16Word = Destination,
+                Register16Word = Register
             };
             output.EmitCode(translation.Opcode);
         }
 
+        public override string ToString() {
+            return string.Format("movw {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+        }
     }
 }
