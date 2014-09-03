@@ -35,10 +35,7 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
         protected abstract string OpcodeName { get; }
 
         protected string FormatOffset() {
-            var delta = (Delta - 1) * 2;
-            if (delta == 0) return "$";
-            if (delta < 0) return "$" + delta;
-            return "$+" + delta;
+            return FormatOffset(Delta, 1);
         }
 
         public override string ToString() {

@@ -6,7 +6,7 @@
         }
 
         public override string ToString() {
-            return string.Format("rjmp {0}", Offset);
+            return string.Format("rjmp {0}", FormatOffset(Delta, 1));
         }
 
     }

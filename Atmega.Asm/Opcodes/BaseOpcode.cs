@@ -163,12 +163,12 @@ namespace Atmega.Asm.Opcodes {
                 return BaseStatusBitOffset7Opcode.FromOpcode(bytecode);
             }
 
-            //if ((bytecode & 0xf000) == 0xc000) {
-            //    return new RjmpOpcode { Offset = translation.Offset12 };
-            //}
-            //if ((bytecode & 0xf000) == 0xd000) {
-            //    return new RcallOpcode { Offset = translation.Offset12 };
-            //}
+            if ((bytecode & 0xf000) == 0xc000) {
+                return new RjmpOpcode { Delta = translation.Offset12 };
+            }
+            if ((bytecode & 0xf000) == 0xd000) {
+                return new RcallOpcode { Delta = translation.Offset12 };
+            }
 
             if ((bytecode & 0xf000) == 0x3000) {
                 return new CpiOpcode { Register = translation.Destination16, Value = translation.Imm8 };
@@ -190,10 +190,10 @@ namespace Atmega.Asm.Opcodes {
             }
 
             //if ((bytecode & 0xd200) == 0x8000) {
-            //    return new LddOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Offset = translation.YZOffset };
+            //    return new LddOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Delta = translation.YZOffset };
             //}
             //if ((bytecode & 0xd200) == 0x8200) {
-            //    return new StdOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Offset = translation.YZOffset };
+            //    return new StdOpCode { Register = translation.Destination32, BaseRegister = translation.YZSelector, Delta = translation.YZOffset };
             //}
 
 
@@ -251,6 +251,14 @@ namespace Atmega.Asm.Opcodes {
         protected static string FormatRegister(byte reg) {
             return "r" + reg;
         }
+
+        protected string FormatOffset(int delta, int commandSize) {
+            var d = (delta + commandSize) * 2;
+            if (d == 0) return "$";
+            if (d < 0) return "$" + d;
+            return "$+" + d;
+        }
+
 
     }
 }

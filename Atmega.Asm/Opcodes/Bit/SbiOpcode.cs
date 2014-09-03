@@ -6,7 +6,7 @@
         }
 
         public override string ToString() {
-            return string.Format("sbi {0}, {1}", FormatPort(Port), Bit);
+            return string.Format("sbi {0}, {1}", FormatPort(Port), FormatPortBit(Port, Bit));
         }
     }
 }
