@@ -82,10 +82,13 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xff00) == 0x9900) {
                 return new SbicOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }
-            //if ((bytecode & 0xfe00) == 0x9200) {
-            //    var target = GetIndirectAddress(translation);
-            //    return new StOpcode { Register = translation.Destination32, Target = target };
-            //}
+            
+            if ((bytecode & 0xee0c) == 0x8200) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xee0c) == 0x8000) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
 
             if ((bytecode & 0xfe08) == 0xf800) {
                 return new BldOpcode { Register = translation.Destination32, Bit = translation.BitNumber };

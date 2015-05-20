@@ -254,6 +254,29 @@
             }
         }
 
+        public IndirectOperand IndirectOperand {
+            get {
+                return new IndirectOperand {
+                    Register = IndirectOperandRegister,
+                    Increment = Increment,
+                    Decrement = Decrement,
+                };
+            }
+        }
+
+        public IndirectRegister IndirectOperandRegister {
+            get {
+                var type = (Opcode >> 2) & 0x3;
+                switch (type) {
+                    case 0: return IndirectRegister.X;
+                    case 2: return IndirectRegister.Y;
+                    case 3: return IndirectRegister.Z;
+                    default:
+                        return IndirectRegister.None;
+                }
+            }
+        }
+
         public byte DesRound {
             get {
                 return (byte)((Opcode & 0x00f0) >> 4);
@@ -268,7 +291,8 @@
     public enum IndirectRegister {
         X,
         Y,
-        Z
+        Z,
+        None = -1
     }
 
     public struct IndirectOperand {
@@ -279,6 +303,15 @@
 
         public bool Decrement;
 
+        public override string ToString() {
+            var suffix = Increment ? "+" : (Decrement ? "-" : "");
+            switch (Register) {
+                case IndirectRegister.X: return "x" + suffix;
+                case IndirectRegister.Y: return "y" + suffix;
+                case IndirectRegister.Z: return "z" + suffix;
+                default: return "?" + suffix;
+            }
+        }
     }
 
     public struct IndirectOperandWithDisplacement {
