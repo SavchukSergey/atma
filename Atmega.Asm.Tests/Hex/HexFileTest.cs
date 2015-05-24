@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Atmega.Asm.Hex;
+using Atmega.Hex;
 using NUnit.Framework;
 
 namespace Atmega.Asm.Tests.Hex {

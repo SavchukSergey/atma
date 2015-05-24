@@ -15,6 +15,8 @@
                 <MenuItem Header="Open..." Command="ApplicationCommands.Open" />
             </MenuItem>
         </Menu>
-        <TextBlock Grid.Row="1" Text="{Binding Path=HexFormatted}" FontFamily="Consolas" />
+        <ScrollViewer Grid.Row="1">
+            <TextBlock Text="{Binding Path=HexFormatted}" FontFamily="Consolas" />
+        </ScrollViewer>
     </Grid>
 </Window>

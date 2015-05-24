@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Atmega.Asm.Hex;
 
-namespace Atmega.Asm.Hex {
+namespace Atmega.Hex {
     public class HexFileLine {
 
         public ushort Address { get; set; }

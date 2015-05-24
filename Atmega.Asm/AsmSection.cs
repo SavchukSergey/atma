@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Atmega.Asm.Hex;
+using Atmega.Hex;
 
 namespace Atmega.Asm {
     public class AsmSection {

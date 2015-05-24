@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Atmega.Asm.Hex;
 using Atmega.Asm.Tokens;
+using Atmega.Hex;
 
 namespace Atmega.Asm {
     public class AsmContext {

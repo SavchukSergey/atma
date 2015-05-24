@@ -4,6 +4,7 @@ using System.IO;
 using Atmega.Asm.Hex;
 using Atmega.Asm.IO;
 using Atmega.Asm.Opcodes;
+using Atmega.Hex;
 
 namespace Atmega.Asm {
     class Program {

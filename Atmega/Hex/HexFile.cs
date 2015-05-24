@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Atmega.Asm.Hex;
 
-namespace Atmega.Asm.Hex {
+namespace Atmega.Hex {
     public class HexFile {
 
         private readonly List<HexFileLine> _lines = new List<HexFileLine>();
