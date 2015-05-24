@@ -12,3 +12,5 @@
 /Atmega.sln.DotSettings.user
 /Atmega.Asm/Atmega.Asm.csproj.user
 
+/Atmega.Flasher/bin/
+/Atmega.Flasher/obj/
