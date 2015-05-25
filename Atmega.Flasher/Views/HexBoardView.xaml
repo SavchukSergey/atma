@@ -5,7 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer>
-        <TextBlock Text="{Binding Path=HexFormatted}" FontFamily="Consolas" />
-    </ScrollViewer>
+    <DataGrid ItemsSource="{Binding Path=Lines}" IsReadOnly="True" AutoGenerateColumns="False" FontFamily="Consolas" 
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="false"
+                  CanUserResizeRows="false"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  VerticalScrollBarVisibility="Visible"
+                  HorizontalGridLinesBrush="#a0a0a0"
+                  VerticalGridLinesBrush="#a0a0a0"
+                  >
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Address" Binding="{Binding Path=Address, StringFormat=X4}" Foreground="#808080">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Padding" Value="0, 0, 10, 0"/>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
+            <DataGridTextColumn Header="00" Binding="{Binding Path=Bytes[0].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="01" Binding="{Binding Path=Bytes[1].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="02" Binding="{Binding Path=Bytes[2].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="03" Binding="{Binding Path=Bytes[3].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="04" Binding="{Binding Path=Bytes[4].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="05" Binding="{Binding Path=Bytes[5].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="06" Binding="{Binding Path=Bytes[6].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="07" Binding="{Binding Path=Bytes[7].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="08" Binding="{Binding Path=Bytes[8].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="09" Binding="{Binding Path=Bytes[9].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0A" Binding="{Binding Path=Bytes[10].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0B" Binding="{Binding Path=Bytes[11].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0C" Binding="{Binding Path=Bytes[12].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0D" Binding="{Binding Path=Bytes[13].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0E" Binding="{Binding Path=Bytes[14].Value, StringFormat=X2}" />
+            <DataGridTextColumn Header="0F" Binding="{Binding Path=Bytes[15].Value, StringFormat=X2}" />
+
+            <DataGridTextColumn Binding="{Binding Path=Characters}" Width="*">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Padding" Value="10, 0, 10, 0"/>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>

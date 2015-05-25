@@ -17,7 +17,7 @@ namespace Atmega.Flasher {
 
         public void OpenFile(string filePath) {
             var hexFile = HexFile.Load(filePath);
-            EepromHexBoard = HexBoard.From(hexFile);
+            FlashHexBoard = HexBoard.From(hexFile);
             //todo: split eeprom & flash
         }
 

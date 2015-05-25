@@ -18,6 +18,7 @@ namespace Atmega.Flasher.Views {
     /// Interaction logic for HexBoardView.xaml
     /// </summary>
     public partial class HexBoardView : UserControl {
+        
         public HexBoardView() {
             InitializeComponent();
         }
