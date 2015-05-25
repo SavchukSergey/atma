@@ -20,6 +20,7 @@ namespace Atmega.Flasher.AvrIsp {
                 BaudRate = 57600,
                 DataBits = 8,
                 Parity = Parity.None,
+                ReadTimeout = 500
             }) {
         }
 
@@ -49,7 +50,10 @@ namespace Atmega.Flasher.AvrIsp {
 
         public void EndProgram() {
             WriteChar('Q');
-            ReadEmpty();
+            try {
+                ReadEmpty();
+            } catch (TimeoutException) {
+            }
         }
 
         public byte Universal(byte a, byte b, byte c, byte d) {
@@ -83,17 +87,17 @@ namespace Atmega.Flasher.AvrIsp {
             }
             ReadEmpty();
         }
-        
-        //todo: when reading flash. response is always in words. You request three byte - you get 4 byte reponse. low byte first
-        public byte[] ReadPage(int length, AvrIspMemoryType memType) {
+
+        //todo: when reading flash. response is always in words. You request three byte - you get 4 byte response. low byte first
+        public byte[] ReadPage(int length, AvrMemoryType memType) {
             WriteChar('t');
             WriteByte((byte)(length >> 8));
             WriteByte((byte)(length & 0xff));
             switch (memType) {
-                case AvrIspMemoryType.Flash:
+                case AvrMemoryType.Flash:
                     WriteChar('F');
                     break;
-                case AvrIspMemoryType.Eeprom:
+                case AvrMemoryType.Eeprom:
                     WriteChar('E');
                     break;
                 default:
@@ -114,11 +118,11 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         public byte[] ReadFlash(int length) {
-            return ReadPage(length, AvrIspMemoryType.Flash);
+            return ReadPage(length, AvrMemoryType.Flash);
         }
 
         public byte[] ReadEeprom(int length) {
-            return ReadPage(length, AvrIspMemoryType.Eeprom);
+            return ReadPage(length, AvrMemoryType.Eeprom);
         }
 
         public void WriteFlash(int[] data) {

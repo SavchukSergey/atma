@@ -5,5 +5,7 @@
             : base(7) {
         }
 
+        protected override string OpcodeName { get { return "brid"; } }
+
     }
 }

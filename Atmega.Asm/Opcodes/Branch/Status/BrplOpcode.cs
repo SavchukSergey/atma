@@ -5,5 +5,7 @@
             : base(2) {
         }
 
+        protected override string OpcodeName { get { return "brpl"; } }
+
     }
 }

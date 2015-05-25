@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AvrIsp\AvrIspProgrammer.cs" />
+    <Compile Include="IProgrammer.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\FlasherAvrIspConfig.cs" />
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
@@ -74,7 +76,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AvrIsp\AvrIspClient.cs" />
-    <Compile Include="AvrIsp\AvrIspMemoryType.cs" />
+    <Compile Include="AvrMemoryType.cs" />
     <Compile Include="AvrIsp\AvrIspVersion.cs" />
     <Compile Include="AvrSpi\AvrSpiClient.cs" />
     <Compile Include="Commands\FlasherCommands.cs" />

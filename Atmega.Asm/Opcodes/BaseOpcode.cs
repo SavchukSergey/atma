@@ -82,7 +82,7 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xff00) == 0x9900) {
                 return new SbicOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }
-            
+
             if ((bytecode & 0xee0c) == 0x8200) {
                 return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
             }
@@ -187,10 +187,20 @@ namespace Atmega.Asm.Opcodes {
             }
 
             if ((bytecode & 0xf000) == 0xc000) {
-                return new RjmpOpcode { Delta = translation.Offset12 };
+                return new RjmpOpcode { Delta = (short) (translation.Offset12 + 2) };
             }
             if ((bytecode & 0xf000) == 0xd000) {
-                return new RcallOpcode { Delta = translation.Offset12 };
+                return new RcallOpcode { Delta = (short) (translation.Offset12  + 2)};
+            }
+            if ((bytecode & 0xfe0e) == 0x940e) {
+                var high = translation.Offset22High;
+                var low = ReadUShort(stream);
+                return new CallOpcode { Target = ((high << 16) + low) << 1 };
+            }
+            if ((bytecode & 0xfe0e) == 0x940c) {
+                var high = translation.Offset22High;
+                var low = ReadUShort(stream);
+                return new JmpOpcode { Target = ((high << 16) + low) << 1 };
             }
 
             if ((bytecode & 0xf000) == 0x3000) {
@@ -275,13 +285,19 @@ namespace Atmega.Asm.Opcodes {
             return "r" + reg;
         }
 
+        protected static string FormatWordRegister(byte reg) {
+            return FormatRegister((byte)(reg + 1)) + ':' + FormatRegister(reg);
+        }
+
         protected string FormatOffset(int delta, int commandSize) {
             var d = (delta + commandSize) * 2;
             if (d == 0) return "$";
             if (d < 0) return "$" + d;
             return "$+" + d;
         }
-
+        protected string FormatBranchTarget(int target) {
+            return string.Format("0x{0:x}", target);
+        }
 
     }
 }

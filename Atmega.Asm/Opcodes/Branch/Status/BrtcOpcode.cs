@@ -5,5 +5,7 @@
             : base(6) {
         }
 
+        protected override string OpcodeName { get { return "brtc"; } }
+
     }
 }

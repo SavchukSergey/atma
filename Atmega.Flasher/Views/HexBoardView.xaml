@@ -8,6 +8,7 @@
     <UserControl.Resources>
         <Style x:Key="ByteStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#008000" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
     <DataGrid ItemsSource="{Binding Path=Lines}" IsReadOnly="True" AutoGenerateColumns="False"

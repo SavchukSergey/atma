@@ -70,6 +70,7 @@ namespace Atmega.Asm {
             var codeStream = new MemoryStream(code);
             int unknwn = 0;
             while (codeStream.Position < codeStream.Length) {
+                output.Write("lbl_{0:x4}: ", codeStream.Position);
                 var opcode = BaseOpcode.Parse(codeStream);
                 if (opcode is UnknownOpcode) {
                     unknwn++;

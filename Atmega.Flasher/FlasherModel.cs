@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
 using Atmega.Flasher.Models;
@@ -29,7 +29,7 @@ namespace Atmega.Flasher {
             }
             set {
                 _eepromHexBoard = value;
-                OnPropertyChanged("EepromHexBoard");
+                OnPropertyChanged();
             }
         }
 
@@ -39,78 +39,42 @@ namespace Atmega.Flasher {
             }
             set {
                 _flashHexBoard = value;
-                OnPropertyChanged("FlashHexBoard");
+                OnPropertyChanged();
             }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName) {
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null) {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void ReadDevice() {
-            using (var port = new AvrIspClient("COM4")) {
-                port.Open();
-                port.ResetDevice();
-                port.StartProgram();
 
-                var progId = port.GetProgrammerId();
+            using (var programmer = CreateProgrammer()) {
+                programmer.Start();
 
-                //var version = port.ReadVersion();
-                ////Console.WriteLine("Version: {0:x2}.{1:x2}.{2:x2}", version.Hardware, version.Major, version.Minor);
+                EepromHexBoard = ReadMemory(programmer, AvrMemoryType.Eeprom, EepromSize);
+                FlashHexBoard = ReadMemory(programmer, AvrMemoryType.Flash, FlashSize);
 
-                ReadEeprom(port);
-                ReadFlash(port);
-
-                port.EndProgram();
-
-                port.Close();
+                programmer.Stop();
             }
         }
 
-        private void ReadEeprom(AvrIspClient port) {
+        private static HexBoard ReadMemory(IProgrammer programmer, AvrMemoryType memType, int size) {
             var board = new HexBoard();
 
+            var data = programmer.ReadPage(0, size, memType);
             var offset = 0;
-            var size = EepromSize;
-            var blockSize = 256;
-            while (offset < size) {
-                port.SetAddress((ushort)(offset >> 1));
-                var cnt = Math.Min(size - offset, blockSize);
 
-                var data = port.ReadEeprom(cnt);
-
-                foreach (var bt in data) {
-                    board[offset] = bt;
-                    offset++;
-                }
+            foreach (var bt in data) {
+                board[offset] = bt;
+                offset++;
             }
 
-            EepromHexBoard = board;
-        }
-
-        private void ReadFlash(AvrIspClient port) {
-            var board = new HexBoard();
-
-            var offset = 0;
-            var size = FlashSize;
-            var blockSize = 256;
-            while (offset < size) {
-                port.SetAddress((ushort)(offset >> 1));
-                var cnt = Math.Min(size - offset, blockSize);
-
-                var data = port.ReadFlash(cnt);
-
-                foreach (var bt in data) {
-                    board[offset] = bt;
-                    offset++;
-                }
-            }
-
-            FlashHexBoard = board;
+            return board;
         }
 
         public int EepromSize {
@@ -135,6 +99,10 @@ namespace Atmega.Flasher {
             }
             var hf = hfb.Build();
             hf.Save(fileName);
+        }
+
+        private IProgrammer CreateProgrammer() {
+            return new AvrIspProgrammer(new AvrIspClient("COM4"));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Atmega.Asm.Opcodes.Move {
         }
 
         public override string ToString() {
-            return string.Format("movw {0}, {1}", FormatRegister(Destination), FormatRegister(Register));
+            return string.Format("movw {0}, {1}", FormatWordRegister(Destination), FormatWordRegister(Register));
         }
     }
 }
