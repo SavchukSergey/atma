@@ -8,6 +8,7 @@
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand" />
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommand" />
         <CommandBinding Command="commands:FlasherCommands.ReadDevice" Executed="ReadDeviceCommand" />
+        <CommandBinding Command="commands:FlasherCommands.Settings" Executed="SettingsCommand" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,6 +24,7 @@
             <MenuItem Header="Device">
                 <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />
             </MenuItem>
+            <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />
         </Menu>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

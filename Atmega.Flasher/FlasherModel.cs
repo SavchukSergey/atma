@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using Atmega.Asm.Hex;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
+using Atmega.Flasher.Models;
 using Atmega.Hex;
 
 namespace Atmega.Flasher {
@@ -11,6 +10,7 @@ namespace Atmega.Flasher {
 
         private HexBoard _eepromHexBoard = new HexBoard();
         private HexBoard _flashHexBoard = new HexBoard();
+        private readonly FlasherConfig _settings = new FlasherConfig();
 
         public FlasherModel() {
             _eepromHexBoard[0] = null;
@@ -119,6 +119,10 @@ namespace Atmega.Flasher {
 
         public int FlashSize {
             get { return 32768; }
+        }
+
+        public FlasherConfig Settings {
+            get { return _settings; }
         }
 
         public void SaveFile(string fileName) {

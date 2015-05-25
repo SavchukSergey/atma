@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Atmega.Flasher.Views;
 using Microsoft.Win32;
 
 namespace Atmega.Flasher {
@@ -45,5 +46,15 @@ namespace Atmega.Flasher {
         private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             _model.ReadDevice();
         }
+
+        private void SettingsCommand(object sender, ExecutedRoutedEventArgs e) {
+            _model.Settings.Reload();
+            var dlg = new SettingsWindow {
+                DataContext = _model.Settings,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
     }
 }
