@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using Atmega.Asm.Hex;
 using Atmega.Hex;
 
 namespace Atmega.Flasher.Hex {
-    public class HexBoard {
+    public class HexBoard : INotifyPropertyChanged {
 
         private readonly ObservableCollection<HexBoardLine> _lines = new ObservableCollection<HexBoardLine>();
 
@@ -29,6 +31,7 @@ namespace Atmega.Flasher.Hex {
             set {
                 var line = EnsureLine(address);
                 line.Bytes[address % 16] = value;
+                OnPropertyChanged("HexFormatted");
             }
         }
 
@@ -43,6 +46,43 @@ namespace Atmega.Flasher.Hex {
                 }
             }
             return res;
+        }
+
+
+        public string HexFormatted {
+            get {
+                var sb = new StringBuilder();
+                foreach (var line in _lines) {
+                    sb.AppendFormat("{0:x4}: ", line.Address);
+                    foreach (var bt in line.Bytes) {
+                        var val = bt.Value;
+                        if (val.HasValue) {
+                            sb.AppendFormat("{0:x2} ", val);
+                        } else {
+                            sb.Append("-- ");
+                        }
+                    }
+                    sb.Append("  |  ");
+                    foreach (var bt in line.Bytes) {
+                        var val = bt.Value;
+                        if (val.HasValue && val.Value >= 32 && val.Value < 128) {
+                            var ch = (char)val;
+                            sb.Append(ch);
+                        } else {
+                            sb.Append(" ");
+                        }
+                    }
+                    sb.AppendLine();
+                }
+                return sb.ToString();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName) {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

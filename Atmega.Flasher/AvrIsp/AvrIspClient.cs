@@ -90,10 +90,10 @@ namespace Atmega.Flasher.AvrIsp {
             WriteByte((byte)(length >> 8));
             WriteByte((byte)(length & 0xff));
             switch (memType) {
-                case AvrIspMemoryType.Program:
+                case AvrIspMemoryType.Flash:
                     WriteChar('F');
                     break;
-                case AvrIspMemoryType.Flash:
+                case AvrIspMemoryType.Eeprom:
                     WriteChar('E');
                     break;
                 default:
@@ -113,12 +113,12 @@ namespace Atmega.Flasher.AvrIsp {
             return res;
         }
 
-        public byte[] ReadMemory(int length) {
-            return ReadPage(length, AvrIspMemoryType.Program);
-        }
-
         public byte[] ReadFlash(int length) {
             return ReadPage(length, AvrIspMemoryType.Flash);
+        }
+
+        public byte[] ReadEeprom(int length) {
+            return ReadPage(length, AvrIspMemoryType.Eeprom);
         }
 
         public void WriteFlash(int[] data) {
