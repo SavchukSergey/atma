@@ -29,5 +29,9 @@ namespace Atmega.Flasher {
                 _model.OpenFile(dlg.FileName);
             }
         }
+
+        private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
+            _model.ReadDevice();
+        }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using Atmega.Asm.Hex;
+using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
 using Atmega.Hex;
 
@@ -9,15 +12,22 @@ namespace Atmega.Flasher {
 
         private HexBoard _hexFile = new HexBoard();
 
+        public FlasherModel() {
+            HexBoard[0] = null;
+        }
+
         public void OpenFile(string filePath) {
             var hexFile = HexFile.Load(filePath);
-            _hexFile = HexBoard.From(hexFile);
-            OnPropertyChanged("HexFormatted");
+            HexBoard = HexBoard.From(hexFile);
         }
 
         public HexBoard HexBoard {
             get {
                 return _hexFile;
+            }
+            set {
+                _hexFile = value;
+                OnPropertyChanged("HexFormatted");
             }
         }
 
@@ -54,6 +64,46 @@ namespace Atmega.Flasher {
         protected virtual void OnPropertyChanged(string propertyName) {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void ReadDevice() {
+            using (var port = new AvrIspClient("COM4")) {
+                port.Open();
+                port.ResetDevice();
+                port.StartProgram();
+
+                var progId = port.GetProgrammerId();
+
+                //var version = port.ReadVersion();
+                ////Console.WriteLine("Version: {0:x2}.{1:x2}.{2:x2}", version.Hardware, version.Major, version.Minor);
+
+                var board = new HexBoard();
+
+                var offset = 0;
+                var size = FlashSize;
+                var blockSize = 256;
+                while (offset < size) {
+                    port.SetAddress((ushort)(offset >> 1));
+                    var cnt = Math.Min(size - offset, blockSize);
+
+                    var data = port.ReadMemory(cnt);
+
+                    foreach (var bt in data) {
+                        board[offset] = bt;
+                        offset++;
+                    }
+                }
+
+                HexBoard = board;
+
+                port.EndProgram();
+
+                port.Close();
+            }
+        }
+
+        public int FlashSize {
+            get { return 32768; }
         }
     }
 }

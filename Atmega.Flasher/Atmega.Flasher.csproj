@@ -61,6 +61,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AvrIsp\AvrIspClient.cs" />
+    <Compile Include="AvrIsp\AvrIspMemoryType.cs" />
+    <Compile Include="AvrIsp\AvrIspVersion.cs" />
+    <Compile Include="AvrSpi\AvrSpiClient.cs" />
+    <Compile Include="Commands\FlasherCommands.cs" />
     <Compile Include="FlasherModel.cs" />
     <Compile Include="Hex\HexBoard.cs" />
     <Compile Include="Hex\HexBoardByte.cs" />
