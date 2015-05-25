@@ -30,6 +30,18 @@ namespace Atmega.Flasher {
             }
         }
 
+        private void SaveCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new SaveFileDialog {
+                Filter = "Intel Hex File (.hex)|*.hex"
+            };
+
+            var result = dlg.ShowDialog();
+
+            if (result == true) {
+                _model.SaveFile(dlg.FileName);
+            }
+        }
+
         private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             _model.ReadDevice();
         }

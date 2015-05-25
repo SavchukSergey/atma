@@ -6,6 +6,7 @@
         Title="Flasher" Height="700" Width="600" MinWidth="600">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommand" />
         <CommandBinding Command="commands:FlasherCommands.ReadDevice" Executed="ReadDeviceCommand" />
     </Window.CommandBindings>
     <Grid>
@@ -17,6 +18,7 @@
         <Menu VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Open..." Command="ApplicationCommands.Open" />
+                <MenuItem Header="Save..." Command="ApplicationCommands.Save" />
             </MenuItem>
             <MenuItem Header="Device">
                 <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />

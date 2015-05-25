@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Atmega.Asm.Hex;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
 using Atmega.Hex;
@@ -117,6 +119,18 @@ namespace Atmega.Flasher {
 
         public int FlashSize {
             get { return 32768; }
+        }
+
+        public void SaveFile(string fileName) {
+            var hfb = new HexFileBuilder();
+            foreach (var sourceLine in FlashHexBoard.Lines) {
+                hfb.SetAddress(sourceLine.Address);
+                foreach (var bt in sourceLine.Bytes) {
+                    hfb.WriteByte(bt.Value);
+                }
+            }
+            var hf = hfb.Build();
+            hf.Save(fileName);
         }
     }
 }

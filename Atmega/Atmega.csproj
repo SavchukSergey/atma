@@ -58,6 +58,7 @@
     <Compile Include="Elf\ElfStrings.cs" />
     <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Hex\HexFile.cs" />
+    <Compile Include="Hex\HexFileBuilder.cs" />
     <Compile Include="Hex\HexFileLine.cs" />
     <Compile Include="Hex\HexFileLineType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
