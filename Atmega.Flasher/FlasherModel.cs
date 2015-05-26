@@ -52,29 +52,18 @@ namespace Atmega.Flasher {
         }
 
         public void ReadDevice() {
-
+            byte[] eepData;
+            byte[] flashData;
             using (var programmer = CreateProgrammer()) {
                 programmer.Start();
 
-                EepromHexBoard = ReadMemory(programmer, AvrMemoryType.Eeprom, EepromSize);
-                FlashHexBoard = ReadMemory(programmer, AvrMemoryType.Flash, FlashSize);
-
+                eepData = programmer.ReadPage(0, EepromSize, AvrMemoryType.Eeprom);
+                flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash);
                 programmer.Stop();
             }
-        }
 
-        private static HexBoard ReadMemory(IProgrammer programmer, AvrMemoryType memType, int size) {
-            var board = new HexBoard();
-
-            var data = programmer.ReadPage(0, size, memType);
-            var offset = 0;
-
-            foreach (var bt in data) {
-                board[offset] = bt;
-                offset++;
-            }
-
-            return board;
+            EepromHexBoard = HexBoard.From(eepData);
+            FlashHexBoard = HexBoard.From(flashData);
         }
 
         public int EepromSize {

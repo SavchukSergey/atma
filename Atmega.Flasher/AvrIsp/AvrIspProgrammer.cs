@@ -5,7 +5,7 @@ namespace Atmega.Flasher.AvrIsp {
     public class AvrIspProgrammer : IProgrammer {
 
         private readonly AvrIspClient _client;
-        private const int BLOCK_SIZE = 256;
+        private const int BLOCK_SIZE = 1024;
 
         public AvrIspProgrammer(AvrIspClient client) {
             _client = client;

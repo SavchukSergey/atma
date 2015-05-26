@@ -42,10 +42,7 @@ namespace Atmega.Flasher.AvrIsp {
 
         public void EndProgram() {
             WriteChar('Q');
-            try {
-                ReadEmpty();
-            } catch (TimeoutException) {
-            }
+            ReadEmpty();
         }
 
         public byte Universal(byte a, byte b, byte c, byte d) {

@@ -52,5 +52,18 @@ namespace Atmega.Flasher.Hex {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public static HexBoard From(byte[] data) {
+            var board = new HexBoard();
+
+            var offset = 0;
+
+            foreach (var bt in data) {
+                board[offset] = bt;
+                offset++;
+            }
+
+            return board;
+        }
     }
 }
