@@ -11,7 +11,6 @@ namespace Atmega.Flasher {
 
         private HexBoard _eepromHexBoard = new HexBoard();
         private HexBoard _flashHexBoard = new HexBoard();
-        private readonly FlasherConfig _settings = new FlasherConfig();
 
         public FlasherModel() {
             _eepromHexBoard[0] = null;
@@ -86,10 +85,6 @@ namespace Atmega.Flasher {
             get { return 32768; }
         }
 
-        public FlasherConfig Settings {
-            get { return _settings; }
-        }
-
         public void SaveFile(string fileName) {
             var hfb = new HexFileBuilder();
             foreach (var sourceLine in FlashHexBoard.Lines) {
@@ -102,8 +97,9 @@ namespace Atmega.Flasher {
             hf.Save(fileName);
         }
 
-        private IProgrammer CreateProgrammer() {
-            var set = Settings.AvrIsp;
+        private static IProgrammer CreateProgrammer() {
+            var settings = FlasherConfig.ReadFromConfig();
+            var set = settings.AvrIsp;
             var port = new SerialPort(set.ComPort) {
                 BaudRate = set.BaudRate,
                 DataBits = 8,

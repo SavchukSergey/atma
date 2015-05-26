@@ -1,102 +1,68 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Configuration;
 using System.IO.Ports;
-using System.Runtime.CompilerServices;
-using Atmega.Flasher.Annotations;
 
 namespace Atmega.Flasher.Models {
-    public class FlasherAvrIspConfig : INotifyPropertyChanged {
+    public class FlasherAvrIspConfig : BaseConfig {
 
+        private string _comPort;
+        private int _baudRate;
         private readonly ObservableCollection<string> _comPorts = new ObservableCollection<string>();
         private readonly ObservableCollection<int> _baudRates = new ObservableCollection<int>();
 
         public string ComPort {
-            get { return GetConfigString("COM1"); }
+            get { return _comPort; }
             set {
-                var old = ComPort;
-                if (old != value) {
+                if (_comPort != value) {
+                    _comPort = value;
                     OnPropertyChanged();
-                    UpdateConfig(value);
                 }
             }
         }
 
         public int BaudRate {
             get {
-                return GetConfigInt(57600);
+                return _baudRate;
             }
             set {
-                var old = BaudRate;
-                if (old != value) {
+                if (_baudRate != value) {
+                    _baudRate = value;
                     OnPropertyChanged();
-                    UpdateConfig(value.ToString());
                 }
             }
         }
 
-        public void Reload() {
-            _comPorts.Clear();
+        public ObservableCollection<string> ComPorts { get { return _comPorts; } }
+
+        public ObservableCollection<int> BaudRates { get { return _baudRates; } }
+
+        public static FlasherAvrIspConfig ReadFromConfig() {
+            var res = new FlasherAvrIspConfig();
+            res.ComPort = res.GetConfigString("COM1", "ComPort");
+            res.BaudRate = res.GetConfigInt(57600, "BaudRate");
+
+            res.ComPorts.Clear();
             foreach (var port in SerialPort.GetPortNames()) {
-                _comPorts.Add(port);
+                res.ComPorts.Add(port);
             }
-            if (_comPorts.Count == 0) {
-                _comPorts.Add("COM1");
+            if (res.ComPorts.Count == 0) {
+                res.ComPorts.Add("COM1");
             }
 
-            _baudRates.Clear();
-            _baudRates.Add(9600);
-            _baudRates.Add(19200);
-            _baudRates.Add(57600);
+            res.BaudRates.Clear();
+            res.BaudRates.Add(9600);
+            res.BaudRates.Add(19200);
+            res.BaudRates.Add(57600);
+
+            return res;
         }
 
-        public ObservableCollection<string> ComPorts {
-            get {
-                return _comPorts;
-            }
+        public override void Save() {
+            UpdateConfig(ComPort, "ComPort");
+            UpdateConfig(BaudRate.ToString(), "BaudRate");
         }
 
-        public ObservableCollection<int> BaudRates {
-            get {
-                return _baudRates;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private string GetConfig(string key) {
-            key = "AvrIsp." + key;
-            return ConfigurationManager.AppSettings[key];
-        }
-
-        private string GetConfigString(string defaultValue, [CallerMemberName] string key = null) {
-            return GetConfig(key) ?? defaultValue;
-        }
-
-        private int GetConfigInt(int defaultValue, [CallerMemberName] string key = null) {
-            var raw = GetConfig(key);
-            int res;
-            if (int.TryParse(raw, out res)) return res;
-            return defaultValue;
-        }
-
-        private void UpdateConfig(string value, [CallerMemberName] string key = null) {
-            key = "AvrIsp." + key;
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var set = config.AppSettings.Settings[key];
-            if (set != null) {
-                config.AppSettings.Settings[key].Value = value;
-            } else {
-                config.AppSettings.Settings.Add(new KeyValueConfigurationElement(key, value));
-            }
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+        protected override string KeyPrefix {
+            get { return "AvrIsp."; }
         }
     }
 }

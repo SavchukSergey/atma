@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
@@ -20,5 +10,19 @@ namespace Atmega.Flasher.Views {
         public SettingsWindow() {
             InitializeComponent();
         }
+
+        private void CloseCommand(object sender, ExecutedRoutedEventArgs e) {
+            Close();
+        }
+
+        private void SaveCommand(object sender, ExecutedRoutedEventArgs e) {
+            Model.Save();
+            Close();
+        }
+
+        protected FlasherConfig Model {
+            get { return DataContext as FlasherConfig; }
+        }
+
     }
 }

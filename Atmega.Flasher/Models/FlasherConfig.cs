@@ -1,14 +1,24 @@
 ﻿namespace Atmega.Flasher.Models {
-    public class FlasherConfig {
+    public class FlasherConfig : BaseConfig {
 
-        private readonly FlasherAvrIspConfig _avrisp = new FlasherAvrIspConfig();
+        public FlasherAvrIspConfig AvrIsp { get; protected set; }
 
-        public FlasherAvrIspConfig AvrIsp {
-            get { return _avrisp; }
+        public FlasherConfig() {
+            AvrIsp = new FlasherAvrIspConfig();
         }
 
-        public void Reload() {
-            _avrisp.Reload();
+        public static FlasherConfig ReadFromConfig() {
+            return new FlasherConfig {
+                AvrIsp = FlasherAvrIspConfig.ReadFromConfig()
+            };
+        }
+
+        protected override string KeyPrefix {
+            get { return null; }
+        }
+
+        public override void Save() {
+            AvrIsp.Save();
         }
     }
 }

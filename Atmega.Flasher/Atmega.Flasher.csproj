@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="AvrIsp\AvrIspProgrammer.cs" />
     <Compile Include="IProgrammer.cs" />
+    <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\FlasherAvrIspConfig.cs" />
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
