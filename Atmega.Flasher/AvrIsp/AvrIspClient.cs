@@ -15,17 +15,9 @@ namespace Atmega.Flasher.AvrIsp {
 
         private ushort _position;
 
-        public AvrIspClient(string portName)
-            : this(new SerialPort(portName) {
-                BaudRate = 57600,
-                DataBits = 8,
-                Parity = Parity.None,
-                ReadTimeout = 500
-            }) {
-        }
-
         public AvrIspClient(SerialPort port) {
             _port = port;
+            port.ReadTimeout = 500;
         }
 
         public void ResetDevice() {

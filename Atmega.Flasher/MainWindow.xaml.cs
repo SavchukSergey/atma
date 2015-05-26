@@ -44,7 +44,11 @@ namespace Atmega.Flasher {
         }
 
         private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
-            _model.ReadDevice();
+            var dlg = new ReadDeviceWindow {
+                DataContext = _model,
+                Owner = this
+            };
+            dlg.ShowDialog();
         }
 
         private void SettingsCommand(object sender, ExecutedRoutedEventArgs e) {

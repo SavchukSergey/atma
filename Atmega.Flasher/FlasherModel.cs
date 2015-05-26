@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
@@ -102,7 +103,13 @@ namespace Atmega.Flasher {
         }
 
         private IProgrammer CreateProgrammer() {
-            return new AvrIspProgrammer(new AvrIspClient("COM4"));
+            var set = Settings.AvrIsp;
+            var port = new SerialPort(set.ComPort) {
+                BaudRate = set.BaudRate,
+                DataBits = 8,
+                Parity = Parity.None
+            };
+            return new AvrIspProgrammer(new AvrIspClient(port));
         }
     }
 }
