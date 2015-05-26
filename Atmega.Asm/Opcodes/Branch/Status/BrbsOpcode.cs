@@ -20,7 +20,7 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
         public static new BrbsOpcode FromOpcode(ushort opcode) {
             var translation = new OpcodeTranslation { Opcode = opcode };
             var bit = translation.BitNumber;
-            var delta = translation.Offset7;
+            var delta = (short)(translation.Offset7 * 2);
             switch (bit) {
                 case 0: return new BrcsOpcode { Delta = delta };
                 case 1: return new BreqOpcode { Delta = delta };

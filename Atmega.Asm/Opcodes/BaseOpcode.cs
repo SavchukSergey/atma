@@ -56,6 +56,8 @@ namespace Atmega.Asm.Opcodes {
                     return new RetiOpcode();
                 case 0x95a8:
                     return new WdrOpcode();
+                case 0x95c8:
+                    return new LpmOpcode();
             }
 
             if ((bytecode & 0xff0f) == 0x9408) {
@@ -181,9 +183,10 @@ namespace Atmega.Asm.Opcodes {
                 return new SbrsOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
             }
 
-            //if ((bytecode & 0xfe0e) == 0x9004) {
-            //    return new LpmOpcode { Register = translation.Destination32, Increment = translation.Increment };
-            //}
+            if ((bytecode & 0xfe0e) == 0x9004) {
+                return new LpmOpcode { Destination = translation.Destination32, Increment = translation.Increment };
+            }
+
             if ((bytecode & 0xffef) == 0x95e8) {
                 return new SpmOpcode { PostIncrement = translation.SpmIncrement };
             }
@@ -193,7 +196,7 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xfe0f) == 0x900f) {
                 return new PopOpcode { Register = translation.Destination32 };
             }
-            if ((bytecode & 0xfe0f) == 0x9202) {
+            if ((bytecode & 0xfe0f) == 0x9402) {
                 return new SwapOpcode { Register = translation.Destination32 };
             }
             if ((bytecode & 0xfe00) == 0x9400) {
@@ -265,10 +268,10 @@ namespace Atmega.Asm.Opcodes {
             }
 
             if ((bytecode & 0xf000) == 0xc000) {
-                return new RjmpOpcode { Delta = (short) (translation.Offset12 + 2) };
+                return new RjmpOpcode { Delta = (short)(translation.Offset12 * 2) };
             }
             if ((bytecode & 0xf000) == 0xd000) {
-                return new RcallOpcode { Delta = (short) (translation.Offset12  + 2)};
+                return new RcallOpcode { Delta = (short)(translation.Offset12 * 2) };
             }
             if ((bytecode & 0xfe0e) == 0x940e) {
                 var high = translation.Offset22High;
@@ -368,7 +371,7 @@ namespace Atmega.Asm.Opcodes {
         }
 
         protected string FormatOffset(int delta, int commandSize) {
-            var d = (delta + commandSize) * 2;
+            var d = delta + commandSize * 2;
             if (d == 0) return "$";
             if (d < 0) return "$" + d;
             return "$+" + d;

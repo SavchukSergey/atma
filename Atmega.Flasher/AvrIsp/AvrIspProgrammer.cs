@@ -39,11 +39,11 @@ namespace Atmega.Flasher.AvrIsp {
 
         private byte[] ReadEeprom(int start, int length) {
             var offset = start;
-            var size = length;
+            var end = start + length;
             var result = new byte[length];
-            while (offset < size) {
+            while (offset < end) {
                 _client.SetAddress((ushort)(offset >> 1));
-                var cnt = Math.Min(size - offset, BLOCK_SIZE);
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
                 var data = _client.ReadEeprom(cnt);
 
@@ -58,11 +58,11 @@ namespace Atmega.Flasher.AvrIsp {
 
         private byte[] ReadFlash(int start, int length) {
             var offset = start;
-            var size = length;
+            var end = start + length;
             var result = new byte[length];
-            while (offset < size) {
+            while (offset < end) {
                 _client.SetAddress((ushort)(offset >> 1));
-                var cnt = Math.Min(size - offset, BLOCK_SIZE);
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
                 var data = _client.ReadFlash(cnt);
 

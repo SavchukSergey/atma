@@ -1,4 +1,5 @@
-﻿using Atmega.Asm.Tokens;
+﻿using System;
+using Atmega.Asm.Tokens;
 
 namespace Atmega.Asm.Opcodes.Branch.Status {
     public abstract class BaseStatusBitOffset7Opcode : BaseOpcode {
@@ -9,10 +10,24 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
 
         public virtual byte Bit { get; set; }
 
-        public short Delta { get; set; }
+        private short _delta;
+        public short Delta {
+            get { return _delta; }
+            set {
+                if ((value & 0x1) > 0) {
+                    throw new InvalidOperationException("invalid relative jump");
+                }
+                value >>= 1;
+                if (value < -64 || value > 63) {
+                    throw new InvalidOperationException("jump beyond 2048 boundary");
+                }
+                value <<= 1;
+                _delta = value;
+            }
+        }
 
         protected override void Compile(AsmSection output) {
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Offset7 = (sbyte)Delta, BitNumber = Bit };
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Offset7 = (sbyte)(Delta / 2), BitNumber = Bit };
             output.EmitCode(translation.Opcode);
         }
 
@@ -28,7 +43,7 @@ namespace Atmega.Asm.Opcodes.Branch.Status {
             if (delta > 63 || delta < -64) {
                 throw new TokenException("relative jump out of range (-64; 63)", firstToken);
             }
-
+            delta *= 2;
             Delta = (short)delta;
         }
 
