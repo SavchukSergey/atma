@@ -6,7 +6,7 @@
         }
 
         public override string ToString() {
-            return string.Format("jmp {0}", FormatBranchTarget(Target));
+            return string.Format("jmp {0}", FormatAddress(Target));
         }
     }
 }

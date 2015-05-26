@@ -3,19 +3,24 @@
 namespace Atmega.Asm.Opcodes {
     public abstract class BaseImm16Reg32Opcode : BaseOpcode {
 
+        public byte Source { get; set; }
+
+        public ushort Address { get; set; }
+
         protected BaseImm16Reg32Opcode(string opcodeTemplate)
             : base(opcodeTemplate) {
         }
 
-        public override void Compile(AsmParser parser, AsmSection output) {
-            var value = parser.ReadUshort();
+        protected override void Parse(AsmParser parser) {
+            Address = parser.ReadUshort();
             parser.ReadToken(TokenType.Comma);
-            var dest = parser.ReadReg32();
-
-            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Destination32 = dest };
-            output.EmitCode(translation.Opcode);
-            output.EmitCode(value);
+            Source = parser.ReadReg32();
         }
 
+        protected override void Compile(AsmSection output) {
+            var translation = new OpcodeTranslation { Opcode = _opcodeTemplate, Destination32 = Source };
+            output.EmitCode(translation.Opcode);
+            output.EmitCode(Address);
+        }
     }
 }

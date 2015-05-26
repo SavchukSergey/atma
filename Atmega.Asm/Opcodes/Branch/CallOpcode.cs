@@ -6,7 +6,7 @@
         }
 
         public override string ToString() {
-            return string.Format("call {0}", FormatBranchTarget(Target));
+            return string.Format("call {0}", FormatAddress(Target));
         }
 
     }

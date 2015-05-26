@@ -5,7 +5,6 @@ namespace Atmega.Asm.Opcodes.Move {
     public class LdOpcode : BaseOpcode {
 
         private static readonly ushort _xTemplate = ParseOpcodeTemplate("1001000rrrrr1100");
-        
         private static readonly ushort _yTemplate = ParseOpcodeTemplate("1000000rrrrr1000");
         private static readonly ushort _zTemplate = ParseOpcodeTemplate("1000000rrrrr0000");
         private static readonly ushort _yPostPreTemplate = ParseOpcodeTemplate("1001000rrrrr1000");

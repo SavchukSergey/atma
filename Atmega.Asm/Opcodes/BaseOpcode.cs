@@ -83,12 +83,88 @@ namespace Atmega.Asm.Opcodes {
                 return new SbicOpcode { Port = translation.Port32, Bit = translation.BitNumber };
             }
 
-            if ((bytecode & 0xee0c) == 0x8200) {
-                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
-            }
-            if ((bytecode & 0xee0c) == 0x8000) {
+            //x
+            if ((bytecode & 0xfe0f) == 0x900c) {
                 return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
             }
+            if ((bytecode & 0xfe0f) == 0x900d) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x900e) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            //y
+            if ((bytecode & 0xfe0f) == 0x8008) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9009) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x900a) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xd208) == 0x8008) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            //z
+            if ((bytecode & 0xfe0f) == 0x8000) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9001) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9002) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xd208) == 0x8000) {
+                return new LdOpcode { Destination = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9000) {
+                return new LdsOpcode { Destination = translation.Destination32, Address = ReadUShort(stream) };
+            }
+
+
+
+            //x
+            if ((bytecode & 0xfe0f) == 0x920c) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x920d) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x920e) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            //y
+            if ((bytecode & 0xfe0f) == 0x8208) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9209) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x920a) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xd208) == 0x8208) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            //z
+            if ((bytecode & 0xfe0f) == 0x8200) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9201) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9202) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xd208) == 0x8200) {
+                return new StOpcode { Source = translation.Destination32, Operand = translation.IndirectOperand };
+            }
+            if ((bytecode & 0xfe0f) == 0x9200) {
+                return new StsOpcode { Source = translation.Destination32, Address = ReadUShort(stream) };
+            }
+
 
             if ((bytecode & 0xfe08) == 0xf800) {
                 return new BldOpcode { Register = translation.Destination32, Bit = translation.BitNumber };
@@ -109,9 +185,6 @@ namespace Atmega.Asm.Opcodes {
             if ((bytecode & 0xffef) == 0x95e8) {
                 return new SpmOpcode { PostIncrement = translation.SpmIncrement };
             }
-            //if ((bytecode & 0xfe0f) == 0x9000) {
-            //    return new LdsOpcode { Register = translation.Destination32, Address = ReadUShort(stream) };
-            //}
             if ((bytecode & 0xfe0f) == 0x920f) {
                 return new PushOpcode { Register = translation.Destination32 };
             }
@@ -295,7 +368,7 @@ namespace Atmega.Asm.Opcodes {
             if (d < 0) return "$" + d;
             return "$+" + d;
         }
-        protected string FormatBranchTarget(int target) {
+        protected string FormatAddress(int target) {
             return string.Format("0x{0:x}", target);
         }
 

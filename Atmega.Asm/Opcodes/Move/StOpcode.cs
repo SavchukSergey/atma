@@ -18,7 +18,6 @@ namespace Atmega.Asm.Opcodes.Move {
 
         public byte Source { get; set; }
 
-
         protected override void Parse(AsmParser parser) {
             Operand = parser.ReadIndirectOperand();
             parser.ReadToken(TokenType.Comma);
