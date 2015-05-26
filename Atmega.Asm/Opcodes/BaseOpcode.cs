@@ -50,6 +50,8 @@ namespace Atmega.Asm.Opcodes {
                     return new NopOpcode();
                 case 0x9508:
                     return new RetOpcode();
+                case 0x9509:
+                    return new IcallOpcode();
                 case 0x9518:
                     return new RetiOpcode();
                 case 0x95a8:
@@ -190,6 +192,9 @@ namespace Atmega.Asm.Opcodes {
             }
             if ((bytecode & 0xfe0f) == 0x900f) {
                 return new PopOpcode { Register = translation.Destination32 };
+            }
+            if ((bytecode & 0xfe0f) == 0x9202) {
+                return new SwapOpcode { Register = translation.Destination32 };
             }
             if ((bytecode & 0xfe00) == 0x9400) {
                 var subop = bytecode & 0xf;
