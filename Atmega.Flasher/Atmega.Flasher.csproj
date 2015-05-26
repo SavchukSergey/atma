@@ -55,10 +55,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AvrIsp\AvrIspProgrammer.cs" />
+    <Compile Include="AvrSignature.cs" />
+    <Compile Include="AvrSpi\AvrSpiProgrammer.cs" />
     <Compile Include="IProgrammer.cs" />
     <Compile Include="Models\BaseConfig.cs" />
+    <Compile Include="Models\DeviceParameters.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\FlasherAvrIspConfig.cs" />
+    <Compile Include="SpiMaster.cs" />
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
       <DependentUpon>AvrIspSettingsView.xaml</DependentUpon>
     </Compile>

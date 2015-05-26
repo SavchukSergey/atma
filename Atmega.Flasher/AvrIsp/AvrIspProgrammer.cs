@@ -18,7 +18,6 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         public void Stop() {
-            Thread.Sleep(500);
             _client.EndProgram();
             _client.Close();
         }
