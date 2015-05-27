@@ -5,7 +5,7 @@ namespace Atmega.Flasher.Models {
     public class FlasherConfig : BaseConfig {
 
         private ProgrammerType _programmerType;
-        private ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
+        private readonly ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
 
         public FlasherAvrIspConfig AvrIsp { get; protected set; }
 

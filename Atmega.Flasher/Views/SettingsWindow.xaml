@@ -10,7 +10,7 @@
         <CommandBinding Command="Save" Executed="SaveCommand"></CommandBinding>
     </Window.CommandBindings>
     <Window.Resources>
-        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+        <converters:EnumToVisibilityConverter x:Key="enumToVisibilityConverter" />
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -34,8 +34,9 @@
                   SelectedValue="{Binding Path=ProgrammerType, Mode=TwoWay}">
                 </ComboBox>
             </Grid>
-            <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}"
-                                      Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}"/>
+            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
+                <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 </Window>

@@ -2,12 +2,13 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Converters {
     public class EnumToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value == parameter) return Visibility.Visible;
+            if (value.Equals(parameter)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
 
