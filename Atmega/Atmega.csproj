@@ -57,6 +57,15 @@
     <Compile Include="Elf\ElfStreamExt.cs" />
     <Compile Include="Elf\ElfStrings.cs" />
     <Compile Include="Elf\ElfType.cs" />
+    <Compile Include="Flasher\AvrIsp\AvrIspClient.cs" />
+    <Compile Include="Flasher\AvrIsp\AvrIspProgrammer.cs" />
+    <Compile Include="Flasher\AvrIsp\AvrIspVersion.cs" />
+    <Compile Include="Flasher\AvrMemoryType.cs" />
+    <Compile Include="Flasher\AvrSignature.cs" />
+    <Compile Include="Flasher\AvrSpi\AvrSpiClient.cs" />
+    <Compile Include="Flasher\AvrSpi\AvrSpiProgrammer.cs" />
+    <Compile Include="Flasher\IProgrammer.cs" />
+    <Compile Include="Flasher\SpiMaster.cs" />
     <Compile Include="Hex\HexFile.cs" />
     <Compile Include="Hex\HexFileBuilder.cs" />
     <Compile Include="Hex\HexFileLine.cs" />
