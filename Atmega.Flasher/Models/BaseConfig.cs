@@ -47,6 +47,12 @@ namespace Atmega.Flasher.Models {
             return int.TryParse(raw, out res) ? res : defaultValue;
         }
 
+        protected TEnum GetConfigEnum<TEnum>(TEnum defaultValue, string key) where TEnum : struct {
+            var raw = GetConfig(key);
+            TEnum res;
+            return Enum.TryParse(raw, out res) ? res : defaultValue;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -12,6 +12,28 @@
             <Button Content="Save" Command="Save" Margin="10" Padding="10"></Button>
             <Button Content="Cancel" Command="Close" Margin="10" Padding="10"></Button>
         </StackPanel>
-        <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0">Programmer</TextBlock>
+                <ComboBox Grid.Row="0" Grid.Column="1"
+                  DisplayMemberPath="Value"
+                  SelectedValuePath="Key"
+                  ItemsSource="{Binding Path=ProgrammerTypes}" 
+                  SelectedValue="{Binding Path=ProgrammerType, Mode=TwoWay}">
+                </ComboBox>
+            </Grid>
+            <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}">
+                <views:AvrIspSettingsView.Triggers>
+                    
+                </views:AvrIspSettingsView.Triggers>
+            </views:AvrIspSettingsView>
+        </StackPanel>
     </DockPanel>
 </Window>
