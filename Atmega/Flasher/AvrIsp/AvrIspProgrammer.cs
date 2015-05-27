@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 
 namespace Atmega.Flasher.AvrIsp {
     public class AvrIspProgrammer : IProgrammer {
@@ -22,22 +21,24 @@ namespace Atmega.Flasher.AvrIsp {
             _client.Close();
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
+        public byte[] ReadPage(int start, int length, AvrMemoryType memType, Action<ProgressCallbackData> progressCallbackData = null) {
             switch (memType) {
                 case AvrMemoryType.Eeprom:
-                    return ReadEeprom(start, length);
+                    return ReadEeprom(start, length, progressCallbackData);
                 case AvrMemoryType.Flash:
-                    return ReadFlash(start, length);
+                    return ReadFlash(start, length, progressCallbackData);
                 default:
                     throw new NotSupportedException();
             }
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
+        public void WritePage(int start, AvrMemoryType memType, byte[] data, Action<ProgressCallbackData> progressCallbackData = null) {
             throw new System.NotImplementedException();
         }
 
-        private byte[] ReadEeprom(int start, int length) {
+        private byte[] ReadEeprom(int start, int length, Action<ProgressCallbackData> progressCallbackData = null) {
+            var callbackData = new ProgressCallbackData { Total = length };
+
             var offset = start;
             var end = start + length;
             var result = new byte[length];
@@ -51,12 +52,17 @@ namespace Atmega.Flasher.AvrIsp {
                     result[offset - start] = bt;
                     offset++;
                 }
+
+                callbackData.Done += cnt;
+                if (progressCallbackData != null) progressCallbackData(callbackData);
             }
 
             return result;
         }
 
-        private byte[] ReadFlash(int start, int length) {
+        private byte[] ReadFlash(int start, int length, Action<ProgressCallbackData> progressCallbackData = null) {
+            var callbackData = new ProgressCallbackData { Total = length };
+
             var offset = start;
             var end = start + length;
             var result = new byte[length];
@@ -70,6 +76,9 @@ namespace Atmega.Flasher.AvrIsp {
                     result[offset - start] = bt;
                     offset++;
                 }
+
+                callbackData.Done += cnt;
+                if (progressCallbackData != null) progressCallbackData(callbackData);
             }
 
             return result;

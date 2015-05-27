@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Reading Device" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Loaded="ReadDeviceWindow_OnLoaded">
-    <StackPanel Orientation="Vertical">
-        <ProgressBar Minimum="0" Maximum="100" Value="50" IsIndeterminate="False" Height="50"></ProgressBar>
+    <StackPanel Orientation="Vertical" x:Name="operationView">
+        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Path=Progress, Mode=OneWay}" IsIndeterminate="False" Height="50"></ProgressBar>
     </StackPanel>
 </Window>

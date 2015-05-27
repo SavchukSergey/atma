@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows.Threading;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
 using Atmega.Flasher.Models;
@@ -11,10 +14,12 @@ namespace Atmega.Flasher {
 
         private HexBoard _eepromHexBoard = new HexBoard();
         private HexBoard _flashHexBoard = new HexBoard();
+        private Dispatcher _dispatcher;
 
         public FlasherModel() {
             _eepromHexBoard[0] = null;
             _flashHexBoard[0] = null;
+            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public void OpenFile(string filePath) {
@@ -51,19 +56,28 @@ namespace Atmega.Flasher {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void ReadDevice() {
-            byte[] eepData;
-            byte[] flashData;
-            using (var programmer = CreateProgrammer()) {
-                programmer.Start();
+        public DeviceReadOperation ReadDevice(Action completeCallback) {
+            var op = new DeviceReadOperation(_dispatcher) { FlashSize = FlashSize, EepromSize = EepromSize };
 
-                eepData = programmer.ReadPage(0, EepromSize, AvrMemoryType.Eeprom);
-                flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash);
-                programmer.Stop();
-            }
+            ThreadPool.QueueUserWorkItem(s => {
+                byte[] eepData;
+                byte[] flashData;
+                using (var programmer = CreateProgrammer()) {
+                    programmer.Start();
 
-            EepromHexBoard = HexBoard.From(eepData);
-            FlashHexBoard = HexBoard.From(flashData);
+                    eepData = programmer.ReadPage(0, EepromSize, AvrMemoryType.Eeprom, callbackData => op.EepromDone = callbackData.Done);
+                    flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash, callbackData => op.FlashDone = callbackData.Done);
+                    programmer.Stop();
+                }
+
+                _dispatcher.Invoke(() => {
+                    EepromHexBoard = HexBoard.From(eepData);
+                    FlashHexBoard = HexBoard.From(flashData);
+                    completeCallback();
+                });
+            });
+
+            return op;
         }
 
         public int EepromSize {

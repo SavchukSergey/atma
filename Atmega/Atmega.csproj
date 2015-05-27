@@ -65,6 +65,7 @@
     <Compile Include="Flasher\AvrSpi\AvrSpiClient.cs" />
     <Compile Include="Flasher\AvrSpi\AvrSpiProgrammer.cs" />
     <Compile Include="Flasher\IProgrammer.cs" />
+    <Compile Include="Flasher\ProgressCallbackData.cs" />
     <Compile Include="Flasher\SpiMaster.cs" />
     <Compile Include="Hex\HexFile.cs" />
     <Compile Include="Hex\HexFileBuilder.cs" />

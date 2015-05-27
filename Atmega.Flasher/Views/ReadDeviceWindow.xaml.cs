@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
@@ -11,8 +12,8 @@ namespace Atmega.Flasher.Views {
 
         private void ReadDeviceWindow_OnLoaded(object sender, RoutedEventArgs e) {
             var m = Model;
-            m.ReadDevice();
-            Close();
+            var op = m.ReadDevice(Close);
+            operationView.DataContext = op;
         }
 
         protected FlasherModel Model {
