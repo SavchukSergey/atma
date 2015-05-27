@@ -6,8 +6,13 @@ using Atmega.Flasher.Annotations;
 
 namespace Atmega.Flasher.Models {
     public abstract class BaseConfig : INotifyPropertyChanged {
+        private readonly string _keyPrefix;
 
-        protected abstract string KeyPrefix { get; }
+        protected BaseConfig(string keyPrefix) {
+            _keyPrefix = keyPrefix;
+        }
+
+        protected string KeyPrefix { get { return _keyPrefix; } }
 
         protected string GetKey(string key) {
             if (!string.IsNullOrWhiteSpace(KeyPrefix)) {
@@ -62,5 +67,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public abstract void Save();
+
+        public abstract void ReadFromConfig();
     }
 }

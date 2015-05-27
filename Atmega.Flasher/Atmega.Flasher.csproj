@@ -55,14 +55,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
+    <Compile Include="Models\ComBitBangConfig.cs" />
+    <Compile Include="Models\ComPortSettings.cs" />
     <Compile Include="Models\ProgrammerType.cs" />
     <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\DeviceParameters.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
-    <Compile Include="Models\FlasherAvrIspConfig.cs" />
+    <Compile Include="Models\AvrIspConfig.cs" />
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
       <DependentUpon>AvrIspSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComBitBangSettingsView.xaml.cs">
+      <DependentUpon>ComBitBangSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ComPortSettingsView.xaml.cs">
+      <DependentUpon>ComPortSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HexBoardView.xaml.cs">
       <DependentUpon>HexBoardView.xaml</DependentUpon>
@@ -91,6 +99,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AvrIspSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComBitBangSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ComPortSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

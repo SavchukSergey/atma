@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:commands="clr-namespace:Atmega.Flasher.Commands"
         xmlns:views="clr-namespace:Atmega.Flasher.Views"
-        Title="Flasher" Height="700" Width="600" MinWidth="600" WindowStartupLocation="CenterScreen">
+        Title="Flasher" Height="700" Width="600" MinWidth="600" Padding="10" WindowStartupLocation="CenterScreen">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand" />
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommand" />

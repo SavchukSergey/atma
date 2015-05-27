@@ -53,7 +53,7 @@ namespace Atmega.Flasher {
         }
 
         private void SettingsCommand(object sender, ExecutedRoutedEventArgs e) {
-            var settings = FlasherConfig.ReadFromConfig();
+            var settings = FlasherConfig.Read();
             var dlg = new SettingsWindow {
                 DataContext = settings,
                 Owner = this

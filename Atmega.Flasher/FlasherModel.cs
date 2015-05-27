@@ -102,7 +102,7 @@ namespace Atmega.Flasher {
         }
 
         private static IProgrammer CreateProgrammer(DeviceOperation progress, CancellationToken cancellationToken) {
-            var settings = FlasherConfig.ReadFromConfig();
+            var settings = FlasherConfig.Read();
             var inner = CreateProgrammerFromConfig(settings);
             var programmer = new ProgressTrackerProgrammer(inner, progress, cancellationToken);
             return programmer;
@@ -111,11 +111,7 @@ namespace Atmega.Flasher {
         private static IProgrammer CreateProgrammerFromConfig(FlasherConfig settings) {
             //return new StubProgrammer();
             var set = settings.AvrIsp;
-            var port = new SerialPort(set.ComPort) {
-                BaudRate = set.BaudRate,
-                DataBits = 8,
-                Parity = Parity.None
-            };
+            var port = set.ComPortSettings.CreateSerialPort();
             return new AvrIspProgrammer(new AvrIspClient(port));
         }
     }

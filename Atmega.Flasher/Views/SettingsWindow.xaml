@@ -4,13 +4,16 @@
         xmlns:views="clr-namespace:Atmega.Flasher.Views"
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
         xmlns:converters="clr-namespace:Atmega.Flasher.Converters"
-        Title="Settings" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        Title="Settings" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance models:FlasherConfig}">
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="CloseCommand"></CommandBinding>
         <CommandBinding Command="Save" Executed="SaveCommand"></CommandBinding>
     </Window.CommandBindings>
     <Window.Resources>
-        <converters:EnumToVisibilityConverter x:Key="enumToVisibilityConverter" />
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -34,8 +37,11 @@
                   SelectedValue="{Binding Path=ProgrammerType, Mode=TwoWay}">
                 </ComboBox>
             </Grid>
-            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource enumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
+            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
                 <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.ComBitBang}}">
+                <views:ComBitBangSettingsView DataContext="{Binding Path=ComBitBang}" />
             </StackPanel>
         </StackPanel>
     </DockPanel>

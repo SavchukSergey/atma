@@ -6,11 +6,21 @@ namespace Atmega.Flasher.Models {
 
         private ProgrammerType _programmerType;
         private readonly ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
+        private readonly AvrIspConfig _avrIsp;
+        private readonly ComBitBangConfig _comBitBang;
 
-        public FlasherAvrIspConfig AvrIsp { get; protected set; }
+        public AvrIspConfig AvrIsp {
+            get { return _avrIsp; }
+        }
 
-        public FlasherConfig() {
-            AvrIsp = new FlasherAvrIspConfig();
+        public ComBitBangConfig ComBitBang {
+            get { return _comBitBang; }
+        }
+
+        public FlasherConfig()
+            : base(string.Empty) {
+            _avrIsp = new AvrIspConfig("AvrIsp.");
+            _comBitBang = new ComBitBangConfig("ComBitBang.");
         }
 
         public ProgrammerType ProgrammerType {
@@ -29,25 +39,27 @@ namespace Atmega.Flasher.Models {
             }
         }
 
-        public static FlasherConfig ReadFromConfig() {
-            var res = new FlasherConfig {
-                AvrIsp = FlasherAvrIspConfig.ReadFromConfig()
-            };
-            res.ProgrammerTypes.Clear();
-            res.ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.AvrIsp, "Avr ISP"));
-            res.ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.ComBitBang, "Com Bit Bang"));
-            res.ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.Stub, "Stub"));
-            res.ProgrammerType = res.GetConfigEnum(ProgrammerType.AvrIsp, "ProgrammerType");
-            return res;
+        public override void ReadFromConfig() {
+            _avrIsp.ReadFromConfig();
+            _comBitBang.ReadFromConfig();
+
+            ProgrammerTypes.Clear();
+            ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.AvrIsp, "Avr ISP"));
+            ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.ComBitBang, "Com Bit Bang"));
+            ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.Stub, "Stub"));
+            ProgrammerType = GetConfigEnum(ProgrammerType.AvrIsp, "ProgrammerType");
         }
 
-        protected override string KeyPrefix {
-            get { return null; }
+        public static FlasherConfig Read() {
+            var res = new FlasherConfig();
+            res.ReadFromConfig();
+            return res;
         }
 
         public override void Save() {
             UpdateConfig(ProgrammerType.ToString(), "ProgrammerType");
-            AvrIsp.Save();
+            _avrIsp.Save();
+            _comBitBang.Save();
         }
     }
 }
