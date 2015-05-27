@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.Hex;
@@ -56,28 +57,28 @@ namespace Atmega.Flasher {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public DeviceReadOperation ReadDevice(Action completeCallback) {
-            var op = new DeviceReadOperation(_dispatcher) { FlashSize = FlashSize, EepromSize = EepromSize };
+        public DeviceOperation ReadDevice(DeviceOperation op, CancellationToken cancellationToken) {
+            op.FlashSize += FlashSize;
+            op.EepromSize += EepromSize;
 
-            ThreadPool.QueueUserWorkItem(s => {
-                byte[] eepData;
-                byte[] flashData;
-                using (var programmer = CreateProgrammer()) {
-                    programmer.Start();
+            byte[] eepData;
+            byte[] flashData;
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
 
-                    eepData = programmer.ReadPage(0, EepromSize, AvrMemoryType.Eeprom, callbackData => op.EepromDone = callbackData.Done);
-                    flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash, callbackData => op.FlashDone = callbackData.Done);
-                    programmer.Stop();
-                }
+                eepData = programmer.ReadPage(0, EepromSize, AvrMemoryType.Eeprom);
+                flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash);
+                programmer.Stop();
+            }
 
-                _dispatcher.Invoke(() => {
-                    EepromHexBoard = HexBoard.From(eepData);
-                    FlashHexBoard = HexBoard.From(flashData);
-                    completeCallback();
-                });
-            });
+            EepromHexBoard = HexBoard.From(eepData);
+            FlashHexBoard = HexBoard.From(flashData);
 
             return op;
+        }
+
+        public async Task<DeviceOperation> ReadDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => ReadDevice(op, cancellationToken), cancellationToken);
         }
 
         public int EepromSize {
@@ -100,8 +101,15 @@ namespace Atmega.Flasher {
             hf.Save(fileName);
         }
 
-        private static IProgrammer CreateProgrammer() {
+        private static IProgrammer CreateProgrammer(DeviceOperation progress, CancellationToken cancellationToken) {
             var settings = FlasherConfig.ReadFromConfig();
+            var inner = CreateProgrammerFromConfig(settings);
+            var programmer = new ProgressTrackerProgrammer(inner, progress, cancellationToken);
+            return programmer;
+        }
+
+        private static IProgrammer CreateProgrammerFromConfig(FlasherConfig settings) {
+            //return new StubProgrammer();
             var set = settings.AvrIsp;
             var port = new SerialPort(set.ComPort) {
                 BaudRate = set.BaudRate,

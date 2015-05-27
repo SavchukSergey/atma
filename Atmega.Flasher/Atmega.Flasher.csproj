@@ -54,7 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DeviceReadOperation.cs" />
+    <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\DeviceParameters.cs" />
     <Compile Include="Models\FlasherConfig.cs" />

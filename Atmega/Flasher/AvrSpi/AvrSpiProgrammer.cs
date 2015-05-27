@@ -22,8 +22,7 @@ namespace Atmega.Flasher.AvrSpi {
             _client.Close();
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType, Action<ProgressCallbackData> progressCallbackData = null) {
-            var data = new ProgressCallbackData { Total = length };
+        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
             var res = new byte[length];
             for (var i = 0; i < length; i++) {
                 switch (memType) {
@@ -34,14 +33,11 @@ namespace Atmega.Flasher.AvrSpi {
                         res[i] = _client.ReadEepromMemory((ushort)(start + i));
                         break;
                 }
-                data.Done++;
-                if (progressCallbackData != null && i % 256 == 0) progressCallbackData(data);
             }
-            if (progressCallbackData != null) progressCallbackData(data);
             return res;
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data, Action<ProgressCallbackData> progressCallbackData = null) {
+        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
             throw new System.NotImplementedException();
         }
     }
