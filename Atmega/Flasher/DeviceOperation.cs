@@ -23,6 +23,8 @@ namespace Atmega.Flasher {
             get { return 100.0 * Done / Math.Max(1, Total); }
         }
 
+        public virtual string CurrentState { get; set; }
+        
         public void IncrementDone(int count, AvrMemoryType memType) {
             switch (memType) {
                 case AvrMemoryType.Flash:

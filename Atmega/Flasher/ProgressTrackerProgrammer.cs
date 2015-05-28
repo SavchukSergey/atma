@@ -25,10 +25,12 @@ namespace Atmega.Flasher {
         }
 
         public void Start() {
+            _progressData.CurrentState = "Entering programming mode";
             _inner.Start();
         }
 
         public void Stop() {
+            _progressData.CurrentState = "Leaving programming mode";
             _inner.Stop();
         }
 
@@ -38,6 +40,7 @@ namespace Atmega.Flasher {
             var result = new byte[length];
             while (offset < end) {
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
+                _progressData.CurrentState = string.Format("Reading {0} memory {1}-{2}", memType, offset, offset + cnt - 1);
                 var page = _inner.ReadPage(offset, cnt, memType);
                 foreach (var bt in page) {
                     result[offset - start] = bt;
@@ -45,6 +48,9 @@ namespace Atmega.Flasher {
                 }
 
                 _progressData.IncrementDone(cnt, memType);
+                if (_cancellationToken.IsCancellationRequested) {
+                    _progressData.CurrentState = "Operation is cancelled";
+                }
                 _cancellationToken.ThrowIfCancellationRequested();
             }
 

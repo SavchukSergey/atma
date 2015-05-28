@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Atmega.Flasher.Models {
     public class FlasherConfig : BaseConfig {
 
+        private DeviceParameters _device;
         private ProgrammerType _programmerType;
         private readonly ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
+        private readonly ObservableCollection<DeviceParameters> _devices = new ObservableCollection<DeviceParameters>();
         private readonly AvrIspConfig _avrIsp;
         private readonly ComBitBangConfig _comBitBang;
 
@@ -34,8 +37,22 @@ namespace Atmega.Flasher.Models {
         }
 
         public ObservableCollection<KeyValuePair<ProgrammerType, string>> ProgrammerTypes {
+            get { return _programmerTypes; }
+        }
+
+        public ObservableCollection<DeviceParameters> Devices {
             get {
-                return _programmerTypes;
+                return _devices;
+            }
+        }
+
+        public DeviceParameters Device {
+            get { return _device; }
+            set {
+                if (_device != value) {
+                    _device = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -48,6 +65,11 @@ namespace Atmega.Flasher.Models {
             ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.ComBitBang, "Com Bit Bang"));
             ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.Stub, "Stub"));
             ProgrammerType = GetConfigEnum(ProgrammerType.AvrIsp, "ProgrammerType");
+
+            _devices.Clear();
+            DeviceParameters.List().ToList().ForEach(_devices.Add);
+            var deviceName = GetConfigString("atmega328p", "DeviceName");
+            Device = _devices.FirstOrDefault(item => item.Name.ToLowerInvariant() == deviceName.ToLowerInvariant());
         }
 
         public static FlasherConfig Read() {
@@ -58,6 +80,7 @@ namespace Atmega.Flasher.Models {
 
         public override void Save() {
             UpdateConfig(ProgrammerType.ToString(), "ProgrammerType");
+            UpdateConfig(Device.Name, "DeviceName");
             _avrIsp.Save();
             _comBitBang.Save();
         }

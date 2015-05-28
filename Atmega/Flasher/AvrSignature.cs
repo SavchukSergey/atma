@@ -1,6 +1,9 @@
-﻿namespace Atmega.Flasher {
+﻿using System.Globalization;
+using System.Xml.Linq;
+
+namespace Atmega.Flasher {
     public class AvrSignature {
-        
+
         public AvrSignature() {
         }
 
@@ -16,5 +19,9 @@
 
         public byte Low { get; set; }
 
+        public static AvrSignature Parse(string val) {
+            var all = int.Parse(val, NumberStyles.HexNumber);
+            return new AvrSignature((byte)(all >> 16), (byte)(all >> 8), (byte)all);
+        }
     }
 }

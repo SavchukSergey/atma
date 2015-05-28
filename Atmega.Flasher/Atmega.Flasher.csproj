@@ -70,6 +70,7 @@
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
       <DependentUpon>AvrIspSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BaseDeviceOperationWindow.cs" />
     <Compile Include="Views\ComBitBangSettingsView.xaml.cs">
       <DependentUpon>ComBitBangSettingsView.xaml</DependentUpon>
     </Compile>
@@ -179,7 +180,11 @@
       <Name>Atmega</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="devices.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

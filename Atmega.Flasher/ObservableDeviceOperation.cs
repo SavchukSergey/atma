@@ -9,6 +9,7 @@ namespace Atmega.Flasher {
         private int _flashSize;
         private int _eepromSize;
         private int _flashDone;
+        private string _currentState;
 
         public override int EepromDone {
             get { return _eepromDone; }
@@ -51,6 +52,15 @@ namespace Atmega.Flasher {
                     OnPropertyChanged();
                     OnPropertyChanged("Progress");
                 }
+            }
+        }
+
+        public override string CurrentState {
+            get { return _currentState; }
+            set {
+                if (value == _currentState) return;
+                _currentState = value;
+                OnPropertyChanged();
             }
         }
 

@@ -1,41 +1,17 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using Atmega.Flasher.Models;
+﻿using System.Threading.Tasks;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
     /// Interaction logic for ReadDeviceWindow.xaml
     /// </summary>
-    public partial class ReadDeviceWindow : Window {
-
-        private Task _task;
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+    public partial class ReadDeviceWindow : BaseDeviceOperationWindow {
 
         public ReadDeviceWindow() {
             InitializeComponent();
         }
 
-        private async void ReadDeviceWindow_OnLoaded(object sender, RoutedEventArgs e) {
-            var m = Model;
-            var op = new ObservableDeviceOperation();
-            OperationView.DataContext = op;
-            try {
-                _task = m.ReadDeviceAsync(op, _cts.Token);
-                await _task;
-                Close();
-            } catch (OperationCanceledException) {
-            }
-        }
-
-        protected FlasherModel Model {
-            get { return DataContext as FlasherModel; }
-        }
-
-        protected override void OnClosed(EventArgs e) {
-            _cts.Cancel();
-            base.OnClosed(e);
+        protected override Task<bool> Execute(DeviceOperation op) {
+            return Model.ReadDeviceAsync(op, _cts.Token);
         }
     }
 }

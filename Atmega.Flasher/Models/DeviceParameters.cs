@@ -1,5 +1,12 @@
-﻿namespace Atmega.Flasher.Models {
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+
+namespace Atmega.Flasher.Models {
     public class DeviceParameters {
+
+        public string Name { get; set; }
 
         public int FlashSize { get; set; }
 
@@ -9,27 +16,19 @@
 
         public AvrSignature Signature { get; set; }
 
-        public static DeviceParameters Get(string deviceName) {
-            switch (deviceName.ToLower()) {
-                case "atmega48a":
-                    return new DeviceParameters { FlashSize = 4096, EepromSize = 256, RamSize = 512, Signature = new AvrSignature(0x1e, 0x92, 0x05)};
-                case "atmega48pa":
-                    return new DeviceParameters { FlashSize = 4096, EepromSize = 256, RamSize = 512, Signature = new AvrSignature(0x1e, 0x92, 0x0a) };
-                case "atmega88a":
-                    return new DeviceParameters { FlashSize = 8192, EepromSize = 512, RamSize = 1024, Signature = new AvrSignature(0x1e, 0x93, 0x0a) };
-                case "atmega88pa":
-                    return new DeviceParameters { FlashSize = 8192, EepromSize = 512, RamSize = 1024, Signature = new AvrSignature(0x1e, 0x93, 0x0f) };
-                case "atmega168a":
-                    return new DeviceParameters { FlashSize = 16384, EepromSize = 512, RamSize = 1024, Signature = new AvrSignature(0x1e, 0x94, 0x06) };
-                case "atmega168pa":
-                    return new DeviceParameters { FlashSize = 16384, EepromSize = 512, RamSize = 1024, Signature = new AvrSignature(0x1e, 0x94, 0x0b) };
-                case "atmega328":
-                    return new DeviceParameters { FlashSize = 32768, EepromSize = 1024, RamSize = 2048, Signature = new AvrSignature(0x1e, 0x95, 0x14) };
-                case "atmega328p":
-                    return new DeviceParameters { FlashSize = 32768, EepromSize = 1024, RamSize = 2048, Signature = new AvrSignature(0x1e, 0x95, 0x0f) };
-                default:
-                    return null;
-            }
+        public static DeviceParameters From(XElement node) {
+            return new DeviceParameters {
+                Name = node.Attribute("name").Value,
+                FlashSize = int.Parse(node.Attribute("flash").Value),
+                EepromSize = int.Parse(node.Attribute("eeprom").Value),
+                RamSize = int.Parse(node.Attribute("ram").Value),
+                Signature = AvrSignature.Parse(node.Attribute("signature").Value)
+            };
+        }
+
+        public static IList<DeviceParameters> List() {
+            var xDoc = XDocument.Load("devices.xml");
+            return xDoc.Root.Elements().Select(From).ToList();
         }
     }
 }

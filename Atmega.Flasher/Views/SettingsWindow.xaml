@@ -24,13 +24,21 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0">Programmer</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0">Device</TextBlock>
                 <ComboBox Grid.Row="0" Grid.Column="1"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Path=Devices}" 
+                          SelectedItem="{Binding Path=Device, Mode=TwoWay}">
+                </ComboBox>
+
+                <TextBlock Grid.Row="1" Grid.Column="0">Programmer</TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1"
                   DisplayMemberPath="Value"
                   SelectedValuePath="Key"
                   ItemsSource="{Binding Path=ProgrammerTypes}" 

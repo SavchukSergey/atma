@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<devices>
+  <device name="atmega48a" flash="4096" eeprom="256" ram="512" signature="1e9205" />
+  <device name="atmega48pa" flash="4096" eeprom="256" ram="512" signature="1e920a" />
+  <device name="atmega88a" flash="8192" eeprom="512" ram="1024" signature="1e930a" />
+  <device name="atmega88pa" flash="8192" eeprom="512" ram="1024" signature="1e930f" />
+  <device name="atmega168a" flash="16384" eeprom="512" ram="1024" signature="1e9406" />
+  <device name="atmega168pa" flash="16384" eeprom="512" ram="1024" signature="1e940b" />
+  <device name="atmega328" flash="32768" eeprom="1024" ram="2048" signature="1e9514" />
+  <device name="atmega328p" flash="32768" eeprom="1024" ram="2048" signature="1e950f" />
+</devices>
