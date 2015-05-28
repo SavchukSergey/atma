@@ -33,7 +33,28 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         public void WritePage(int start, AvrMemoryType memType, byte[] data) {
-            throw new System.NotImplementedException();
+            switch (memType) {
+                case AvrMemoryType.Eeprom:
+                    WriteEeprom(start, data);
+                    break;
+                case AvrMemoryType.Flash:
+                    WriteFlash(start, data);
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        private void WriteEeprom(int start, byte[] data) {
+            var offset = start;
+            var end = start + data.Length;
+            while (offset < end) {
+                _client.SetAddress((ushort)(offset >> 1));
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
+
+                _client.WriteEeprom(data, offset, cnt);
+                offset += cnt;
+            }
         }
 
         private byte[] ReadEeprom(int start, int length) {
@@ -55,7 +76,19 @@ namespace Atmega.Flasher.AvrIsp {
             return result;
         }
 
-        private byte[] ReadFlash(int start, int length, Action<DeviceOperation> progressCallbackData = null) {
+        private void WriteFlash(int start, byte[] data) {
+            var offset = start;
+            var end = start + data.Length;
+            while (offset < end) {
+                _client.SetAddress((ushort)(offset >> 1));
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
+
+                _client.WriteFlash(data, offset, cnt);
+                offset += cnt;
+            }
+        }
+
+        private byte[] ReadFlash(int start, int length) {
             var offset = start;
             var end = start + length;
             var result = new byte[length];

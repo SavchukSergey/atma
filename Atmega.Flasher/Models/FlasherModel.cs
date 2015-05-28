@@ -73,8 +73,35 @@ namespace Atmega.Flasher.Models {
             return op;
         }
 
+        public DeviceOperation WriteDevice(DeviceOperation op, CancellationToken cancellationToken) {
+            op.FlashSize += FlashSize;
+            op.EepromSize += EepromSize;
+
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+
+                for (var i = 0; i < FlashSize; i += 50) {
+                    Thread.Sleep(50);
+                    op.FlashDone += 50;
+                }
+                for (var i = 0; i < EepromSize; i += 50) {
+                    Thread.Sleep(50);
+                    op.EepromSize+= 50;
+                }
+                //eepData = programmer.WritePage(0, EepromHexBoard., AvrMemoryType.Eeprom);
+                //flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash);
+                programmer.Stop();
+            }
+
+            return op;
+        }
+
         public async Task<DeviceOperation> ReadDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
             return await Task.Run(() => ReadDevice(op, cancellationToken), cancellationToken);
+        }
+
+        public async Task<DeviceOperation> WriteDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => WriteDevice(op, cancellationToken), cancellationToken);
         }
 
         public int EepromSize {
@@ -109,7 +136,7 @@ namespace Atmega.Flasher.Models {
                 case ProgrammerType.AvrIsp:
                     return settings.AvrIsp.CreateProgrammer();
                 case ProgrammerType.ComBitBang:
-                     return settings.ComBitBang.CreateProgrammer();
+                    return settings.ComBitBang.CreateProgrammer();
                 case ProgrammerType.Stub:
                     return new StubProgrammer();
                 default:

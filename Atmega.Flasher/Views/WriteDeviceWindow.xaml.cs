@@ -6,23 +6,23 @@ using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
-    /// Interaction logic for ReadDeviceWindow.xaml
+    /// Interaction logic for WriteDeviceWindow.xaml
     /// </summary>
-    public partial class ReadDeviceWindow : Window {
+    public partial class WriteDeviceWindow : Window {
 
         private Task _task;
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
-        public ReadDeviceWindow() {
+        public WriteDeviceWindow() {
             InitializeComponent();
         }
 
-        private async void ReadDeviceWindow_OnLoaded(object sender, RoutedEventArgs e) {
+        private async void WriteDeviceWindow_OnLoaded(object sender, RoutedEventArgs e) {
             var m = Model;
             var op = new ObservableDeviceOperation();
             OperationView.DataContext = op;
             try {
-                _task = m.ReadDeviceAsync(op, _cts.Token);
+                _task = m.WriteDeviceAsync(op, _cts.Token);
                 await _task;
                 Close();
             } catch (OperationCanceledException) {

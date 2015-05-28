@@ -17,8 +17,8 @@
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Save" Command="Save" Margin="10" Padding="10"></Button>
-            <Button Content="Cancel" Command="Close" Margin="10" Padding="10"></Button>
+            <Button Content="Save" Command="Save"></Button>
+            <Button Content="Cancel" Command="Close"></Button>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <Grid>

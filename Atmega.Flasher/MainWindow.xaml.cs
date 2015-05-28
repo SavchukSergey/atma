@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views;
@@ -46,6 +45,14 @@ namespace Atmega.Flasher {
 
         private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new ReadDeviceWindow {
+                DataContext = _model,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
+        private void WriteDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new WriteDeviceWindow {
                 DataContext = _model,
                 Owner = this
             };

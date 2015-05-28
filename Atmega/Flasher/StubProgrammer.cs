@@ -17,6 +17,7 @@ namespace Atmega.Flasher {
         }
 
         public void WritePage(int start, AvrMemoryType memType, byte[] data) {
+            Thread.Sleep(50);
         }
     }
 }

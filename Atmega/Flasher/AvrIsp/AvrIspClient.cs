@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
@@ -114,17 +116,30 @@ namespace Atmega.Flasher.AvrIsp {
             return ReadPage(length, AvrMemoryType.Eeprom);
         }
 
-        public void WriteFlash(int[] data) {
-            WriteFlash(data.Select(i => (byte)i).ToArray());
+        public void WriteFlash(byte[] data, int offset, int length) {
+            WriteChar('d');
+            WriteByte((byte)(length >> 8));
+            WriteByte((byte)(length & 0xff));
+            WriteChar('F');
+
+            for (var i = 0; i < length; i++) {
+                var bt = data[offset + i];
+                WriteByte(bt);
+            }
+
+            WriteByte(CRC_EOP);
+
+            ReadEmpty();
         }
 
-        public void WriteFlash(byte[] data) {
+        public void WriteEeprom(byte[] data, int offset, int length) {
             WriteChar('d');
-            WriteByte((byte)(data.Length >> 8));
-            WriteByte((byte)(data.Length & 0xff));
+            WriteByte((byte)(length >> 8));
+            WriteByte((byte)(length & 0xff));
             WriteChar('E');
 
-            foreach (var bt in data) {
+            for (var i = 0; i < length; i++) {
+                var bt = data[offset + i];
                 WriteByte(bt);
             }
 
