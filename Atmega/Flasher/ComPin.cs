@@ -44,6 +44,10 @@ namespace Atmega.Flasher {
                 case ComPinType.Dtr:
                     _port.DtrEnable = value ^ _invert;
                     break;
+                case ComPinType.TxD:
+                    var b = new[] { (byte)((value ^ _invert) ? 0xff : 0x00) };
+                    _port.Write(b, 0, 1);
+                    break;
             }
         }
     }

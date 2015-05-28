@@ -10,8 +10,8 @@ namespace Atmega.Flasher.Models {
         private readonly ComBitBangPinConfig _mosiPin;
         private readonly ComBitBangPinConfig _misoPin;
 
-        private readonly ObservableCollection<string> _inputComPins = new ObservableCollection<string>();
-        private readonly ObservableCollection<string> _outputComPins = new ObservableCollection<string>();
+        private readonly ObservableCollection<ComPinType> _inputComPins = new ObservableCollection<ComPinType>();
+        private readonly ObservableCollection<ComPinType> _outputComPins = new ObservableCollection<ComPinType>();
 
         public ComBitBangConfig(string keyPrefix)
             : base(keyPrefix) {
@@ -21,14 +21,15 @@ namespace Atmega.Flasher.Models {
             _mosiPin = new ComBitBangPinConfig(keyPrefix + "MosiPin.");
             _misoPin = new ComBitBangPinConfig(keyPrefix + "MisoPin.");
 
-            _inputComPins.Add("CTS");
-            _inputComPins.Add("CD");
-            _inputComPins.Add("DSR");
-            _inputComPins.Add("None");
+            _inputComPins.Add(ComPinType.Cts);
+            _inputComPins.Add(ComPinType.CD);
+            _inputComPins.Add(ComPinType.Dsr);
+            _inputComPins.Add(ComPinType.None);
 
-            _outputComPins.Add("RTS");
-            _outputComPins.Add("DTR");
-            _outputComPins.Add("None");
+            _outputComPins.Add(ComPinType.Rts);
+            _outputComPins.Add(ComPinType.Dtr);
+            _outputComPins.Add(ComPinType.TxD);
+            _outputComPins.Add(ComPinType.None);
         }
 
         public ComBitBangPinConfig ResetPin { get { return _resetPin; } }
@@ -40,11 +41,11 @@ namespace Atmega.Flasher.Models {
         public ComBitBangPinConfig MisoPin { get { return _misoPin; } }
 
 
-        public ObservableCollection<string> InputComPins {
+        public ObservableCollection<ComPinType> InputComPins {
             get { return _inputComPins; }
         }
 
-        public ObservableCollection<string> OuputComPins {
+        public ObservableCollection<ComPinType> OuputComPins {
             get { return _outputComPins; }
         }
 
@@ -70,7 +71,7 @@ namespace Atmega.Flasher.Models {
 
         public override IProgrammer CreateProgrammer() {
             var port = ComPortSettings.CreateSerialPort();
-            var spiMaster = new SpiMaster(port, ClkPin.CreatePin(port));
+            var spiMaster = new SpiMaster(port, ClkPin.CreatePin(port), MosiPin.CreatePin(port), MisoPin.CreatePin(port));
             return new AvrSpiProgrammer(new AvrSpiClient(spiMaster));
         }
     }

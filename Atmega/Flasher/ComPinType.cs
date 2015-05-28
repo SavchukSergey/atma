@@ -5,6 +5,7 @@
         Cts,
         CD,
         Dsr,
-        Dtr
+        Dtr,
+        TxD
     }
 }

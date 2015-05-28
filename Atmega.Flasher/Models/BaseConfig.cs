@@ -41,6 +41,10 @@ namespace Atmega.Flasher.Models {
             UpdateConfig(val ? "true" : "false", key);
         }
 
+        protected void UpdateConfigEnum<TEnum>(string key, TEnum val) where TEnum : struct {
+            UpdateConfig(val.ToString(), key);
+        }
+
         private string GetConfig(string key) {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException("key");
             key = GetKey(key);
@@ -71,7 +75,7 @@ namespace Atmega.Flasher.Models {
         protected TEnum GetConfigEnum<TEnum>(TEnum defaultValue, string key) where TEnum : struct {
             var raw = GetConfig(key);
             TEnum res;
-            return Enum.TryParse(raw, out res) ? res : defaultValue;
+            return Enum.TryParse(raw, true, out res) ? res : defaultValue;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

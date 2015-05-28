@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Converters {
     public class EnumToVisibilityConverter : IValueConverter {

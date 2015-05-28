@@ -5,10 +5,14 @@ namespace Atmega.Flasher {
     public class SpiMaster : IDisposable {
         private readonly SerialPort _port;
         private readonly ComPin _clkPin;
+        private readonly ComPin _mosiPin;
+        private readonly ComPin _misoPin;
 
-        public SpiMaster(SerialPort port, ComPin clkPin) {
+        public SpiMaster(SerialPort port, ComPin clkPin, ComPin mosiPin, ComPin misoPin) {
             _port = port;
             _clkPin = clkPin;
+            _mosiPin = mosiPin;
+            _misoPin = misoPin;
         }
 
         public void Open() {
@@ -39,11 +43,11 @@ namespace Atmega.Flasher {
         }
 
         public bool GetMiso() {
-            return _port.DsrHolding;
+            return _misoPin.Get();
         }
 
         public void SetMosi(bool val) {
-            _port.DtrEnable = val;
+            _mosiPin.Set(val);
         }
 
         public void SetClock() {
