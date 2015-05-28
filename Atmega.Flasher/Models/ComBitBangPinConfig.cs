@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO.Ports;
 
 namespace Atmega.Flasher.Models {
     public class ComBitBangPinConfig : BaseConfig {
@@ -38,6 +39,29 @@ namespace Atmega.Flasher.Models {
         public override void ReadFromConfig() {
             Pin = GetConfigString("None", "Pin");
             Invert = GetConfigBool(false, "Invert");
+        }
+
+        public ComPin CreatePin(SerialPort port) {
+            return new ComPin(port, GetPinType(), Invert);
+        }
+
+        private ComPinType GetPinType() {
+            switch (Pin.ToLowerInvariant()) {
+                case "rts":
+                    return ComPinType.Rts;
+                case "dtr":
+                    return ComPinType.Dtr;
+                case "cts":
+                    return ComPinType.Cts;
+                case "cd":
+                    return ComPinType.CD;
+                case "dsr":
+                    return ComPinType.Dsr;
+                case "none":
+                    return ComPinType.None;
+                default:
+                    throw new NotSupportedException();
+            }
         }
 
     }

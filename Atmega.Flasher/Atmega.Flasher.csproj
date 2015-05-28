@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
+    <Compile Include="Models\BaseProgrammerConfig.cs" />
     <Compile Include="Models\ComBitBangConfig.cs" />
     <Compile Include="Models\ComBitBangPinConfig.cs" />
     <Compile Include="Models\ComPortSettings.cs" />

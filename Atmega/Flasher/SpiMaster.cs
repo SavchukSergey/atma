@@ -4,9 +4,11 @@ using System.IO.Ports;
 namespace Atmega.Flasher {
     public class SpiMaster : IDisposable {
         private readonly SerialPort _port;
+        private readonly ComPin _clkPin;
 
-        public SpiMaster(SerialPort port) {
+        public SpiMaster(SerialPort port, ComPin clkPin) {
             _port = port;
+            _clkPin = clkPin;
         }
 
         public void Open() {
@@ -45,12 +47,12 @@ namespace Atmega.Flasher {
         }
 
         public void SetClock() {
-            _port.RtsEnable = true;
+            _clkPin.Set();
             DelayHigh();
         }
 
         public void ResetClock() {
-            _port.RtsEnable = false;
+            _clkPin.Reset();
             DelayLow();
         }
 

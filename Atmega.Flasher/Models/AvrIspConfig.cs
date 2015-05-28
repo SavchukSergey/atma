@@ -1,5 +1,7 @@
-﻿namespace Atmega.Flasher.Models {
-    public class AvrIspConfig : BaseConfig {
+﻿using Atmega.Flasher.AvrIsp;
+
+namespace Atmega.Flasher.Models {
+    public class AvrIspConfig : BaseProgrammerConfig {
 
         private readonly ComPortSettings _comPortSettings;
 
@@ -20,5 +22,9 @@
             _comPortSettings.ReadFromConfig();
         }
 
+        public override IProgrammer CreateProgrammer() {
+            var port = ComPortSettings.CreateSerialPort();
+            return new AvrIspProgrammer(new AvrIspClient(port));
+        }
     }
 }

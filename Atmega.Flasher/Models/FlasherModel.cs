@@ -107,13 +107,9 @@ namespace Atmega.Flasher.Models {
         private static IProgrammer CreateProgrammerFromConfig(FlasherConfig settings) {
             switch (settings.ProgrammerType) {
                 case ProgrammerType.AvrIsp:
-                    var avrIspConfig = settings.AvrIsp;
-                    var avrispPort = avrIspConfig.ComPortSettings.CreateSerialPort();
-                    return new AvrIspProgrammer(new AvrIspClient(avrispPort));
+                    return settings.AvrIsp.CreateProgrammer();
                 case ProgrammerType.ComBitBang:
-                    var comBitBangConfig = settings.ComBitBang;
-                    var comBitBangPort = comBitBangConfig.ComPortSettings.CreateSerialPort();
-                    return new AvrSpiProgrammer(new AvrSpiClient(new SpiMaster(comBitBangPort)));
+                     return settings.ComBitBang.CreateProgrammer();
                 case ProgrammerType.Stub:
                     return new StubProgrammer();
                 default:

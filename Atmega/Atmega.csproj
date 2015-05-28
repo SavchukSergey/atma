@@ -64,6 +64,8 @@
     <Compile Include="Flasher\AvrSignature.cs" />
     <Compile Include="Flasher\AvrSpi\AvrSpiClient.cs" />
     <Compile Include="Flasher\AvrSpi\AvrSpiProgrammer.cs" />
+    <Compile Include="Flasher\ComPin.cs" />
+    <Compile Include="Flasher\ComPinType.cs" />
     <Compile Include="Flasher\IProgrammer.cs" />
     <Compile Include="Flasher\DeviceOperation.cs" />
     <Compile Include="Flasher\ProgressTrackerProgrammer.cs" />

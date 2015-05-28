@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using Atmega.Flasher.AvrSpi;
 
 namespace Atmega.Flasher.Models {
-    public class ComBitBangConfig : BaseConfig {
+    public class ComBitBangConfig : BaseProgrammerConfig {
 
         private readonly ComPortSettings _comPortSettings;
         private readonly ComBitBangPinConfig _resetPin;
@@ -31,11 +32,11 @@ namespace Atmega.Flasher.Models {
         }
 
         public ComBitBangPinConfig ResetPin { get { return _resetPin; } }
-        
+
         public ComBitBangPinConfig ClkPin { get { return _clkPin; } }
 
         public ComBitBangPinConfig MosiPin { get { return _mosiPin; } }
-        
+
         public ComBitBangPinConfig MisoPin { get { return _misoPin; } }
 
 
@@ -65,6 +66,12 @@ namespace Atmega.Flasher.Models {
             _clkPin.ReadFromConfig();
             _mosiPin.ReadFromConfig();
             _misoPin.ReadFromConfig();
+        }
+
+        public override IProgrammer CreateProgrammer() {
+            var port = ComPortSettings.CreateSerialPort();
+            var spiMaster = new SpiMaster(port, ClkPin.CreatePin(port));
+            return new AvrSpiProgrammer(new AvrSpiClient(spiMaster));
         }
     }
 }
