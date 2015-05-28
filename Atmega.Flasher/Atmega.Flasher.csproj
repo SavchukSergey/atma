@@ -89,6 +89,9 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VerifyDeviceWindow.xaml.cs">
+      <DependentUpon>VerifyDeviceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WriteDeviceWindow.xaml.cs">
       <DependentUpon>WriteDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VerifyDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

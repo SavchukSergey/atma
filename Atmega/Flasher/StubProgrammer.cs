@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 
 namespace Atmega.Flasher {
@@ -18,14 +17,13 @@ namespace Atmega.Flasher {
         }
 
         public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
+            var res = new byte[length];
+            var mem = memType == AvrMemoryType.Flash ? _flash : _eeprom;
             Thread.Sleep(50);
-            switch (memType) {
-                case AvrMemoryType.Flash:
-                    return _flash.Skip(start).Take(length).ToArray();
-                case AvrMemoryType.Eeprom:
-                    return _eeprom.Skip(start).Take(length).ToArray();
-                default: throw new NotSupportedException();
+            for (var i = 0; i < length; i++) {
+                res[i] = mem[i % mem.Length];
             }
+            return res;
         }
 
         public void WritePage(int start, AvrMemoryType memType, byte[] data) {

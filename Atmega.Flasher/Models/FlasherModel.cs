@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,61 +53,91 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool ReadDevice(DeviceOperation op, CancellationToken cancellationToken) {
-            try {
-                var config = FlasherConfig.Read();
-                var device = config.Device;
-                var flashSize = device.FlashSize;
-                var eepromSize = device.EepromSize;
-                op.FlashSize += flashSize;
-                op.EepromSize += eepromSize;
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+            var flashSize = device.FlashSize;
+            var eepromSize = device.EepromSize;
+            op.FlashSize += flashSize;
+            op.EepromSize += eepromSize;
 
-                byte[] eepData;
-                byte[] flashData;
-                using (var programmer = CreateProgrammer(op, cancellationToken)) {
-                    programmer.Start();
-                    flashData = programmer.ReadPage(0, flashSize, AvrMemoryType.Flash);
-                    eepData = programmer.ReadPage(0, eepromSize, AvrMemoryType.Eeprom);
-                    programmer.Stop();
-                }
-                op.CurrentState = "Everything is done";
-
-                EepromHexBoard = HexBoard.From(eepData);
-                FlashHexBoard = HexBoard.From(flashData);
-
-                return true;
-            } catch (TimeoutException) {
-                op.CurrentState = "Device is not ready";
-                return false;
+            byte[] eepData;
+            byte[] flashData;
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+                flashData = programmer.ReadPage(0, flashSize, AvrMemoryType.Flash);
+                eepData = programmer.ReadPage(0, eepromSize, AvrMemoryType.Eeprom);
+                programmer.Stop();
             }
+            op.CurrentState = "Everything is done";
+
+            EepromHexBoard = HexBoard.From(eepData);
+            FlashHexBoard = HexBoard.From(flashData);
+
+            return true;
         }
 
         public bool WriteDevice(DeviceOperation op, CancellationToken cancellationToken) {
-            try {
-                var eepromBlocks = EepromHexBoard.SplitBlocks();
-                var flashBlocks = FlashHexBoard.SplitBlocks();
+            var eepromBlocks = EepromHexBoard.SplitBlocks();
+            var flashBlocks = FlashHexBoard.SplitBlocks();
 
-                op.FlashSize += flashBlocks.TotalBytes;
-                op.EepromSize += eepromBlocks.TotalBytes;
+            op.FlashSize += flashBlocks.TotalBytes;
+            op.EepromSize += eepromBlocks.TotalBytes;
 
-                using (var programmer = CreateProgrammer(op, cancellationToken)) {
-                    programmer.Start();
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
 
-                    foreach (var block in flashBlocks.Blocks) {
-                        programmer.WritePage(block.Address, AvrMemoryType.Flash, block.Data);
-                    }
-
-                    foreach (var block in eepromBlocks.Blocks) {
-                        programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data);
-                    }
-
-                    programmer.Stop();
+                foreach (var block in flashBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.Flash, block.Data);
                 }
 
-                return true;
-            } catch (Exception) {
-                op.CurrentState = "Device is not ready";
+                foreach (var block in eepromBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data);
+                }
+
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            return true;
+        }
+
+        public bool VerifyDevice(DeviceOperation op, CancellationToken cancellationToken) {
+            var eepromBlocks = EepromHexBoard.SplitBlocks();
+            var flashBlocks = FlashHexBoard.SplitBlocks();
+
+            op.FlashSize += flashBlocks.TotalBytes;
+            op.EepromSize += eepromBlocks.TotalBytes;
+
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+
+                if (VerifyBlocks(programmer, flashBlocks, AvrMemoryType.Flash, op)) {
+                    return false;
+                }
+
+                if (VerifyBlocks(programmer, eepromBlocks, AvrMemoryType.Eeprom, op)) {
+                    return false;
+                }
+
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            return true;
+        }
+
+        private static bool VerifyBlocks(IProgrammer programmer, HexBlocks blocks, AvrMemoryType memType, DeviceOperation op) {
+            if (blocks.Blocks.Any(block => !VerifyBlock(programmer, block, memType))) {
+                op.Complete();
+                op.CurrentState = string.Format("{0} memory verification failed", memType);
                 return false;
             }
+            return true;
+        }
+
+        private static bool VerifyBlock(IProgrammer programmer, HexBlock block, AvrMemoryType memType) {
+            var actual = programmer.ReadPage(block.Address, block.Data.Length, memType);
+            return !block.Data.Where((t, i) => t != actual[i]).Any();
         }
 
         public async Task<bool> ReadDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
@@ -117,13 +148,9 @@ namespace Atmega.Flasher.Models {
             return await Task.Run(() => WriteDevice(op, cancellationToken), cancellationToken);
         }
 
-        //public int EepromSize {
-        //    get { return 1024; }
-        //}
-
-        //public int FlashSize {
-        //    get { return 32768; }
-        //}
+        public async Task<bool> VerifyDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => VerifyDevice(op, cancellationToken), cancellationToken);
+        }
 
         public void SaveFile(string fileName) {
             var hfb = new HexFileBuilder();

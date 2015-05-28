@@ -24,7 +24,7 @@ namespace Atmega.Flasher {
         }
 
         public virtual string CurrentState { get; set; }
-        
+
         public void IncrementDone(int count, AvrMemoryType memType) {
             switch (memType) {
                 case AvrMemoryType.Flash:
@@ -36,5 +36,9 @@ namespace Atmega.Flasher {
             }
         }
 
+        public void Complete() {
+            FlashDone = FlashSize;
+            EepromDone = EepromSize;
+        }
     }
 }

@@ -7,7 +7,6 @@ using Atmega.Flasher.Models;
 namespace Atmega.Flasher.Views {
     public abstract class BaseDeviceOperationWindow : Window {
 
-        private Task<bool> _task;
         protected readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         protected BaseDeviceOperationWindow() {
@@ -19,11 +18,13 @@ namespace Atmega.Flasher.Views {
             var opView = FindName("OperationView") as FrameworkElement;
             if (opView != null) opView.DataContext = op;
             try {
-                _task = Execute(op);
-                if (await _task) {
+                var res = await Execute(op);
+                if (res) {
                     Close();
                 }
             } catch (OperationCanceledException) {
+            } catch (Exception) {
+                op.CurrentState = "Device is not ready";
             }
         }
 

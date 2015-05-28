@@ -62,10 +62,14 @@ namespace Atmega.Flasher {
             var end = start + data.Length;
             while (offset < end) {
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
+                _progressData.CurrentState = string.Format("Writing {0} memory {1}-{2}", memType, offset, offset + cnt - 1);
                 _inner.WritePage(offset, memType, data.Skip(offset - start).Take(cnt).ToArray());
                 offset += cnt;
 
                 _progressData.IncrementDone(cnt, memType);
+                if (_cancellationToken.IsCancellationRequested) {
+                    _progressData.CurrentState = "Operation is cancelled";
+                } 
                 _cancellationToken.ThrowIfCancellationRequested();
             }
         }

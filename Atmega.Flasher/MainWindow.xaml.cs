@@ -59,6 +59,14 @@ namespace Atmega.Flasher {
             dlg.ShowDialog();
         }
 
+        private void VerifyDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new VerifyDeviceWindow {
+                DataContext = _model,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
         private void SettingsCommand(object sender, ExecutedRoutedEventArgs e) {
             var settings = FlasherConfig.Read();
             var dlg = new SettingsWindow {
