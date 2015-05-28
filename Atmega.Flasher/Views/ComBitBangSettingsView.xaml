@@ -4,9 +4,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Atmega.Flasher.Views"
+             xmlns:models="clr-namespace:Atmega.Flasher.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance models:ComBitBangConfig}">
+    <StackPanel Orientation="Vertical">
         <views:ComPortSettingsView DataContext="{Binding Path=ComPortSettings}" />
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0">Reset PIN:</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0">CLK PIN:</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0">MOSI PIN:</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0">MISO PIN:</TextBlock>
+
+            <ComboBox Grid.Row="0" Grid.Column="1"
+                  ItemsSource="{Binding Path=OuputComPins}" 
+                  SelectedItem="{Binding Path=ResetPin.Pin, Mode=TwoWay}" />
+
+            <ComboBox Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Path=OuputComPins}" 
+                  SelectedItem="{Binding Path=ClkPin.Pin, Mode=TwoWay}" />
+
+            <ComboBox Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding Path=OuputComPins}" 
+                  SelectedItem="{Binding Path=MosiPin.Pin, Mode=TwoWay}" />
+
+            <ComboBox Grid.Row="3" Grid.Column="1"
+                  ItemsSource="{Binding Path=InputComPins}" 
+                  SelectedItem="{Binding Path=MisoPin.Pin, Mode=TwoWay}" />
+
+            <CheckBox  Grid.Row="0" Grid.Column="2" IsChecked="{Binding Path=ResetPin.Invert}" Content="Invert"/>
+            <CheckBox  Grid.Row="1" Grid.Column="2" IsChecked="{Binding Path=ClkPin.Invert}" Content="Invert"/>
+            <CheckBox  Grid.Row="2" Grid.Column="2" IsChecked="{Binding Path=MosiPin.Invert}" Content="Invert"/>
+            <CheckBox  Grid.Row="3" Grid.Column="2" IsChecked="{Binding Path=MisoPin.Invert}" Content="Invert"/>
+        </Grid>
+    </StackPanel>
 </UserControl>

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Views {
     /// <summary>

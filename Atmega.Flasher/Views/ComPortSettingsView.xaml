@@ -19,12 +19,10 @@
         <TextBlock Grid.Row="0" Grid.Column="0">Com Port</TextBlock>
         <ComboBox Grid.Row="0" Grid.Column="1"
                   ItemsSource="{Binding Path=ComPorts}" 
-                  SelectedItem="{Binding Path=ComPort, Mode=TwoWay}">
-        </ComboBox>
+                  SelectedItem="{Binding Path=ComPort, Mode=TwoWay}" />
         <TextBlock Grid.Row="1" Grid.Column="0">Baud Rate</TextBlock>
         <ComboBox Grid.Row="1" Grid.Column="1" 
                   ItemsSource="{Binding Path=BaudRates}"
-                  SelectedItem="{Binding Path=BaudRate, Mode=TwoWay}">
-        </ComboBox>
+                  SelectedItem="{Binding Path=BaudRate, Mode=TwoWay}" />
     </Grid>
 </UserControl>

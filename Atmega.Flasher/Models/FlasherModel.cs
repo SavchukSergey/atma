@@ -1,26 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Atmega.Flasher.AvrIsp;
+using Atmega.Flasher.AvrSpi;
 using Atmega.Flasher.Hex;
-using Atmega.Flasher.Models;
 using Atmega.Hex;
 
-namespace Atmega.Flasher {
+namespace Atmega.Flasher.Models {
     public class FlasherModel : INotifyPropertyChanged {
 
         private HexBoard _eepromHexBoard = new HexBoard();
         private HexBoard _flashHexBoard = new HexBoard();
-        private Dispatcher _dispatcher;
 
         public FlasherModel() {
             _eepromHexBoard[0] = null;
             _flashHexBoard[0] = null;
-            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public void OpenFile(string filePath) {
@@ -109,10 +105,20 @@ namespace Atmega.Flasher {
         }
 
         private static IProgrammer CreateProgrammerFromConfig(FlasherConfig settings) {
-            //return new StubProgrammer();
-            var set = settings.AvrIsp;
-            var port = set.ComPortSettings.CreateSerialPort();
-            return new AvrIspProgrammer(new AvrIspClient(port));
+            switch (settings.ProgrammerType) {
+                case ProgrammerType.AvrIsp:
+                    var avrIspConfig = settings.AvrIsp;
+                    var avrispPort = avrIspConfig.ComPortSettings.CreateSerialPort();
+                    return new AvrIspProgrammer(new AvrIspClient(avrispPort));
+                case ProgrammerType.ComBitBang:
+                    var comBitBangConfig = settings.ComBitBang;
+                    var comBitBangPort = comBitBangConfig.ComPortSettings.CreateSerialPort();
+                    return new AvrSpiProgrammer(new AvrSpiClient(new SpiMaster(comBitBangPort)));
+                case ProgrammerType.Stub:
+                    return new StubProgrammer();
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }

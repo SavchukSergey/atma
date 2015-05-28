@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using Atmega.Flasher.Annotations;
 
@@ -36,6 +37,10 @@ namespace Atmega.Flasher.Models {
             ConfigurationManager.RefreshSection("appSettings");
         }
 
+        protected void UpdateConfigBool(string key, bool val) {
+            UpdateConfig(val ? "true" : "false", key);
+        }
+
         private string GetConfig(string key) {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException("key");
             key = GetKey(key);
@@ -49,7 +54,18 @@ namespace Atmega.Flasher.Models {
         protected int GetConfigInt(int defaultValue, string key) {
             var raw = GetConfig(key);
             int res;
-            return int.TryParse(raw, out res) ? res : defaultValue;
+            return int.TryParse(raw, NumberStyles.Integer, CultureInfo.InvariantCulture, out res) ? res : defaultValue;
+        }
+
+        protected bool GetConfigBool(bool defaultValue, string key) {
+            var raw = (GetConfig(key) ?? "").ToLowerInvariant();
+            switch (raw) {
+                case "true":
+                    return true;
+                case "false":
+                    return false;
+            }
+            return defaultValue;
         }
 
         protected TEnum GetConfigEnum<TEnum>(TEnum defaultValue, string key) where TEnum : struct {
