@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 
 namespace Atmega.Flasher {
@@ -48,11 +49,19 @@ namespace Atmega.Flasher {
             }
 
             return result;
-
         }
 
         public void WritePage(int start, AvrMemoryType memType, byte[] data) {
-            throw new NotImplementedException();
+            var offset = start;
+            var end = start + data.Length;
+            while (offset < end) {
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
+                _inner.WritePage(offset, memType, data.Skip(offset - start).Take(cnt).ToArray());
+                offset += cnt;
+
+                _progressData.IncrementDone(cnt, memType);
+                _cancellationToken.ThrowIfCancellationRequested();
+            }
         }
     }
 }

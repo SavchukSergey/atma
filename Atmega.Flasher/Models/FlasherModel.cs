@@ -74,22 +74,24 @@ namespace Atmega.Flasher.Models {
         }
 
         public DeviceOperation WriteDevice(DeviceOperation op, CancellationToken cancellationToken) {
-            op.FlashSize += FlashSize;
-            op.EepromSize += EepromSize;
+
+            var eepromBlocks = EepromHexBoard.SplitBlocks();
+            var flashBlocks = FlashHexBoard.SplitBlocks();
+
+            op.FlashSize += flashBlocks.TotalBytes;
+            op.EepromSize += eepromBlocks.TotalBytes;
 
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
 
-                for (var i = 0; i < FlashSize; i += 50) {
-                    Thread.Sleep(50);
-                    op.FlashDone += 50;
+                foreach (var block in flashBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.Flash, block.Data);
                 }
-                for (var i = 0; i < EepromSize; i += 50) {
-                    Thread.Sleep(50);
-                    op.EepromSize+= 50;
+
+                foreach (var block in eepromBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data);
                 }
-                //eepData = programmer.WritePage(0, EepromHexBoard., AvrMemoryType.Eeprom);
-                //flashData = programmer.ReadPage(0, FlashSize, AvrMemoryType.Flash);
+
                 programmer.Stop();
             }
 

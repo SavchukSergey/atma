@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Atmega.Hex;
@@ -64,6 +65,39 @@ namespace Atmega.Flasher.Hex {
             }
 
             return board;
+        }
+
+        public HexBlocks SplitBlocks() {
+            var res = new HexBlocks();
+            var blockStart = 0;
+            var address = 0;
+            var bytes = new List<byte>();
+
+            var allBytes = Lines
+                .SelectMany(l => l.Bytes.Select((b, i) => new HexBlockByte { Address = l.Address + i, Byte = b.Value }))
+                .Where(item => item.Byte.HasValue);
+            foreach (var bt in allBytes) {
+                if (bt.Address != address) {
+                    if (bytes.Count > 0) {
+                        res.Blocks.Add(new HexBlock {
+                            Address = blockStart,
+                            Data = bytes.ToArray()
+                        });
+                        bytes = new List<byte>();
+                    }
+                    blockStart = bt.Address;
+                    address = blockStart;
+                }
+                if (bt.Byte.HasValue) bytes.Add(bt.Byte.Value);
+                address++;
+            }
+            if (bytes.Count != 0) {
+                res.Blocks.Add(new HexBlock {
+                    Address = blockStart,
+                    Data = bytes.ToArray()
+                });
+            }
+            return res;
         }
     }
 }
