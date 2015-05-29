@@ -27,6 +27,8 @@ namespace Atmega.Flasher {
             get { return Progress / 100; }
         }
 
+        public virtual DeviceOperationStatus Status { get; set; }
+
         public virtual string CurrentState { get; set; }
 
         public void IncrementDone(int count, AvrMemoryType memType) {

@@ -24,8 +24,10 @@ namespace Atmega.Flasher.Views {
                 }
             } catch (OperationCanceledException) {
                 op.CurrentState = "Operation is cancelled";
+                op.Status = DeviceOperationStatus.Error;
             } catch (Exception) {
                 op.CurrentState = "Device is not ready";
+                op.Status = DeviceOperationStatus.Error;
             }
         }
 

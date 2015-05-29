@@ -135,6 +135,7 @@ namespace Atmega.Flasher.Models {
             }
             op.Complete();
             op.CurrentState = string.Format("{0} memory verification failed", memType);
+            op.Status = DeviceOperationStatus.Error;
             return false;
         }
 
