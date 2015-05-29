@@ -108,31 +108,34 @@ namespace Atmega.Flasher.Models {
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
 
+            op.FlashDone = 500;
+
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
 
-                if (VerifyBlocks(programmer, flashBlocks, AvrMemoryType.Flash, op)) {
+                if (!VerifyBlocks(programmer, flashBlocks, AvrMemoryType.Flash, op)) {
                     return false;
                 }
 
-                if (VerifyBlocks(programmer, eepromBlocks, AvrMemoryType.Eeprom, op)) {
+                if (!VerifyBlocks(programmer, eepromBlocks, AvrMemoryType.Eeprom, op)) {
                     return false;
                 }
 
                 programmer.Stop();
             }
+            op.Complete();
             op.CurrentState = "Everything is done";
 
             return true;
         }
 
         private static bool VerifyBlocks(IProgrammer programmer, HexBlocks blocks, AvrMemoryType memType, DeviceOperation op) {
-            if (blocks.Blocks.Any(block => !VerifyBlock(programmer, block, memType))) {
-                op.Complete();
-                op.CurrentState = string.Format("{0} memory verification failed", memType);
-                return false;
+            if (blocks.Blocks.All(block => VerifyBlock(programmer, block, memType))) {
+                return true;
             }
-            return true;
+            op.Complete();
+            op.CurrentState = string.Format("{0} memory verification failed", memType);
+            return false;
         }
 
         private static bool VerifyBlock(IProgrammer programmer, HexBlock block, AvrMemoryType memType) {

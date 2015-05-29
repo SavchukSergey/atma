@@ -9,6 +9,6 @@
     <StackPanel Orientation="Vertical" x:Name="OperationView" >
         <TextBlock>Progress:</TextBlock>
         <ProgressBar Minimum="0" Maximum="100" Value="{Binding Path=Progress, Mode=OneWay}" Height="50"></ProgressBar>
-        <TextBlock Text="{Binding CurrentState}"></TextBlock>
+        <TextBlock Text="{Binding CurrentState}" />
     </StackPanel>
 </UserControl>

@@ -6,7 +6,6 @@
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
         mc:Ignorable="d"
         Title="Reading Device" Height="142" Width="300"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Icon="../Icons/read.png"
         d:DataContext="{d:DesignInstance models:FlasherOperationModel }">
     <views:BaseDeviceOperationWindow.TaskbarItemInfo>

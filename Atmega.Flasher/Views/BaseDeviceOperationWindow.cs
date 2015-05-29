@@ -11,6 +11,8 @@ namespace Atmega.Flasher.Views {
 
         protected BaseDeviceOperationWindow() {
             Loaded += BaseDeviceOperationWindow_Loaded;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ResizeMode = ResizeMode.NoResize;
         }
 
         private async void BaseDeviceOperationWindow_Loaded(object sender, RoutedEventArgs e) {
@@ -21,6 +23,7 @@ namespace Atmega.Flasher.Views {
                     Close();
                 }
             } catch (OperationCanceledException) {
+                op.CurrentState = "Operation is cancelled";
             } catch (Exception) {
                 op.CurrentState = "Device is not ready";
             }

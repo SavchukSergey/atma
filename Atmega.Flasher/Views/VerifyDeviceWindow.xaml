@@ -3,13 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:Atmega.Flasher.Views"
         Title="Verifying Device" Height="142" Width="300"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
-        Icon="../Icons/verify.png"
-                                 >
+        Icon="../Icons/verify.png"  >
     <views:BaseDeviceOperationWindow.TaskbarItemInfo>
         <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding Path=DeviceOperation.ProgressFraction}" />
     </views:BaseDeviceOperationWindow.TaskbarItemInfo>
     <StackPanel Orientation="Vertical">
-        <views:DeviceOperationView x:Name="OperationView" />
+        <views:DeviceOperationView />
     </StackPanel>
 </views:BaseDeviceOperationWindow>
