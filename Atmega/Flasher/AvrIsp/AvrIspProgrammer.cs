@@ -64,7 +64,7 @@ namespace Atmega.Flasher.AvrIsp {
                 _client.SetAddress((ushort)(offset >> 1));
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
-                _client.WriteEeprom(data, offset, cnt);
+                _client.WriteEeprom(data, offset - start, cnt);
                 offset += cnt;
             }
         }
@@ -95,7 +95,7 @@ namespace Atmega.Flasher.AvrIsp {
                 _client.SetAddress((ushort)(offset >> 1));
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
-                _client.WriteFlash(data, offset, cnt);
+                _client.WriteFlash(data, offset - start, cnt);
                 offset += cnt;
             }
         }
