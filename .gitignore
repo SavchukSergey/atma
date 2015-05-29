@@ -14,3 +14,5 @@
 
 /Atmega.Flasher/bin/
 /Atmega.Flasher/obj/
+/Atmega.Flasher/*.user
+/Atmega.Flasher/Icons/Thumbs.db

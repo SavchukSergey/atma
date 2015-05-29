@@ -61,6 +61,7 @@
     <Compile Include="Models\ComBitBangConfig.cs" />
     <Compile Include="Models\ComBitBangPinConfig.cs" />
     <Compile Include="Models\ComPortSettings.cs" />
+    <Compile Include="Models\FlasherOperationModel.cs" />
     <Compile Include="Models\ProgrammerType.cs" />
     <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
@@ -91,6 +92,9 @@
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppToolBar.xaml.cs">
+      <DependentUpon>AppToolBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VerifyDeviceWindow.xaml.cs">
       <DependentUpon>VerifyDeviceWindow.xaml</DependentUpon>
@@ -151,6 +155,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AppToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VerifyDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,7 +206,16 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Icons\verify.png" />
+    <Resource Include="Icons\main.png" />
+    <Resource Include="Icons\lock-bits.png" />
+    <Resource Include="Icons\save.png" />
+    <Resource Include="Icons\open.png" />
+    <Resource Include="Icons\read.png" />
+    <Resource Include="Icons\write.png" />
+    <Resource Include="Icons\settings.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

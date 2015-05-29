@@ -7,6 +7,7 @@
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
         mc:Ignorable="d"
         Title="Flasher" Height="700" Width="600" MinWidth="600" Padding="10" WindowStartupLocation="CenterScreen"
+        Icon="Icons/main.png"
         d:DataContext="{d:DesignInstance models:FlasherModel}">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand" />
@@ -17,40 +18,44 @@
         <CommandBinding Command="commands:FlasherCommands.LockBits" Executed="LockBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.Settings" Executed="SettingsCommand" />
     </Window.CommandBindings>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Menu VerticalAlignment="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="Open..." Command="ApplicationCommands.Open" />
-                <MenuItem Header="Save..." Command="ApplicationCommands.Save" />
-            </MenuItem>
-            <MenuItem Header="Device">
-                <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />
-                <MenuItem Header="Write" Command="commands:FlasherCommands.WriteDevice" />
-                <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
-                <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" />
-            </MenuItem>
-            <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />
-        </Menu>
-        <Grid Grid.Row="1">
+    <DockPanel LastChildFill="True">
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+            <Menu VerticalAlignment="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Open..." Command="ApplicationCommands.Open" />
+                    <MenuItem Header="Save..." Command="ApplicationCommands.Save" />
+                </MenuItem>
+                <MenuItem Header="Device">
+                    <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />
+                    <MenuItem Header="Write" Command="commands:FlasherCommands.WriteDevice" />
+                    <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
+                    <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" />
+                </MenuItem>
+                <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />
+            </Menu>
+            <views:AppToolBar />
+        </StackPanel>
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock>FLASH</TextBlock>
-            <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=FlashHexBoard}"/>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock>FLASH</TextBlock>
+                <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=FlashHexBoard}"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock>EEPROM</TextBlock>
+                <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}"/>
+            </Grid>
         </Grid>
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <TextBlock>EEPROM</TextBlock>
-            <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}"/>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </Window>

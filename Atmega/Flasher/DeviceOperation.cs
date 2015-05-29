@@ -23,6 +23,10 @@ namespace Atmega.Flasher {
             get { return 100.0 * Done / Math.Max(1, Total); }
         }
 
+        public double ProgressFraction {
+            get { return Progress / 100; }
+        }
+
         public virtual string CurrentState { get; set; }
 
         public void IncrementDone(int count, AvrMemoryType memType) {

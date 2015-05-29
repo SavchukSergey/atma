@@ -14,9 +14,7 @@ namespace Atmega.Flasher.Views {
         }
 
         private async void BaseDeviceOperationWindow_Loaded(object sender, RoutedEventArgs e) {
-            var op = new ObservableDeviceOperation();
-            var opView = FindName("OperationView") as FrameworkElement;
-            if (opView != null) opView.DataContext = op;
+            var op = DeviceOperation;
             try {
                 var res = await Execute(op);
                 if (res) {
@@ -28,8 +26,13 @@ namespace Atmega.Flasher.Views {
             }
         }
 
+        protected DeviceOperation DeviceOperation {
+            get { return ((FlasherOperationModel)DataContext).DeviceOperation; }
+        }
+
+
         protected FlasherModel Model {
-            get { return DataContext as FlasherModel; }
+            get { return ((FlasherOperationModel)DataContext).Flasher; }
         }
 
         protected override void OnClosed(EventArgs e) {

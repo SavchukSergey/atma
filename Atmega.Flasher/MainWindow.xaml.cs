@@ -45,7 +45,7 @@ namespace Atmega.Flasher {
 
         private void ReadDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new ReadDeviceWindow {
-                DataContext = _model,
+                DataContext = new FlasherOperationModel(_model),
                 Owner = this
             };
             dlg.ShowDialog();
@@ -53,7 +53,7 @@ namespace Atmega.Flasher {
 
         private void WriteDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new WriteDeviceWindow {
-                DataContext = _model,
+                DataContext = new FlasherOperationModel(_model),
                 Owner = this
             };
             dlg.ShowDialog();
@@ -61,7 +61,7 @@ namespace Atmega.Flasher {
 
         private void VerifyDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new VerifyDeviceWindow {
-                DataContext = _model,
+                DataContext = new FlasherOperationModel(_model),
                 Owner = this
             };
             dlg.ShowDialog();

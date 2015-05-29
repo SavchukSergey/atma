@@ -18,6 +18,7 @@ namespace Atmega.Flasher {
                     _eepromDone = value;
                     OnPropertyChanged();
                     OnPropertyChanged("Progress");
+                    OnPropertyChanged("ProgressFraction");
                 }
             }
         }
@@ -29,6 +30,7 @@ namespace Atmega.Flasher {
                     _flashDone = value;
                     OnPropertyChanged();
                     OnPropertyChanged("Progress");
+                    OnPropertyChanged("ProgressFraction");
                 }
             }
         }
@@ -40,6 +42,7 @@ namespace Atmega.Flasher {
                     _flashSize = value;
                     OnPropertyChanged();
                     OnPropertyChanged("Progress");
+                    OnPropertyChanged("ProgressFraction");
                 }
             }
         }
@@ -51,6 +54,7 @@ namespace Atmega.Flasher {
                     _eepromSize = value;
                     OnPropertyChanged();
                     OnPropertyChanged("Progress");
+                    OnPropertyChanged("ProgressFraction");
                 }
             }
         }
