@@ -6,7 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
         mc:Ignorable="d"
-        Title="Flasher" Height="700" Width="600" MinWidth="600" Padding="10" WindowStartupLocation="CenterScreen"
+        Title="Flasher"
+        Height="700" Width="740"
+        MinWidth="740"
+        Padding="10" WindowStartupLocation="CenterScreen"
         Icon="Icons/main.png"
         d:DataContext="{d:DesignInstance models:FlasherModel}">
     <Window.CommandBindings>
@@ -15,6 +18,7 @@
         <CommandBinding Command="commands:FlasherCommands.ReadDevice" Executed="ReadDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.WriteDevice" Executed="WriteDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.VerifyDevice" Executed="VerifyDeviceCommand" />
+        <CommandBinding Command="commands:FlasherCommands.EraseDevice" Executed="EraseDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.LockBits" Executed="LockBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.Settings" Executed="SettingsCommand" />
     </Window.CommandBindings>
@@ -29,6 +33,7 @@
                     <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />
                     <MenuItem Header="Write" Command="commands:FlasherCommands.WriteDevice" />
                     <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
+                    <MenuItem Header="Erase" Command="commands:FlasherCommands.EraseDevice" />
                     <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" />
                 </MenuItem>
                 <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />

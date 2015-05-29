@@ -53,6 +53,10 @@ namespace Atmega.Flasher.AvrIsp {
             _client.Universal(0xac, 0xe0, 0x00, bits.Value);
         }
 
+        public void EraseDevice() {
+            _client.Universal(0xac, 0x80, 0x00, 0x00);
+        }
+
         private void WriteEeprom(int start, byte[] data) {
             var offset = start;
             var end = start + data.Length;

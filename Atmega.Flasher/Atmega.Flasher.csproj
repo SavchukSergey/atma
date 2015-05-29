@@ -88,6 +88,9 @@
     <Compile Include="Views\LockBitsWindow.xaml.cs">
       <DependentUpon>LockBitsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EraseDeviceWindow.xaml.cs">
+      <DependentUpon>EraseDeviceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReadDeviceWindow.xaml.cs">
       <DependentUpon>ReadDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EraseDeviceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ReadDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,6 +214,7 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Icons\erase.png" />
     <Resource Include="Icons\verify.png" />
     <Resource Include="Icons\main.png" />
     <Resource Include="Icons\lock-bits.png" />

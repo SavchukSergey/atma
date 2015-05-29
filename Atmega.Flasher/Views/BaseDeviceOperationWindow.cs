@@ -29,6 +29,10 @@ namespace Atmega.Flasher.Views {
                 op.CurrentState = "Device is not ready";
                 op.Status = DeviceOperationStatus.Error;
             }
+            if (op.Status == DeviceOperationStatus.Error) {
+                op.FlashSize = Math.Max(1, op.FlashSize);
+                op.Complete();
+            }
         }
 
         protected DeviceOperation DeviceOperation {

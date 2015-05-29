@@ -57,5 +57,9 @@ namespace Atmega.Flasher.AvrSpi {
         public void WriteLockBits(AtmegaLockBits bits) {
             _client.WriteLockBits(bits.Value);
         }
+
+        public void EraseDevice() {
+            _client.ChipErase();
+        }
     }
 }

@@ -9,7 +9,7 @@
         Icon="../Icons/read.png"
         d:DataContext="{d:DesignInstance models:FlasherOperationModel }">
     <views:BaseDeviceOperationWindow.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding Path=DeviceOperation.ProgressFraction}" />
+        <TaskbarItemInfo ProgressState="{Binding Path=DeviceOperation.Status, Mode=OneWay, Converter={StaticResource ProgressStateConverter}}" ProgressValue="{Binding Path=DeviceOperation.ProgressFraction}" />
     </views:BaseDeviceOperationWindow.TaskbarItemInfo>
     <StackPanel Orientation="Vertical">
         <views:DeviceOperationView DataContext="{Binding Path=DeviceOperation}" />

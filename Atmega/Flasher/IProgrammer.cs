@@ -15,5 +15,6 @@ namespace Atmega.Flasher {
 
         void WriteLockBits(AtmegaLockBits bits);
 
+        void EraseDevice();
     }
 }

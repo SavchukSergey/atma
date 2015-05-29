@@ -52,11 +52,14 @@ namespace Atmega.Flasher {
         }
 
         private void WriteDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
-            var dlg = new WriteDeviceWindow {
-                DataContext = new FlasherOperationModel(_model),
-                Owner = this
-            };
-            dlg.ShowDialog();
+            var msgResult = MessageBox.Show("Are you sure you want start writing to the device. All previous data will be lost", "Write confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (msgResult == MessageBoxResult.Yes) {
+                var dlg = new WriteDeviceWindow {
+                    DataContext = new FlasherOperationModel(_model),
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
         }
 
         private void VerifyDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
@@ -82,6 +85,17 @@ namespace Atmega.Flasher {
                 Owner = this
             };
             dlg.ShowDialog();
+        }
+
+        private void EraseDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
+            var msgResult = MessageBox.Show("Are you sure you want start erasing the device. All previous data will be lost", "Erase confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (msgResult == MessageBoxResult.Yes) {
+                var dlg = new EraseDeviceWindow {
+                    DataContext = new FlasherOperationModel(_model),
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:commands="clr-namespace:Atmega.Flasher.Commands"
              mc:Ignorable="d" 
-             d:DesignHeight="64" d:DesignWidth="500">
+             d:DesignHeight="64" d:DesignWidth="650">
     <UserControl.Resources>
         <Style TargetType="StackPanel">
             <Setter Property="Orientation" Value="Vertical" />
@@ -54,6 +54,14 @@
                     <TextBlock>Verify Device</TextBlock>
                 </StackPanel>
             </Button>
+            <Button Command="commands:FlasherCommands.EraseDevice">
+                <StackPanel>
+                    <Image Source="../Icons/erase.png" />
+                    <TextBlock>Erase Device</TextBlock>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+        <ToolBar>
             <Button Command="commands:FlasherCommands.LockBits">
                 <StackPanel>
                     <Image Source="../Icons/lock-bits.png" />

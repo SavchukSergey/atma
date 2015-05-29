@@ -108,8 +108,6 @@ namespace Atmega.Flasher.Models {
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
 
-            op.FlashDone = 500;
-
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
 
@@ -123,6 +121,27 @@ namespace Atmega.Flasher.Models {
 
                 programmer.Stop();
             }
+            op.Complete();
+            op.CurrentState = "Everything is done";
+
+            return true;
+        }
+
+        public bool EraseDevice(DeviceOperation op, CancellationToken cancellationToken) {
+            var eepromBlocks = EepromHexBoard.SplitBlocks();
+            var flashBlocks = FlashHexBoard.SplitBlocks();
+
+            op.FlashSize += flashBlocks.TotalBytes;
+            op.EepromSize += eepromBlocks.TotalBytes;
+
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+
+                programmer.EraseDevice();
+
+                programmer.Stop();
+            }
+
             op.Complete();
             op.CurrentState = "Everything is done";
 
@@ -154,6 +173,10 @@ namespace Atmega.Flasher.Models {
 
         public async Task<bool> VerifyDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
             return await Task.Run(() => VerifyDevice(op, cancellationToken), cancellationToken);
+        }
+
+        public async Task<bool> EraseDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => EraseDevice(op, cancellationToken), cancellationToken);
         }
 
         public void SaveFile(string fileName) {

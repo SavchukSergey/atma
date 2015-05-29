@@ -83,5 +83,10 @@ namespace Atmega.Flasher {
             _progressData.CurrentState = "Writing lock bits";
             _inner.WriteLockBits(bits);
         }
+
+        public void EraseDevice() {
+            _progressData.CurrentState = "Erasing the device";
+            _inner.EraseDevice();
+        }
     }
 }
