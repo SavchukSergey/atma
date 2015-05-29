@@ -6,6 +6,7 @@ namespace Atmega.Flasher.Commands {
         private readonly static RoutedCommand _readDevice = new RoutedCommand();
         private readonly static RoutedCommand _writeDevice = new RoutedCommand();
         private readonly static RoutedCommand _verifyDevice = new RoutedCommand();
+        private readonly static RoutedCommand _lockBitsDevice = new RoutedCommand();
         private readonly static RoutedCommand _settings = new RoutedCommand();
 
         public static RoutedCommand ReadDevice {
@@ -18,6 +19,10 @@ namespace Atmega.Flasher.Commands {
 
         public static RoutedCommand VerifyDevice {
             get { return _verifyDevice; }
+        }
+
+        public static RoutedCommand LockBits {
+            get { return _lockBitsDevice; }
         }
 
         public static RoutedCommand Settings {

@@ -38,7 +38,24 @@ namespace Atmega.Flasher.AvrSpi {
         }
 
         public void WritePage(int start, AvrMemoryType memType, byte[] data) {
-            throw new System.NotImplementedException();
+            for (var i = 0; i < data.Length; i++) {
+                switch (memType) {
+                    case AvrMemoryType.Flash:
+                        _client.WriteFlashByte((ushort)(start + i), data[i]);
+                        break;
+                    case AvrMemoryType.Eeprom:
+                        _client.WriteEepromMemory((ushort)(start + i), data[i]);
+                        break;
+                }
+            }
+        }
+
+        public AtmegaLockBits ReadLockBits() {
+            return new AtmegaLockBits { Value = _client.ReadLockBits() };
+        }
+
+        public void WriteLockBits(AtmegaLockBits bits) {
+            _client.WriteLockBits(bits.Value);
         }
     }
 }

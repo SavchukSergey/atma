@@ -57,6 +57,7 @@
     <Compile Include="Elf\ElfStreamExt.cs" />
     <Compile Include="Elf\ElfStrings.cs" />
     <Compile Include="Elf\ElfType.cs" />
+    <Compile Include="Flasher\AtmegaLockBits.cs" />
     <Compile Include="Flasher\AvrIsp\AvrIspClient.cs" />
     <Compile Include="Flasher\AvrIsp\AvrIspProgrammer.cs" />
     <Compile Include="Flasher\AvrIsp\AvrIspVersion.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Flasher\ComPinType.cs" />
     <Compile Include="Flasher\IProgrammer.cs" />
     <Compile Include="Flasher\DeviceOperation.cs" />
+    <Compile Include="Flasher\MemoryProtectionMode.cs" />
     <Compile Include="Flasher\ProgressTrackerProgrammer.cs" />
     <Compile Include="Flasher\SpiMaster.cs" />
     <Compile Include="Flasher\StubProgrammer.cs" />

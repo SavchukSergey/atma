@@ -11,5 +11,9 @@ namespace Atmega.Flasher {
 
         void WritePage(int start, AvrMemoryType memType, byte[] data);
 
+        AtmegaLockBits ReadLockBits();
+
+        void WriteLockBits(AtmegaLockBits bits);
+
     }
 }

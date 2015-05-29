@@ -83,6 +83,9 @@
     <Compile Include="Views\HexBoardView.xaml.cs">
       <DependentUpon>HexBoardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LockBitsWindow.xaml.cs">
+      <DependentUpon>LockBitsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReadDeviceWindow.xaml.cs">
       <DependentUpon>ReadDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HexBoardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LockBitsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

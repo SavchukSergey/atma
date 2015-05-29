@@ -14,6 +14,7 @@
         <CommandBinding Command="commands:FlasherCommands.ReadDevice" Executed="ReadDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.WriteDevice" Executed="WriteDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.VerifyDevice" Executed="VerifyDeviceCommand" />
+        <CommandBinding Command="commands:FlasherCommands.LockBits" Executed="LockBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.Settings" Executed="SettingsCommand" />
     </Window.CommandBindings>
     <Grid>
@@ -31,6 +32,7 @@
                 <MenuItem Header="Read" Command="commands:FlasherCommands.ReadDevice" />
                 <MenuItem Header="Write" Command="commands:FlasherCommands.WriteDevice" />
                 <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
+                <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" />
             </MenuItem>
             <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />
         </Menu>

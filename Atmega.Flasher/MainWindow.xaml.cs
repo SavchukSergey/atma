@@ -76,5 +76,12 @@ namespace Atmega.Flasher {
             dlg.ShowDialog();
         }
 
+        private void LockBitsCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new LockBitsWindow {
+                DataContext = _model,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
     }
 }

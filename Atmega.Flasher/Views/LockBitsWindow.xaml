@@ -1,0 +1,29 @@
+﻿<Window x:Class="Atmega.Flasher.Views.LockBitsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lock Bits" Height="300" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Memory Protection</TextBlock>
+        <CheckBox Grid.Row="0" Grid.Column="1">Allow Read</CheckBox>
+        <CheckBox Grid.Row="0" Grid.Column="2">Allow Write</CheckBox>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">Application Protection</TextBlock>
+        <CheckBox Grid.Row="1" Grid.Column="1">Allow Read</CheckBox>
+        <CheckBox Grid.Row="1" Grid.Column="2">Allow Write</CheckBox>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">BootLoader Protection</TextBlock>
+        <CheckBox Grid.Row="2" Grid.Column="1">Allow Read</CheckBox>
+        <CheckBox Grid.Row="2" Grid.Column="2">Allow Write</CheckBox>
+
+    </Grid>
+</Window>

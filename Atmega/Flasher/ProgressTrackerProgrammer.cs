@@ -69,9 +69,19 @@ namespace Atmega.Flasher {
                 _progressData.IncrementDone(cnt, memType);
                 if (_cancellationToken.IsCancellationRequested) {
                     _progressData.CurrentState = "Operation is cancelled";
-                } 
+                }
                 _cancellationToken.ThrowIfCancellationRequested();
             }
+        }
+
+        public AtmegaLockBits ReadLockBits() {
+            _progressData.CurrentState = "Reading lock bits";
+            return _inner.ReadLockBits();
+        }
+
+        public void WriteLockBits(AtmegaLockBits bits) {
+            _progressData.CurrentState = "Writing lock bits";
+            _inner.WriteLockBits(bits);
         }
     }
 }

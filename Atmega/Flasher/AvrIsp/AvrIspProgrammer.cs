@@ -45,6 +45,14 @@ namespace Atmega.Flasher.AvrIsp {
             }
         }
 
+        public AtmegaLockBits ReadLockBits() {
+            return new AtmegaLockBits { Value = _client.Universal(0x58, 0x00, 0x00, 0x00) };
+        }
+
+        public void WriteLockBits(AtmegaLockBits bits) {
+            _client.Universal(0xac, 0xe0, 0x00, bits.Value);
+        }
+
         private void WriteEeprom(int start, byte[] data) {
             var offset = start;
             var end = start + data.Length;
