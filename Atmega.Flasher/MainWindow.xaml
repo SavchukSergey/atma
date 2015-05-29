@@ -45,22 +45,9 @@
                 <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock>FLASH</TextBlock>
-                <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=FlashHexBoard}"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock>EEPROM</TextBlock>
-                <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}"/>
-            </Grid>
+
+            <views:HexBoardView Grid.Row="0" DataContext="{Binding Path=FlashHexBoard}" Title="FLASH"/>
+            <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}" Title="EEPROM"/>
         </Grid>
     </DockPanel>
 </Window>

@@ -99,5 +99,9 @@ namespace Atmega.Flasher.Hex {
             }
             return res;
         }
+
+        public void Clear() {
+            Lines.Clear();
+        }
     }
 }
