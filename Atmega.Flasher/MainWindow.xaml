@@ -40,7 +40,7 @@
             </Menu>
             <views:AppToolBar />
         </StackPanel>
-        <Grid>
+        <Grid Style="{StaticResource Container}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
