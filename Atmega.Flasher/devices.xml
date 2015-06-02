@@ -1,27 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <devices>
-  <device name="atmega48a" eeprom="256" ram="512" signature="1e9205">
+  <device name="ATmega48a" eeprom="256" ram="512" signature="1e9205">
     <flash size="4096" page="64" />
   </device>
-  <device name="atmega48pa" eeprom="256" ram="512" signature="1e920a">
+  <device name="ATmega48pa" eeprom="256" ram="512" signature="1e920a">
     <flash size="4096" page="64" />
   </device>
-  <device name="atmega88a" eeprom="512" ram="1024" signature="1e930a">
+  <device name="ATmega88a" eeprom="512" ram="1024" signature="1e930a">
     <flash size="8192" page="64" />
   </device>
-  <device name="atmega88pa" eeprom="512" ram="1024" signature="1e930f">
+  <device name="ATmega88pa" eeprom="512" ram="1024" signature="1e930f">
     <flash size="8192" page="64" />
   </device>
-  <device name="atmega168a" eeprom="512" ram="1024" signature="1e9406">
+  <device name="ATmega168a" eeprom="512" ram="1024" signature="1e9406">
     <flash size="16384" page="128" />
   </device>
-  <device name="atmega168pa" eeprom="512" ram="1024" signature="1e940b">
+  <device name="ATmega168pa" eeprom="512" ram="1024" signature="1e940b">
     <flash size="16384" page="128" />
   </device>
-  <device name="atmega328" eeprom="1024" ram="2048" signature="1e9514">
+  <device name="ATmega328" eeprom="1024" ram="2048" signature="1e9514">
     <flash size="32768" page="128" />
   </device>
-  <device name="atmega328p" eeprom="1024" ram="2048" signature="1e950f">
+  <device name="ATmega328p" eeprom="1024" ram="2048" signature="1e950f">
     <flash size="32768" page="128" />
   </device>
+
+
+  <device name="ATtiny11" signature="1e9005">
+  </device>
+
+  <device name="ATtiny12" signature="1e9005">
+  </device>
+
+  <device name="ATtiny15" signature="1e9006">
+  </device>
+
+  <device name="ATtiny22" signature="1e9106">
+  </device>
+
+  <device name="ATtiny26" signature="1e9109">
+  </device>
+
+  <device name="ATtiny28" signature="1e9107">
+  </device>
+
+  <device name="AT90S1200" signature="1e9001">
+  </device>
+
+  <device name="AT90S2313" signature="1e9101">
+  </device>
+
+  <device name="AT90S2323" signature="1e9102">
+  </device>
+
+  <device name="AT90S2333" signature="1e9105">
+  </device>
+
+  <device name="AT90S2343" signature="1e9103">
+  </device>
+
+  <device name="AT90S4414" signature="1e9201">
+  </device>
+
+  <device name="AT90S4433" signature="1e9203">
+  </device>
+
+  <device name="AT90S4434" signature="1e9202">
+  </device>
+
+  <device name="AT90S8515" signature="1e9301">
+  </device>
+
+  <device name="AT90S8535" signature="1e9303">
+  </device>
+
+
+  <device name="ATmega8" signature="1e9307">
+  </device>
+
+  <device name="ATmega8515" signature="1e9306">
+  </device>
+
+  <device name="ATmega8535" signature="1e9308">
+  </device>
+
+  <device name="ATmega161" signature="1e9401">
+  </device>
+
+  <device name="ATmega163" signature="1e9402">
+  </device>
+
+  <device name="ATmega16" signature="1e9403">
+  </device>
+
+  <device name="ATmega162" signature="1e9404">
+  </device>
+
+  <device name="ATmega169" signature="1e9405">
+  </device>
+
+  <device name="ATmega323" signature="1e9501">
+  </device>
+
+  <device name="ATmega32" signature="1e9502">
+  </device>
+
+  <device name="ATmega64" signature="1e9602">
+  </device>
+
+  <device name="ATmega103" signature="1e9701">
+  </device>
+
+  <device name="ATmega128" signature="1e9702">
+  </device>
+
+  <device name="AT89551" signature="1e5106">
+  </device>
+
+  <device name="AT89552" signature="1e5206">
+  </device>
+
+  <device name="AT86RF401" signature="1e9181">
+  </device>
+
 </devices>

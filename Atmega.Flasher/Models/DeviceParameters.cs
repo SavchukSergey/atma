@@ -21,21 +21,27 @@ namespace Atmega.Flasher.Models {
 
         public static DeviceParameters From(XElement node) {
             var xFlash = node.Element("flash");
+            var xName = node.Attribute("name");
+            var xFlashSize = xFlash != null ? xFlash.Attribute("size") : null;
+            var xFlashPage = xFlash != null ? xFlash.Attribute("page") : null;
+            var xEeprom = node.Attribute("eeprom");
+            var xRam = node.Attribute("ram");
+            var xSignature = node.Attribute("signature");
             return new DeviceParameters {
-                Name = node.Attribute("name").Value,
+                Name = xName != null ? xName.Value : "unknown",
                 Flash = {
-                    Size = int.Parse(xFlash.Attribute("size").Value),
-                    PageSize = int.Parse(xFlash.Attribute("page").Value),
+                    Size = xFlashSize != null ? int.Parse(xFlashSize.Value) : 0,
+                    PageSize = xFlashSize != null ? int.Parse(xFlashPage.Value) : 0,
                 },
-                EepromSize = int.Parse(node.Attribute("eeprom").Value),
-                RamSize = int.Parse(node.Attribute("ram").Value),
-                Signature = AvrSignature.Parse(node.Attribute("signature").Value)
+                EepromSize = xEeprom != null ? int.Parse(xEeprom.Value) : 0,
+                RamSize = xRam != null ? int.Parse(xRam.Value) : 0,
+                Signature = xSignature != null ? AvrSignature.Parse(xSignature.Value) : new AvrSignature()
             };
         }
 
         public static IList<DeviceParameters> List() {
             var xDoc = XDocument.Load("devices.xml");
-            return xDoc.Root.Elements().Select(From).ToList();
+            return xDoc.Root.Elements().Select(From).OrderBy(item => item.Name).ToList();
         }
     }
 
