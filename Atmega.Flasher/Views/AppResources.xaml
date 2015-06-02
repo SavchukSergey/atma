@@ -3,8 +3,8 @@
                     xmlns:converters="clr-namespace:Atmega.Flasher.Converters"
                     xmlns:views="clr-namespace:Atmega.Flasher.Views">
     <Style TargetType="{x:Type Button}">
-        <Setter Property="Padding" Value="10" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="5" />
     </Style>
     <Style TargetType="DataGrid">
         <Setter Property="FontSize" Value="16" />
@@ -13,7 +13,10 @@
         <Setter Property="Padding" Value="5" />
         <Setter Property="Margin" Value="5" />
     </Style>
-    <Style x:Key="Container" TargetType="Panel">
+    <Style x:Key="DialogContainer" TargetType="Panel">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="5" />
     </Style>
     <converters:ProgressStateConverter x:Key="ProgressStateConverter" />

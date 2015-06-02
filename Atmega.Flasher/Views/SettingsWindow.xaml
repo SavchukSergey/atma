@@ -16,7 +16,7 @@
     <Window.Resources>
         <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     </Window.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" Style="{StaticResource DialogContainer}">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Command="Save"></Button>
             <Button Content="Cancel" Command="Close"></Button>

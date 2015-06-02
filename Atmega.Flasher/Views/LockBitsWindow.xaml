@@ -4,7 +4,7 @@
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Icon="../Icons/lock-bits.png"
         Title="Lock Bits" Height="300" Width="400">
-    <Grid>
+    <Grid Style="{StaticResource DialogContainer}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

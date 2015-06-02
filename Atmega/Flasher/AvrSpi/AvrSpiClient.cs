@@ -77,6 +77,14 @@ namespace Atmega.Flasher.AvrSpi {
             SpiTransaction(0xc1, 0x00, (byte)(adr & 0x03), val);
         }
 
+        public void LoadProgramMemoryPageByte(ushort address, byte bt) {
+            if ((address & 0x1) != 0) {
+                LoadProgramMemoryPageHighByte((ushort) (address >> 1), bt);
+            } else {
+                LoadProgramMemoryPageHighByte((ushort) (address >> 1), bt);
+            }
+        }
+
         #endregion
 
         #region Read Instructions

@@ -55,7 +55,7 @@ namespace Atmega.Flasher.Models {
         public bool ReadDevice(DeviceOperation op, CancellationToken cancellationToken) {
             var config = FlasherConfig.Read();
             var device = config.Device;
-            var flashSize = device.FlashSize;
+            var flashSize = device.Flash.Size;
             var eepromSize = device.EepromSize;
             op.FlashSize += flashSize;
             op.EepromSize += eepromSize;
@@ -77,8 +77,11 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteDevice(DeviceOperation op, CancellationToken cancellationToken) {
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+
             var eepromBlocks = EepromHexBoard.SplitBlocks();
-            var flashBlocks = FlashHexBoard.SplitBlocks();
+            var flashBlocks = FlashHexBoard.SplitBlocks(device.Flash.PageSize);
 
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;

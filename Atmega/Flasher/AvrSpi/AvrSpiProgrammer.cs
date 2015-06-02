@@ -41,12 +41,15 @@ namespace Atmega.Flasher.AvrSpi {
             for (var i = 0; i < data.Length; i++) {
                 switch (memType) {
                     case AvrMemoryType.Flash:
-                        _client.WriteFlashByte((ushort)(start + i), data[i]);
+                        _client.LoadProgramMemoryPageByte((ushort)(start + i), data[i]);
                         break;
                     case AvrMemoryType.Eeprom:
                         _client.WriteEepromMemory((ushort)(start + i), data[i]);
                         break;
                 }
+            }
+            if (memType == AvrMemoryType.Flash) {
+                _client.WriteProgramMemoryPage((ushort) start);
             }
         }
 
