@@ -57,7 +57,7 @@ namespace Atmega.Hex {
                     lineNumber++;
                 }
             } catch (Exception e) {
-                throw new Exception("couldn't parse line " + lineNumber + ". " + e.Message);
+                throw new HexFileException("couldn't parse line " + lineNumber + ". " + e.Message);
             }
             return res;
         }

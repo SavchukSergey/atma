@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO.Ports;
 using System.Text;
 using System.Threading;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.AvrIsp {
     public class AvrIspClient : IDisposable {
@@ -10,21 +10,20 @@ namespace Atmega.Flasher.AvrIsp {
         private const byte STK_OK = 0x10;
         private const byte CRC_EOP = 0x20;
 
-        private readonly SerialPort _port;
+        private readonly IAvrChannel _port;
 
         private ushort _position;
 
-        public AvrIspClient(SerialPort port) {
+        public AvrIspClient(IAvrChannel port) {
             _port = port;
-            port.ReadTimeout = 500;
         }
 
         public void ResetDevice() {
-            _port.DtrEnable = true;
+            _port.ToggleReset(true);
             Thread.Sleep(200);
-            _port.DtrEnable = false;
+            _port.ToggleReset(false);
             Thread.Sleep(200);
-            _port.DtrEnable = true;
+            _port.ToggleReset(true);
             Thread.Sleep(200);
             //_port.DtrEnable = true; //in-circuit capacity will break dtr signal. so we can skip dtr=true
         }
@@ -179,7 +178,7 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         private byte ReadByte() {
-            return (byte)_port.ReadByte();
+            return _port.ReceiveByte();
         }
 
         private void WriteChar(char ch) {
@@ -187,7 +186,7 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         private void WriteByte(byte bt) {
-            _port.Write(new[] { bt }, 0, 1);
+            _port.SendByte(bt);
         }
 
         public void Dispose() {
@@ -195,7 +194,7 @@ namespace Atmega.Flasher.AvrIsp {
         }
 
         private void ReadAssert(byte bt) {
-            var res = _port.ReadByte();
+            var res = _port.ReceiveByte();
             if (res != bt) throw new Exception("nosync");
         }
 

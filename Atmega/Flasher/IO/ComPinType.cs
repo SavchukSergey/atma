@@ -1,4 +1,4 @@
-﻿namespace Atmega.Flasher {
+﻿namespace Atmega.Flasher.IO {
     public enum ComPinType {
         None,
         Rts,

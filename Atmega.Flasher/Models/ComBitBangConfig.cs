@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Atmega.Flasher.AvrSpi;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {
     public class ComBitBangConfig : BaseProgrammerConfig {

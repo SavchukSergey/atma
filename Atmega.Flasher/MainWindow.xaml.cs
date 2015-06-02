@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views;
+using Atmega.Hex;
 using Microsoft.Win32;
 
 namespace Atmega.Flasher {
@@ -27,7 +28,11 @@ namespace Atmega.Flasher {
             var result = dlg.ShowDialog();
 
             if (result == true) {
-                _model.OpenFile(dlg.FileName);
+                try {
+                    _model.OpenFile(dlg.FileName);
+                } catch (HexFileException exc) {
+                    MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

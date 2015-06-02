@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO.Ports;
 
-namespace Atmega.Flasher {
+namespace Atmega.Flasher.IO {
     public class ComPin {
         private readonly SerialPort _port;
         private readonly ComPinType _pin;

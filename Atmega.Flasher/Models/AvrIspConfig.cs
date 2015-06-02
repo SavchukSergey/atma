@@ -1,4 +1,5 @@
 ﻿using Atmega.Flasher.AvrIsp;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {
     public class AvrIspConfig : BaseProgrammerConfig {
@@ -24,7 +25,7 @@ namespace Atmega.Flasher.Models {
 
         public override IProgrammer CreateProgrammer() {
             var port = ComPortSettings.CreateSerialPort();
-            return new AvrIspProgrammer(new AvrIspClient(port));
+            return new AvrIspProgrammer(new AvrIspClient(new SerialPortChannel(port)));
         }
     }
 }

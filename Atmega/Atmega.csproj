@@ -65,9 +65,11 @@
     <Compile Include="Flasher\AvrSignature.cs" />
     <Compile Include="Flasher\AvrSpi\AvrSpiClient.cs" />
     <Compile Include="Flasher\AvrSpi\AvrSpiProgrammer.cs" />
-    <Compile Include="Flasher\ComPin.cs" />
-    <Compile Include="Flasher\ComPinType.cs" />
+    <Compile Include="Flasher\IO\ComPin.cs" />
+    <Compile Include="Flasher\IO\ComPinType.cs" />
     <Compile Include="Flasher\DeviceOperationStatus.cs" />
+    <Compile Include="Flasher\IO\IAvrChannel.cs" />
+    <Compile Include="Flasher\IO\SerialPortChannel.cs" />
     <Compile Include="Flasher\IProgrammer.cs" />
     <Compile Include="Flasher\DeviceOperation.cs" />
     <Compile Include="Flasher\MemoryProtectionMode.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Flasher\StubProgrammer.cs" />
     <Compile Include="Hex\HexFile.cs" />
     <Compile Include="Hex\HexFileBuilder.cs" />
+    <Compile Include="Hex\HexFileException.cs" />
     <Compile Include="Hex\HexFileLine.cs" />
     <Compile Include="Hex\HexFileLineType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

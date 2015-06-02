@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {
     public class ComBitBangPinConfig : BaseConfig {
