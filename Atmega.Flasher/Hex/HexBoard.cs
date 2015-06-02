@@ -67,7 +67,7 @@ namespace Atmega.Flasher.Hex {
             return board;
         }
 
-        public HexBlocks SplitBlocks() {
+        public HexBlocks SplitBlocks(int pageSize = 1) {
             var res = new HexBlocks();
             var blockStart = 0;
             var address = 0;
@@ -77,6 +77,13 @@ namespace Atmega.Flasher.Hex {
                 .SelectMany(l => l.Bytes.Select((b, i) => new HexBlockByte { Address = l.Address + i, Byte = b.Value }))
                 .Where(item => item.Byte.HasValue);
             foreach (var bt in allBytes) {
+                if (bt.Address != address && (bt.Address / pageSize == address / pageSize)) {
+                    while (address != bt.Address) {
+                        bytes.Add(0xff);
+                        address++;
+                    }
+                }
+
                 if (bt.Address != address) {
                     if (bytes.Count > 0) {
                         res.Blocks.Add(new HexBlock {
