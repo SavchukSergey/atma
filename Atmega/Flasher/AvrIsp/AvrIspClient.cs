@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using Atmega.Flasher.IO;
+using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher.AvrIsp {
     public class AvrIspClient : IDisposable {
@@ -158,11 +159,11 @@ namespace Atmega.Flasher.AvrIsp {
             return BRead();
         }
 
-        public AvrIspVersion ReadVersion() {
-            return new AvrIspVersion {
+        public StkVersion ReadVersion() {
+            return new StkVersion {
                 Hardware = GetVersion(0x80),
-                Major = GetVersion(0x81),
-                Minor = GetVersion(0x82),
+                SoftwareMajor = GetVersion(0x81),
+                SoftwareMinor = GetVersion(0x82),
                 Type = (char)GetVersion(0x93)
             };
         }

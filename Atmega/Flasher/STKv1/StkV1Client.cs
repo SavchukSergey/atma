@@ -192,10 +192,10 @@ namespace Atmega.Flasher.STKv1 {
             AssertOk();
         }
 
-        public void ProgramPage(byte[] data, AvrMemoryType memType) {
+        public void ProgramPage(byte[] data, int dataStart, int dataLength, AvrMemoryType memType) {
             WriteCommand(StkV1Command.ProgramPage);
-            WriteByte((byte)(data.Length >> 8));
-            WriteByte((byte)(data.Length & 0xff));
+            WriteByte((byte)(dataLength >> 8));
+            WriteByte((byte)(dataLength & 0xff));
             switch (memType) {
                 case AvrMemoryType.Flash:
                     WriteChar('F');
@@ -206,12 +206,166 @@ namespace Atmega.Flasher.STKv1 {
                 default:
                     throw new NotSupportedException();
             }
-            for (var i = 0; i < data.Length; i++) {
-                _port.SendByte(data[i]);
+            for (var i = 0; i < dataLength; i++) {
+                _port.SendByte(data[i + dataStart]);
             }
             WriteCrcEop();
             AssertInSync();
             AssertOk();
+        }
+
+        public void ReadFlashMemory(byte[] data, int dataStart, int dataLength) {
+            WriteCommand(StkV1Command.ReadFlashMemory);
+            WriteByte((byte)(dataLength >> 8));
+            WriteByte((byte)(dataLength & 0xff));
+            WriteCrcEop();
+            AssertInSync();
+
+            for (var i = 0; i < dataLength; i++) {
+                data[i + dataStart] = _port.ReceiveByte();
+            }
+            AssertOk();
+        }
+
+        public void ReadDataMemory(byte[] data, int dataStart, int dataLength) {
+            WriteCommand(StkV1Command.ReadDataMemory);
+            WriteByte((byte)(dataLength >> 8));
+            WriteByte((byte)(dataLength & 0xff));
+            WriteCrcEop();
+            AssertInSync();
+
+            for (var i = 0; i < dataLength; i++) {
+                data[i + dataStart] = _port.ReceiveByte();
+            }
+            AssertOk();
+        }
+
+        public StkFuseBits ReadFuseBits() {
+            WriteCommand(StkV1Command.ReadFuseBits);
+            WriteCrcEop();
+            AssertInSync();
+
+            StkFuseBits res;
+            res.Low = _port.ReceiveByte();
+            res.High = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public StkFuseBitsExt ReadFuseBitsExt() {
+            WriteCommand(StkV1Command.ReadFuseBitsExt);
+            WriteCrcEop();
+            AssertInSync();
+
+            StkFuseBitsExt res;
+            res.Low = _port.ReceiveByte();
+            res.High = _port.ReceiveByte();
+            res.Extended = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public byte ReadLockBits() {
+            WriteCommand(StkV1Command.ReadLockBits);
+            WriteCrcEop();
+            AssertInSync();
+
+            var res = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public void ReadPage(byte[] data, int dataStart, int dataLength, AvrMemoryType memType) {
+            WriteCommand(StkV1Command.ReadPage);
+            WriteByte((byte)(dataLength >> 8));
+            WriteByte((byte)(dataLength & 0xff));
+            switch (memType) {
+                case AvrMemoryType.Flash:
+                    WriteChar('F');
+                    break;
+                case AvrMemoryType.Eeprom:
+                    WriteChar('E');
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+            WriteCrcEop();
+            AssertInSync();
+
+            for (var i = 0; i < dataLength; i++) {
+                data[i + dataStart] = _port.ReceiveByte();
+            }
+            AssertOk();
+        }
+
+        public AvrSignature ReadSignatureBytes() {
+            WriteCommand(StkV1Command.ReadSignatureBytes);
+            WriteCrcEop();
+            AssertInSync();
+
+            AvrSignature res;
+            res.Vendor = _port.ReceiveByte();
+            res.Middle = _port.ReceiveByte();
+            res.Low = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public byte ReadOscillatorCalibrationByte() {
+            WriteCommand(StkV1Command.ReadOscillatorCalibrationByte);
+            WriteCrcEop();
+            AssertInSync();
+
+            var res = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public byte ReadOscillatorCalibrationByteExt(byte adr) {
+            WriteCommand(StkV1Command.ReadOscillatorCalibrationByteExt);
+            _port.SendByte(adr);
+            WriteCrcEop();
+            AssertInSync();
+
+            var res = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public byte Universal(byte a, byte b, byte c, byte d) {
+            WriteCommand(StkV1Command.Universal);
+            _port.SendByte(a);
+            _port.SendByte(b);
+            _port.SendByte(c);
+            _port.SendByte(d);
+            WriteCrcEop();
+
+            AssertInSync();
+            var res = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
+        }
+
+        public byte UniversalExt(byte[] cmd) {
+            WriteCommand(StkV1Command.UniversalExt);
+            _port.SendByte((byte)(cmd.Length - 1));
+            foreach (var bt in cmd) {
+                _port.SendByte(bt);
+            }
+            WriteCrcEop();
+
+            AssertInSync();
+            var res = _port.ReceiveByte();
+            AssertOk();
+
+            return res;
         }
 
         public void ResetDevice() {
@@ -230,85 +384,6 @@ namespace Atmega.Flasher.STKv1 {
 
 
 
-        public byte Universal(byte a, byte b, byte c, byte d) {
-            WriteChar('V');
-            WriteByte(a);
-            WriteByte(b);
-            WriteByte(c);
-            WriteByte(d);
-            return BRead();
-        }
-
-
-        //todo: when reading flash. response is always in words. You request three byte - you get 4 byte response. low byte first
-        public byte[] ReadPage(int length, AvrMemoryType memType) {
-            WriteChar('t');
-            WriteByte((byte)(length >> 8));
-            WriteByte((byte)(length & 0xff));
-            switch (memType) {
-                case AvrMemoryType.Flash:
-                    WriteChar('F');
-                    break;
-                case AvrMemoryType.Eeprom:
-                    WriteChar('E');
-                    break;
-                default:
-                    throw new Exception();
-            }
-            WriteByte(CRC_EOP);
-
-            ReadAssert(STK_INSYNC);
-
-            var res = new byte[length];
-            for (var i = 0; i < length; i++) {
-                res[i] = ReadByte();
-            }
-
-            ReadAssert(STK_OK);
-
-            return res;
-        }
-
-        public byte[] ReadFlash(int length) {
-            return ReadPage(length, AvrMemoryType.Flash);
-        }
-
-        public byte[] ReadEeprom(int length) {
-            return ReadPage(length, AvrMemoryType.Eeprom);
-        }
-
-        public void WriteFlash(byte[] data, int offset, int length) {
-            WriteChar('d');
-            WriteByte((byte)(length >> 8));
-            WriteByte((byte)(length & 0xff));
-            WriteChar('F');
-
-            for (var i = 0; i < length; i++) {
-                var bt = data[offset + i];
-                WriteByte(bt);
-            }
-
-            WriteByte(CRC_EOP);
-
-            ReadEmpty();
-        }
-
-        public void WriteEeprom(byte[] data, int offset, int length) {
-            WriteChar('d');
-            WriteByte((byte)(length >> 8));
-            WriteByte((byte)(length & 0xff));
-            WriteChar('E');
-
-            for (var i = 0; i < length; i++) {
-                var bt = data[offset + i];
-                WriteByte(bt);
-            }
-
-            WriteByte(CRC_EOP);
-
-            ReadEmpty();
-        }
-
         private byte BRead() {
             WriteByte(CRC_EOP);
             ReadAssert(STK_INSYNC);
@@ -323,11 +398,11 @@ namespace Atmega.Flasher.STKv1 {
             return BRead();
         }
 
-        public AvrIspVersion ReadVersion() {
-            return new AvrIspVersion {
+        public StkVersion ReadVersion() {
+            return new StkVersion {
                 Hardware = GetVersion(0x80),
-                Major = GetVersion(0x81),
-                Minor = GetVersion(0x82),
+                SoftwareMajor = GetVersion(0x81),
+                SoftwareMinor = GetVersion(0x82),
                 Type = (char)GetVersion(0x93)
             };
         }
