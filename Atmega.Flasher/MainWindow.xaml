@@ -13,8 +13,9 @@
         Icon="Icons/main.png"
         d:DataContext="{d:DesignInstance models:FlasherModel}">
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenFlashCommand" />
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommand" />
+        <CommandBinding Command="commands:FlasherCommands.OpenEeprom" Executed="OpenEepromCommand" />
         <CommandBinding Command="commands:FlasherCommands.ReadDevice" Executed="ReadDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.WriteDevice" Executed="WriteDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.VerifyDevice" Executed="VerifyDeviceCommand" />
@@ -26,7 +27,8 @@
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
             <Menu VerticalAlignment="Top">
                 <MenuItem Header="File">
-                    <MenuItem Header="Open..." Command="ApplicationCommands.Open" />
+                    <MenuItem Header="Open Flash..." Command="ApplicationCommands.Open" />
+                    <MenuItem Header="Open Eeprom..." Command="commands:FlasherCommands.OpenEeprom" />
                     <MenuItem Header="Save..." Command="ApplicationCommands.Save" />
                 </MenuItem>
                 <MenuItem Header="Device">

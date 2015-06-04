@@ -3,12 +3,17 @@
 namespace Atmega.Flasher.Commands {
     public class FlasherCommands {
 
+        private readonly static RoutedCommand _openEeprom = new RoutedCommand();
         private readonly static RoutedCommand _readDevice = new RoutedCommand();
         private readonly static RoutedCommand _writeDevice = new RoutedCommand();
         private readonly static RoutedCommand _eraseDevice = new RoutedCommand();
         private readonly static RoutedCommand _verifyDevice = new RoutedCommand();
         private readonly static RoutedCommand _lockBitsDevice = new RoutedCommand();
         private readonly static RoutedCommand _settings = new RoutedCommand();
+
+        public static RoutedCommand OpenEeprom {
+            get { return _openEeprom; }
+        }
 
         public static RoutedCommand ReadDevice {
             get { return _readDevice; }

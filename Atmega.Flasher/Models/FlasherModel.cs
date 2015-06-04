@@ -18,10 +18,14 @@ namespace Atmega.Flasher.Models {
             _flashHexBoard[0] = null;
         }
 
-        public void OpenFile(string filePath) {
+        public void OpenFlash(string filePath) {
             var hexFile = HexFile.Load(filePath);
             FlashHexBoard = HexBoard.From(hexFile);
-            //todo: split eeprom & flash
+        }
+
+        public void OpenEeprom(string filePath) {
+            var hexFile = HexFile.Load(filePath);
+            EepromHexBoard = HexBoard.From(hexFile);
         }
 
         public HexBoard EepromHexBoard {

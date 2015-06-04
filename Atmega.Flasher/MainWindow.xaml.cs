@@ -20,7 +20,7 @@ namespace Atmega.Flasher {
             DataContext = _model;
         }
 
-        private void OpenCommand(object sender, ExecutedRoutedEventArgs e) {
+        private void OpenFlashCommand(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new OpenFileDialog {
                 Filter = "Intel Hex File (.hex)|*.hex"
             };
@@ -29,7 +29,23 @@ namespace Atmega.Flasher {
 
             if (result == true) {
                 try {
-                    _model.OpenFile(dlg.FileName);
+                    _model.OpenFlash(dlg.FileName);
+                } catch (HexFileException exc) {
+                    MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void OpenEepromCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new OpenFileDialog {
+                Filter = "Intel Hex File (.hex)|*.hex"
+            };
+
+            var result = dlg.ShowDialog();
+
+            if (result == true) {
+                try {
+                    _model.OpenEeprom(dlg.FileName);
                 } catch (HexFileException exc) {
                     MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
