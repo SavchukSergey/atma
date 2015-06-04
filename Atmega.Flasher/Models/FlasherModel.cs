@@ -60,12 +60,12 @@ namespace Atmega.Flasher.Models {
             op.FlashSize += flashSize;
             op.EepromSize += eepromSize;
 
-            byte[] eepData;
-            byte[] flashData;
+            var flashData = new byte[flashSize];
+            var eepData = new byte[eepromSize];
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
-                flashData = programmer.ReadPage(0, flashSize, AvrMemoryType.Flash);
-                eepData = programmer.ReadPage(0, eepromSize, AvrMemoryType.Eeprom);
+                programmer.ReadPage(0, AvrMemoryType.Flash, flashData, 0, flashSize);
+                programmer.ReadPage(0, AvrMemoryType.Eeprom, eepData, 0, eepromSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -90,11 +90,11 @@ namespace Atmega.Flasher.Models {
                 programmer.Start();
 
                 foreach (var block in flashBlocks.Blocks) {
-                    programmer.WritePage(block.Address, AvrMemoryType.Flash, block.Data);
+                    programmer.WritePage(block.Address, AvrMemoryType.Flash, block.Data, 0, block.Data.Length);
                 }
 
                 foreach (var block in eepromBlocks.Blocks) {
-                    programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data);
+                    programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data, 0, block.Data.Length);
                 }
 
                 programmer.Stop();
@@ -162,7 +162,8 @@ namespace Atmega.Flasher.Models {
         }
 
         private static bool VerifyBlock(IProgrammer programmer, HexBlock block, AvrMemoryType memType) {
-            var actual = programmer.ReadPage(block.Address, block.Data.Length, memType);
+            var actual = new byte[block.Data.Length];
+            programmer.ReadPage(block.Address, memType, actual, 0, actual.Length);
             return !block.Data.Where((t, i) => t != actual[i]).Any();
         }
 

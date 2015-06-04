@@ -22,34 +22,32 @@ namespace Atmega.Flasher.AvrSpi {
             _client.Close();
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
-            var res = new byte[length];
-            for (var i = 0; i < length; i++) {
+        public void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
+            for (var i = 0; i < dataLength; i++) {
                 switch (memType) {
                     case AvrMemoryType.Flash:
-                        res[i] = _client.ReadFlashByte((ushort)(start + i));
+                        data[i + dataStart] = _client.ReadFlashByte((ushort)(address + i));
                         break;
                     case AvrMemoryType.Eeprom:
-                        res[i] = _client.ReadEepromMemory((ushort)(start + i));
+                        data[i + dataStart] = _client.ReadEepromMemory((ushort)(address + i));
                         break;
                 }
             }
-            return res;
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
-            for (var i = 0; i < data.Length; i++) {
+        public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
+            for (var i = 0; i < dataLength; i++) {
                 switch (memType) {
                     case AvrMemoryType.Flash:
-                        _client.LoadProgramMemoryPageByte((ushort)(start + i), data[i]);
+                        _client.LoadProgramMemoryPageByte((ushort)(address + i), data[i + dataStart]);
                         break;
                     case AvrMemoryType.Eeprom:
-                        _client.WriteEepromMemory((ushort)(start + i), data[i]);
+                        _client.WriteEepromMemory((ushort)(address + i), data[i + dataStart]);
                         break;
                 }
             }
             if (memType == AvrMemoryType.Flash) {
-                _client.WriteProgramMemoryPage((ushort) start);
+                _client.WriteProgramMemoryPage((ushort) address);
             }
         }
 

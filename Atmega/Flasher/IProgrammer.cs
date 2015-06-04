@@ -7,9 +7,9 @@ namespace Atmega.Flasher {
 
         void Stop();
 
-        byte[] ReadPage(int start, int length, AvrMemoryType memType);
+        void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength);
 
-        void WritePage(int start, AvrMemoryType memType, byte[] data);
+        void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength);
 
         AtmegaLockBits ReadLockBits();
 

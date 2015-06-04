@@ -5,10 +5,10 @@ using System.Linq;
 namespace Atmega.Flasher.Models {
     public class FlasherConfig : BaseConfig {
 
-        private DeviceParameters _device;
+        private DeviceInfo _device;
         private ProgrammerType _programmerType;
         private readonly ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
-        private readonly ObservableCollection<DeviceParameters> _devices = new ObservableCollection<DeviceParameters>();
+        private readonly ObservableCollection<DeviceInfo> _devices = new ObservableCollection<DeviceInfo>();
         private readonly AvrIspConfig _avrIsp;
         private readonly ComBitBangConfig _comBitBang;
 
@@ -40,13 +40,13 @@ namespace Atmega.Flasher.Models {
             get { return _programmerTypes; }
         }
 
-        public ObservableCollection<DeviceParameters> Devices {
+        public ObservableCollection<DeviceInfo> Devices {
             get {
                 return _devices;
             }
         }
 
-        public DeviceParameters Device {
+        public DeviceInfo Device {
             get { return _device; }
             set {
                 if (_device != value) {
@@ -67,7 +67,7 @@ namespace Atmega.Flasher.Models {
             ProgrammerType = GetConfigEnum(ProgrammerType.AvrIsp, "ProgrammerType");
 
             _devices.Clear();
-            DeviceParameters.List().ToList().ForEach(_devices.Add);
+            DeviceInfo.List().ToList().ForEach(_devices.Add);
             var deviceName = GetConfigString("atmega328p", "DeviceName");
             Device = _devices.FirstOrDefault(item => item.Name.ToLowerInvariant() == deviceName.ToLowerInvariant());
         }

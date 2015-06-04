@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Atmega.Flasher.Models {
-    public class DeviceParameters {
+namespace Atmega.Flasher {
+    public class DeviceInfo {
 
         private readonly DeviceFlashParameters _flash = new DeviceFlashParameters();
 
@@ -19,7 +19,7 @@ namespace Atmega.Flasher.Models {
 
         public AvrSignature Signature { get; set; }
 
-        public static DeviceParameters From(XElement node) {
+        public static DeviceInfo From(XElement node) {
             var xFlash = node.Element("flash");
             var xName = node.Attribute("name");
             var xFlashSize = xFlash != null ? xFlash.Attribute("size") : null;
@@ -27,7 +27,7 @@ namespace Atmega.Flasher.Models {
             var xEeprom = node.Attribute("eeprom");
             var xRam = node.Attribute("ram");
             var xSignature = node.Attribute("signature");
-            return new DeviceParameters {
+            return new DeviceInfo {
                 Name = xName != null ? xName.Value : "unknown",
                 Flash = {
                     Size = xFlashSize != null ? int.Parse(xFlashSize.Value) : 0,
@@ -39,7 +39,7 @@ namespace Atmega.Flasher.Models {
             };
         }
 
-        public static IList<DeviceParameters> List() {
+        public static IList<DeviceInfo> List() {
             var xDoc = XDocument.Load("devices.xml");
             return xDoc.Root.Elements().Select(From).OrderBy(item => item.Name).ToList();
         }

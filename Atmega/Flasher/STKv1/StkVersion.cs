@@ -7,6 +7,5 @@
 
         public int SoftwareMinor { get; set; }
         
-        public char Type { get; set; }
     }
 }

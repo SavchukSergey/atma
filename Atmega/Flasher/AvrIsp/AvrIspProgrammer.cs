@@ -1,44 +1,47 @@
 ﻿using System;
+using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher.AvrIsp {
     public class AvrIspProgrammer : IProgrammer {
 
-        private readonly AvrIspClient _client;
+        private readonly StkV1Client _client;
         private const int BLOCK_SIZE = 1024;
 
-        public AvrIspProgrammer(AvrIspClient client) {
+        public AvrIspProgrammer(StkV1Client client) {
             _client = client;
         }
 
         public void Start() {
             _client.Open();
             _client.ResetDevice();
-            _client.StartProgram();
+            _client.EnterProgramMode();
         }
 
         public void Stop() {
-            _client.EndProgram();
+            _client.LeaveProgramMode();
             _client.Close();
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
+        public void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             switch (memType) {
                 case AvrMemoryType.Eeprom:
-                    return ReadEeprom(start, length);
+                    ReadEeprom(address, data, dataStart, dataLength);
+                    break;
                 case AvrMemoryType.Flash:
-                    return ReadFlash(start, length);
+                    ReadFlash(address, data, dataStart, dataLength);
+                    break;
                 default:
                     throw new NotSupportedException();
             }
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
+        public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             switch (memType) {
                 case AvrMemoryType.Eeprom:
-                    WriteEeprom(start, data);
+                    WriteEeprom(address, data, dataStart, dataLength);
                     break;
                 case AvrMemoryType.Flash:
-                    WriteFlash(start, data);
+                    WriteFlash(address, data, dataStart, dataLength);
                     break;
                 default:
                     throw new NotSupportedException();
@@ -57,66 +60,50 @@ namespace Atmega.Flasher.AvrIsp {
             _client.Universal(0xac, 0x80, 0x00, 0x00);
         }
 
-        private void WriteEeprom(int start, byte[] data) {
-            var offset = start;
-            var end = start + data.Length;
+        private void WriteEeprom(int address, byte[] data, int dataStart, int dataLength) {
+            var offset = address;
+            var end = address + dataLength;
             while (offset < end) {
-                _client.SetAddress((ushort)(offset >> 1));
+                _client.LoadAddress((ushort)(offset >> 1));
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
-                _client.WriteEeprom(data, offset - start, cnt);
+                _client.ProgramPage(data, offset - address + dataStart, cnt, AvrMemoryType.Eeprom);
                 offset += cnt;
             }
         }
 
-        private byte[] ReadEeprom(int start, int length) {
-            var offset = start;
-            var end = start + length;
-            var result = new byte[length];
+        private void ReadEeprom(int address, byte[] data, int dataStart, int dataLength) {
+            var offset = address;
+            var end = address + dataLength;
             while (offset < end) {
-                _client.SetAddress((ushort)(offset >> 1));
+                _client.LoadAddress((ushort)(offset >> 1));
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
-
-                var data = _client.ReadEeprom(cnt);
-
-                foreach (var bt in data) {
-                    result[offset - start] = bt;
-                    offset++;
-                }
-            }
-
-            return result;
-        }
-
-        private void WriteFlash(int start, byte[] data) {
-            var offset = start;
-            var end = start + data.Length;
-            while (offset < end) {
-                _client.SetAddress((ushort)(offset >> 1));
-                var cnt = Math.Min(end - offset, BLOCK_SIZE);
-
-                _client.WriteFlash(data, offset - start, cnt);
+                _client.ReadPage(data, offset - address + dataStart, cnt, AvrMemoryType.Eeprom);
                 offset += cnt;
             }
         }
 
-        private byte[] ReadFlash(int start, int length) {
+        private void WriteFlash(int start, byte[] data, int dataStart, int dataLength) {
             var offset = start;
-            var end = start + length;
-            var result = new byte[length];
+            var end = start + dataLength;
             while (offset < end) {
-                _client.SetAddress((ushort)(offset >> 1));
+                _client.LoadAddress((ushort)(offset >> 1));
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
 
-                var data = _client.ReadFlash(cnt);
-
-                foreach (var bt in data) {
-                    result[offset - start] = bt;
-                    offset++;
-                }
+                _client.ProgramPage(data, offset - start + dataStart, cnt, AvrMemoryType.Flash);
+                offset += cnt;
             }
+        }
 
-            return result;
+        private void ReadFlash(int address, byte[] data, int dataStart, int dataLength) {
+            var offset = address;
+            var end = address + dataLength;
+            while (offset < end) {
+                _client.LoadAddress((ushort)(offset >> 1));
+                var cnt = Math.Min(end - offset, BLOCK_SIZE);
+                _client.ReadPage(data, offset - address + dataStart, cnt, AvrMemoryType.Flash);
+                offset += cnt;
+            }
         }
 
         public void Dispose() {

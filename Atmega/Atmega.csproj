@@ -58,13 +58,13 @@
     <Compile Include="Elf\ElfStrings.cs" />
     <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Flasher\AtmegaLockBits.cs" />
+    <Compile Include="Flasher\DeviceInfo.cs" />
     <Compile Include="Flasher\STKv1\StkDeviceCode.cs" />
     <Compile Include="Flasher\STKv1\StkFailedException.cs" />
     <Compile Include="Flasher\STKv1\StkFuseBitsExt.cs" />
     <Compile Include="Flasher\STKv1\StkFuseBits.cs" />
     <Compile Include="Flasher\STKv1\StkNoSyncException.cs" />
     <Compile Include="Flasher\STKv1\StkV1Client.cs" />
-    <Compile Include="Flasher\AvrIsp\AvrIspClient.cs" />
     <Compile Include="Flasher\AvrIsp\AvrIspProgrammer.cs" />
     <Compile Include="Flasher\STKv1\StkVersion.cs" />
     <Compile Include="Flasher\AvrMemoryType.cs" />

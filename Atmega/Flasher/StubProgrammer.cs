@@ -17,25 +17,23 @@ namespace Atmega.Flasher {
         public void Stop() {
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
-            var res = new byte[length];
+        public void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             var mem = memType == AvrMemoryType.Flash ? _flash : _eeprom;
             Thread.Sleep(50);
-            for (var i = 0; i < length; i++) {
-                res[i] = mem[i % mem.Length];
+            for (var i = 0; i < dataLength; i++) {
+                data[i + dataStart] = mem[(i + address) % mem.Length];
             }
-            return res;
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
+        public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             Thread.Sleep(50);
             for (var i = 0; i < data.Length; i++) {
                 switch (memType) {
                     case AvrMemoryType.Flash:
-                        _flash[i + start] = data[i];
+                        _flash[(i + address) % _flash.Length] = data[i + dataStart];
                         break;
                     case AvrMemoryType.Eeprom:
-                        _eeprom[i + start] = data[i];
+                        _eeprom[(i + address) % _eeprom.Length] = data[i + dataStart];
                         break;
                     default: throw new NotSupportedException();
                 }

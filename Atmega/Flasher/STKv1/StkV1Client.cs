@@ -2,23 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Atmega.Flasher.AvrIsp;
 using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.STKv1 {
     public class StkV1Client : IDisposable {
 
-        private const byte STK_OK = 0x10;
-        private const byte STK_FAILED = 0x00;
-        private const byte STK_INSYNC = 0x14;
-        private const byte STK_NOSYNC = 0x00;
-        private const byte STK_UNKNOWN = 0x00;
-        private const byte STK_N_DEVICE = 0x00;
         private const byte CRC_EOP = 0x20;
 
         private readonly IAvrChannel _port;
-
-        private ushort _position;
 
         public StkV1Client(IAvrChannel port) {
             _port = port;
@@ -97,7 +88,7 @@ namespace Atmega.Flasher.STKv1 {
             AssertOk();
         }
 
-        public void SetDeviceParameters(StkV1DeviceParametersExt parameters) {
+        public void SetDeviceParametersExt(StkV1DeviceParametersExt parameters) {
             WriteCommand(StkV1Command.SetDeviceParametersExt);
             WriteByte(4);
             WriteByte(parameters.EepromPageSize);
@@ -383,27 +374,11 @@ namespace Atmega.Flasher.STKv1 {
         }
 
 
-
-        private byte BRead() {
-            WriteByte(CRC_EOP);
-            ReadAssert(STK_INSYNC);
-            var res = ReadByte();
-            ReadAssert(STK_OK);
-            return res;
-        }
-
-        public byte GetVersion(byte arg) {
-            WriteChar('A');
-            WriteByte(arg);
-            return BRead();
-        }
-
         public StkVersion ReadVersion() {
             return new StkVersion {
-                Hardware = GetVersion(0x80),
-                SoftwareMajor = GetVersion(0x81),
-                SoftwareMinor = GetVersion(0x82),
-                Type = (char)GetVersion(0x93)
+                Hardware = GetParameterValue(StkV1Parameter.HardwareVersion),
+                SoftwareMajor = GetParameterValue(StkV1Parameter.SoftwareMajorVersion),
+                SoftwareMinor = GetParameterValue(StkV1Parameter.SoftwareMinorVersion),
             };
         }
 
@@ -411,15 +386,6 @@ namespace Atmega.Flasher.STKv1 {
             _port.Close();
         }
 
-        private void ReadEmpty() {
-            WriteByte(CRC_EOP);
-            ReadAssert(STK_INSYNC);
-            ReadAssert(STK_OK);
-        }
-
-        private byte ReadByte() {
-            return _port.ReceiveByte();
-        }
 
         private void WriteChar(char ch) {
             WriteByte((byte)ch);
@@ -435,11 +401,6 @@ namespace Atmega.Flasher.STKv1 {
 
         public void Dispose() {
             _port.Dispose();
-        }
-
-        private void ReadAssert(byte bt) {
-            var res = _port.ReceiveByte();
-            if (res != bt) throw new Exception("nosync");
         }
 
         private void AssertInSync() {

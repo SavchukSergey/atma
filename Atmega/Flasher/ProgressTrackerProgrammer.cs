@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 
 namespace Atmega.Flasher {
@@ -34,18 +33,14 @@ namespace Atmega.Flasher {
             _inner.Stop();
         }
 
-        public byte[] ReadPage(int start, int length, AvrMemoryType memType) {
-            var offset = start;
-            var end = start + length;
-            var result = new byte[length];
+        public void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
+            var offset = address;
+            var end = address + dataLength;
             while (offset < end) {
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
                 _progressData.CurrentState = string.Format("Reading {0} memory {1}-{2}", memType, offset, offset + cnt - 1);
-                var page = _inner.ReadPage(offset, cnt, memType);
-                foreach (var bt in page) {
-                    result[offset - start] = bt;
-                    offset++;
-                }
+                _inner.ReadPage(offset, memType, data, offset - address + dataStart, cnt);
+                offset += cnt;
 
                 _progressData.IncrementDone(cnt, memType);
                 if (_cancellationToken.IsCancellationRequested) {
@@ -53,17 +48,15 @@ namespace Atmega.Flasher {
                 }
                 _cancellationToken.ThrowIfCancellationRequested();
             }
-
-            return result;
         }
 
-        public void WritePage(int start, AvrMemoryType memType, byte[] data) {
-            var offset = start;
-            var end = start + data.Length;
+        public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
+            var offset = address;
+            var end = address + dataLength;
             while (offset < end) {
                 var cnt = Math.Min(end - offset, BLOCK_SIZE);
                 _progressData.CurrentState = string.Format("Writing {0} memory {1}-{2}", memType, offset, offset + cnt - 1);
-                _inner.WritePage(offset, memType, data.Skip(offset - start).Take(cnt).ToArray());
+                _inner.WritePage(offset, memType, data, offset - address + dataStart, cnt);
                 offset += cnt;
 
                 _progressData.IncrementDone(cnt, memType);

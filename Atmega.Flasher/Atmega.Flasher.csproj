@@ -66,7 +66,6 @@
     <Compile Include="Models\ProgrammerType.cs" />
     <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
-    <Compile Include="Models\DeviceParameters.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\AvrIspConfig.cs" />
     <Compile Include="Views\AvrIspSettingsView.xaml.cs">
