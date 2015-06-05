@@ -30,8 +30,8 @@
                   SelectedValue="{Binding Path=ProgrammerType, Mode=TwoWay}">
             </ComboBox>
         </Grid>
-        <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
-            <settings:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
+        <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.StkV1}}">
+            <settings:StkV1SettingsView DataContext="{Binding Path=Stkv1}" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.ComBitBang}}">
             <settings:ComBitBangSettingsView DataContext="{Binding Path=ComBitBang}" />

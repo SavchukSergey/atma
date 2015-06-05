@@ -1,6 +1,6 @@
 ﻿namespace Atmega.Flasher.Models {
     public enum ProgrammerType {
-        AvrIsp,
+        StkV1,
         ComBitBang,
         Stub
     }

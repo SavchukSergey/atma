@@ -9,11 +9,11 @@ namespace Atmega.Flasher.Models {
         private ProgrammerType _programmerType;
         private readonly ObservableCollection<KeyValuePair<ProgrammerType, string>> _programmerTypes = new ObservableCollection<KeyValuePair<ProgrammerType, string>>();
         private readonly ObservableCollection<DeviceInfo> _devices = new ObservableCollection<DeviceInfo>();
-        private readonly AvrIspConfig _avrIsp;
+        private readonly StkV1Config _stkv1;
         private readonly ComBitBangConfig _comBitBang;
 
-        public AvrIspConfig AvrIsp {
-            get { return _avrIsp; }
+        public StkV1Config Stkv1 {
+            get { return _stkv1; }
         }
 
         public ComBitBangConfig ComBitBang {
@@ -22,7 +22,7 @@ namespace Atmega.Flasher.Models {
 
         public FlasherConfig()
             : base(string.Empty) {
-            _avrIsp = new AvrIspConfig("AvrIsp.");
+            _stkv1 = new StkV1Config("StkV1.");
             _comBitBang = new ComBitBangConfig("ComBitBang.");
         }
 
@@ -57,14 +57,14 @@ namespace Atmega.Flasher.Models {
         }
 
         public override void ReadFromConfig() {
-            _avrIsp.ReadFromConfig();
+            _stkv1.ReadFromConfig();
             _comBitBang.ReadFromConfig();
 
             ProgrammerTypes.Clear();
-            ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.AvrIsp, "Avr ISP"));
+            ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.StkV1, "STK v1"));
             ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.ComBitBang, "Com Bit Bang"));
             ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.Stub, "Stub"));
-            ProgrammerType = GetConfigEnum(ProgrammerType.AvrIsp, "ProgrammerType");
+            ProgrammerType = GetConfigEnum(ProgrammerType.StkV1, "ProgrammerType");
 
             _devices.Clear();
             DeviceInfo.List().ToList().ForEach(_devices.Add);
@@ -81,7 +81,7 @@ namespace Atmega.Flasher.Models {
         public override void Save() {
             UpdateConfig(ProgrammerType.ToString(), "ProgrammerType");
             UpdateConfig(Device.Name, "DeviceName");
-            _avrIsp.Save();
+            _stkv1.Save();
             _comBitBang.Save();
         }
     }

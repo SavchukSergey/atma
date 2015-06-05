@@ -1,13 +1,12 @@
-﻿using Atmega.Flasher.AvrIsp;
-using Atmega.Flasher.IO;
+﻿using Atmega.Flasher.IO;
 using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher.Models {
-    public class AvrIspConfig : BaseProgrammerConfig {
+    public class StkV1Config : BaseProgrammerConfig {
 
         private readonly ComPortSettings _comPortSettings;
 
-        public AvrIspConfig(string keyPrefix)
+        public StkV1Config(string keyPrefix)
             : base(keyPrefix) {
             _comPortSettings = new ComPortSettings(keyPrefix);
         }
@@ -26,7 +25,7 @@ namespace Atmega.Flasher.Models {
 
         public override IProgrammer CreateProgrammer(DeviceInfo device) {
             var port = ComPortSettings.CreateSerialPort();
-            return new AvrIspProgrammer(new StkV1Client(new SerialPortChannel(port)), device);
+            return new StkV1Programmer(new StkV1Client(new SerialPortChannel(port)), device);
         }
     }
 }

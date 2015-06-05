@@ -210,8 +210,8 @@ namespace Atmega.Flasher.Models {
             var device = settings.Device;
 
             switch (settings.ProgrammerType) {
-                case ProgrammerType.AvrIsp:
-                    return settings.AvrIsp.CreateProgrammer(device);
+                case ProgrammerType.StkV1:
+                    return settings.Stkv1.CreateProgrammer(device);
                 case ProgrammerType.ComBitBang:
                     return settings.ComBitBang.CreateProgrammer(device);
                 case ProgrammerType.Stub:

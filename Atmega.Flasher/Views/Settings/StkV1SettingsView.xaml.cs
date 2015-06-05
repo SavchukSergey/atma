@@ -2,10 +2,10 @@
 
 namespace Atmega.Flasher.Views.Settings {
     /// <summary>
-    /// Interaction logic for AvrIspSettingsView.xaml
+    /// Interaction logic for StkV1SettingsView.xaml
     /// </summary>
-    public partial class AvrIspSettingsView : UserControl {
-        public AvrIspSettingsView() {
+    public partial class StkV1SettingsView : UserControl {
+        public StkV1SettingsView() {
             InitializeComponent();
         }
     }

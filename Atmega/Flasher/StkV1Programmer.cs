@@ -1,14 +1,14 @@
 ﻿using System;
 using Atmega.Flasher.STKv1;
 
-namespace Atmega.Flasher.AvrIsp {
-    public class AvrIspProgrammer : IProgrammer {
+namespace Atmega.Flasher {
+    public class StkV1Programmer : IProgrammer {
 
         private readonly StkV1Client _client;
         private readonly DeviceInfo _device;
         private const int BLOCK_SIZE = 1024;
 
-        public AvrIspProgrammer(StkV1Client client, DeviceInfo device) {
+        public StkV1Programmer(StkV1Client client, DeviceInfo device) {
             _client = client;
             _device = device;
         }

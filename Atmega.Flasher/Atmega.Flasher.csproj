@@ -67,9 +67,9 @@
     <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
-    <Compile Include="Models\AvrIspConfig.cs" />
-    <Compile Include="Views\Settings\AvrIspSettingsView.xaml.cs">
-      <DependentUpon>AvrIspSettingsView.xaml</DependentUpon>
+    <Compile Include="Models\StkV1Config.cs" />
+    <Compile Include="Views\Settings\StkV1SettingsView.xaml.cs">
+      <DependentUpon>StkV1SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BaseDeviceOperationWindow.cs" />
     <Compile Include="Views\Settings\ComBitBangSettingsView.xaml.cs">
@@ -132,7 +132,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Settings\AvrIspSettingsView.xaml">
+    <Page Include="Views\Settings\StkV1SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
