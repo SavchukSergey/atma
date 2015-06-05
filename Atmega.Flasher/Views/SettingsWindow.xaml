@@ -1,57 +1,30 @@
 ﻿<Window x:Class="Atmega.Flasher.Views.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:views="clr-namespace:Atmega.Flasher.Views"
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
-        xmlns:converters="clr-namespace:Atmega.Flasher.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        Title="Settings" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:settings="clr-namespace:Atmega.Flasher.Views.Settings"
+        mc:Ignorable="d"
+        Title="Settings" Height="400" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Icon="../Icons/settings.png"
         d:DataContext="{d:DesignInstance models:FlasherConfig}">
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="CloseCommand"></CommandBinding>
-        <CommandBinding Command="Save" Executed="SaveCommand"></CommandBinding>
+        <CommandBinding Command="Close" Executed="CloseCommand" />
+        <CommandBinding Command="Save" Executed="SaveCommand" />
     </Window.CommandBindings>
-    <Window.Resources>
-        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
-    </Window.Resources>
     <DockPanel LastChildFill="True" Style="{StaticResource DialogContainer}">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Command="Save"></Button>
             <Button Content="Cancel" Command="Close"></Button>
         </StackPanel>
-        <StackPanel Orientation="Vertical">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0">Device</TextBlock>
-                <ComboBox Grid.Row="0" Grid.Column="1"
-                          DisplayMemberPath="Name"
-                          ItemsSource="{Binding Path=Devices}" 
-                          SelectedItem="{Binding Path=Device, Mode=TwoWay}">
-                </ComboBox>
-
-                <TextBlock Grid.Row="1" Grid.Column="0">Programmer</TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1"
-                  DisplayMemberPath="Value"
-                  SelectedValuePath="Key"
-                  ItemsSource="{Binding Path=ProgrammerTypes}" 
-                  SelectedValue="{Binding Path=ProgrammerType, Mode=TwoWay}">
-                </ComboBox>
-            </Grid>
-            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
-                <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.ComBitBang}}">
-                <views:ComBitBangSettingsView DataContext="{Binding Path=ComBitBang}" />
-            </StackPanel>
-        </StackPanel>
+        <TabControl>
+            <TabItem Header="Connection">
+                <settings:ConnectionView />
+            </TabItem>
+            <TabItem Header="Device">
+                <settings:DeviceView />
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>

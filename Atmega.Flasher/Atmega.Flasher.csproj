@@ -99,6 +99,12 @@
     <Compile Include="Views\AppToolBar.xaml.cs">
       <DependentUpon>AppToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Settings\ConnectionView.xaml.cs">
+      <DependentUpon>ConnectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\DeviceView.xaml.cs">
+      <DependentUpon>DeviceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VerifyDeviceWindow.xaml.cs">
       <DependentUpon>VerifyDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -163,6 +169,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\ConnectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\DeviceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
