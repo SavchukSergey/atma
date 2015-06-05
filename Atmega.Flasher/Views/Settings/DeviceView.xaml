@@ -13,27 +13,31 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0">Device</TextBlock>
-        <ComboBox Grid.Row="0" Grid.Column="1"
+        <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=Device}">Device</Label>
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="Device"
                           DisplayMemberPath="Name"
                           ItemsSource="{Binding Path=Devices}" 
                           SelectedItem="{Binding Path=Device, Mode=TwoWay}">
         </ComboBox>
 
-        <TextBlock Grid.Row="1" Grid.Column="0">Flash Size</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Device.Flash.Size}" />
+        <Label Grid.Row="1" Grid.Column="0">Flash Size</Label>
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=Device.Flash.Size}" />
 
-        <TextBlock Grid.Row="2" Grid.Column="0">Flash Page Size</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Device.Flash.PageSize}" />
+        <Label Grid.Row="2" Grid.Column="0">Flash Page Size</Label>
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=Device.Flash.PageSize}" />
 
-        <TextBlock Grid.Row="3" Grid.Column="0">EEPROM Size</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Device.EepromSize}" />
+        <Label Grid.Row="3" Grid.Column="0">EEPROM Size</Label>
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=Device.EepromSize}" />
+
+        <Label Grid.Row="4" Grid.Column="0">Ram Size</Label>
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=Device.RamSize}" />
 
     </Grid>
 </UserControl>

@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:models="clr-namespace:Atmega.Flasher.Models"
-             xmlns:views="clr-namespace:Atmega.Flasher.Views"
              xmlns:converters="clr-namespace:Atmega.Flasher.Converters"
+             xmlns:settings="clr-namespace:Atmega.Flasher.Views.Settings"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance models:FlasherConfig}">
     <UserControl.Resources>
         <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     </UserControl.Resources>
@@ -22,8 +22,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="1" Grid.Column="0">Programmer</TextBlock>
-            <ComboBox Grid.Row="1" Grid.Column="1"
+            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=ProgrammerType}">Programmer</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="ProgrammerType"
                   DisplayMemberPath="Value"
                   SelectedValuePath="Key"
                   ItemsSource="{Binding Path=ProgrammerTypes}" 
@@ -31,10 +31,10 @@
             </ComboBox>
         </Grid>
         <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.AvrIsp}}">
-            <views:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
+            <settings:AvrIspSettingsView DataContext="{Binding Path=AvrIsp}" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Visibility="{Binding Path=ProgrammerType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static models:ProgrammerType.ComBitBang}}">
-            <views:ComBitBangSettingsView DataContext="{Binding Path=ComBitBang}" />
+            <settings:ComBitBangSettingsView DataContext="{Binding Path=ComBitBang}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

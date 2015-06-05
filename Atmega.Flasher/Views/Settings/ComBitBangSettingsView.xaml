@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="Atmega.Flasher.Views.ComBitBangSettingsView"
+﻿<UserControl x:Class="Atmega.Flasher.Views.Settings.ComBitBangSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:views="clr-namespace:Atmega.Flasher.Views"
              xmlns:models="clr-namespace:Atmega.Flasher.Models"
+             xmlns:settings="clr-namespace:Atmega.Flasher.Views.Settings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance models:ComBitBangConfig}">
     <StackPanel Orientation="Vertical">
-        <views:ComPortSettingsView DataContext="{Binding Path=ComPortSettings}" />
+        <settings:ComPortSettingsView DataContext="{Binding Path=ComPortSettings}" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -21,24 +21,24 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0">Reset PIN:</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="0">CLK PIN:</TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="0">MOSI PIN:</TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="0">MISO PIN:</TextBlock>
+            <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=ResetPin}">Reset PIN:</Label>
+            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=ClkPin}">CLK PIN:</Label>
+            <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=MosiPin}">MOSI PIN:</Label>
+            <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=MisoPin}">MISO PIN:</Label>
 
-            <ComboBox Grid.Row="0" Grid.Column="1"
+            <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ResetPin"
                   ItemsSource="{Binding Path=OuputComPins}" 
                   SelectedItem="{Binding Path=ResetPin.Pin, Mode=TwoWay}" />
 
-            <ComboBox Grid.Row="1" Grid.Column="1"
+            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="ClkPin"
                   ItemsSource="{Binding Path=OuputComPins}" 
                   SelectedItem="{Binding Path=ClkPin.Pin, Mode=TwoWay}" />
 
-            <ComboBox Grid.Row="2" Grid.Column="1"
+            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="MosiPin"
                   ItemsSource="{Binding Path=OuputComPins}" 
                   SelectedItem="{Binding Path=MosiPin.Pin, Mode=TwoWay}" />
 
-            <ComboBox Grid.Row="3" Grid.Column="1"
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="MisoPin"
                   ItemsSource="{Binding Path=InputComPins}" 
                   SelectedItem="{Binding Path=MisoPin.Pin, Mode=TwoWay}" />
 

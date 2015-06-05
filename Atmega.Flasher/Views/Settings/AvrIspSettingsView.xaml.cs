@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Atmega.Flasher.Views {
+namespace Atmega.Flasher.Views.Settings {
     /// <summary>
     /// Interaction logic for AvrIspSettingsView.xaml
     /// </summary>

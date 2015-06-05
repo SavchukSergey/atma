@@ -68,14 +68,14 @@
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\AvrIspConfig.cs" />
-    <Compile Include="Views\AvrIspSettingsView.xaml.cs">
+    <Compile Include="Views\Settings\AvrIspSettingsView.xaml.cs">
       <DependentUpon>AvrIspSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BaseDeviceOperationWindow.cs" />
-    <Compile Include="Views\ComBitBangSettingsView.xaml.cs">
+    <Compile Include="Views\Settings\ComBitBangSettingsView.xaml.cs">
       <DependentUpon>ComBitBangSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ComPortSettingsView.xaml.cs">
+    <Compile Include="Views\Settings\ComPortSettingsView.xaml.cs">
       <DependentUpon>ComPortSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeviceOperationView.xaml.cs">
@@ -132,15 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AvrIspSettingsView.xaml">
+    <Page Include="Views\Settings\AvrIspSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ComBitBangSettingsView.xaml">
+    <Page Include="Views\Settings\ComBitBangSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ComPortSettingsView.xaml">
+    <Page Include="Views\Settings\ComPortSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
