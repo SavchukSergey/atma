@@ -5,6 +5,6 @@
             : base(keyPrefix) {
         }
 
-        public abstract IProgrammer CreateProgrammer();
+        public abstract IProgrammer CreateProgrammer(DeviceInfo device);
     }
 }

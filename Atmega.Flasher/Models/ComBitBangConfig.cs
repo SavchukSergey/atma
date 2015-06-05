@@ -70,7 +70,7 @@ namespace Atmega.Flasher.Models {
             _misoPin.ReadFromConfig();
         }
 
-        public override IProgrammer CreateProgrammer() {
+        public override IProgrammer CreateProgrammer(DeviceInfo device) {
             var port = ComPortSettings.CreateSerialPort();
             var spiMaster = new SpiMaster(port, ClkPin.CreatePin(port), MosiPin.CreatePin(port), MisoPin.CreatePin(port));
             return new AvrSpiProgrammer(new AvrSpiClient(spiMaster));

@@ -5,15 +5,40 @@ namespace Atmega.Flasher.AvrIsp {
     public class AvrIspProgrammer : IProgrammer {
 
         private readonly StkV1Client _client;
+        private readonly DeviceInfo _device;
         private const int BLOCK_SIZE = 1024;
 
-        public AvrIspProgrammer(StkV1Client client) {
+        public AvrIspProgrammer(StkV1Client client, DeviceInfo device) {
             _client = client;
+            _device = device;
         }
 
         public void Start() {
             _client.Open();
             _client.ResetDevice();
+            _client.SetDeviceParameters(new StkV1DeviceParameters {
+                DeviceCode = (StkDeviceCode)0x86,
+                Revision = 0,
+                ProgType = 0,
+                ParMode = 1,
+                Polling = 1,
+                SelfTimed = 1,
+                LockBytes = 1,
+                FuseBytes = 3,
+                FlashPollVal1 = 0xff,
+                FlashPollVal2 = 0xff,
+                EepromPollVal1 = 0xff,
+                EepromPollVal2 = 0xff,
+                PageSize = 128,
+                EepromPageSize = 4,
+                FlashSize = 0x800000 //why is it so big?
+            });
+            _client.SetDeviceParametersExt(new StkV1DeviceParametersExt {
+                EepromPageSize = 4,
+                SignalPageL = 0xd7,
+                SignalBs2 = 0xc2,
+                ResetDisable = 0
+            });
             _client.EnterProgramMode();
         }
 

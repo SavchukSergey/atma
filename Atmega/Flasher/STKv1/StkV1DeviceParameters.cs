@@ -1,7 +1,7 @@
 ﻿namespace Atmega.Flasher.STKv1 {
     public struct StkV1DeviceParameters {
 
-        public byte DeviceCode;
+        public StkDeviceCode DeviceCode;
         public byte Revision;
         public byte ProgType;
         public byte ParMode;

@@ -62,7 +62,7 @@ namespace Atmega.Flasher.STKv1 {
 
         public void SetDeviceParameters(StkV1DeviceParameters parameters) {
             WriteCommand(StkV1Command.SetDeviceParameters);
-            WriteByte(parameters.DeviceCode);
+            WriteByte((byte) parameters.DeviceCode);
             WriteByte(parameters.Revision);
             WriteByte(parameters.ProgType);
             WriteByte(parameters.ParMode);

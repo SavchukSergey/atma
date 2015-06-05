@@ -24,9 +24,9 @@ namespace Atmega.Flasher.Models {
             _comPortSettings.ReadFromConfig();
         }
 
-        public override IProgrammer CreateProgrammer() {
+        public override IProgrammer CreateProgrammer(DeviceInfo device) {
             var port = ComPortSettings.CreateSerialPort();
-            return new AvrIspProgrammer(new StkV1Client(new SerialPortChannel(port)));
+            return new AvrIspProgrammer(new StkV1Client(new SerialPortChannel(port)), device);
         }
     }
 }
