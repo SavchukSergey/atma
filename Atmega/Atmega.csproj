@@ -59,6 +59,7 @@
     <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Flasher\AtmegaLockBits.cs" />
     <Compile Include="Flasher\DeviceInfo.cs" />
+    <Compile Include="Flasher\SpiMasterChannel.cs" />
     <Compile Include="Flasher\STKv1\StkDeviceCode.cs" />
     <Compile Include="Flasher\STKv1\StkFailedException.cs" />
     <Compile Include="Flasher\STKv1\StkFuseBitsExt.cs" />

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.AvrSpi {
     public class AvrSpiClient : IDisposable {
 
-        private readonly SpiMaster _spiMaster;
+        private readonly IAvrChannel _spiMaster;
 
-        public AvrSpiClient(SpiMaster spiMaster) {
+        public AvrSpiClient(IAvrChannel spiMaster) {
             _spiMaster = spiMaster;
         }
 
@@ -20,7 +21,7 @@ namespace Atmega.Flasher.AvrSpi {
 
         public void StartProgram() {
             ResetPin = true;
-            _spiMaster.ResetClock();
+            _spiMaster.ToggleReset(false);
             Thread.Sleep(50);
             ResetPin = false;
             Thread.Sleep(50);
@@ -39,7 +40,8 @@ namespace Atmega.Flasher.AvrSpi {
             _spiMaster.SendByte(a);
             _spiMaster.SendByte(b);
             _spiMaster.SendByte(c);
-            return _spiMaster.SendByte(d);
+            _spiMaster.SendByte(d);
+            return _spiMaster.ReceiveByte();
         }
 
         public byte ProgrammingEnable() {
@@ -79,9 +81,9 @@ namespace Atmega.Flasher.AvrSpi {
 
         public void LoadProgramMemoryPageByte(ushort address, byte bt) {
             if ((address & 0x1) != 0) {
-                LoadProgramMemoryPageHighByte((ushort) (address >> 1), bt);
+                LoadProgramMemoryPageHighByte((ushort)(address >> 1), bt);
             } else {
-                LoadProgramMemoryPageHighByte((ushort) (address >> 1), bt);
+                LoadProgramMemoryPageHighByte((ushort)(address >> 1), bt);
             }
         }
 
@@ -184,7 +186,7 @@ namespace Atmega.Flasher.AvrSpi {
             };
         }
 
-
+        //TODO:
         private bool ResetPin {
             get { return false; }
             set { }

@@ -1,4 +1,5 @@
 ﻿using Atmega.Flasher.AvrSpi;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {
     public class ComBitBangConfig : BaseProgrammerConfig {
@@ -47,9 +48,13 @@ namespace Atmega.Flasher.Models {
         }
 
         public override IProgrammer CreateProgrammer(DeviceInfo device) {
+            return new AvrSpiProgrammer(new AvrSpiClient(CreateChannel()));
+        }
+
+        public override IAvrChannel CreateChannel() {
             var port = ComPortSettings.CreateSerialPort();
             var spiMaster = new SpiMaster(port, ClkPin.CreatePin(port), MosiPin.CreatePin(port), MisoPin.CreatePin(port));
-            return new AvrSpiProgrammer(new AvrSpiClient(spiMaster));
+            return new SpiMasterChannel(spiMaster, ResetPin.CreatePin(port));
         }
     }
 }

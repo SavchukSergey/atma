@@ -1,4 +1,6 @@
-﻿namespace Atmega.Flasher.Models {
+﻿using Atmega.Flasher.IO;
+
+namespace Atmega.Flasher.Models {
     public abstract class BaseProgrammerConfig : BaseConfig {
         
         protected BaseProgrammerConfig(string keyPrefix)
@@ -6,5 +8,8 @@
         }
 
         public abstract IProgrammer CreateProgrammer(DeviceInfo device);
+
+        public abstract IAvrChannel CreateChannel();
+
     }
 }

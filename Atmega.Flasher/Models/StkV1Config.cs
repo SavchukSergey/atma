@@ -30,8 +30,12 @@ namespace Atmega.Flasher.Models {
         }
 
         public override IProgrammer CreateProgrammer(DeviceInfo device) {
+            return new StkV1Programmer(new StkV1Client(CreateChannel()), device);
+        }
+
+        public override IAvrChannel CreateChannel() {
             var port = ComPortSettings.CreateSerialPort();
-            return new StkV1Programmer(new StkV1Client(new SerialPortChannel(port, ResetPin.CreatePin(port))), device);
+            return new SerialPortChannel(port, ResetPin.CreatePin(port));
         }
     }
 }
