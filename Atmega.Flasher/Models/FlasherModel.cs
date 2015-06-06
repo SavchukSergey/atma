@@ -209,16 +209,8 @@ namespace Atmega.Flasher.Models {
         private static IProgrammer CreateProgrammerFromConfig(FlasherConfig settings) {
             var device = settings.Device;
 
-            switch (settings.ProgrammerType) {
-                case ProgrammerType.StkV1:
-                    return settings.Stkv1.CreateProgrammer(device);
-                case ProgrammerType.ComBitBang:
-                    return settings.ComBitBang.CreateProgrammer(device);
-                case ProgrammerType.Stub:
-                    return new StubProgrammer();
-                default:
-                    throw new NotSupportedException();
-            }
+            var programmerConfig = settings.GetProgrammerConfig();
+            return programmerConfig.CreateProgrammer(device);
         }
     }
 }

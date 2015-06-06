@@ -87,6 +87,7 @@
     <Compile Include="Flasher\STKv1\StkV1DeviceParameters.cs" />
     <Compile Include="Flasher\STKv1\StkV1Parameter.cs" />
     <Compile Include="Flasher\STKv1\StkV1Response.cs" />
+    <Compile Include="Flasher\StubChannel.cs" />
     <Compile Include="Flasher\StubProgrammer.cs" />
     <Compile Include="Hex\HexFile.cs" />
     <Compile Include="Hex\HexFileBuilder.cs" />

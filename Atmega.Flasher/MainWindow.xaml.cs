@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views;
@@ -116,6 +117,18 @@ namespace Atmega.Flasher {
                     Owner = this
                 };
                 dlg.ShowDialog();
+            }
+        }
+
+        private void ResetDevice(object sender, ExecutedRoutedEventArgs e) {
+            var settings = FlasherConfig.Read();
+            using (var channel = settings.GetProgrammerConfig().CreateChannel()) {
+                channel.Open();
+                channel.ToggleReset(true);
+                Thread.Sleep(100);
+                channel.ToggleReset(false);
+                Thread.Sleep(100);
+                channel.Close();
             }
         }
     }

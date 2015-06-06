@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -11,6 +12,7 @@ namespace Atmega.Flasher.Models {
         private readonly ObservableCollection<DeviceInfo> _devices = new ObservableCollection<DeviceInfo>();
         private readonly StkV1Config _stkv1;
         private readonly ComBitBangConfig _comBitBang;
+        private readonly StubConfig _stub;
 
         public StkV1Config Stkv1 {
             get { return _stkv1; }
@@ -83,6 +85,19 @@ namespace Atmega.Flasher.Models {
             UpdateConfig(Device.Name, "DeviceName");
             _stkv1.Save();
             _comBitBang.Save();
+        }
+
+        public BaseProgrammerConfig GetProgrammerConfig() {
+            switch (ProgrammerType) {
+                case ProgrammerType.StkV1:
+                    return _stkv1;
+                case ProgrammerType.ComBitBang:
+                    return _comBitBang;
+                case ProgrammerType.Stub:
+                    return _stub;
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }

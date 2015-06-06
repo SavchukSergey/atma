@@ -64,6 +64,7 @@
     <Compile Include="Models\ComPortSettings.cs" />
     <Compile Include="Models\FlasherOperationModel.cs" />
     <Compile Include="Models\ProgrammerType.cs" />
+    <Compile Include="Models\StubConfig.cs" />
     <Compile Include="ObservableDeviceOperation.cs" />
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\FlasherConfig.cs" />

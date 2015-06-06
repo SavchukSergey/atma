@@ -9,6 +9,7 @@ namespace Atmega.Flasher.Commands {
         private readonly static RoutedCommand _eraseDevice = new RoutedCommand();
         private readonly static RoutedCommand _verifyDevice = new RoutedCommand();
         private readonly static RoutedCommand _lockBitsDevice = new RoutedCommand();
+        private readonly static RoutedCommand _resetDevice = new RoutedCommand();
         private readonly static RoutedCommand _settings = new RoutedCommand();
 
         public static RoutedCommand OpenEeprom {
@@ -33,6 +34,10 @@ namespace Atmega.Flasher.Commands {
 
         public static RoutedCommand LockBits {
             get { return _lockBitsDevice; }
+        }
+
+        public static RoutedCommand ResetDevice {
+            get { return _resetDevice; }
         }
 
         public static RoutedCommand Settings {

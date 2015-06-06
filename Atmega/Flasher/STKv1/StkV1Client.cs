@@ -374,8 +374,7 @@ namespace Atmega.Flasher.STKv1 {
             _port.ToggleReset(false);
             Thread.Sleep(200);
             _port.ToggleReset(true);
-            Thread.Sleep(200);
-            //_port.DtrEnable = true; //in-circuit capacity will break dtr signal. so we can skip dtr=true
+            Thread.Sleep(200); //in-circuit capacity will break dtr signal. so we can skip dtr=true
         }
 
         public void Open() {
