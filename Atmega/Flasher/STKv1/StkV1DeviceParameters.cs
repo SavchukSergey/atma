@@ -34,19 +34,19 @@
         }
 
         public byte FlashSize4 {
-            get { return (byte)(EepromPageSize >> 24); }
+            get { return (byte)(FlashSize >> 24); }
         }
 
         public byte FlashSize3 {
-            get { return (byte)(EepromPageSize >> 16); }
+            get { return (byte)(FlashSize >> 16); }
         }
 
         public byte FlashSize2 {
-            get { return (byte)(EepromPageSize >> 8); }
+            get { return (byte)(FlashSize >> 8); }
         }
 
         public byte FlashSize1 {
-            get { return (byte)(EepromPageSize >> 0); }
+            get { return (byte)(FlashSize >> 0); }
         }
     }
 }

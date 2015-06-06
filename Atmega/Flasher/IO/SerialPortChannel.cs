@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System;
+using System.IO.Ports;
 
 namespace Atmega.Flasher.IO {
     public class SerialPortChannel : IAvrChannel {
@@ -28,6 +29,7 @@ namespace Atmega.Flasher.IO {
 
         public void SendByte(byte bt) {
             _port.Write(new[] { bt }, 0, 1);
+            Console.Write("{1} [{0:x2}] ", bt, (bt >= 32 && bt <= 127) ? (char)bt : '.');
         }
 
         public byte ReceiveByte() {

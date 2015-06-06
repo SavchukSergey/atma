@@ -15,6 +15,15 @@ namespace Atmega.Flasher.STKv1 {
             _port = port;
         }
 
+        public void GetSyncLoop() {
+            for (var i = 0; i < 10; i++) {
+                try {
+                    GetSynchronization();
+                    return;
+                } catch (TimeoutException) {
+                }
+            }
+        }
 
         public string GetSignOn() {
             WriteCommand(StkV1Command.GetSignOn);
@@ -62,7 +71,7 @@ namespace Atmega.Flasher.STKv1 {
 
         public void SetDeviceParameters(StkV1DeviceParameters parameters) {
             WriteCommand(StkV1Command.SetDeviceParameters);
-            WriteByte((byte) parameters.DeviceCode);
+            WriteByte((byte)parameters.DeviceCode);
             WriteByte(parameters.Revision);
             WriteByte(parameters.ProgType);
             WriteByte(parameters.ParMode);

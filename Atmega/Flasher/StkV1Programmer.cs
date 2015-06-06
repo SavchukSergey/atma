@@ -16,6 +16,7 @@ namespace Atmega.Flasher {
         public void Start() {
             _client.Open();
             _client.ResetDevice();
+            _client.GetSyncLoop();
             _client.SetDeviceParameters(new StkV1DeviceParameters {
                 DeviceCode = (StkDeviceCode)0x86,
                 Revision = 0,
@@ -29,9 +30,9 @@ namespace Atmega.Flasher {
                 FlashPollVal2 = 0xff,
                 EepromPollVal1 = 0xff,
                 EepromPollVal2 = 0xff,
-                PageSize = 128,
-                EepromPageSize = 4,
-                FlashSize = 0x800000 //why is it so big?
+                PageSize = (ushort) _device.Flash.PageSize,
+                EepromPageSize = (ushort) _device.EepromSize,
+                FlashSize = (uint) _device.Flash.Size
             });
             _client.SetDeviceParametersExt(new StkV1DeviceParametersExt {
                 EepromPageSize = 4,
