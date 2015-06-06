@@ -30,9 +30,9 @@ namespace Atmega.Flasher {
                 FlashPollVal2 = 0xff,
                 EepromPollVal1 = 0xff,
                 EepromPollVal2 = 0xff,
-                PageSize = (ushort) _device.Flash.PageSize,
-                EepromPageSize = (ushort) _device.EepromSize,
-                FlashSize = (uint) _device.Flash.Size
+                PageSize = (ushort)_device.Flash.PageSize,
+                EepromPageSize = (ushort)_device.EepromSize,
+                FlashSize = (uint)_device.Flash.Size
             });
             _client.SetDeviceParametersExt(new StkV1DeviceParametersExt {
                 EepromPageSize = 4,

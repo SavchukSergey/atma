@@ -10,7 +10,7 @@ namespace Atmega.Flasher.IO {
         public SerialPortChannel(SerialPort port, ComPin resetPin) {
             _port = port;
             _resetPin = resetPin;
-            port.ReadTimeout = 500;
+            port.ReadTimeout = 1000;
         }
 
         public void Dispose() {

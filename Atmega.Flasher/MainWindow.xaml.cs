@@ -122,14 +122,11 @@ namespace Atmega.Flasher {
 
         private void ResetDevice(object sender, ExecutedRoutedEventArgs e) {
             var settings = FlasherConfig.Read();
-            using (var channel = settings.GetProgrammerConfig().CreateChannel()) {
-                channel.Open();
-                channel.ToggleReset(true);
-                Thread.Sleep(100);
-                channel.ToggleReset(false);
-                Thread.Sleep(100);
-                channel.Close();
-            }
+            var dlg = new ResetDeviceWindow {
+                DataContext = new FlasherOperationModel(_model),
+                Owner = this
+            };
+            dlg.ShowDialog();
         }
     }
 }

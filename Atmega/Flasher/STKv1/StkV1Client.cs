@@ -99,7 +99,7 @@ namespace Atmega.Flasher.STKv1 {
 
         public void SetDeviceParametersExt(StkV1DeviceParametersExt parameters) {
             WriteCommand(StkV1Command.SetDeviceParametersExt);
-            WriteByte(4);
+            WriteByte(5);
             WriteByte(parameters.EepromPageSize);
             WriteByte(parameters.SignalPageL);
             WriteByte(parameters.SignalBs2);
