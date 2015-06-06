@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Atmega.Flasher.AvrSpi;
-using Atmega.Flasher.IO;
+﻿using Atmega.Flasher.AvrSpi;
 
 namespace Atmega.Flasher.Models {
     public class ComBitBangConfig : BaseProgrammerConfig {
@@ -11,9 +9,6 @@ namespace Atmega.Flasher.Models {
         private readonly ComBitBangPinConfig _mosiPin;
         private readonly ComBitBangPinConfig _misoPin;
 
-        private readonly ObservableCollection<ComPinType> _inputComPins = new ObservableCollection<ComPinType>();
-        private readonly ObservableCollection<ComPinType> _outputComPins = new ObservableCollection<ComPinType>();
-
         public ComBitBangConfig(string keyPrefix)
             : base(keyPrefix) {
             _comPortSettings = new ComPortSettings(keyPrefix);
@@ -21,16 +16,6 @@ namespace Atmega.Flasher.Models {
             _clkPin = new ComBitBangPinConfig(keyPrefix + "ClkPin.");
             _mosiPin = new ComBitBangPinConfig(keyPrefix + "MosiPin.");
             _misoPin = new ComBitBangPinConfig(keyPrefix + "MisoPin.");
-
-            _inputComPins.Add(ComPinType.Cts);
-            _inputComPins.Add(ComPinType.CD);
-            _inputComPins.Add(ComPinType.Dsr);
-            _inputComPins.Add(ComPinType.None);
-
-            _outputComPins.Add(ComPinType.Rts);
-            _outputComPins.Add(ComPinType.Dtr);
-            _outputComPins.Add(ComPinType.TxD);
-            _outputComPins.Add(ComPinType.None);
         }
 
         public ComBitBangPinConfig ResetPin { get { return _resetPin; } }
@@ -40,15 +25,6 @@ namespace Atmega.Flasher.Models {
         public ComBitBangPinConfig MosiPin { get { return _mosiPin; } }
 
         public ComBitBangPinConfig MisoPin { get { return _misoPin; } }
-
-
-        public ObservableCollection<ComPinType> InputComPins {
-            get { return _inputComPins; }
-        }
-
-        public ObservableCollection<ComPinType> OuputComPins {
-            get { return _outputComPins; }
-        }
 
         public ComPortSettings ComPortSettings {
             get { return _comPortSettings; }

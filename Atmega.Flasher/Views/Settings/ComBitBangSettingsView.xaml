@@ -17,9 +17,9 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=ResetPin}">Reset PIN:</Label>
             <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=ClkPin}">CLK PIN:</Label>
@@ -27,19 +27,19 @@
             <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=MisoPin}">MISO PIN:</Label>
 
             <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ResetPin"
-                  ItemsSource="{Binding Path=OuputComPins}" 
+                  ItemsSource="{StaticResource OuputComPins}" 
                   SelectedItem="{Binding Path=ResetPin.Pin, Mode=TwoWay}" />
 
             <ComboBox Grid.Row="1" Grid.Column="1" x:Name="ClkPin"
-                  ItemsSource="{Binding Path=OuputComPins}" 
+                  ItemsSource="{StaticResource OuputComPins}" 
                   SelectedItem="{Binding Path=ClkPin.Pin, Mode=TwoWay}" />
 
             <ComboBox Grid.Row="2" Grid.Column="1" x:Name="MosiPin"
-                  ItemsSource="{Binding Path=OuputComPins}" 
+                  ItemsSource="{StaticResource OuputComPins}" 
                   SelectedItem="{Binding Path=MosiPin.Pin, Mode=TwoWay}" />
 
             <ComboBox Grid.Row="3" Grid.Column="1" x:Name="MisoPin"
-                  ItemsSource="{Binding Path=InputComPins}" 
+                  ItemsSource="{StaticResource InputComPins}" 
                   SelectedItem="{Binding Path=MisoPin.Pin, Mode=TwoWay}" />
 
             <CheckBox  Grid.Row="0" Grid.Column="2" IsChecked="{Binding Path=ResetPin.Invert}" Content="Invert"/>

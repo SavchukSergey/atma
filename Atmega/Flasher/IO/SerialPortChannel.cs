@@ -5,9 +5,11 @@ namespace Atmega.Flasher.IO {
     public class SerialPortChannel : IAvrChannel {
 
         private readonly SerialPort _port;
+        private readonly ComPin _resetPin;
 
-        public SerialPortChannel(SerialPort port) {
+        public SerialPortChannel(SerialPort port, ComPin resetPin) {
             _port = port;
+            _resetPin = resetPin;
             port.ReadTimeout = 500;
         }
 
@@ -24,7 +26,7 @@ namespace Atmega.Flasher.IO {
         }
 
         public void ToggleReset(bool val) {
-            _port.DtrEnable = val;
+            _resetPin.Set(val);
         }
 
         public void SendByte(byte bt) {
