@@ -41,5 +41,9 @@ namespace Atmega.Flasher.Devices {
             }
             return (byte)(source & (~mask));
         }
+
+        public override string ToString() {
+            return Name;
+        }
     }
 }

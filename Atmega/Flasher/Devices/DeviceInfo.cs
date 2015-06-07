@@ -56,6 +56,10 @@ namespace Atmega.Flasher.Devices {
             var xDoc = XDocument.Load("devices.xml");
             return xDoc.Root.Elements().Select(From).OrderBy(item => item.Name).ToList();
         }
+
+        public override string ToString() {
+            return Name;
+        }
     }
 
 }

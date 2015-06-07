@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Xml.Linq;
 
 namespace Atmega.Flasher.Devices {
@@ -11,6 +9,18 @@ namespace Atmega.Flasher.Devices {
 
         public IList<DeviceBit> Bits {
             get { return _bits; }
+        }
+
+        public IList<DeviceByteBits> BitsByAddress {
+            get {
+                return _bits
+                    .GroupBy(item => item.Address)
+                    .Select(item => new DeviceByteBits {
+                        Address = item.Key,
+                        Bits = item.ToList()
+                    })
+                    .ToList();
+            }
         }
 
         public int Size {

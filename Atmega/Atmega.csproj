@@ -59,6 +59,7 @@
     <Compile Include="Elf\ElfType.cs" />
     <Compile Include="Flasher\Devices\DeviceBits.cs" />
     <Compile Include="Flasher\Devices\DeviceByte.cs" />
+    <Compile Include="Flasher\Devices\DeviceByteBits.cs" />
     <Compile Include="Flasher\Devices\DeviceInfo.cs" />
     <Compile Include="Flasher\Devices\DeviceEepromParameters.cs" />
     <Compile Include="Flasher\Devices\DeviceFlashParameters.cs" />
