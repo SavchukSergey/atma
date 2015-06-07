@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views;
+using Atmega.Flasher.Views.Operations;
 using Atmega.Hex;
 using Microsoft.Win32;
 

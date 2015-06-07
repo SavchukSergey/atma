@@ -75,7 +75,7 @@
     <Compile Include="Views\FuseBitsWindow.xaml.cs">
       <DependentUpon>FuseBitsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ResetDeviceWindow.xaml.cs">
+    <Compile Include="Views\Operations\ResetDeviceWindow.xaml.cs">
       <DependentUpon>ResetDeviceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\StkV1SettingsView.xaml.cs">
@@ -150,7 +150,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ResetDeviceWindow.xaml">
+    <Page Include="Views\Operations\ResetDeviceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -249,6 +249,7 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Icons\reset.png" />
     <Resource Include="Icons\fuse-bits.png" />
     <Resource Include="Icons\erase.png" />
     <Resource Include="Icons\verify.png" />

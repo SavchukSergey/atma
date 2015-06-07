@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Atmega.Flasher.Models;
 
-namespace Atmega.Flasher.Views {
+namespace Atmega.Flasher.Views.Operations {
     /// <summary>
     /// Interaction logic for ResetDeviceWindow.xaml
     /// </summary>
