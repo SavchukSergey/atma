@@ -4,10 +4,10 @@ using Atmega.Flasher.Models;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
-    /// Interaction logic for LockBitsWindow.xaml
+    /// Interaction logic for FuseBitsWindow.xaml
     /// </summary>
-    public partial class LockBitsWindow : Window {
-        public LockBitsWindow() {
+    public partial class FuseBitsWindow : Window {
+        public FuseBitsWindow() {
             InitializeComponent();
         }
 
@@ -19,10 +19,10 @@ namespace Atmega.Flasher.Views {
             Close();
         }
 
-        private void LockBitsWindow_OnLoaded(object sender, RoutedEventArgs e) {
+        private void FuseBitsWindow_OnLoaded(object sender, RoutedEventArgs e) {
             var settings = FlasherConfig.Read();
-            var lockBits = settings.Device.LockBits;
-            DeviceBitsView.DataContext = lockBits;
+            var fuseBits = settings.Device.FuseBits;
+            DeviceBitsView.DataContext = fuseBits;
         }
 
         protected FlasherModel Model {

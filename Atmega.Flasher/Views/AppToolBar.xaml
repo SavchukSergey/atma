@@ -68,6 +68,12 @@
                     <TextBlock>Lock Bits</TextBlock>
                 </StackPanel>
             </Button>
+            <Button Command="commands:FlasherCommands.FuseBits">
+                <StackPanel>
+                    <Image Source="../Icons/fuse-bits.png" />
+                    <TextBlock>Fuse Bits</TextBlock>
+                </StackPanel>
+            </Button>
         </ToolBar>
         <ToolBar>
             <Button Command="commands:FlasherCommands.Settings">

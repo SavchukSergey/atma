@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Atmega.Flasher.AvrSpi {
+﻿namespace Atmega.Flasher.AvrSpi {
     public class AvrSpiProgrammer : IProgrammer {
         private readonly AvrSpiClient _client;
 
@@ -31,6 +29,12 @@ namespace Atmega.Flasher.AvrSpi {
                     case AvrMemoryType.Eeprom:
                         data[i + dataStart] = _client.ReadEepromMemory((ushort)(address + i));
                         break;
+                    case AvrMemoryType.LockBits:
+                        data[i + dataStart] = ReadLockByte(address + i);
+                        break;
+                    case AvrMemoryType.FuseBits:
+                        data[i + dataStart] = ReadFuseByte(address + i);
+                        break;
                 }
             }
         }
@@ -44,19 +48,61 @@ namespace Atmega.Flasher.AvrSpi {
                     case AvrMemoryType.Eeprom:
                         _client.WriteEepromMemory((ushort)(address + i), data[i + dataStart]);
                         break;
+                    case AvrMemoryType.FuseBits:
+                        WriteFuseByte(address + i, data[i + dataStart]);
+                        break;
+                    case AvrMemoryType.LockBits:
+                        WriteLockByte(address + i, data[i + dataStart]);
+                        break;
                 }
             }
             if (memType == AvrMemoryType.Flash) {
-                _client.WriteProgramMemoryPage((ushort) address);
+                _client.WriteProgramMemoryPage((ushort)address);
             }
         }
 
-        public AtmegaLockBits ReadLockBits() {
-            return new AtmegaLockBits { Value = _client.ReadLockBits() };
+        private byte ReadFuseByte(int address) {
+            switch (address) {
+                case 0:
+                    return _client.ReadFuseBits();
+                case 1:
+                    return _client.ReadFuseHighBits();
+                case 2:
+                    return _client.ReadExtendedHighBits();
+                default:
+                    return 0;
+            }
         }
 
-        public void WriteLockBits(AtmegaLockBits bits) {
-            _client.WriteLockBits(bits.Value);
+        private byte ReadLockByte(int address) {
+            switch (address) {
+                case 0:
+                    return _client.ReadLockBits();
+                default:
+                    return 0;
+            }
+        }
+
+        private void WriteFuseByte(int address, byte val) {
+            switch (address) {
+                case 0:
+                    _client.WriteFuseBits(val);
+                    break;
+                case 1:
+                    _client.WriteHighFuseBits(val);
+                    break;
+                case 2:
+                    _client.WriteExtendedFuseBits(val);
+                    break;
+            }
+        }
+
+        private void WriteLockByte(int address, byte val) {
+            switch (address) {
+                case 0:
+                    _client.WriteLockBits(val);
+                    break;
+            }
         }
 
         public void EraseDevice() {

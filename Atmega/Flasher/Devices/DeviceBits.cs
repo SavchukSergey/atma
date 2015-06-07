@@ -13,6 +13,13 @@ namespace Atmega.Flasher.Devices {
             get { return _bits; }
         }
 
+        public int Size {
+            get {
+                if (_bits.Count == 0) return 0;
+                return _bits.Max(item => item.Address) + 1;
+            }
+        }
+
         public IList<DeviceByte> ToBytes() {
             var res = new Dictionary<int, DeviceByte>();
             foreach (var bit in _bits) {

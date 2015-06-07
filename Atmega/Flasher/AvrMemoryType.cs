@@ -1,6 +1,8 @@
 ﻿namespace Atmega.Flasher {
     public enum AvrMemoryType {
         Flash,
-        Eeprom
+        Eeprom,
+        LockBits,
+        FuseBits
     }
 }

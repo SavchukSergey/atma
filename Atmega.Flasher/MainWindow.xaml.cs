@@ -109,6 +109,14 @@ namespace Atmega.Flasher {
             dlg.ShowDialog();
         }
 
+        private void FuseBitsCommand(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new FuseBitsWindow {
+                DataContext = _model,
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
         private void EraseDeviceCommand(object sender, ExecutedRoutedEventArgs e) {
             var msgResult = MessageBox.Show("Are you sure you want start erasing the device. All previous data will be lost", "Erase confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (msgResult == MessageBoxResult.Yes) {
@@ -121,7 +129,6 @@ namespace Atmega.Flasher {
         }
 
         private void ResetDevice(object sender, ExecutedRoutedEventArgs e) {
-            var settings = FlasherConfig.Read();
             var dlg = new ResetDeviceWindow {
                 DataContext = new FlasherOperationModel(_model),
                 Owner = this

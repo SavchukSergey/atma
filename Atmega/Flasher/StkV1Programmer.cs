@@ -36,7 +36,7 @@ namespace Atmega.Flasher {
                 FlashSize = (uint)_device.Flash.Size
             });
             _client.SetDeviceParametersExt(new StkV1DeviceParametersExt {
-                EepromPageSize = (byte) _device.Eeprom.PageSize,
+                EepromPageSize = (byte)_device.Eeprom.PageSize,
                 SignalPageL = 0xd7,
                 SignalBs2 = 0xc2,
                 ResetDisable = 0
@@ -57,6 +57,16 @@ namespace Atmega.Flasher {
                 case AvrMemoryType.Flash:
                     ReadFlash(address, data, dataStart, dataLength);
                     break;
+                case AvrMemoryType.LockBits:
+                    for (var i = 0; i < dataLength; i++) {
+                        data[i + dataStart] = ReadLockByte(address + i);
+                    }
+                    break;
+                case AvrMemoryType.FuseBits:
+                    for (var i = 0; i < dataLength; i++) {
+                        data[i + dataStart] = ReadFuseByte(address + i);
+                    }
+                    break;
                 default:
                     throw new NotSupportedException();
             }
@@ -70,17 +80,63 @@ namespace Atmega.Flasher {
                 case AvrMemoryType.Flash:
                     WriteFlash(address, data, dataStart, dataLength);
                     break;
+                case AvrMemoryType.LockBits:
+                    for (var i = 0; i < dataLength; i++) {
+                        WriteLockByte(address + i, data[i + dataStart]);
+                    }
+                    break;
+                case AvrMemoryType.FuseBits:
+                    for (var i = 0; i < dataLength; i++) {
+                        WriteFuseByte(address + i, data[i + dataStart]);
+                    }
+                    break;
                 default:
                     throw new NotSupportedException();
             }
         }
 
-        public AtmegaLockBits ReadLockBits() {
-            return new AtmegaLockBits { Value = _client.Universal(0x58, 0x00, 0x00, 0x00) };
+        private byte ReadLockByte(int address) {
+            switch (address) {
+                case 0:
+                    return _client.Universal(0x58, 0x00, 0x00, 0x00);
+                default:
+                    return 0;
+            }
         }
 
-        public void WriteLockBits(AtmegaLockBits bits) {
-            _client.Universal(0xac, 0xe0, 0x00, bits.Value);
+        private void WriteLockByte(int address, byte val) {
+            switch (address) {
+                case 0:
+                    _client.Universal(0xac, 0x00, 0x00, 0x00);
+                    break;
+            }
+        }
+
+        private byte ReadFuseByte(int address) {
+            switch (address) {
+                case 0:
+                    return _client.Universal(0x50, 0x00, 0x00, 0x00);
+                case 1:
+                    return _client.Universal(0x58, 0x08, 0x00, 0x00);
+                case 2:
+                    return _client.Universal(0x50, 0x08, 0x00, 0x00);
+                default:
+                    return 0;
+            }
+        }
+
+        private void WriteFuseByte(int address, byte val) {
+            switch (address) {
+                case 0:
+                    _client.Universal(0xac, 0xa0, 0x00, val);
+                    break;
+                case 1:
+                    _client.Universal(0xac, 0xa8, 0x00, val);
+                    break;
+                case 2:
+                    _client.Universal(0xac, 0xa4, 0x00, val);
+                    break;
+            }
         }
 
         public void EraseDevice() {

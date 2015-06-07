@@ -72,6 +72,9 @@
     <Compile Include="Views\DeviceBitsView.xaml.cs">
       <DependentUpon>DeviceBitsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FuseBitsWindow.xaml.cs">
+      <DependentUpon>FuseBitsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ResetDeviceWindow.xaml.cs">
       <DependentUpon>ResetDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
     <Page Include="Views\DeviceBitsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FuseBitsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ResetDeviceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +249,7 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Icons\fuse-bits.png" />
     <Resource Include="Icons\erase.png" />
     <Resource Include="Icons\verify.png" />
     <Resource Include="Icons\main.png" />

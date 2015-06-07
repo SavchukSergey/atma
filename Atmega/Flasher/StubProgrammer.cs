@@ -6,7 +6,6 @@ namespace Atmega.Flasher {
 
         private readonly byte[] _flash = new byte[32768];
         private readonly byte[] _eeprom = new byte[1024];
-        private AtmegaLockBits _lockBits;
 
         public void Dispose() {
         }
@@ -38,14 +37,6 @@ namespace Atmega.Flasher {
                     default: throw new NotSupportedException();
                 }
             }
-        }
-
-        public AtmegaLockBits ReadLockBits() {
-            return _lockBits;
-        }
-
-        public void WriteLockBits(AtmegaLockBits bits) {
-            _lockBits = bits;
         }
 
         public void EraseDevice() {

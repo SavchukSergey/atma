@@ -35,6 +35,29 @@
       <deviceBit bit="4" name="BLB11" inverse="true" />
       <deviceBit bit="5" name="BLB12" inverse="true" />
     </lockBits>
+    <fuseBits>
+      <deviceBit bit="0" name="CKSEL0" inverse="true" />
+      <deviceBit bit="1" name="CKSEL1" inverse="true" />
+      <deviceBit bit="2" name="CKSEL2" inverse="true" />
+      <deviceBit bit="3" name="CKSEL3" inverse="true" />
+      <deviceBit bit="4" name="SUT0" inverse="true" />
+      <deviceBit bit="5" name="SUT1" inverse="true" />
+      <deviceBit bit="6" name="CKOUT" inverse="true" />
+      <deviceBit bit="7" name="CKDIV8" inverse="true" />
+
+      <deviceBit bit="0" name="BOOTRST" inverse="true" address="1" />
+      <deviceBit bit="1" name="BOOTSZ0" inverse="true" address="1" />
+      <deviceBit bit="2" name="BOOTSZ1" inverse="true" address="1" />
+      <deviceBit bit="3" name="EESAVE" inverse="true" address="1" />
+      <deviceBit bit="4" name="WDTON" inverse="true" address="1" />
+      <deviceBit bit="5" name="SPIEN" inverse="true" address="1" />
+      <deviceBit bit="6" name="DWEN" inverse="true" address="1" />
+      <deviceBit bit="7" name="RSTDISBL" inverse="true" address="1" />
+
+      <deviceBit bit="0" name="BODLEVEL0" inverse="true" address="2" />
+      <deviceBit bit="1" name="BODLEVEL1" inverse="true" address="2" />
+      <deviceBit bit="2" name="BODLEVEL2" inverse="true" address="2" />
+    </fuseBits>
   </device>
   <device name="ATmega328p" ram="2048" signature="1e950f">
     <flash size="32768" page="128" />

@@ -9,6 +9,7 @@ namespace Atmega.Flasher.Commands {
         private readonly static RoutedCommand _eraseDevice = new RoutedCommand();
         private readonly static RoutedCommand _verifyDevice = new RoutedCommand();
         private readonly static RoutedCommand _lockBitsDevice = new RoutedCommand();
+        private readonly static RoutedCommand _fuseBitsDevice = new RoutedCommand();
         private readonly static RoutedCommand _resetDevice = new RoutedCommand();
         private readonly static RoutedCommand _settings = new RoutedCommand();
 
@@ -34,6 +35,10 @@ namespace Atmega.Flasher.Commands {
 
         public static RoutedCommand LockBits {
             get { return _lockBitsDevice; }
+        }
+
+        public static RoutedCommand FuseBits {
+            get { return _fuseBitsDevice; }
         }
 
         public static RoutedCommand ResetDevice {

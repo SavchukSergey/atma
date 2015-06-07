@@ -6,17 +6,25 @@ namespace Atmega.Flasher {
         public virtual int FlashDone { get; set; }
 
         public virtual int EepromDone { get; set; }
+        
+        public virtual int LocksDone { get; set; }
+        
+        public virtual int FusesDone { get; set; }
 
         public virtual int FlashSize { get; set; }
 
         public virtual int EepromSize { get; set; }
+        
+        public virtual int LocksSize { get; set; }
+        
+        public virtual int FusesSize { get; set; }
 
         public int Done {
-            get { return FlashDone + EepromDone; }
+            get { return FlashDone + EepromDone + LocksDone + FusesDone; }
         }
 
         public int Total {
-            get { return FlashSize + EepromSize; }
+            get { return FlashSize + EepromSize + LocksSize + FusesSize; }
         }
 
         public double Progress {
@@ -39,12 +47,20 @@ namespace Atmega.Flasher {
                 case AvrMemoryType.Eeprom:
                     EepromDone += count;
                     break;
+                case AvrMemoryType.LockBits:
+                    LocksDone += count;
+                    break;
+                case AvrMemoryType.FuseBits:
+                    FusesDone += count;
+                    break;
             }
         }
 
         public void Complete() {
             FlashDone = FlashSize;
             EepromDone = EepromSize;
+            LocksDone = LocksSize;
+            FusesDone = FusesSize;
         }
     }
 }
