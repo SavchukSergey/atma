@@ -12,10 +12,14 @@ namespace Atmega.Flasher.Models {
 
         private HexBoard _eepromHexBoard = new HexBoard();
         private HexBoard _flashHexBoard = new HexBoard();
+        private HexBoard _fusesHexBoard = new HexBoard();
+        private HexBoard _locksHexBoard = new HexBoard();
 
         public FlasherModel() {
             _eepromHexBoard[0] = null;
             _flashHexBoard[0] = null;
+            _fusesHexBoard[0] = null;
+            _locksHexBoard[0] = null;
         }
 
         public void OpenFlash(string filePath) {
@@ -48,12 +52,69 @@ namespace Atmega.Flasher.Models {
             }
         }
 
+        public HexBoard FusesHexBoard {
+            get {
+                return _fusesHexBoard;
+            }
+            set {
+                _fusesHexBoard = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public HexBoard LocksHexBoard {
+            get {
+                return _locksHexBoard;
+            }
+            set {
+                _locksHexBoard = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null) {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public bool ReadFuses(DeviceOperation op, CancellationToken cancellationToken) {
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+            var fusesSize = device.FuseBits.Size;
+            op.FusesSize += fusesSize;
+
+            var fusesData = new byte[fusesSize];
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+                programmer.ReadPage(0, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            FusesHexBoard = HexBoard.From(fusesData);
+
+            return true;
+        }
+
+        public bool ReadLocks(DeviceOperation op, CancellationToken cancellationToken) {
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+            var locksSize = device.LockBits.Size;
+            op.LocksSize += locksSize;
+
+            var locksData = new byte[locksSize];
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+                programmer.ReadPage(0, AvrMemoryType.LockBits, locksData, 0, locksSize);
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            LocksHexBoard = HexBoard.From(locksData);
+
+            return true;
         }
 
         public bool ReadDevice(DeviceOperation op, CancellationToken cancellationToken) {
@@ -187,6 +248,10 @@ namespace Atmega.Flasher.Models {
             return await Task.Run(() => EraseDevice(op, cancellationToken), cancellationToken);
         }
 
+        public async Task<bool> ReadFusesAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => ReadFuses(op, cancellationToken), cancellationToken);
+        }
+
         public void SaveFile(string fileName) {
             var hfb = new HexFileBuilder();
             foreach (var sourceLine in FlashHexBoard.Lines) {
@@ -212,5 +277,6 @@ namespace Atmega.Flasher.Models {
             var programmerConfig = settings.GetProgrammerConfig();
             return programmerConfig.CreateProgrammer(device);
         }
+
     }
 }

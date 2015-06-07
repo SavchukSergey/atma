@@ -49,5 +49,14 @@ namespace Atmega.Flasher.Devices {
             }
             return res;
         }
+
+        public void ApplyFrom(byte[] data) {
+            foreach (var bit in _bits) {
+                if (bit.Address < data.Length) {
+                    var bt = data[bit.Address];
+                    bit.GetValueFrom(bt);
+                }
+            }
+        }
     }
 }

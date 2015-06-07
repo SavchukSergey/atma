@@ -45,5 +45,11 @@ namespace Atmega.Flasher.Devices {
         public override string ToString() {
             return Name;
         }
+
+        public void GetValueFrom(byte bt) {
+            if (Constant.HasValue) return;
+             var mask = 1 << Bit;
+            Value = ((bt & mask) != 0) ^ Inverse;
+        }
     }
 }
