@@ -252,6 +252,10 @@ namespace Atmega.Flasher.Models {
             return await Task.Run(() => ReadFuses(op, cancellationToken), cancellationToken);
         }
 
+        public async Task<bool> ReadLocksAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => ReadLocks(op, cancellationToken), cancellationToken);
+        }
+
         public void SaveFile(string fileName) {
             var hfb = new HexFileBuilder();
             foreach (var sourceLine in FlashHexBoard.Lines) {

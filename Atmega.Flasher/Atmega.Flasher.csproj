@@ -75,6 +75,9 @@
     <Compile Include="Views\FuseBitsWindow.xaml.cs">
       <DependentUpon>FuseBitsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Operations\ReadLocksWindow.xaml.cs">
+      <DependentUpon>ReadLocksWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Operations\ReadFusesWindow.xaml.cs">
       <DependentUpon>ReadFusesWindow.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FuseBitsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Operations\ReadLocksWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

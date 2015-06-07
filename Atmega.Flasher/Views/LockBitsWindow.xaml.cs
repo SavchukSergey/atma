@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Models;
+using Atmega.Flasher.Views.Operations;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
@@ -20,8 +22,18 @@ namespace Atmega.Flasher.Views {
         }
 
         private void LockBitsWindow_OnLoaded(object sender, RoutedEventArgs e) {
+            var dlg = new ReadLocksWindow {
+                DataContext = new FlasherOperationModel(Model),
+                Owner = this
+            };
+            dlg.ShowDialog();
+
             var settings = FlasherConfig.Read();
             var lockBits = settings.Device.LockBits;
+
+            var locksData = Model.LocksHexBoard.SplitBlocks(int.MaxValue).Blocks.First().Data;
+            lockBits.ApplyFrom(locksData);
+
             DeviceBitsView.DataContext = lockBits;
         }
 
