@@ -5,26 +5,30 @@ using Atmega.Flasher.IO;
 namespace Atmega.Flasher.AvrSpi {
     public class AvrSpiClient : IDisposable {
 
-        private readonly IAvrChannel _spiMaster;
+        private readonly IAvrChannel _channel;
 
-        public AvrSpiClient(IAvrChannel spiMaster) {
-            _spiMaster = spiMaster;
+        public AvrSpiClient(IAvrChannel channel) {
+            _channel = channel;
+        }
+
+        private void Reset() {
+            _channel.ToggleReset(true);
+            Thread.Sleep(50);
+            _channel.ToggleReset(false);
+            Thread.Sleep(50);
+            _channel.ToggleReset(true);
         }
 
         public void Open() {
-            _spiMaster.Open();
+            _channel.Open();
         }
 
         public void Close() {
-            _spiMaster.Close();
+            _channel.Close();
         }
 
         public void StartProgram() {
-            ResetPin = true;
-            _spiMaster.ToggleReset(false);
-            Thread.Sleep(50);
-            ResetPin = false;
-            Thread.Sleep(50);
+            Reset();
             ProgrammingEnable();
         }
 
@@ -33,15 +37,15 @@ namespace Atmega.Flasher.AvrSpi {
         }
 
         public void Stop() {
-            ResetPin = true;
+            Reset();
         }
 
         public byte SpiTransaction(byte a, byte b, byte c, byte d) {
-            _spiMaster.SendByte(a);
-            _spiMaster.SendByte(b);
-            _spiMaster.SendByte(c);
-            _spiMaster.SendByte(d);
-            return _spiMaster.ReceiveByte();
+            _channel.SendByte(a);
+            _channel.SendByte(b);
+            _channel.SendByte(c);
+            _channel.SendByte(d);
+            return _channel.ReceiveByte();
         }
 
         public byte ProgrammingEnable() {
@@ -52,9 +56,7 @@ namespace Atmega.Flasher.AvrSpi {
             SpiTransaction(0xac, 0x80, 0x00, 0x00);
             Thread.Sleep(10);
             Thread.Sleep(1000);
-            ResetPin = true;
-            Thread.Sleep(50);
-            ResetPin = false;
+            Reset();
         }
 
         public byte PollRdyBusy(byte arg) {
@@ -186,14 +188,8 @@ namespace Atmega.Flasher.AvrSpi {
             };
         }
 
-        //TODO:
-        private bool ResetPin {
-            get { return false; }
-            set { }
-        }
-
         public void Dispose() {
-            _spiMaster.Dispose();
+            _channel.Dispose();
         }
 
     }
