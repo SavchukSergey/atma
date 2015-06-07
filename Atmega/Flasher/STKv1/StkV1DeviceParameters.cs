@@ -14,7 +14,7 @@
         public byte EepromPollVal1;
         public byte EepromPollVal2;
         public ushort PageSize;
-        public ushort EepromPageSize;
+        public ushort EepromSize;
         public uint FlashSize;
 
         public byte PageSizeHigh {
@@ -26,11 +26,11 @@
         }
 
         public byte EepromSizeHigh {
-            get { return (byte)(EepromPageSize >> 8); }
+            get { return (byte)(EepromSize >> 8); }
         }
 
         public byte EepromSizeLow {
-            get { return (byte)(EepromPageSize & 0xff); }
+            get { return (byte)(EepromSize & 0xff); }
         }
 
         public byte FlashSize4 {

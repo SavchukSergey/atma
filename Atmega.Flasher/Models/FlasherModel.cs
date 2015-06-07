@@ -60,7 +60,7 @@ namespace Atmega.Flasher.Models {
             var config = FlasherConfig.Read();
             var device = config.Device;
             var flashSize = device.Flash.Size;
-            var eepromSize = device.EepromSize;
+            var eepromSize = device.Eeprom.Size;
             op.FlashSize += flashSize;
             op.EepromSize += eepromSize;
 

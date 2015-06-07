@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace Atmega.Flasher.Views {
     /// <summary>
@@ -7,6 +8,14 @@ namespace Atmega.Flasher.Views {
     public partial class LockBitsWindow : Window {
         public LockBitsWindow() {
             InitializeComponent();
+        }
+
+        private void CloseCommand(object sender, ExecutedRoutedEventArgs e) {
+            Close();
+        }
+
+        private void SaveCommand(object sender, ExecutedRoutedEventArgs e) {
+            Close();
         }
     }
 }

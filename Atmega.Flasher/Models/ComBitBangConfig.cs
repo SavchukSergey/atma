@@ -1,4 +1,5 @@
 ﻿using Atmega.Flasher.AvrSpi;
+using Atmega.Flasher.Devices;
 using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {

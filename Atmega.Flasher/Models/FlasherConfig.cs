@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Atmega.Flasher.Devices;
 
 namespace Atmega.Flasher.Models {
     public class FlasherConfig : BaseConfig {

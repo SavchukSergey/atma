@@ -1,4 +1,5 @@
 ﻿using System;
+using Atmega.Flasher.Devices;
 using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher {
@@ -31,11 +32,11 @@ namespace Atmega.Flasher {
                 EepromPollVal1 = 0xff,
                 EepromPollVal2 = 0xff,
                 PageSize = (ushort)_device.Flash.PageSize,
-                EepromPageSize = (ushort)_device.EepromSize,
+                EepromSize = (ushort)_device.Eeprom.Size,
                 FlashSize = (uint)_device.Flash.Size
             });
             _client.SetDeviceParametersExt(new StkV1DeviceParametersExt {
-                EepromPageSize = 4,
+                EepromPageSize = (byte) _device.Eeprom.PageSize,
                 SignalPageL = 0xd7,
                 SignalBs2 = 0xc2,
                 ResetDisable = 0

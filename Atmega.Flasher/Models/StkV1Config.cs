@@ -1,4 +1,5 @@
-﻿using Atmega.Flasher.IO;
+﻿using Atmega.Flasher.Devices;
+using Atmega.Flasher.IO;
 using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher.Models {

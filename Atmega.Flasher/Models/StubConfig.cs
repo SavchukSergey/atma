@@ -1,4 +1,5 @@
-﻿using Atmega.Flasher.IO;
+﻿using Atmega.Flasher.Devices;
+using Atmega.Flasher.IO;
 
 namespace Atmega.Flasher.Models {
     public class StubConfig : BaseProgrammerConfig {

@@ -1,28 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <devices>
-  <device name="ATmega48a" eeprom="256" ram="512" signature="1e9205">
+  <device name="ATmega48a" ram="512" signature="1e9205">
     <flash size="4096" page="64" />
+    <eeprom size="256" />
   </device>
-  <device name="ATmega48pa" eeprom="256" ram="512" signature="1e920a">
+  <device name="ATmega48pa" ram="512" signature="1e920a">
     <flash size="4096" page="64" />
+    <eeprom size="256" />
   </device>
-  <device name="ATmega88a" eeprom="512" ram="1024" signature="1e930a">
+  <device name="ATmega88a" ram="1024" signature="1e930a">
     <flash size="8192" page="64" />
+    <eeprom size="512" />
   </device>
-  <device name="ATmega88pa" eeprom="512" ram="1024" signature="1e930f">
+  <device name="ATmega88pa" ram="1024" signature="1e930f">
     <flash size="8192" page="64" />
+    <eeprom size="512" />
   </device>
   <device name="ATmega168a" eeprom="512" ram="1024" signature="1e9406">
     <flash size="16384" page="128" />
+    <eeprom size="512" />
   </device>
-  <device name="ATmega168pa" eeprom="512" ram="1024" signature="1e940b">
+  <device name="ATmega168pa" ram="1024" signature="1e940b">
     <flash size="16384" page="128" />
+    <eeprom size="512" />
   </device>
-  <device name="ATmega328" eeprom="1024" ram="2048" signature="1e9514">
+  <device name="ATmega328" ram="2048" signature="1e9514">
     <flash size="32768" page="128" />
+    <eeprom size="1024" />
+    <lockBits>
+      <deviceBit bit="0" name="LB1" inverse="true" />
+      <deviceBit bit="1" name="LB2" inverse="true" />
+      <deviceBit bit="2" name="BLB01" inverse="true" />
+      <deviceBit bit="3" name="BLB02" inverse="true" />
+      <deviceBit bit="4" name="BLB11" inverse="true" />
+      <deviceBit bit="5" name="BLB12" inverse="true" />
+    </lockBits>
   </device>
-  <device name="ATmega328p" eeprom="1024" ram="2048" signature="1e950f">
+  <device name="ATmega328p" ram="2048" signature="1e950f">
     <flash size="32768" page="128" />
+    <eeprom size="1024" />
+    <lockBits>
+      <deviceBit bit="0" name="LB1" inverse="true" />
+      <deviceBit bit="1" name="LB2" inverse="true" />
+      <deviceBit bit="2" name="BLB01" inverse="true" />
+      <deviceBit bit="3" name="BLB02" inverse="true" />
+      <deviceBit bit="4" name="BLB11" inverse="true" />
+      <deviceBit bit="5" name="BLB12" inverse="true" />
+    </lockBits>
   </device>
 
 
@@ -121,6 +145,11 @@
   </device>
 
   <device name="AT86RF401" signature="1e9181">
+  </device>
+
+  <device name="PIC16F628" ram="224">
+    <flash size="4096" />
+    <eeprom size="128" />
   </device>
 
 </devices>

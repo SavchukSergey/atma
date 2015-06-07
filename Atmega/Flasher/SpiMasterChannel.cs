@@ -17,6 +17,7 @@ namespace Atmega.Flasher {
 
         public void Open() {
             _master.Open();
+            _master.ResetClock();
         }
 
         public void Close() {

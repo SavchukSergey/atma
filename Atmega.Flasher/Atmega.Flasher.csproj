@@ -69,6 +69,9 @@
     <Compile Include="Models\BaseConfig.cs" />
     <Compile Include="Models\FlasherConfig.cs" />
     <Compile Include="Models\StkV1Config.cs" />
+    <Compile Include="Views\DeviceBitsView.xaml.cs">
+      <DependentUpon>DeviceBitsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ResetDeviceWindow.xaml.cs">
       <DependentUpon>ResetDeviceWindow.xaml</DependentUpon>
     </Compile>
@@ -133,6 +136,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AppResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceBitsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
