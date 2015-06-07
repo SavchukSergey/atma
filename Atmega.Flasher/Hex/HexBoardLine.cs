@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Atmega.Flasher.Annotations;
@@ -31,6 +32,10 @@ namespace Atmega.Flasher.Hex {
                 }
                 return sb.ToString();
             }
+        }
+
+        public bool HasData {
+            get { return _bytes.Any(b => b.Value.HasValue); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

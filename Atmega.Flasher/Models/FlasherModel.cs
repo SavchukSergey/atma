@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -145,8 +144,8 @@ namespace Atmega.Flasher.Models {
             var config = FlasherConfig.Read();
             var device = config.Device;
 
-            var eepromBlocks = EepromHexBoard.SplitBlocks();
             var flashBlocks = FlashHexBoard.SplitBlocks(device.Flash.PageSize);
+            var eepromBlocks = EepromHexBoard.SplitBlocks(device.Eeprom.PageSize);
 
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
@@ -160,6 +159,42 @@ namespace Atmega.Flasher.Models {
 
                 foreach (var block in eepromBlocks.Blocks) {
                     programmer.WritePage(block.Address, AvrMemoryType.Eeprom, block.Data, 0, block.Data.Length);
+                }
+
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            return true;
+        }
+
+        public bool WriteFuses(DeviceOperation op, CancellationToken cancellationToken) {
+            var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
+            op.FusesSize += fusesBlocks.TotalBytes;
+
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+
+                foreach (var block in fusesBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.FuseBits, block.Data, 0, block.Data.Length);
+                }
+
+                programmer.Stop();
+            }
+            op.CurrentState = "Everything is done";
+
+            return true;
+        }
+
+        public bool WriteLocks(DeviceOperation op, CancellationToken cancellationToken) {
+            var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
+            op.FusesSize += fusesBlocks.TotalBytes;
+
+            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+                programmer.Start();
+
+                foreach (var block in fusesBlocks.Blocks) {
+                    programmer.WritePage(block.Address, AvrMemoryType.LockBits, block.Data, 0, block.Data.Length);
                 }
 
                 programmer.Stop();
@@ -254,6 +289,14 @@ namespace Atmega.Flasher.Models {
 
         public async Task<bool> ReadLocksAsync(DeviceOperation op, CancellationToken cancellationToken) {
             return await Task.Run(() => ReadLocks(op, cancellationToken), cancellationToken);
+        }
+
+        public async Task<bool> WriteLocksAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => WriteLocks(op, cancellationToken), cancellationToken);
+        }
+
+        public async Task<bool> WriteFusesAsync(DeviceOperation op, CancellationToken cancellationToken) {
+            return await Task.Run(() => WriteFuses(op, cancellationToken), cancellationToken);
         }
 
         public void SaveFile(string fileName) {

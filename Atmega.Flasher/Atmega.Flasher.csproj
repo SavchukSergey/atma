@@ -84,6 +84,12 @@
     <Compile Include="Views\Operations\ResetDeviceWindow.xaml.cs">
       <DependentUpon>ResetDeviceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Operations\WriteLocksWindow.xaml.cs">
+      <DependentUpon>WriteLocksWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Operations\WriteFusesWindow.xaml.cs">
+      <DependentUpon>WriteFusesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\StkV1SettingsView.xaml.cs">
       <DependentUpon>StkV1SettingsView.xaml</DependentUpon>
     </Compile>
@@ -124,7 +130,7 @@
     <Compile Include="Views\VerifyDeviceWindow.xaml.cs">
       <DependentUpon>VerifyDeviceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WriteDeviceWindow.xaml.cs">
+    <Compile Include="Views\Operations\WriteDeviceWindow.xaml.cs">
       <DependentUpon>WriteDeviceWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -165,6 +171,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Operations\ResetDeviceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Operations\WriteLocksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Operations\WriteFusesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -220,7 +234,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WriteDeviceWindow.xaml">
+    <Page Include="Views\Operations\WriteDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

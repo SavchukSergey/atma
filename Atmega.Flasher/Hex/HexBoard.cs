@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -65,6 +66,37 @@ namespace Atmega.Flasher.Hex {
             }
 
             return board;
+        }
+
+        public int MaxAddress {
+            get {
+                var res = -1;
+                foreach (var line in _lines) {
+                    if (line.HasData) {
+                        for (var btIndex = 0; btIndex < line.Bytes.Length; btIndex++) {
+                            var bt = line.Bytes[btIndex];
+                            if (bt.Value.HasValue) {
+                                res = Math.Max(res, line.Address + btIndex);
+                            }
+                        }
+                    }
+                }
+                return res;
+            }
+        }
+        public byte[] ToArray() {
+            var res = new byte[MaxAddress + 1];
+            foreach (var line in _lines) {
+                if (line.HasData) {
+                    for (var btIndex = 0; btIndex < line.Bytes.Length; btIndex++) {
+                        var bt = line.Bytes[btIndex];
+                        if (bt.Value.HasValue) {
+                            res[line.Address + btIndex] = bt.Value.Value;
+                        }
+                    }
+                }
+            }
+            return res;
         }
 
         public HexBlocks SplitBlocks(int pageSize = 1) {
