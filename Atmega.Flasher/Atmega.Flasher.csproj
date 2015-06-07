@@ -100,7 +100,7 @@
     <Compile Include="Views\EraseDeviceWindow.xaml.cs">
       <DependentUpon>EraseDeviceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReadDeviceWindow.xaml.cs">
+    <Compile Include="Views\Operations\ReadDeviceWindow.xaml.cs">
       <DependentUpon>ReadDeviceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
@@ -182,7 +182,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ReadDeviceWindow.xaml">
+    <Page Include="Views\Operations\ReadDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
