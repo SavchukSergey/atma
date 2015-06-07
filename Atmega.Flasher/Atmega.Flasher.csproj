@@ -103,7 +103,7 @@
     <Compile Include="Views\LockBitsWindow.xaml.cs">
       <DependentUpon>LockBitsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EraseDeviceWindow.xaml.cs">
+    <Compile Include="Views\Operations\EraseDeviceWindow.xaml.cs">
       <DependentUpon>EraseDeviceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Operations\ReadDeviceWindow.xaml.cs">
@@ -192,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EraseDeviceWindow.xaml">
+    <Page Include="Views\Operations\EraseDeviceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
