@@ -107,7 +107,7 @@ namespace Atmega.Flasher {
         private void WriteLockByte(int address, byte val) {
             switch (address) {
                 case 0:
-                    _client.Universal(0xac, 0x00, 0x00, 0x00);
+                    _client.Universal(0xac, 0xe0, 0x00, val);
                     break;
             }
         }
