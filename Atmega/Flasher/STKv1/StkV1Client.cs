@@ -16,13 +16,18 @@ namespace Atmega.Flasher.STKv1 {
         }
 
         public void GetSyncLoop() {
-            for (var i = 0; i < 10; i++) {
+            const int tries = 3;
+            for (var i = 0; i < tries; i++) {
                 try {
                     GetSynchronization();
                     return;
+                } catch (StkNoSyncException) {
+                    if (i == tries - 1) throw;
                 } catch (TimeoutException) {
+                    if (i == tries - 1) throw;
                 }
             }
+            GetSynchronization();
         }
 
         public string GetSignOn() {

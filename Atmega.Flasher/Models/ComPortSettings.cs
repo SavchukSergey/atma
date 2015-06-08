@@ -73,7 +73,8 @@ namespace Atmega.Flasher.Models {
             return new SerialPort(ComPort) {
                 BaudRate = BaudRate,
                 DataBits = 8,
-                Parity = Parity.None
+                Parity = Parity.None,
+                StopBits = StopBits.One
             };
         }
     }
