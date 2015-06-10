@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>main.ico</ApplicationIcon>
+    <ApplicationIcon>Icons\main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -284,7 +284,6 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="main.ico" />
     <Resource Include="Icons\main.ico" />
     <Resource Include="Icons\reset.png" />
     <Resource Include="Icons\fuse-bits.png" />
