@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Globalization;
+using System.Xml.Linq;
 
 namespace Atmega.Flasher.Devices {
     public class DeviceBit {
@@ -22,7 +23,7 @@ namespace Atmega.Flasher.Devices {
             var xInverse = xDeviceBit.Attribute("inverse");
             var xConstant = xDeviceBit.Attribute("constant");
             return new DeviceBit {
-                Address = xAddress != null ? int.Parse(xAddress.Value) : 0,
+                Address = xAddress != null ? int.Parse(xAddress.Value, NumberStyles.AllowHexSpecifier) : 0,
                 Bit = xBit != null ? int.Parse(xBit.Value) : 0,
                 Name = xName != null ? xName.Value : "",
                 Inverse = xInverse != null && xInverse.Value.ToLowerInvariant() == "true",
