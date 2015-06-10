@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Atmega.Flasher.Annotations;
 
 namespace Atmega.Flasher {
@@ -11,6 +12,10 @@ namespace Atmega.Flasher {
         private int _flashDone;
         private string _currentState;
         private DeviceOperationStatus _status;
+
+        public ObservableDeviceOperation(CancellationTokenSource cancellationTokenSource)
+            : base(cancellationTokenSource) {
+        }
 
         public override int EepromDone {
             get { return _eepromDone; }
@@ -88,5 +93,6 @@ namespace Atmega.Flasher {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
     }
 }

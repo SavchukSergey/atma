@@ -1,12 +1,14 @@
-﻿namespace Atmega.Flasher.Models {
+﻿using System.Threading;
+
+namespace Atmega.Flasher.Models {
     public class FlasherOperationModel {
 
         private readonly FlasherModel _flasher;
-        private readonly ObservableDeviceOperation _deviceOperation = new ObservableDeviceOperation();
+        private readonly ObservableDeviceOperation _deviceOperation;
 
         public FlasherOperationModel(FlasherModel flasher) {
             _flasher = flasher;
-            _deviceOperation = new ObservableDeviceOperation();
+            _deviceOperation = new ObservableDeviceOperation(new CancellationTokenSource());
         }
 
         public FlasherModel Flasher {

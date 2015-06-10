@@ -11,7 +11,7 @@ namespace Atmega.Flasher.Views {
         }
 
         protected override Task<bool> Execute(DeviceOperation op) {
-            return Model.VerifyDeviceAsync(op, _cts.Token);
+            return Model.VerifyDeviceAsync(op);
         }
     }
 }

@@ -78,14 +78,14 @@ namespace Atmega.Flasher.Models {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool ReadFuses(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool ReadFuses(DeviceOperation op) {
             var config = FlasherConfig.Read();
             var device = config.Device;
             var fusesSize = device.FuseBits.Size;
             op.FusesSize += fusesSize;
 
             var fusesData = new byte[fusesSize];
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
                 programmer.ReadPage(device.FuseBits.StartAddress, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
                 programmer.Stop();
@@ -97,14 +97,14 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool ReadLocks(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool ReadLocks(DeviceOperation op) {
             var config = FlasherConfig.Read();
             var device = config.Device;
             var locksSize = device.LockBits.Size;
             op.LocksSize += locksSize;
 
             var locksData = new byte[locksSize];
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
                 programmer.ReadPage(device.LockBits.StartAddress, AvrMemoryType.LockBits, locksData, 0, locksSize);
                 programmer.Stop();
@@ -116,7 +116,7 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool ReadDevice(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool ReadDevice(DeviceOperation op) {
             var config = FlasherConfig.Read();
             var device = config.Device;
             var flashSize = device.Flash.Size;
@@ -132,7 +132,7 @@ namespace Atmega.Flasher.Models {
             var eepData = new byte[eepromSize];
             var fusesData = new byte[fusesSize];
             var locksData = new byte[locksSize];
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
                 programmer.ReadPage(0, AvrMemoryType.Flash, flashData, 0, flashSize);
                 programmer.ReadPage(0, AvrMemoryType.Eeprom, eepData, 0, eepromSize);
@@ -150,7 +150,7 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool WriteDevice(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool WriteDevice(DeviceOperation op) {
             var config = FlasherConfig.Read();
             var device = config.Device;
 
@@ -160,7 +160,7 @@ namespace Atmega.Flasher.Models {
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
 
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
                 foreach (var block in flashBlocks.Blocks) {
@@ -178,11 +178,11 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool WriteFuses(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool WriteFuses(DeviceOperation op) {
             var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
             op.FusesSize += fusesBlocks.TotalBytes;
 
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
                 foreach (var block in fusesBlocks.Blocks) {
@@ -196,11 +196,11 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool WriteLocks(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool WriteLocks(DeviceOperation op) {
             var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
             op.FusesSize += fusesBlocks.TotalBytes;
 
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
                 foreach (var block in fusesBlocks.Blocks) {
@@ -214,14 +214,14 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool VerifyDevice(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool VerifyDevice(DeviceOperation op) {
             var eepromBlocks = EepromHexBoard.SplitBlocks();
             var flashBlocks = FlashHexBoard.SplitBlocks();
 
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
 
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
                 if (!VerifyBlocks(programmer, flashBlocks, AvrMemoryType.Flash, op)) {
@@ -240,14 +240,14 @@ namespace Atmega.Flasher.Models {
             return true;
         }
 
-        public bool EraseDevice(DeviceOperation op, CancellationToken cancellationToken) {
+        public bool EraseDevice(DeviceOperation op) {
             var eepromBlocks = EepromHexBoard.SplitBlocks();
             var flashBlocks = FlashHexBoard.SplitBlocks();
 
             op.FlashSize += flashBlocks.TotalBytes;
             op.EepromSize += eepromBlocks.TotalBytes;
 
-            using (var programmer = CreateProgrammer(op, cancellationToken)) {
+            using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
                 programmer.EraseDevice();
@@ -277,36 +277,36 @@ namespace Atmega.Flasher.Models {
             return !block.Data.Where((t, i) => t != actual[i]).Any();
         }
 
-        public async Task<bool> ReadDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => ReadDevice(op, cancellationToken), cancellationToken);
+        public async Task<bool> ReadDeviceAsync(DeviceOperation op) {
+            return await Task.Run(() => ReadDevice(op), op.CancellationToken);
         }
 
-        public async Task<bool> WriteDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => WriteDevice(op, cancellationToken), cancellationToken);
+        public async Task<bool> WriteDeviceAsync(DeviceOperation op) {
+            return await Task.Run(() => WriteDevice(op), op.CancellationToken);
         }
 
-        public async Task<bool> VerifyDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => VerifyDevice(op, cancellationToken), cancellationToken);
+        public async Task<bool> VerifyDeviceAsync(DeviceOperation op) {
+            return await Task.Run(() => VerifyDevice(op), op.CancellationToken);
         }
 
-        public async Task<bool> EraseDeviceAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => EraseDevice(op, cancellationToken), cancellationToken);
+        public async Task<bool> EraseDeviceAsync(DeviceOperation op) {
+            return await Task.Run(() => EraseDevice(op), op.CancellationToken);
         }
 
-        public async Task<bool> ReadFusesAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => ReadFuses(op, cancellationToken), cancellationToken);
+        public async Task<bool> ReadFusesAsync(DeviceOperation op) {
+            return await Task.Run(() => ReadFuses(op), op.CancellationToken);
         }
 
-        public async Task<bool> ReadLocksAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => ReadLocks(op, cancellationToken), cancellationToken);
+        public async Task<bool> ReadLocksAsync(DeviceOperation op) {
+            return await Task.Run(() => ReadLocks(op), op.CancellationToken);
         }
 
-        public async Task<bool> WriteLocksAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => WriteLocks(op, cancellationToken), cancellationToken);
+        public async Task<bool> WriteLocksAsync(DeviceOperation op) {
+            return await Task.Run(() => WriteLocks(op), op.CancellationToken);
         }
 
-        public async Task<bool> WriteFusesAsync(DeviceOperation op, CancellationToken cancellationToken) {
-            return await Task.Run(() => WriteFuses(op, cancellationToken), cancellationToken);
+        public async Task<bool> WriteFusesAsync(DeviceOperation op) {
+            return await Task.Run(() => WriteFuses(op), op.CancellationToken);
         }
 
         public void SaveFile(string fileName) {
@@ -321,10 +321,10 @@ namespace Atmega.Flasher.Models {
             hf.Save(fileName);
         }
 
-        private static IProgrammer CreateProgrammer(DeviceOperation progress, CancellationToken cancellationToken) {
+        private static IProgrammer CreateProgrammer(DeviceOperation deviceOperation) {
             var settings = FlasherConfig.Read();
             var inner = CreateProgrammerFromConfig(settings);
-            var programmer = new ProgressTrackerProgrammer(inner, progress, cancellationToken);
+            var programmer = new ProgressTrackerProgrammer(inner, deviceOperation);
             return programmer;
         }
 

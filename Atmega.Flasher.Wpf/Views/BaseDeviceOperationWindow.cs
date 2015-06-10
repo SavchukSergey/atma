@@ -7,7 +7,7 @@ using Atmega.Flasher.Models;
 namespace Atmega.Flasher.Views {
     public abstract class BaseDeviceOperationWindow : Window {
 
-        protected readonly CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         protected BaseDeviceOperationWindow() {
             Loaded += BaseDeviceOperationWindow_Loaded;
