@@ -16,3 +16,5 @@
 /Atmega.Flasher/obj/
 /Atmega.Flasher/*.user
 /Atmega.Flasher/Icons/Thumbs.db
+/Atmega.Flasher.Wpf/bin/
+/Atmega.Flasher.Wpf/obj/

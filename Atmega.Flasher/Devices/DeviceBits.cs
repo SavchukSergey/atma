@@ -11,6 +11,18 @@ namespace Atmega.Flasher.Devices {
             get { return _bits; }
         }
 
+        public int StartAddress {
+            get {
+                return _bits.Count == 0 ? 0 : _bits.Min(item => item.Address);
+            }
+        }
+
+        public int EndAddress {
+            get {
+                return _bits.Count == 0 ? 0 : _bits.Max(item => item.Address);
+            }
+        }
+
         public IList<DeviceByteBits> BitsByAddress {
             get {
                 return _bits
@@ -25,8 +37,7 @@ namespace Atmega.Flasher.Devices {
 
         public int Size {
             get {
-                if (_bits.Count == 0) return 0;
-                return _bits.Max(item => item.Address) + 1;
+                return EndAddress - StartAddress + 1;
             }
         }
 

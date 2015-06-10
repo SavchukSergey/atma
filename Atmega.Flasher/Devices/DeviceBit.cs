@@ -23,7 +23,7 @@ namespace Atmega.Flasher.Devices {
             var xInverse = xDeviceBit.Attribute("inverse");
             var xConstant = xDeviceBit.Attribute("constant");
             return new DeviceBit {
-                Address = xAddress != null ? int.Parse(xAddress.Value, NumberStyles.AllowHexSpecifier) : 0,
+                Address = xAddress != null ? ParseInt(xAddress.Value) : 0,
                 Bit = xBit != null ? int.Parse(xBit.Value) : 0,
                 Name = xName != null ? xName.Value : "",
                 Inverse = xInverse != null && xInverse.Value.ToLowerInvariant() == "true",
@@ -49,8 +49,13 @@ namespace Atmega.Flasher.Devices {
 
         public void GetValueFrom(byte bt) {
             if (Constant.HasValue) return;
-             var mask = 1 << Bit;
+            var mask = 1 << Bit;
             Value = ((bt & mask) != 0) ^ Inverse;
+        }
+
+        private static int ParseInt(string val) {
+            if (val.StartsWith("0x")) return int.Parse(val.Substring(2), NumberStyles.HexNumber);
+            return int.Parse(val);
         }
     }
 }

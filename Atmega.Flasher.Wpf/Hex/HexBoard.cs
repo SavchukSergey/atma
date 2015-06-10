@@ -55,13 +55,13 @@ namespace Atmega.Flasher.Hex {
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public static HexBoard From(byte[] data) {
+        public static HexBoard From(byte[] data, int targetStart = 0) {
             var board = new HexBoard();
 
             var offset = 0;
 
             foreach (var bt in data) {
-                board[offset] = bt;
+                board[offset + targetStart] = bt;
                 offset++;
             }
 

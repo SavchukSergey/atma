@@ -51,10 +51,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <views:HexBoardView Grid.Row="0" DataContext="{Binding Path=FlashHexBoard}" Title="FLASH"/>
             <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}" Title="EEPROM"/>
+            <views:HexBoardView Grid.Row="2" DataContext="{Binding Path=FusesHexBoard}" Title="FUSES"/>
+            <views:HexBoardView Grid.Row="3" DataContext="{Binding Path=LocksHexBoard}" Title="LOCKS"/>
         </Grid>
     </DockPanel>
 </Window>

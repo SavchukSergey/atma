@@ -198,20 +198,20 @@
     <eeprom size="128" />
 
     <fuseBits>
-      <deviceBit bit="5" name="CP1" inverse="true" address="2008h" />
-      <deviceBit bit="4" name="CP0" inverse="true" address="2008h" />
-      <deviceBit bit="3" name="CP1" inverse="true" address="2008h" />
-      <deviceBit bit="2" name="CP0" inverse="true" address="2008h" />
-      <deviceBit bit="0" name="CPD" inverse="true" address="2008h" />
+      <deviceBit bit="5" name="CP1" inverse="true" address="0x2008" />
+      <deviceBit bit="4" name="CP0" inverse="true" address="0x2008" />
+      <deviceBit bit="3" name="CP1" inverse="true" address="0x2008" />
+      <deviceBit bit="2" name="CP0" inverse="true" address="0x2008" />
+      <deviceBit bit="0" name="CPD" inverse="true" address="0x2008" />
 
-      <deviceBit bit="7" name="LVP" inverse="true" address="2007h" />
-      <deviceBit bit="6" name="BOREN" inverse="true" address="2007h" />
-      <deviceBit bit="5" name="MCLRE" inverse="true" address="2007h" />
-      <deviceBit bit="4" name="FOSC2" inverse="true" address="2007h" />
-      <deviceBit bit="3" name="PWRTEN" inverse="true" address="2007h" />
-      <deviceBit bit="2" name="WDTEN" inverse="true" address="2007h" />
-      <deviceBit bit="1" name="FOSC1" inverse="true" address="2007h" />
-      <deviceBit bit="0" name="FOSC0" inverse="true" address="2007h" />
+      <deviceBit bit="7" name="LVP" inverse="true" address="0x2007" />
+      <deviceBit bit="6" name="BOREN" inverse="true" address="0x2007" />
+      <deviceBit bit="5" name="MCLRE" inverse="true" address="0x2007" />
+      <deviceBit bit="4" name="FOSC2" inverse="true" address="0x2007" />
+      <deviceBit bit="3" name="PWRTEN" inverse="true" address="0x2007" />
+      <deviceBit bit="2" name="WDTEN" inverse="true" address="0x2007" />
+      <deviceBit bit="1" name="FOSC1" inverse="true" address="0x2007" />
+      <deviceBit bit="0" name="FOSC0" inverse="true" address="0x2007" />
     </fuseBits>
 
   </device>

@@ -87,7 +87,7 @@ namespace Atmega.Flasher.Models {
             var fusesData = new byte[fusesSize];
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
-                programmer.ReadPage(0, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
+                programmer.ReadPage(device.FuseBits.StartAddress, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -106,7 +106,7 @@ namespace Atmega.Flasher.Models {
             var locksData = new byte[locksSize];
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
-                programmer.ReadPage(0, AvrMemoryType.LockBits, locksData, 0, locksSize);
+                programmer.ReadPage(device.LockBits.StartAddress, AvrMemoryType.LockBits, locksData, 0, locksSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -121,21 +121,31 @@ namespace Atmega.Flasher.Models {
             var device = config.Device;
             var flashSize = device.Flash.Size;
             var eepromSize = device.Eeprom.Size;
+            var fusesSize = device.FuseBits.Size;
+            var locksSize = device.LockBits.Size;
             op.FlashSize += flashSize;
             op.EepromSize += eepromSize;
+            op.FusesSize += fusesSize;
+            op.LocksSize += locksSize;
 
             var flashData = new byte[flashSize];
             var eepData = new byte[eepromSize];
+            var fusesData = new byte[fusesSize];
+            var locksData = new byte[locksSize];
             using (var programmer = CreateProgrammer(op, cancellationToken)) {
                 programmer.Start();
                 programmer.ReadPage(0, AvrMemoryType.Flash, flashData, 0, flashSize);
                 programmer.ReadPage(0, AvrMemoryType.Eeprom, eepData, 0, eepromSize);
+                programmer.ReadPage(device.FuseBits.StartAddress, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
+                programmer.ReadPage(device.LockBits.StartAddress, AvrMemoryType.LockBits, locksData, 0, locksSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
 
             EepromHexBoard = HexBoard.From(eepData);
             FlashHexBoard = HexBoard.From(flashData);
+            FusesHexBoard = HexBoard.From(fusesData, device.FuseBits.StartAddress);
+            LocksHexBoard = HexBoard.From(locksData, device.LockBits.StartAddress);
 
             return true;
         }
