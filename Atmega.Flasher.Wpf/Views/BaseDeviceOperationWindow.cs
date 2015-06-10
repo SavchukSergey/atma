@@ -7,8 +7,6 @@ using Atmega.Flasher.Models;
 namespace Atmega.Flasher.Views {
     public abstract class BaseDeviceOperationWindow : Window {
 
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-
         protected BaseDeviceOperationWindow() {
             Loaded += BaseDeviceOperationWindow_Loaded;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -48,7 +46,7 @@ namespace Atmega.Flasher.Views {
         }
 
         protected override void OnClosed(EventArgs e) {
-            _cts.Cancel();
+            DeviceOperation.Cancel();
             base.OnClosed(e);
         }
 

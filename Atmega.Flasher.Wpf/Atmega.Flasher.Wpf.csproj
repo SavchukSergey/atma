@@ -59,8 +59,6 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Converters\ProgressStateConverter.cs" />
-    <Compile Include="Hex\HexBlock.cs" />
-    <Compile Include="Hex\HexBlocks.cs" />
     <Compile Include="Models\BaseProgrammerConfig.cs" />
     <Compile Include="Models\ComBitBangConfig.cs" />
     <Compile Include="Models\ComBitBangPinConfig.cs" />
@@ -146,9 +144,6 @@
     </Compile>
     <Compile Include="Commands\FlasherCommands.cs" />
     <Compile Include="Models\FlasherModel.cs" />
-    <Compile Include="Hex\HexBoard.cs" />
-    <Compile Include="Hex\HexBoardByte.cs" />
-    <Compile Include="Hex\HexBoardLine.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

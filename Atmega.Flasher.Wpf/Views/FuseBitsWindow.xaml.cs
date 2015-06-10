@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Devices;
 using Atmega.Flasher.Models;
@@ -46,7 +45,7 @@ namespace Atmega.Flasher.Views {
             var settings = FlasherConfig.Read();
             var fuseBits = settings.Device.FuseBits;
 
-            var fusesData = Model.FusesHexBoard.ToArray();
+            var fusesData = Model.FusesHexBoard;
             fuseBits.ApplyFrom(fusesData);
 
             DeviceBitsView.DataContext = fuseBits;

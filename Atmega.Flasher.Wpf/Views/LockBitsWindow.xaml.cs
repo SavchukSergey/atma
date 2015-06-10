@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Atmega.Flasher.Devices;
 using Atmega.Flasher.Models;
@@ -46,7 +45,7 @@ namespace Atmega.Flasher.Views {
             var settings = FlasherConfig.Read();
             var lockBits = settings.Device.LockBits;
 
-            var locksData = Model.LocksHexBoard.ToArray();
+            var locksData = Model.LocksHexBoard;
             lockBits.ApplyFrom(locksData);
 
             DeviceBitsView.DataContext = lockBits;
