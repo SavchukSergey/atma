@@ -14,7 +14,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public override IProgrammer CreateProgrammer(DeviceInfo device) {
-            return new StubProgrammer();
+            return StubProgrammer.Instance;
         }
 
         public override IAvrChannel CreateChannel() {

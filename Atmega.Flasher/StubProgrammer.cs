@@ -6,6 +6,8 @@ namespace Atmega.Flasher {
 
         private readonly byte[] _flash = new byte[32768];
         private readonly byte[] _eeprom = new byte[1024];
+        private readonly byte[] _fuses = new byte[1024 * 16];
+        private readonly byte[] _locks = new byte[1024 * 16];
 
         public void Dispose() {
         }
@@ -17,7 +19,7 @@ namespace Atmega.Flasher {
         }
 
         public void ReadPage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
-            var mem = memType == AvrMemoryType.Flash ? _flash : _eeprom;
+            var mem = GetMemory(memType);
             Thread.Sleep(50);
             for (var i = 0; i < dataLength; i++) {
                 data[i + dataStart] = mem[(i + address) % mem.Length];
@@ -26,20 +28,29 @@ namespace Atmega.Flasher {
 
         public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             Thread.Sleep(50);
+            var mem = GetMemory(memType);
             for (var i = 0; i < data.Length; i++) {
-                switch (memType) {
-                    case AvrMemoryType.Flash:
-                        _flash[(i + address) % _flash.Length] = data[i + dataStart];
-                        break;
-                    case AvrMemoryType.Eeprom:
-                        _eeprom[(i + address) % _eeprom.Length] = data[i + dataStart];
-                        break;
-                    default: throw new NotSupportedException();
-                }
+                mem[(i + address) % mem.Length] = data[i + dataStart];
             }
         }
 
+        private byte[] GetMemory(AvrMemoryType memType) {
+            switch (memType) {
+                case AvrMemoryType.Flash:
+                    return _flash;
+                case AvrMemoryType.Eeprom:
+                    return _eeprom;
+                case AvrMemoryType.FuseBits:
+                    return _fuses;
+                case AvrMemoryType.LockBits:
+                    return _locks;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
         public void EraseDevice() {
         }
+
+        public static StubProgrammer Instance = new StubProgrammer();
     }
 }

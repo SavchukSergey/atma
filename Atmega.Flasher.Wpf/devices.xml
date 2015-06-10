@@ -28,70 +28,78 @@
     <flash size="32768" page="128" />
     <eeprom size="1024" />
     <lockBits>
-      <deviceBit bit="0" name="LB1" inverse="true" />
-      <deviceBit bit="1" name="LB2" inverse="true" />
-      <deviceBit bit="2" name="BLB01" inverse="true" />
-      <deviceBit bit="3" name="BLB02" inverse="true" />
-      <deviceBit bit="4" name="BLB11" inverse="true" />
-      <deviceBit bit="5" name="BLB12" inverse="true" />
+      <group>
+        <deviceBit bit="0" name="LB1" />
+        <deviceBit bit="1" name="LB2" />
+        <deviceBit bit="2" name="BLB01" />
+        <deviceBit bit="3" name="BLB02" />
+        <deviceBit bit="4" name="BLB11" />
+        <deviceBit bit="5" name="BLB12" />
+      </group>
     </lockBits>
     <fuseBits>
-      <deviceBit bit="0" name="CKSEL0" inverse="true" />
-      <deviceBit bit="1" name="CKSEL1" inverse="true" />
-      <deviceBit bit="2" name="CKSEL2" inverse="true" />
-      <deviceBit bit="3" name="CKSEL3" inverse="true" />
-      <deviceBit bit="4" name="SUT0" inverse="true" />
-      <deviceBit bit="5" name="SUT1" inverse="true" />
-      <deviceBit bit="6" name="CKOUT" inverse="true" />
-      <deviceBit bit="7" name="CKDIV8" inverse="true" />
+      <group>
+        <deviceBit bit="0" name="CKSEL0" />
+        <deviceBit bit="1" name="CKSEL1" />
+        <deviceBit bit="2" name="CKSEL2" />
+        <deviceBit bit="3" name="CKSEL3" />
+        <deviceBit bit="4" name="SUT0" />
+        <deviceBit bit="5" name="SUT1" />
+        <deviceBit bit="6" name="CKOUT" />
+        <deviceBit bit="7" name="CKDIV8" />
 
-      <deviceBit bit="0" name="BOOTRST" inverse="true" address="1" />
-      <deviceBit bit="1" name="BOOTSZ0" inverse="true" address="1" />
-      <deviceBit bit="2" name="BOOTSZ1" inverse="true" address="1" />
-      <deviceBit bit="3" name="EESAVE" inverse="true" address="1" />
-      <deviceBit bit="4" name="WDTON" inverse="true" address="1" />
-      <deviceBit bit="5" name="SPIEN" inverse="true" address="1" />
-      <deviceBit bit="6" name="DWEN" inverse="true" address="1" />
-      <deviceBit bit="7" name="RSTDISBL" inverse="true" address="1" />
+        <deviceBit bit="0" name="BOOTRST" address="1" />
+        <deviceBit bit="1" name="BOOTSZ0" address="1" />
+        <deviceBit bit="2" name="BOOTSZ1" address="1" />
+        <deviceBit bit="3" name="EESAVE" address="1" />
+        <deviceBit bit="4" name="WDTON" address="1" />
+        <deviceBit bit="5" name="SPIEN" address="1" />
+        <deviceBit bit="6" name="DWEN" address="1" />
+        <deviceBit bit="7" name="RSTDISBL" address="1" />
 
-      <deviceBit bit="0" name="BODLEVEL0" inverse="true" address="2" />
-      <deviceBit bit="1" name="BODLEVEL1" inverse="true" address="2" />
-      <deviceBit bit="2" name="BODLEVEL2" inverse="true" address="2" />
+        <deviceBit bit="0" name="BODLEVEL0" address="2" />
+        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+        <deviceBit bit="2" name="BODLEVEL2" address="2" />
+      </group>
     </fuseBits>
   </device>
   <device name="ATmega328p" ram="2048" signature="1e950f">
     <flash size="32768" page="128" />
     <eeprom size="1024" />
     <lockBits>
-      <deviceBit bit="0" name="LB1" inverse="true" />
-      <deviceBit bit="1" name="LB2" inverse="true" />
-      <deviceBit bit="2" name="BLB01" inverse="true" />
-      <deviceBit bit="3" name="BLB02" inverse="true" />
-      <deviceBit bit="4" name="BLB11" inverse="true" />
-      <deviceBit bit="5" name="BLB12" inverse="true" />
+      <group>
+        <deviceBit bit="0" name="LB1" />
+        <deviceBit bit="1" name="LB2" />
+        <deviceBit bit="2" name="BLB01" />
+        <deviceBit bit="3" name="BLB02" />
+        <deviceBit bit="4" name="BLB11" />
+        <deviceBit bit="5" name="BLB12" />
+      </group>
     </lockBits>
     <fuseBits>
-      <deviceBit bit="0" name="CKSEL0" inverse="true" />
-      <deviceBit bit="1" name="CKSEL1" inverse="true" />
-      <deviceBit bit="2" name="CKSEL2" inverse="true" />
-      <deviceBit bit="3" name="CKSEL3" inverse="true" />
-      <deviceBit bit="4" name="SUT0" inverse="true" />
-      <deviceBit bit="5" name="SUT1" inverse="true" />
-      <deviceBit bit="6" name="CKOUT" inverse="true" />
-      <deviceBit bit="7" name="CKDIV8" inverse="true" />
+      <group>
+        <deviceBit bit="0" name="CKSEL0" />
+        <deviceBit bit="1" name="CKSEL1" />
+        <deviceBit bit="2" name="CKSEL2" />
+        <deviceBit bit="3" name="CKSEL3" />
+        <deviceBit bit="4" name="SUT0" />
+        <deviceBit bit="5" name="SUT1" />
+        <deviceBit bit="6" name="CKOUT" />
+        <deviceBit bit="7" name="CKDIV8" />
 
-      <deviceBit bit="0" name="BOOTRST" inverse="true" address="1" />
-      <deviceBit bit="1" name="BOOTSZ0" inverse="true" address="1" />
-      <deviceBit bit="2" name="BOOTSZ1" inverse="true" address="1" />
-      <deviceBit bit="3" name="EESAVE" inverse="true" address="1" />
-      <deviceBit bit="4" name="WDTON" inverse="true" address="1" />
-      <deviceBit bit="5" name="SPIEN" inverse="true" address="1" />
-      <deviceBit bit="6" name="DWEN" inverse="true" address="1" />
-      <deviceBit bit="7" name="RSTDISBL" inverse="true" address="1" />
+        <deviceBit bit="0" name="BOOTRST" address="1" />
+        <deviceBit bit="1" name="BOOTSZ0" address="1" />
+        <deviceBit bit="2" name="BOOTSZ1" address="1" />
+        <deviceBit bit="3" name="EESAVE" address="1" />
+        <deviceBit bit="4" name="WDTON" address="1" />
+        <deviceBit bit="5" name="SPIEN" address="1" />
+        <deviceBit bit="6" name="DWEN" address="1" />
+        <deviceBit bit="7" name="RSTDISBL" address="1" />
 
-      <deviceBit bit="0" name="BODLEVEL0" inverse="true" address="2" />
-      <deviceBit bit="1" name="BODLEVEL1" inverse="true" address="2" />
-      <deviceBit bit="2" name="BODLEVEL2" inverse="true" address="2" />
+        <deviceBit bit="0" name="BODLEVEL0" address="2" />
+        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+        <deviceBit bit="2" name="BODLEVEL2" address="2" />
+      </group>
     </fuseBits>
   </device>
 
@@ -197,21 +205,29 @@
     <flash size="4096" />
     <eeprom size="128" />
 
-    <fuseBits>
-      <deviceBit bit="5" name="CP1" inverse="true" address="0x2008" />
-      <deviceBit bit="4" name="CP0" inverse="true" address="0x2008" />
-      <deviceBit bit="3" name="CP1" inverse="true" address="0x2008" />
-      <deviceBit bit="2" name="CP0" inverse="true" address="0x2008" />
-      <deviceBit bit="0" name="CPD" inverse="true" address="0x2008" />
+    <fuseBits page="2">
+      <group name="0x200f">
+        <deviceBit bit="5" name="CP1" address="0x200f" />
+        <deviceBit bit="4" name="CP0" address="0x200f" />
+        <deviceBit bit="3" name="CP1" address="0x200f" />
+        <deviceBit bit="2" name="CP0" address="0x200f" />
+        <deviceBit bit="0" name="CPD" address="0x200f" />
+      </group>
 
-      <deviceBit bit="7" name="LVP" inverse="true" address="0x2007" />
-      <deviceBit bit="6" name="BOREN" inverse="true" address="0x2007" />
-      <deviceBit bit="5" name="MCLRE" inverse="true" address="0x2007" />
-      <deviceBit bit="4" name="FOSC2" inverse="true" address="0x2007" />
-      <deviceBit bit="3" name="PWRTEN" inverse="true" address="0x2007" />
-      <deviceBit bit="2" name="WDTEN" inverse="true" address="0x2007" />
-      <deviceBit bit="1" name="FOSC1" inverse="true" address="0x2007" />
-      <deviceBit bit="0" name="FOSC0" inverse="true" address="0x2007" />
+      <group name="0x200e">
+        <deviceBit bit="7" name="LVP" address="0x200e" />
+        <deviceBit bit="6" name="BOREN" address="0x200e" />
+        <deviceBit bit="5" name="MCLRE" address="0x200e" />
+        <deviceBit bit="3" name="PWRTEN" address="0x200e" />
+        <deviceBit bit="2" name="WDTEN" address="0x200e" />
+      </group>
+
+      <group name="Oscillator Selection">
+        <deviceBit bit="4" name="FOSC2" address="0x200e" />
+        <deviceBit bit="1" name="FOSC1" address="0x200e" />
+        <deviceBit bit="0" name="FOSC0" address="0x200e" />
+      </group>
+
     </fuseBits>
 
   </device>

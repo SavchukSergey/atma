@@ -91,7 +91,7 @@ namespace Atmega.Flasher.Models {
             }
             op.CurrentState = "Everything is done";
 
-            FusesHexBoard = HexBoard.From(fusesData);
+            FusesHexBoard = HexBoard.From(fusesData, device.FuseBits.StartAddress);
 
             return true;
         }
@@ -110,7 +110,7 @@ namespace Atmega.Flasher.Models {
             }
             op.CurrentState = "Everything is done";
 
-            LocksHexBoard = HexBoard.From(locksData);
+            LocksHexBoard = HexBoard.From(locksData, device.LockBits.StartAddress);
 
             return true;
         }
@@ -178,7 +178,10 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteFuses(DeviceOperation op) {
-            var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+
+            var fusesBlocks = FusesHexBoard.SplitBlocks(device.FuseBits.PageSize);
             op.FusesSize += fusesBlocks.TotalBytes;
 
             using (var programmer = CreateProgrammer(op)) {
@@ -196,13 +199,16 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteLocks(DeviceOperation op) {
-            var fusesBlocks = FusesHexBoard.SplitBlocks(int.MaxValue);
-            op.FusesSize += fusesBlocks.TotalBytes;
+            var config = FlasherConfig.Read();
+            var device = config.Device;
+
+            var locksBlocks = LocksHexBoard.SplitBlocks(device.LockBits.PageSize);
+            op.LocksSize += locksBlocks.TotalBytes;
 
             using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
 
-                foreach (var block in fusesBlocks.Blocks) {
+                foreach (var block in locksBlocks.Blocks) {
                     programmer.WritePage(block.Address, AvrMemoryType.LockBits, block.Data, 0, block.Data.Length);
                 }
 

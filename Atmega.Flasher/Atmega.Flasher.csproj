@@ -47,11 +47,17 @@
     <Compile Include="DeviceOperationStatus.cs" />
     <Compile Include="Devices\DeviceBit.cs" />
     <Compile Include="Devices\DeviceBits.cs" />
+    <Compile Include="Devices\DeviceBitsGroup.cs" />
     <Compile Include="Devices\DeviceByte.cs" />
     <Compile Include="Devices\DeviceByteBits.cs" />
     <Compile Include="Devices\DeviceEepromParameters.cs" />
     <Compile Include="Devices\DeviceFlashParameters.cs" />
     <Compile Include="Devices\DeviceInfo.cs" />
+    <Compile Include="Hex\HexBlock.cs" />
+    <Compile Include="Hex\HexBlocks.cs" />
+    <Compile Include="Hex\HexBoard.cs" />
+    <Compile Include="Hex\HexBoardByte.cs" />
+    <Compile Include="Hex\HexBoardLine.cs" />
     <Compile Include="IO\ComPin.cs" />
     <Compile Include="IO\ComPinType.cs" />
     <Compile Include="IO\IAvrChannel.cs" />

@@ -1,37 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Atmega.Flasher.Hex;
 
 namespace Atmega.Flasher.Devices {
     public class DeviceBits {
 
-        private readonly IList<DeviceBit> _bits = new List<DeviceBit>();
+        private readonly IList<DeviceBitsGroup> _groups = new List<DeviceBitsGroup>();
 
-        public IList<DeviceBit> Bits {
-            get { return _bits; }
+        public IList<DeviceBitsGroup> Groups {
+            get { return _groups; }
         }
 
         public int StartAddress {
             get {
-                return _bits.Count == 0 ? 0 : _bits.Min(item => item.Address);
+                return _groups.Count == 0 ? 0 : _groups.Min(item => item.StartAddress);
             }
         }
 
         public int EndAddress {
             get {
-                return _bits.Count == 0 ? 0 : _bits.Max(item => item.Address);
-            }
-        }
-
-        public IList<DeviceByteBits> BitsByAddress {
-            get {
-                return _bits
-                    .GroupBy(item => item.Address)
-                    .Select(item => new DeviceByteBits {
-                        Address = item.Key,
-                        Bits = item.ToList()
-                    })
-                    .ToList();
+                return _groups.Count == 0 ? 0 : _groups.Max(item => item.EndAddress);
             }
         }
 
@@ -41,33 +30,31 @@ namespace Atmega.Flasher.Devices {
             }
         }
 
-        public IList<DeviceByte> ToBytes() {
-            var res = new Dictionary<int, DeviceByte>();
-            foreach (var bit in _bits) {
-                var adr = bit.Address;
-                DeviceByte item;
-                res.TryGetValue(adr, out item);
-                item.Value = bit.Apply(item.Value);
-                res[adr] = item;
-            }
-            return res.Values.ToList();
-        }
+        public int PageSize { get; set; }
 
         public static DeviceBits Parse(XElement xBits) {
             var res = new DeviceBits();
+
+            var xPage = xBits.Attribute("page");
+            res.PageSize = xPage != null ? int.Parse(xPage.Value) : 1;
             foreach (var xBit in xBits.Elements()) {
-                res.Bits.Add(DeviceBit.From(xBit));
+                res.Groups.Add(DeviceBitsGroup.From(xBit));
             }
             return res;
         }
 
-        public void ApplyFrom(byte[] data) {
-            foreach (var bit in _bits) {
-                if (bit.Address < data.Length) {
-                    var bt = data[bit.Address];
-                    bit.GetValueFrom(bt);
-                }
+        public void ApplyFrom(HexBoard data) {
+            foreach (var gr in _groups) {
+                gr.ApplyFrom(data);
             }
         }
+
+        public void ApplyTo(HexBoard board) {
+            foreach (var gr in _groups) {
+                gr.ApplyTo(board);
+            }
+        }
+
+
     }
 }

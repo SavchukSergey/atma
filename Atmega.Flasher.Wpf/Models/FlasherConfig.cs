@@ -27,6 +27,7 @@ namespace Atmega.Flasher.Models {
             : base(string.Empty) {
             _stkv1 = new StkV1Config("StkV1.");
             _comBitBang = new ComBitBangConfig("ComBitBang.");
+            _stub = new StubConfig("Stub.");
         }
 
         public ProgrammerType ProgrammerType {
@@ -62,6 +63,7 @@ namespace Atmega.Flasher.Models {
         public override void ReadFromConfig() {
             _stkv1.ReadFromConfig();
             _comBitBang.ReadFromConfig();
+            _stub.ReadFromConfig();
 
             ProgrammerTypes.Clear();
             ProgrammerTypes.Add(new KeyValuePair<ProgrammerType, string>(ProgrammerType.StkV1, "STK v1"));
@@ -86,6 +88,7 @@ namespace Atmega.Flasher.Models {
             UpdateConfig(Device.Name, "DeviceName");
             _stkv1.Save();
             _comBitBang.Save();
+            _stub.Save();
         }
 
         public BaseProgrammerConfig GetProgrammerConfig() {

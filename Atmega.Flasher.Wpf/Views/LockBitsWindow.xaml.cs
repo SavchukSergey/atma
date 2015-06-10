@@ -19,12 +19,7 @@ namespace Atmega.Flasher.Views {
 
         private void SaveCommand(object sender, ExecutedRoutedEventArgs e) {
             var deviceBits = (DeviceBits)DeviceBitsView.DataContext;
-            var data = deviceBits.ToBytes();
-
-            Model.LocksHexBoard.Clear();
-            foreach (var item in data) {
-                Model.LocksHexBoard[item.Address] = item.Value;
-            }
+            deviceBits.ApplyTo(Model.LocksHexBoard);
 
             var dlg = new WriteLocksWindow {
                 DataContext = new FlasherOperationModel(Model),

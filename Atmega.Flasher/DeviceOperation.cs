@@ -1,22 +1,29 @@
 ﻿using System;
+using System.Threading;
 
 namespace Atmega.Flasher {
     public class DeviceOperation {
 
+        private readonly CancellationTokenSource _cancellationTokenSource;
+
+        public DeviceOperation(CancellationTokenSource cancellationTokenSource) {
+            _cancellationTokenSource = cancellationTokenSource;
+        }
+
         public virtual int FlashDone { get; set; }
 
         public virtual int EepromDone { get; set; }
-        
+
         public virtual int LocksDone { get; set; }
-        
+
         public virtual int FusesDone { get; set; }
 
         public virtual int FlashSize { get; set; }
 
         public virtual int EepromSize { get; set; }
-        
+
         public virtual int LocksSize { get; set; }
-        
+
         public virtual int FusesSize { get; set; }
 
         public int Done {
@@ -56,11 +63,19 @@ namespace Atmega.Flasher {
             }
         }
 
+        public void Cancel() {
+            _cancellationTokenSource.Cancel();
+        }
+
         public void Complete() {
             FlashDone = FlashSize;
             EepromDone = EepromSize;
             LocksDone = LocksSize;
             FusesDone = FusesSize;
+        }
+
+        public CancellationToken CancellationToken {
+            get { return _cancellationTokenSource.Token; }
         }
     }
 }
