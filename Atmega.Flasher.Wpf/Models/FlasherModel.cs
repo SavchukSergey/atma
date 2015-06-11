@@ -86,7 +86,7 @@ namespace Atmega.Flasher.Models {
             var fusesData = new byte[fusesSize];
             using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
-                programmer.ReadPage(device.FuseBits.StartAddress, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
+                programmer.ReadPage(device.FuseBits.StartAddress, device.FuseBits.Location ?? AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -105,7 +105,7 @@ namespace Atmega.Flasher.Models {
             var locksData = new byte[locksSize];
             using (var programmer = CreateProgrammer(op)) {
                 programmer.Start();
-                programmer.ReadPage(device.LockBits.StartAddress, AvrMemoryType.LockBits, locksData, 0, locksSize);
+                programmer.ReadPage(device.LockBits.StartAddress, device.LockBits.Location ?? AvrMemoryType.LockBits, locksData, 0, locksSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -135,8 +135,8 @@ namespace Atmega.Flasher.Models {
                 programmer.Start();
                 programmer.ReadPage(0, AvrMemoryType.Flash, flashData, 0, flashSize);
                 programmer.ReadPage(0, AvrMemoryType.Eeprom, eepData, 0, eepromSize);
-                programmer.ReadPage(device.FuseBits.StartAddress, AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
-                programmer.ReadPage(device.LockBits.StartAddress, AvrMemoryType.LockBits, locksData, 0, locksSize);
+                programmer.ReadPage(device.FuseBits.StartAddress, device.FuseBits.Location ?? AvrMemoryType.FuseBits, fusesData, 0, fusesSize);
+                programmer.ReadPage(device.LockBits.StartAddress, device.LockBits.Location ?? AvrMemoryType.LockBits, locksData, 0, locksSize);
                 programmer.Stop();
             }
             op.CurrentState = "Everything is done";
@@ -188,7 +188,7 @@ namespace Atmega.Flasher.Models {
                 programmer.Start();
 
                 foreach (var block in fusesBlocks.Blocks) {
-                    programmer.WritePage(block.Address, AvrMemoryType.FuseBits, block.Data, 0, block.Data.Length);
+                    programmer.WritePage(block.Address, device.FuseBits.Location ?? AvrMemoryType.FuseBits, block.Data, 0, block.Data.Length);
                 }
 
                 programmer.Stop();
@@ -209,7 +209,7 @@ namespace Atmega.Flasher.Models {
                 programmer.Start();
 
                 foreach (var block in locksBlocks.Blocks) {
-                    programmer.WritePage(block.Address, AvrMemoryType.LockBits, block.Data, 0, block.Data.Length);
+                    programmer.WritePage(block.Address, device.LockBits.Location ?? AvrMemoryType.LockBits, block.Data, 0, block.Data.Length);
                 }
 
                 programmer.Stop();

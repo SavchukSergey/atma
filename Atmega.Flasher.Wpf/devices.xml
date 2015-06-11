@@ -243,27 +243,27 @@
     <flash size="4096" />
     <eeprom size="128" />
 
-    <fuseBits page="2">
-      <group name="0x200f">
-        <deviceBit bit="5" name="CP1" address="0x200f" />
-        <deviceBit bit="4" name="CP0" address="0x200f" />
-        <deviceBit bit="3" name="CP1" address="0x200f" />
-        <deviceBit bit="2" name="CP0" address="0x200f" />
-        <deviceBit bit="0" name="CPD" address="0x200f" />
+    <fuseBits page="2" location="flash">
+      <group name="0x2007 high">
+        <deviceBit bit="5" name="CP1" address="0x400f" />
+        <deviceBit bit="4" name="CP0" address="0x400f" />
+        <deviceBit bit="3" name="CP1" address="0x400f" />
+        <deviceBit bit="2" name="CP0" address="0x400f" />
+        <deviceBit bit="0" name="CPD" address="0x400f" />
       </group>
 
-      <group name="0x200e">
-        <deviceBit bit="7" name="LVP" address="0x200e" />
-        <deviceBit bit="6" name="BOREN" address="0x200e" />
-        <deviceBit bit="5" name="MCLRE" address="0x200e" />
-        <deviceBit bit="3" name="PWRTEN" address="0x200e" />
-        <deviceBit bit="2" name="WDTEN" address="0x200e" />
+      <group name="0x2007 low">
+        <deviceBit bit="7" name="LVP" address="0x400e" />
+        <deviceBit bit="6" name="BOREN" address="0x400e" />
+        <deviceBit bit="5" name="MCLRE" address="0x400e" />
+        <deviceBit bit="3" name="PWRTEN" address="0x400e" />
+        <deviceBit bit="2" name="WDTEN" address="0x400e" />
       </group>
 
       <group name="Oscillator Selection">
-        <deviceBit bit="4" name="FOSC2" address="0x200e" />
-        <deviceBit bit="1" name="FOSC1" address="0x200e" />
-        <deviceBit bit="0" name="FOSC0" address="0x200e" />
+        <deviceBit bit="4" name="FOSC2" address="0x400e" />
+        <deviceBit bit="1" name="FOSC1" address="0x400e" />
+        <deviceBit bit="0" name="FOSC0" address="0x400e" />
       </group>
 
     </fuseBits>

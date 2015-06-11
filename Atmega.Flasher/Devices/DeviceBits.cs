@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Atmega.Flasher.Hex;
@@ -30,13 +31,17 @@ namespace Atmega.Flasher.Devices {
             }
         }
 
+        public AvrMemoryType? Location { get; set; }
+
         public int PageSize { get; set; }
 
         public static DeviceBits Parse(XElement xBits) {
             var res = new DeviceBits();
 
             var xPage = xBits.Attribute("page");
+            var xLocation = xBits.Attribute("location");
             res.PageSize = xPage != null ? int.Parse(xPage.Value) : 1;
+            res.Location = xLocation != null ? new AvrMemoryType?((AvrMemoryType) Enum.Parse(typeof(AvrMemoryType), xLocation.Value, true)) : null;
             foreach (var xBit in xBits.Elements()) {
                 res.Groups.Add(DeviceBitsGroup.From(xBit));
             }
