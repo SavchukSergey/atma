@@ -7,10 +7,15 @@
         WindowStartupLocation="CenterOwner"
         Icon="../../Icons/serial-monitor.png"
         FocusManager.FocusedElement="{Binding ElementName=MessageToSend}"
+        Loaded="SerialMonitorWindow_OnLoaded"
         >
     <Window.Resources>
         <Style x:Key="MyMessage" TargetType="Paragraph">
             <Setter Property="Foreground" Value="Green" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style x:Key="OtherMessage" TargetType="Paragraph">
+            <Setter Property="Foreground" Value="Red" />
             <Setter Property="Margin" Value="0" />
         </Style>
     </Window.Resources>
@@ -20,6 +25,11 @@
             <TextBox x:Name="MessageToSend" VerticalContentAlignment="Center" KeyDown="MessageToSend_OnKeyDown" ToolTip="Enter message to be sent" />
         </DockPanel>
         <RichTextBox x:Name="MessageLog" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="5" >
+            <RichTextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Click="ClearLog" Header="Clear" />
+                </ContextMenu>
+            </RichTextBox.ContextMenu>
             <FlowDocument></FlowDocument>
         </RichTextBox>
     </DockPanel>
