@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Flasher"
         Height="700" Width="740"
-        MinWidth="740"
+        MinWidth="740" MinHeight="700"
         Padding="10" WindowStartupLocation="CenterScreen"
         Icon="Icons/main.png"
         d:DataContext="{d:DesignInstance models:FlasherModel}">
@@ -24,7 +24,12 @@
         <CommandBinding Command="commands:FlasherCommands.FuseBits" Executed="FuseBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.ResetDevice" Executed="ResetDevice" />
         <CommandBinding Command="commands:FlasherCommands.Settings" Executed="SettingsCommand" />
+        <CommandBinding Command="commands:FlasherCommands.SerialMonitor" Executed="SerialMonitor" />
     </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="M" Modifiers="Control" Command="commands:FlasherCommands.SerialMonitor"/>
+        <KeyBinding Key="L" Modifiers="Control" Command="commands:FlasherCommands.LockBits"/>
+    </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
             <Menu VerticalAlignment="Top">
@@ -38,15 +43,37 @@
                     <MenuItem Header="Write" Command="commands:FlasherCommands.WriteDevice" />
                     <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
                     <MenuItem Header="Erase" Command="commands:FlasherCommands.EraseDevice" />
-                    <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" />
+                    <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" InputGestureText="Ctrl+L" />
                     <MenuItem Header="Fuse Bits" Command="commands:FlasherCommands.FuseBits" />
                     <Separator />
                     <MenuItem Header="Reset Device" Command="commands:FlasherCommands.ResetDevice" />
+                    <Separator />
+                    <MenuItem Header="Serial Monitor" Command="commands:FlasherCommands.SerialMonitor" InputGestureText="Ctrl+M" />
                 </MenuItem>
                 <MenuItem Header="Settings" Command="commands:FlasherCommands.Settings" />
             </Menu>
             <views:AppToolBar />
         </StackPanel>
+        <StatusBar DockPanel.Dock="Bottom" >
+            <StatusBar.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="5,0,5,0" />
+                </Style>
+            </StatusBar.Resources>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>FLASH size:</TextBlock>
+                    <TextBlock Text="{Binding Path=FlashHexBoard.Size}" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>EEPROM size:</TextBlock>
+                    <TextBlock Text="{Binding Path=EepromHexBoard.Size}" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
         <Grid Style="{StaticResource DialogContainer}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"></RowDefinition>

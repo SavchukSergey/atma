@@ -11,6 +11,7 @@ namespace Atmega.Flasher.Commands {
         private readonly static RoutedCommand _lockBitsDevice = new RoutedCommand();
         private readonly static RoutedCommand _fuseBitsDevice = new RoutedCommand();
         private readonly static RoutedCommand _resetDevice = new RoutedCommand();
+        private readonly static RoutedCommand _serialMonitor = new RoutedCommand();
         private readonly static RoutedCommand _settings = new RoutedCommand();
 
         public static RoutedCommand OpenEeprom {
@@ -47,6 +48,10 @@ namespace Atmega.Flasher.Commands {
 
         public static RoutedCommand Settings {
             get { return _settings; }
+        }
+
+        public static RoutedCommand SerialMonitor {
+            get { return _serialMonitor; }
         }
     }
 }

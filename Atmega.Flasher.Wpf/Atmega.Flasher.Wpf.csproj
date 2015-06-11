@@ -91,6 +91,9 @@
     <Compile Include="Views\Operations\WriteFusesWindow.xaml.cs">
       <DependentUpon>WriteFusesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SerialMonitor\SerialMonitorWindow.xaml.cs">
+      <DependentUpon>SerialMonitorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\StkV1SettingsView.xaml.cs">
       <DependentUpon>StkV1SettingsView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
     <Page Include="Views\Operations\WriteFusesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SerialMonitor\SerialMonitorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\StkV1SettingsView.xaml">
       <SubType>Designer</SubType>
@@ -279,6 +286,7 @@
     <Content Include="devices.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Icons\serial-monitor.png" />
     <Resource Include="Icons\main.ico" />
     <Resource Include="Icons\reset.png" />
     <Resource Include="Icons\fuse-bits.png" />

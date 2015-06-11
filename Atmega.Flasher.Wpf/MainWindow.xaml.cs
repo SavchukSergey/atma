@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views;
 using Atmega.Flasher.Views.Operations;
+using Atmega.Flasher.Views.SerialMonitor;
 using Atmega.Hex;
 using Microsoft.Win32;
 
@@ -131,6 +132,14 @@ namespace Atmega.Flasher {
         private void ResetDevice(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new ResetDeviceWindow {
                 DataContext = new FlasherOperationModel(_model),
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+
+        private void SerialMonitor(object sender, ExecutedRoutedEventArgs e) {
+            var dlg = new SerialMonitorWindow {
+                DataContext = _model,
                 Owner = this
             };
             dlg.ShowDialog();

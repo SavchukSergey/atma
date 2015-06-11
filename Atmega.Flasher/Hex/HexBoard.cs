@@ -39,8 +39,11 @@ namespace Atmega.Flasher.Hex {
             set {
                 var line = EnsureLine(address);
                 line.Bytes[address % 16] = value;
-                OnPropertyChanged("HexFormatted");
             }
+        }
+
+        public bool HasData {
+            get { return Size > 0; }
         }
 
         public ObservableCollection<HexBoardLine> Lines { get { return _lines; } }
@@ -92,6 +95,14 @@ namespace Atmega.Flasher.Hex {
                 return res;
             }
         }
+
+        public int Size {
+            get {
+                if (_lines.Count == 0) return 0;
+                return _lines.Sum(line => line.Bytes.Count(b => b.Value.HasValue));
+            }
+        }
+
         public byte[] ToArray() {
             var res = new byte[MaxAddress + 1];
             foreach (var line in _lines) {
