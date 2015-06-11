@@ -105,5 +105,70 @@ namespace Atmega.Flasher.Views.SerialMonitor {
             MessageLog.Document.Blocks.Clear();
         }
 
+
+        private bool _altMode = false;
+        private int _altChar = 0;
+        private void MessageToSend_OnPreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.LeftCtrl) {
+                _altMode = true;
+                e.Handled = true;
+            } else if (_altMode) {
+                switch (e.Key) {
+                    case Key.D0:
+                    case Key.NumPad0:
+                        _altChar = _altChar * 10 + 0;
+                        break;
+                    case Key.D1:
+                    case Key.NumPad1:
+                        _altChar = _altChar * 10 + 1;
+                        break;
+                    case Key.D2:
+                    case Key.NumPad2:
+                        _altChar = _altChar * 10 + 2;
+                        break;
+                    case Key.D3:
+                    case Key.NumPad3:
+                        _altChar = _altChar * 10 + 3;
+                        break;
+                    case Key.D4:
+                    case Key.NumPad4:
+                        _altChar = _altChar * 10 + 4;
+                        break;
+                    case Key.D5:
+                    case Key.NumPad5:
+                        _altChar = _altChar * 10 + 5;
+                        break;
+                    case Key.D6:
+                    case Key.NumPad6:
+                        _altChar = _altChar * 10 + 6;
+                        break;
+                    case Key.D7:
+                    case Key.NumPad7:
+                        _altChar = _altChar * 10 + 7;
+                        break;
+                    case Key.D8:
+                    case Key.NumPad8:
+                        _altChar = _altChar * 10 + 8;
+                        break;
+                    case Key.D9:
+                    case Key.NumPad9:
+                        _altChar = _altChar * 10 + 9;
+                        break;
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void MessageToSend_OnPreviewKeyUp(object sender, KeyEventArgs e) {
+            if (e.Key == Key.LeftCtrl) {
+                e.Handled = true;
+                int caretIndex = MessageToSend.CaretIndex;
+                MessageToSend.Text = MessageToSend.Text.Insert(caretIndex, ((char)_altChar).ToString());
+                Console.WriteLine("char: {0}", ((char)_altChar).ToString());
+                MessageToSend.CaretIndex = caretIndex + 1;
+                _altChar = 0;
+                _altMode = false;
+            }
+        }
     }
 }

@@ -22,9 +22,15 @@
     <DockPanel LastChildFill="True">
         <DockPanel LastChildFill="True" DockPanel.Dock="Bottom">
             <Button Content="Send" HorizontalAlignment="Center" DockPanel.Dock="Right" Click="Button_Click" />
-            <TextBox x:Name="MessageToSend" VerticalContentAlignment="Center" KeyDown="MessageToSend_OnKeyDown" ToolTip="Enter message to be sent" />
+            <TextBox x:Name="MessageToSend" VerticalContentAlignment="Center"
+                     FontFamily="Consolas" FontSize="16"
+                     PreviewKeyDown="MessageToSend_OnPreviewKeyDown"
+                     PreviewKeyUp="MessageToSend_OnPreviewKeyUp"
+                     KeyDown="MessageToSend_OnKeyDown"
+                     ToolTip="Enter message to be sent" />
         </DockPanel>
-        <RichTextBox x:Name="MessageLog" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="5" >
+        <RichTextBox x:Name="MessageLog" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Padding="5" 
+                     FontFamily="Consolas" FontSize="16" >
             <RichTextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Click="ClearLog" Header="Clear" />
