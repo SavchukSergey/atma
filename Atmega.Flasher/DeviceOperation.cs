@@ -35,7 +35,10 @@ namespace Atmega.Flasher {
         }
 
         public double Progress {
-            get { return 100.0 * Done / Math.Max(1, Total); }
+            get {
+                if (Total == 0) return 100;
+                return 100.0 * Done / Total;
+            }
         }
 
         public double ProgressFraction {

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Atmega.Flasher.Models;
 
-namespace Atmega.Flasher.Views {
+namespace Atmega.Flasher.Views.Operations {
     public abstract class BaseDeviceOperationWindow : Window {
 
         protected BaseDeviceOperationWindow() {
@@ -19,6 +18,9 @@ namespace Atmega.Flasher.Views {
                 var res = await Execute(op);
                 if (res) {
                     Close();
+                } else {
+                    op.Status = DeviceOperationStatus.Error;
+                    op.Complete();
                 }
             } catch (OperationCanceledException) {
                 op.CurrentState = "Operation is cancelled";
@@ -31,7 +33,6 @@ namespace Atmega.Flasher.Views {
                 op.Status = DeviceOperationStatus.Error;
             }
             if (op.Status == DeviceOperationStatus.Error) {
-                op.FlashSize = Math.Max(1, op.FlashSize);
                 op.Complete();
             }
         }

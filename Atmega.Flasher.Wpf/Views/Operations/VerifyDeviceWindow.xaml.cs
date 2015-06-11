@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Atmega.Flasher.Views {
+namespace Atmega.Flasher.Views.Operations {
     /// <summary>
     /// Interaction logic for VerifyDeviceWindow.xaml
     /// </summary>

@@ -10,9 +10,8 @@
     <ItemsControl ItemsSource="{Binding Path=Groups}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Border Margin="5" BorderThickness="1" BorderBrush="DarkBlue" >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Path=Name}" />
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="16" Margin="5" />
                         <ItemsControl ItemsSource="{Binding Path=Bits}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -26,7 +25,6 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
-                </Border>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

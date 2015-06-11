@@ -38,28 +38,33 @@
       </group>
     </lockBits>
     <fuseBits>
-      <group>
-        <deviceBit bit="0" name="CKSEL0" />
-        <deviceBit bit="1" name="CKSEL1" />
-        <deviceBit bit="2" name="CKSEL2" />
+      <group name="Clock Selection">
         <deviceBit bit="3" name="CKSEL3" />
+        <deviceBit bit="2" name="CKSEL2" />
+        <deviceBit bit="1" name="CKSEL1" />
+        <deviceBit bit="0" name="CKSEL0" />
+      </group>
+      <group>
         <deviceBit bit="4" name="SUT0" />
         <deviceBit bit="5" name="SUT1" />
         <deviceBit bit="6" name="CKOUT" />
         <deviceBit bit="7" name="CKDIV8" />
 
-        <deviceBit bit="0" name="BOOTRST" address="1" />
-        <deviceBit bit="1" name="BOOTSZ0" address="1" />
-        <deviceBit bit="2" name="BOOTSZ1" address="1" />
         <deviceBit bit="3" name="EESAVE" address="1" />
         <deviceBit bit="4" name="WDTON" address="1" />
         <deviceBit bit="5" name="SPIEN" address="1" />
         <deviceBit bit="6" name="DWEN" address="1" />
         <deviceBit bit="7" name="RSTDISBL" address="1" />
-
-        <deviceBit bit="0" name="BODLEVEL0" address="2" />
-        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+      </group>
+      <group name="Boot settings">
+        <deviceBit bit="0" name="BOOTRST" address="1" />
+        <deviceBit bit="1" name="BOOTSZ0" address="1" />
+        <deviceBit bit="2" name="BOOTSZ1" address="1" />
+      </group>
+      <group name="Brown-out detection">
         <deviceBit bit="2" name="BODLEVEL2" address="2" />
+        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+        <deviceBit bit="0" name="BODLEVEL0" address="2" />
       </group>
     </fuseBits>
   </device>
@@ -77,28 +82,34 @@
       </group>
     </lockBits>
     <fuseBits>
-      <group>
-        <deviceBit bit="0" name="CKSEL0" />
-        <deviceBit bit="1" name="CKSEL1" />
-        <deviceBit bit="2" name="CKSEL2" />
+      <group name="Clock Selection">
         <deviceBit bit="3" name="CKSEL3" />
+        <deviceBit bit="2" name="CKSEL2" />
+        <deviceBit bit="1" name="CKSEL1" />
+        <deviceBit bit="0" name="CKSEL0" />
+      </group>
+      <group>
         <deviceBit bit="4" name="SUT0" />
         <deviceBit bit="5" name="SUT1" />
         <deviceBit bit="6" name="CKOUT" />
         <deviceBit bit="7" name="CKDIV8" />
 
-        <deviceBit bit="0" name="BOOTRST" address="1" />
-        <deviceBit bit="1" name="BOOTSZ0" address="1" />
-        <deviceBit bit="2" name="BOOTSZ1" address="1" />
         <deviceBit bit="3" name="EESAVE" address="1" />
         <deviceBit bit="4" name="WDTON" address="1" />
         <deviceBit bit="5" name="SPIEN" address="1" />
         <deviceBit bit="6" name="DWEN" address="1" />
         <deviceBit bit="7" name="RSTDISBL" address="1" />
+      </group>
+      <group name="Boot settings">
+        <deviceBit bit="0" name="BOOTRST" address="1" />
+        <deviceBit bit="1" name="BOOTSZ0" address="1" />
+        <deviceBit bit="2" name="BOOTSZ1" address="1" />
+      </group>
 
-        <deviceBit bit="0" name="BODLEVEL0" address="2" />
-        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+      <group name="Brown-out detection">
         <deviceBit bit="2" name="BODLEVEL2" address="2" />
+        <deviceBit bit="1" name="BODLEVEL1" address="2" />
+        <deviceBit bit="0" name="BODLEVEL0" address="2" />
       </group>
     </fuseBits>
   </device>
@@ -154,6 +165,33 @@
 
 
   <device name="ATmega8" signature="1e9307">
+    <fuseBits>
+      <group name="Clock Selection">
+        <deviceBit bit="3" name="CKSEL3" />
+        <deviceBit bit="2" name="CKSEL2" />
+        <deviceBit bit="1" name="CKSEL1" />
+        <deviceBit bit="0" name="CKSEL0" />
+      </group>
+      <group>
+        <deviceBit bit="4" name="SUT0" />
+        <deviceBit bit="5" name="SUT1" />
+
+        <deviceBit bit="3" name="EESAVE" address="1" />
+        <deviceBit bit="4" name="CKOPT" address="1" />
+        <deviceBit bit="5" name="SPIEN" address="1" />
+        <deviceBit bit="6" name="WDTON" address="1" />
+        <deviceBit bit="7" name="RSTDISBL" address="1" />
+      </group>
+      <group name="Boot settings">
+        <deviceBit bit="0" name="BOOTRST" address="1" />
+        <deviceBit bit="1" name="BOOTSZ0" address="1" />
+        <deviceBit bit="2" name="BOOTSZ1" address="1" />
+      </group>
+      <group name="Brown-out detection">
+        <deviceBit bit="7" name="BODLEVEL" address="0" />
+        <deviceBit bit="6" name="BODEN" address="2" />
+      </group>
+    </fuseBits>
   </device>
 
   <device name="ATmega8515" signature="1e9306">

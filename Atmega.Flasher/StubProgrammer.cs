@@ -29,7 +29,7 @@ namespace Atmega.Flasher {
         public void WritePage(int address, AvrMemoryType memType, byte[] data, int dataStart, int dataLength) {
             Thread.Sleep(50);
             var mem = GetMemory(memType);
-            for (var i = 0; i < data.Length; i++) {
+            for (var i = 0; i < dataLength; i++) {
                 mem[(i + address) % mem.Length] = data[i + dataStart];
             }
         }

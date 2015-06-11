@@ -94,7 +94,7 @@
     <Compile Include="Views\Settings\StkV1SettingsView.xaml.cs">
       <DependentUpon>StkV1SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BaseDeviceOperationWindow.cs" />
+    <Compile Include="Views\Operations\BaseDeviceOperationWindow.cs" />
     <Compile Include="Views\Settings\ComBitBangSettingsView.xaml.cs">
       <DependentUpon>ComBitBangSettingsView.xaml</DependentUpon>
     </Compile>
@@ -128,7 +128,7 @@
     <Compile Include="Views\Settings\DeviceView.xaml.cs">
       <DependentUpon>DeviceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VerifyDeviceWindow.xaml.cs">
+    <Compile Include="Views\Operations\VerifyDeviceWindow.xaml.cs">
       <DependentUpon>VerifyDeviceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Operations\WriteDeviceWindow.xaml.cs">
@@ -228,7 +228,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\VerifyDeviceWindow.xaml">
+    <Page Include="Views\Operations\VerifyDeviceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
