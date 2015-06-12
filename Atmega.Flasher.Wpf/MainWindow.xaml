@@ -31,6 +31,7 @@
     <Window.InputBindings>
         <KeyBinding Key="M" Modifiers="Control" Command="commands:FlasherCommands.SerialMonitor"/>
         <KeyBinding Key="L" Modifiers="Control" Command="commands:FlasherCommands.LockBits"/>
+        <KeyBinding Key="F" Modifiers="Control" Command="commands:FlasherCommands.FuseBits"/>
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
@@ -46,7 +47,7 @@
                     <MenuItem Header="Verify" Command="commands:FlasherCommands.VerifyDevice" />
                     <MenuItem Header="Erase" Command="commands:FlasherCommands.EraseDevice" />
                     <MenuItem Header="Lock Bits" Command="commands:FlasherCommands.LockBits" InputGestureText="Ctrl+L" />
-                    <MenuItem Header="Fuse Bits" Command="commands:FlasherCommands.FuseBits" />
+                    <MenuItem Header="Fuse Bits" Command="commands:FlasherCommands.FuseBits" InputGestureText="Ctrl+F" />
                     <Separator />
                     <MenuItem Header="Reset Device" Command="commands:FlasherCommands.ResetDevice" />
                     <Separator />
