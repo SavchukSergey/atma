@@ -129,6 +129,28 @@ namespace Atmega.Flasher {
             }
         }
 
+        private void WriteLockBitsCommand(object sender, ExecutedRoutedEventArgs e) {
+            var msgResult = MessageBox.Show("Are you sure you want start writing lock bits. Data may become unreadable", "Lock bits confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (msgResult == MessageBoxResult.Yes) {
+                var dlg = new WriteLocksWindow {
+                    DataContext = new FlasherOperationModel(Model),
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
+        }
+
+        private void WriteFuseBitsCommand(object sender, ExecutedRoutedEventArgs e) {
+            var msgResult = MessageBox.Show("Are you sure you want start writing fuse bits. Device may become unoperable", "Fuse bits confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (msgResult == MessageBoxResult.Yes) {
+                var dlg = new WriteFusesWindow {
+                    DataContext = new FlasherOperationModel(Model),
+                    Owner = this
+                };
+                dlg.ShowDialog();
+            }
+        }
+
         private void ResetDevice(object sender, ExecutedRoutedEventArgs e) {
             var dlg = new ResetDeviceWindow {
                 DataContext = new FlasherOperationModel(_model),

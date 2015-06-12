@@ -20,6 +20,8 @@
         <CommandBinding Command="commands:FlasherCommands.WriteDevice" Executed="WriteDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.VerifyDevice" Executed="VerifyDeviceCommand" />
         <CommandBinding Command="commands:FlasherCommands.EraseDevice" Executed="EraseDeviceCommand" />
+        <CommandBinding Command="commands:FlasherCommands.WriteLockBits" Executed="WriteLockBitsCommand" />
+        <CommandBinding Command="commands:FlasherCommands.WriteFuseBits" Executed="WriteFuseBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.LockBits" Executed="LockBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.FuseBits" Executed="FuseBitsCommand" />
         <CommandBinding Command="commands:FlasherCommands.ResetDevice" Executed="ResetDevice" />

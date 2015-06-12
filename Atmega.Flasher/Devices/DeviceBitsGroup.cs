@@ -26,6 +26,10 @@ namespace Atmega.Flasher.Devices {
             }
         }
 
+        public IList<DeviceBit> VisibleBits {
+            get { return _bits.Where(item => !item.Hidden).ToList(); }
+        }
+
         public static DeviceBitsGroup From(XElement xBits) {
             var res = new DeviceBitsGroup();
             var xName = xBits.Attribute("name");

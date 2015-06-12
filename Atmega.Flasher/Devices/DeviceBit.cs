@@ -16,17 +16,21 @@ namespace Atmega.Flasher.Devices {
 
         public bool Value { get; set; }
 
+        public bool Hidden { get; set; }
+
         public static DeviceBit From(XElement xDeviceBit) {
             var xAddress = xDeviceBit.Attribute("address");
             var xBit = xDeviceBit.Attribute("bit");
             var xName = xDeviceBit.Attribute("name");
             var xInverse = xDeviceBit.Attribute("inverse");
             var xConstant = xDeviceBit.Attribute("constant");
+            var xHidden = xDeviceBit.Attribute("hidden");
             return new DeviceBit {
                 Address = xAddress != null ? ParseInt(xAddress.Value) : 0,
                 Bit = xBit != null ? int.Parse(xBit.Value) : 0,
                 Name = xName != null ? xName.Value : "",
                 Inverse = xInverse != null && xInverse.Value.ToLowerInvariant() == "true",
+                Hidden = xHidden != null && xHidden.Value.ToLowerInvariant() == "true",
                 Constant = xConstant != null ? new bool?(xConstant.Value == "1") : null
             };
         }

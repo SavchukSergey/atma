@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Atmega.Flasher.Commands;
 using Atmega.Flasher.Devices;
 using Atmega.Flasher.Models;
 using Atmega.Flasher.Views.Operations;
@@ -21,12 +22,7 @@ namespace Atmega.Flasher.Views {
             var deviceBits = (DeviceBits)DeviceBitsView.DataContext;
             deviceBits.ApplyTo(Model.LocksHexBoard);
 
-            var dlg = new WriteLocksWindow {
-                DataContext = new FlasherOperationModel(Model),
-                Owner = this
-            };
-            dlg.ShowDialog();
-
+            FlasherCommands.WriteLockBits.Execute(null, Owner);
             Close(); 
         }
 
