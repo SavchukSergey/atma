@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
+using Atmega.Flasher.STKv1;
 
 namespace Atmega.Flasher.Devices {
     public class DeviceInfo {
@@ -32,6 +35,8 @@ namespace Atmega.Flasher.Devices {
 
         public AvrSignature Signature { get; set; }
 
+        public StkDeviceCode StkCode { get; set; }
+
         public static DeviceInfo From(XElement node) {
             var xName = node.Attribute("name");
 
@@ -41,6 +46,7 @@ namespace Atmega.Flasher.Devices {
             var xSignature = node.Attribute("signature");
             var xLockBits = node.Element("lockBits");
             var xFuseBits = node.Element("fuseBits");
+            var xStkCode = node.Attribute("stkCode");
             return new DeviceInfo {
                 Name = xName != null ? xName.Value : "unknown",
                 _flash = xFlash != null ? DeviceFlashParameters.From(xFlash) : new DeviceFlashParameters(),
@@ -49,7 +55,19 @@ namespace Atmega.Flasher.Devices {
                 Signature = xSignature != null ? AvrSignature.Parse(xSignature.Value) : new AvrSignature(),
                 _lockBits = xLockBits != null ? DeviceBits.Parse(xLockBits) : new DeviceBits(),
                 _fuseBits = xFuseBits != null ? DeviceBits.Parse(xFuseBits) : new DeviceBits(),
+                StkCode = xStkCode != null ? ParseStkCode(xStkCode.Value) : StkDeviceCode.None,
             };
+        }
+
+        private static StkDeviceCode ParseStkCode(string val) {
+            StkDeviceCode res;
+            if (Enum.TryParse(val, true, out res)) return res;
+            return (StkDeviceCode) ParseInt(val);
+        }
+
+        private static int ParseInt(string val) {
+            if (val.StartsWith("0x")) return int.Parse(val.Substring(2), NumberStyles.HexNumber);
+            return int.Parse(val);
         }
 
         public static IList<DeviceInfo> List() {

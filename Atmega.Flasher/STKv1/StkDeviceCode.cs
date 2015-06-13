@@ -1,5 +1,8 @@
 ﻿namespace Atmega.Flasher.STKv1 {
     public enum StkDeviceCode : byte {
+        None = 0xff,
+        Pic16F628 = 1,
+
         ATtiny11 = 0x11,
         ATtiny12 = 0x12,
         ATtiny15 = 0x13,
@@ -24,6 +27,7 @@
         ATmega16 = 0x82,
         ATmega162 = 0x83,
         ATmega169 = 0x84,
+        Atmega328 = 0x86,
         ATmega323 = 0x90,
         ATmega32 = 0x91,
         ATmega64 = 0xA0,
@@ -31,6 +35,6 @@
         ATmega128 = 0xB2,
         AT89551 = 0xE1,
         AT89552 = 0xE2,
-        AT86RF401 = 0xD0
+        AT86RF401 = 0xD0,
     }
 }

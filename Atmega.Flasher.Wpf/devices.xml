@@ -24,7 +24,7 @@
     <flash size="16384" page="128" />
     <eeprom size="512" />
   </device>
-  <device name="ATmega328" ram="2048" signature="1e9514">
+  <device name="ATmega328" ram="2048" signature="1e9514" stkCode="0x86">
     <flash size="32768" page="128" />
     <eeprom size="1024" />
     <lockBits>
@@ -68,7 +68,7 @@
       </group>
     </fuseBits>
   </device>
-  <device name="ATmega328p" ram="2048" signature="1e950f">
+  <device name="ATmega328p" ram="2048" signature="1e950f" stkCode="0x86">
     <flash size="32768" page="128" />
     <eeprom size="1024" />
     <lockBits>
@@ -240,7 +240,7 @@
   <device name="AT86RF401" signature="1e9181">
   </device>
 
-  <device name="PIC16F628" ram="224">
+  <device name="PIC16F628" ram="224" stkCode="0x01">
     <flash size="4096" />
     <eeprom size="128" />
 

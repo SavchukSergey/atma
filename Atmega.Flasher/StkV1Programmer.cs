@@ -19,7 +19,7 @@ namespace Atmega.Flasher {
             _client.ResetDevice();
             _client.GetSyncLoop();
             _client.SetDeviceParameters(new StkV1DeviceParameters {
-                DeviceCode = (StkDeviceCode)0x86,
+                DeviceCode = _device.StkCode,
                 Revision = 0,
                 ProgType = 0,
                 ParMode = 1,
