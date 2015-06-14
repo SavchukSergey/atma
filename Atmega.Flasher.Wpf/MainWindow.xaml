@@ -5,6 +5,7 @@
         xmlns:views="clr-namespace:Atmega.Flasher.Views" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:Atmega.Flasher.Models"
+        xmlns:converters="clr-namespace:Atmega.Flasher.Converters"
         mc:Ignorable="d"
         Title="Flasher"
         Height="700" Width="740"
@@ -36,6 +37,9 @@
         <KeyBinding Key="W" Modifiers="Control" Command="commands:FlasherCommands.WriteDevice"/>
         <KeyBinding Key="V" Modifiers="Control" Command="commands:FlasherCommands.VerifyDevice"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <converters:GridLengthConverter x:Key="GridLengthConverter" />
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
             <Menu VerticalAlignment="Top">
@@ -89,10 +93,10 @@
         </StatusBar>
         <Grid Style="{StaticResource DialogContainer}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="{Binding Path=FlashHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=3}" />
+                <RowDefinition Height="{Binding Path=EepromHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
+                <RowDefinition Height="{Binding Path=FusesHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
+                <RowDefinition Height="{Binding Path=LocksHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
             </Grid.RowDefinitions>
 
             <views:HexBoardView Grid.Row="0" DataContext="{Binding Path=FlashHexBoard}" Title="FLASH"/>

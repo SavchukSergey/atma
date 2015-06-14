@@ -161,6 +161,7 @@ namespace Atmega.Flasher.Hex {
         public void Clear() {
             Lines.Clear();
             Lines.Add(new HexBoardLine { Address = 0 });
+            OnPropertyChanged("Size");
         }
     }
 }
