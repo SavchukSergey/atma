@@ -33,7 +33,7 @@ namespace Atmega.Flasher.Views {
             };
             dlg.ShowDialog();
 
-            var settings = FlasherConfig.Read();
+            var settings = Model.Config;
             var fuseBits = settings.Device.FuseBits;
 
             var fusesData = Model.FusesHexBoard;

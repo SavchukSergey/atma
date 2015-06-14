@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Atmega.Flasher.Devices;
 using Atmega.Flasher.Hex;
 using Atmega.Hex;
 
@@ -70,6 +71,22 @@ namespace Atmega.Flasher.Models {
             }
         }
 
+        private FlasherConfig _config;
+        public FlasherConfig Config {
+            get {
+                if (_config == null) {
+                    _config = FlasherConfig.Read();
+                    OnPropertyChanged();
+                }
+                return _config;
+            }
+        }
+
+        public FlasherConfig ReloadConfig() {
+            _config = null;
+            return Config;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null) {
@@ -78,8 +95,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool ReadFuses(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
             var fusesSize = device.FuseBits.Size;
             op.FusesSize += fusesSize;
 
@@ -97,8 +113,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool ReadLocks(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
             var locksSize = device.LockBits.Size;
             op.LocksSize += locksSize;
 
@@ -116,8 +131,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool ReadDevice(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
             var flashSize = device.Flash.Size;
             var eepromSize = device.Eeprom.Size;
             var fusesSize = device.FuseBits.Size;
@@ -150,8 +164,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteDevice(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
 
             var flashBlocks = FlashHexBoard.SplitBlocks(device.Flash.PageSize);
             var eepromBlocks = EepromHexBoard.SplitBlocks(device.Eeprom.PageSize);
@@ -178,8 +191,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteFuses(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
 
             var fusesBlocks = FusesHexBoard.SplitBlocks(device.FuseBits.PageSize);
             op.FusesSize += fusesBlocks.TotalBytes;
@@ -199,8 +211,7 @@ namespace Atmega.Flasher.Models {
         }
 
         public bool WriteLocks(DeviceOperation op) {
-            var config = FlasherConfig.Read();
-            var device = config.Device;
+            var device = Config.Device;
 
             var locksBlocks = LocksHexBoard.SplitBlocks(device.LockBits.PageSize);
             op.LocksSize += locksBlocks.TotalBytes;
@@ -326,8 +337,8 @@ namespace Atmega.Flasher.Models {
             hf.Save(fileName);
         }
 
-        private static IProgrammer CreateProgrammer(DeviceOperation deviceOperation) {
-            var settings = FlasherConfig.Read();
+        private IProgrammer CreateProgrammer(DeviceOperation deviceOperation) {
+            var settings = Config;
             var inner = CreateProgrammerFromConfig(settings);
             var programmer = new ProgressTrackerProgrammer(inner, deviceOperation);
             return programmer;

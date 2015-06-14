@@ -79,6 +79,13 @@
                     <TextBlock Text="{Binding Path=EepromHexBoard.Size}" />
                 </StackPanel>
             </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Device:</TextBlock>
+                    <TextBlock Text="{Binding Path=Config.Device.Name}" />
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
         <Grid Style="{StaticResource DialogContainer}">
             <Grid.RowDefinitions>

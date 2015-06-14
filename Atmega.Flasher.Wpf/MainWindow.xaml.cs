@@ -99,7 +99,10 @@ namespace Atmega.Flasher {
                 DataContext = settings,
                 Owner = this
             };
-            dlg.ShowDialog();
+            if (dlg.ShowDialog() ?? false) {
+                settings.Save();
+                Model.ReloadConfig();
+            }
         }
 
         private void LockBitsCommand(object sender, ExecutedRoutedEventArgs e) {

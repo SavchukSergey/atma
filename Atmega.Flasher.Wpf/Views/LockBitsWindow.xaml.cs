@@ -33,7 +33,7 @@ namespace Atmega.Flasher.Views {
             };
             dlg.ShowDialog();
 
-            var settings = FlasherConfig.Read();
+            var settings = Model.Config;
             var lockBits = settings.Device.LockBits;
 
             var locksData = Model.LocksHexBoard;

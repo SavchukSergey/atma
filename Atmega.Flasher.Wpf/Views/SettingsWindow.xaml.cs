@@ -7,6 +7,7 @@ namespace Atmega.Flasher.Views {
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
     public partial class SettingsWindow : Window {
+        
         public SettingsWindow() {
             InitializeComponent();
         }
@@ -16,7 +17,7 @@ namespace Atmega.Flasher.Views {
         }
 
         private void SaveCommand(object sender, ExecutedRoutedEventArgs e) {
-            Model.Save();
+            DialogResult = true;
             Close();
         }
 

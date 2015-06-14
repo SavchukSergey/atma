@@ -15,8 +15,8 @@
     </Window.CommandBindings>
     <DockPanel LastChildFill="True" Style="{StaticResource DialogContainer}">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Save" Command="Save"></Button>
-            <Button Content="Cancel" Command="Close" IsCancel="True"></Button>
+            <Button Content="Save" Command="Save" />
+            <Button Content="Cancel" Command="Close" IsCancel="True" />
         </StackPanel>
         <TabControl>
             <TabItem Header="Connection">
