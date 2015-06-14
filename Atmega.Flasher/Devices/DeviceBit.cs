@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Atmega.Flasher.Devices {
@@ -18,6 +20,8 @@ namespace Atmega.Flasher.Devices {
 
         public bool Hidden { get; set; }
 
+        public string Description { get; set; }
+
         public static DeviceBit From(XElement xDeviceBit) {
             var xAddress = xDeviceBit.Attribute("address");
             var xBit = xDeviceBit.Attribute("bit");
@@ -25,13 +29,21 @@ namespace Atmega.Flasher.Devices {
             var xInverse = xDeviceBit.Attribute("inverse");
             var xConstant = xDeviceBit.Attribute("constant");
             var xHidden = xDeviceBit.Attribute("hidden");
+            var xDescription = xDeviceBit.Element("description");
             return new DeviceBit {
                 Address = xAddress != null ? ParseInt(xAddress.Value) : 0,
                 Bit = xBit != null ? int.Parse(xBit.Value) : 0,
                 Name = xName != null ? xName.Value : "",
                 Inverse = xInverse != null && xInverse.Value.ToLowerInvariant() == "true",
                 Hidden = xHidden != null && xHidden.Value.ToLowerInvariant() == "true",
-                Constant = xConstant != null ? new bool?(xConstant.Value == "1") : null
+                Constant = xConstant != null ? new bool?(xConstant.Value == "1") : null,
+                Description = xDescription != null ?
+                    string.Join("\r\n", 
+                    xDescription.Value.Trim()
+                        .Split(new []{'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s=> s.Trim())
+                        .ToArray()
+                    ) : ""
             };
         }
 

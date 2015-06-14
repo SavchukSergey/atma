@@ -259,11 +259,36 @@
     <fuseBits page="2" location="flash">
 
       <group name="Fuses">
-        <deviceBit bit="7" name="LVP" address="0x400e" />
-        <deviceBit bit="6" name="BOREN" address="0x400e" />
-        <deviceBit bit="5" name="MCLRE" address="0x400e" />
-        <deviceBit bit="3" name="PWRTEN" address="0x400e" />
-        <deviceBit bit="2" name="WDTEN" address="0x400e" />
+        <deviceBit bit="7" name="Low Voltage Programming Enabled" address="0x400e" code="LVP">
+          <description>
+            1 = RB4/PGM pin has PGM function, Low Voltage Programming enabled
+            0 = RB4/PGM is digital input, HV on MCLR must be used for programming
+          </description>
+        </deviceBit>
+        <deviceBit bit="6" name="Brown-out Detect Reset Enabled" address="0x400e" code="BODEN">
+          <description>
+            1 = BOD Reset enabled
+            0 = BOD Reset disabled
+          </description>
+        </deviceBit>
+        <deviceBit bit="5" name="RA5/MCLR Pin Function Select bit" address="0x400e" code="MCLRE">
+          <description>
+            1 = RA5/MCLR pin function is MCLR
+            0 = RA5/MCLR pin function is digital input, MCLR internally tied to VDD
+          </description>
+        </deviceBit>
+        <deviceBit bit="3" name="Power-up Timer Enabled" address="0x400e" inverse="true" code="PWRTEN">
+          <description>
+            1 = PWRT enabled
+            0 = PWRT disabled
+          </description>
+        </deviceBit>
+        <deviceBit bit="2" name="Watchdog Timer Enabled" address="0x400e" code="WDTEN" >
+          <description>
+            1 = WDT enabled
+            0 = WDT disabled
+          </description>
+        </deviceBit>
 
         <deviceBit bit="0" name="High byte of configuration word" address="0x400f" hidden="true" />
       </group>
