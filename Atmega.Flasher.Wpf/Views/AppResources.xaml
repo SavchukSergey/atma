@@ -20,14 +20,14 @@
         <Setter Property="Margin" Value="5" />
     </Style>
     <Style TargetType="CheckBox">
-        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="4,0,0,0" />
     </Style>
     <converters:ProgressStateConverter x:Key="ProgressStateConverter" />
     <x:Array x:Key="OuputComPins" Type="io:ComPinType">
         <io:ComPinType>Rts</io:ComPinType>
         <io:ComPinType>Dtr</io:ComPinType>
         <io:ComPinType>TxD</io:ComPinType>
-        <io:ComPinType>None</io:ComPinType>
     </x:Array>
     <x:Array x:Key="InputComPins" Type="io:ComPinType">
         <io:ComPinType>Cts</io:ComPinType>

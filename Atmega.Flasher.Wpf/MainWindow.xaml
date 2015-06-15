@@ -40,7 +40,7 @@
     <Window.Resources>
         <converters:GridLengthConverter x:Key="GridLengthConverter" />
     </Window.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" x:Name="Root" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
         <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
             <Menu VerticalAlignment="Top">
                 <MenuItem Header="File">
@@ -91,18 +91,20 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <Grid Style="{StaticResource DialogContainer}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding Path=FlashHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=3}" />
-                <RowDefinition Height="{Binding Path=EepromHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
-                <RowDefinition Height="{Binding Path=FusesHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
-                <RowDefinition Height="{Binding Path=LocksHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
-            </Grid.RowDefinitions>
+        <Grid Background="SlateGray">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding Path=FlashHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=3}" />
+                    <RowDefinition Height="{Binding Path=EepromHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
+                    <RowDefinition Height="{Binding Path=FusesHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
+                    <RowDefinition Height="{Binding Path=LocksHexBoard.Size, Mode=OneWay, Converter={StaticResource GridLengthConverter}, ConverterParameter=1}" />
+                </Grid.RowDefinitions>
 
-            <views:HexBoardView Grid.Row="0" DataContext="{Binding Path=FlashHexBoard}" Title="FLASH"/>
-            <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}" Title="EEPROM"/>
-            <views:HexBoardView Grid.Row="2" DataContext="{Binding Path=FusesHexBoard}" Title="FUSES"/>
-            <views:HexBoardView Grid.Row="3" DataContext="{Binding Path=LocksHexBoard}" Title="LOCKS"/>
+                <views:HexBoardView Grid.Row="0" DataContext="{Binding Path=FlashHexBoard}" Title="FLASH" Background="{Binding ElementName=Root, Path=Background}"/>
+                <views:HexBoardView Grid.Row="1" DataContext="{Binding Path=EepromHexBoard}" Title="EEPROM" Background="{Binding ElementName=Root, Path=Background}"/>
+                <views:HexBoardView Grid.Row="2" DataContext="{Binding Path=FusesHexBoard}" Title="FUSES" Background="{Binding ElementName=Root, Path=Background}"/>
+                <views:HexBoardView Grid.Row="3" DataContext="{Binding Path=LocksHexBoard}" Title="LOCKS" Background="{Binding ElementName=Root, Path=Background}"/>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

@@ -15,11 +15,11 @@
     </Grid.Resources>
 
     <Grid.RowDefinitions>
-        <RowDefinition Height="auto"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="0" Orientation="Horizontal">
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15,0,0,0">
         <TextBlock Text="{Binding Title, ElementName=Grid}" VerticalAlignment="Center" FontSize="20" />
         <Button Click="ButtonBase_OnClick" Content="Clear" Style="{StaticResource HexBoardButton}"/>
     </StackPanel>
@@ -36,6 +36,7 @@
                   VerticalScrollBarVisibility="Visible"
                   HorizontalGridLinesBrush="#a0a0a0"
                   VerticalGridLinesBrush="#a0a0a0"
+                  AreRowDetailsFrozen="False"
                   >
         <DataGrid.Columns>
             <DataGridTextColumn Header="Address" Binding="{Binding Path=Address, StringFormat=X4}" Foreground="#800000">
