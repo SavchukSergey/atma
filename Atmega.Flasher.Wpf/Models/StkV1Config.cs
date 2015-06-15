@@ -20,18 +20,22 @@ namespace Atmega.Flasher.Models {
 
         public ComBitBangPinConfig ResetPin { get { return _resetPin; } }
 
+        public bool UseReset { get; set; }
+
         public override void Save() {
             _comPortSettings.Save();
             _resetPin.Save();
+            UpdateConfigBool("UseReset", UseReset);
         }
 
         public override void ReadFromConfig() {
             _comPortSettings.ReadFromConfig();
             _resetPin.ReadFromConfig();
+            UseReset = GetConfigBool(true, "UseReset");
         }
 
         public override IProgrammer CreateProgrammer(DeviceInfo device) {
-            return new StkV1Programmer(new StkV1Client(CreateChannel()), device);
+            return new StkV1Programmer(new StkV1Client(CreateChannel()), device, UseReset);
         }
 
         public override IAvrChannel CreateChannel() {

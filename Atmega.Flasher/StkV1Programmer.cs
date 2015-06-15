@@ -7,16 +7,20 @@ namespace Atmega.Flasher {
 
         private readonly StkV1Client _client;
         private readonly DeviceInfo _device;
+        private readonly bool _useReset;
         private const int BLOCK_SIZE = 1024;
 
-        public StkV1Programmer(StkV1Client client, DeviceInfo device) {
+        public StkV1Programmer(StkV1Client client, DeviceInfo device, bool useReset) {
             _client = client;
             _device = device;
+            _useReset = useReset;
         }
 
         public void Start() {
             _client.Open();
-            _client.ResetDevice();
+            if (_useReset) {
+                _client.ResetDevice();
+            }
             _client.GetSyncLoop();
             _client.SetDeviceParameters(new StkV1DeviceParameters {
                 DeviceCode = _device.StkCode,

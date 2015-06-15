@@ -16,19 +16,23 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=ResetPin}">Reset PIN:</Label>
 
-            <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ResetPin"
+            <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=ResetPin}">Use Reset:</Label>
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding Path=UseReset}" Content=""/>
+
+            <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=ResetPin}">Reset PIN:</Label>
+            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="ResetPin"
                   ItemsSource="{StaticResource OuputComPins}" 
                   SelectedItem="{Binding Path=ResetPin.Pin, Mode=TwoWay}" />
+            <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding Path=ResetPin.Invert}" Content="Invert"/>
 
-            <CheckBox  Grid.Row="0" Grid.Column="2" IsChecked="{Binding Path=ResetPin.Invert}" Content="Invert"/>
         </Grid>
     </Grid>
 </UserControl>

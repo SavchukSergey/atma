@@ -246,11 +246,18 @@
 
     <lockBits page="2" location="flash">
       <group name="Code protection">
-        <deviceBit bit="5" name="CP1" address="0x400f" />
-        <deviceBit bit="4" name="CP0" address="0x400f" />
-        <deviceBit bit="3" name="CP1" address="0x400f" />
-        <deviceBit bit="2" name="CP0" address="0x400f" />
-        <deviceBit bit="0" name="CPD" address="0x400f" />
+        <deviceBit bit="5" name="Flash Program Memory Code Protection" address="0x400f" inverse="true" code="CP" >
+          <description>
+            0 = Code protection off
+            1 = 0000h to 07FFh code protected
+          </description>
+        </deviceBit>
+        <deviceBit bit="0" name="Data Code Protection" address="0x400f" inverse="true" code="CPD" >
+          <description>
+            0 = Data memory code protection off
+            1 = Data memory code protected
+          </description>
+        </deviceBit>
 
         <deviceBit bit="0" name="Low byte of configuration word" address="0x400e" hidden="true" />
       </group>
