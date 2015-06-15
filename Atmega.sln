@@ -25,10 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{464B27
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Flasher.Wpf", "Atmega.Flasher.Wpf\Atmega.Flasher.Wpf.csproj", "{15EF3696-CF7A-4AD2-AE4F-AEF418DB09D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Flasher", "Atmega.Flasher\Atmega.Flasher.csproj", "{0C30F079-3B8D-4B53-92F8-6ABF036C430F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,14 +43,6 @@ Global
 		{F188CC08-77E9-46C8-B696-0E9B9C9A6AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F188CC08-77E9-46C8-B696-0E9B9C9A6AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F188CC08-77E9-46C8-B696-0E9B9C9A6AEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15EF3696-CF7A-4AD2-AE4F-AEF418DB09D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15EF3696-CF7A-4AD2-AE4F-AEF418DB09D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15EF3696-CF7A-4AD2-AE4F-AEF418DB09D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15EF3696-CF7A-4AD2-AE4F-AEF418DB09D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C30F079-3B8D-4B53-92F8-6ABF036C430F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C30F079-3B8D-4B53-92F8-6ABF036C430F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C30F079-3B8D-4B53-92F8-6ABF036C430F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C30F079-3B8D-4B53-92F8-6ABF036C430F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
