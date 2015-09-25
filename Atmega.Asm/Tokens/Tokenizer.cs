@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Atmega.Asm.Tokens {
     public class Tokenizer {
 
-        private void SkipWhitespace(ref string content, ref int chIndex) {
+        private static void SkipWhitespace(ref string content, ref int chIndex) {
             while (chIndex < content.Length) {
                 var ch = content[chIndex];
                 if (ch != ' ' && ch != '\t') return;
@@ -12,11 +12,11 @@ namespace Atmega.Asm.Tokens {
             }
         }
 
-        private void SkipNewLineChar(ref string content, ref int pos, char firstChar) {
+        private static void SkipNewLineChar(ref string content, ref int pos, char firstChar) {
             SkipOne(ref content, ref pos, firstChar == '\n' ? '\r' : '\n');
         }
 
-        private void SkipOne(ref string content, ref int chIndex, char match) {
+        private static void SkipOne(ref string content, ref int chIndex, char match) {
             if (chIndex < content.Length) {
                 if (content[chIndex] == match) {
                     chIndex++;
@@ -24,7 +24,7 @@ namespace Atmega.Asm.Tokens {
             }
         }
 
-        private void SkipLine(ref string content, ref int pos) {
+        private static void SkipLine(ref string content, ref int pos) {
             while (pos < content.Length) {
                 var ch = content[pos++];
                 if (ch == 0x0d) {
@@ -38,7 +38,7 @@ namespace Atmega.Asm.Tokens {
             }
         }
 
-        private string ReadString(ref string content, ref int pos, TokenPosition position) {
+        private static string ReadString(ref string content, ref int pos, TokenPosition position) {
             var quoteCh = content[pos++];
             var token = "";
             while (pos < content.Length) {
@@ -226,10 +226,10 @@ namespace Atmega.Asm.Tokens {
             if (literal.EndsWith("h")) {
                 return ParsePostfixedHexInteger(literal, position);
             }
-            return ReadDecimalInteger(literal, position);
+            return ReadDecimalInteger(ref literal, position);
         }
 
-        private Token ReadDecimalInteger(string literal, TokenPosition position) {
+        private static Token ReadDecimalInteger(ref string literal, TokenPosition position) {
             long val = 0;
             var pos = 0;
             while (pos < literal.Length) {
