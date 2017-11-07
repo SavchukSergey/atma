@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40418.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Asm", "Atmega.Asm\Atmega.Asm.csproj", "{93B689CE-8AB5-496D-AEBF-23C88BE1C212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atmega.Asm", "Atmega.Asm\Atmega.Asm.csproj", "{93B689CE-8AB5-496D-AEBF-23C88BE1C212}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega.Asm.Tests", "Atmega.Asm.Tests\Atmega.Asm.Tests.csproj", "{374B2480-436F-423A-92C1-E2E0F21D6DC2}"
 EndProject
@@ -16,14 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{2668
 		Artifacts\include\ports.inc = Artifacts\include\ports.inc
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atmega", "Atmega\Atmega.csproj", "{F188CC08-77E9-46C8-B696-0E9B9C9A6AEF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{464B2743-1464-4B77-AC89-74732AAC8094}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atmega", "Atmega\Atmega.csproj", "{F188CC08-77E9-46C8-B696-0E9B9C9A6AEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{266847E6-603E-4AFC-B2E2-A58E2BDBF1F3} = {478F1F1C-402E-4AB4-8313-BF46553D3A5D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F09B4B1-DF3B-48A8-8BF3-7F2C82DD37C7}
 	EndGlobalSection
 EndGlobal
